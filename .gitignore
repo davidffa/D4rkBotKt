@@ -8,9 +8,9 @@ bin/
 .idea/
 *.iml
 
+# Jars
+*.jar
+
 # Gradle
 .gradle/
 !gradle/wrapper/gradle-wrapper.jar
-
-# Jars
-*.jar
