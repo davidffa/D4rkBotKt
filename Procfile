@@ -1,0 +1,1 @@
+Worker: java -jar build/libs/D4rkBot.jar

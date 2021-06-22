@@ -1,0 +1,16 @@
+# Build
+target/
+build/
+out/
+bin/
+
+# Idea settings
+.idea/
+*.iml
+
+# Gradle
+.gradle/
+!gradle/wrapper/gradle-wrapper.jar
+
+# Jars
+*.jar
