@@ -5,8 +5,6 @@ import net.d4rkb.d4rkbotkt.command.CommandContext
 import net.d4rkb.d4rkbotkt.lavaplayer.PlayerManager
 import net.d4rkb.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.Permission
-import java.net.MalformedURLException
-import java.net.URL
 
 class Play : Command(
   "play",
