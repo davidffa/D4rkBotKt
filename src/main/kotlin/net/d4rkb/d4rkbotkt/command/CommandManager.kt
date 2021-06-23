@@ -177,7 +177,11 @@ class CommandManager {
                 }
             }
 
-            event.channel.sendMessage(":x: Eu não tenho esse comando.\n:thinking: Querias dizer `$suggest`?").queue()
+            val msg = event.channel.sendMessage(":x: Eu não tenho esse comando.\n:thinking: Querias dizer `dk.$suggest`?").complete()
+
+            Timer().schedule(timerTask {
+                msg.delete().queue()
+            }, 7000)
         }
     }
 }
