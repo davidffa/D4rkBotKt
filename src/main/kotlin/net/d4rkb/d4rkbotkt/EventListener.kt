@@ -41,7 +41,7 @@ class EventListener : ListenerAdapter() {
                     presence.setPresence(OnlineStatus.ONLINE, Activity.playing("@D4rkBot.kt"))
                 }
                 (5).toByte() -> {
-                    presence.setPresence(OnlineStatus.ONLINE, Activity.listening("${PlayerManager.getMusicManagersSize()} músicas"))
+                    presence.setPresence(OnlineStatus.ONLINE, Activity.listening("${PlayerManager.musicManagers.size} músicas"))
                 }
                 (6).toByte() -> {
                     val runtimeMXBean = ManagementFactory.getRuntimeMXBean()
