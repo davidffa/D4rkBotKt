@@ -155,7 +155,7 @@ class CommandManager {
                 return
             }
 
-            if (timestamps != null) {
+            if (timestamps != null && event.author.id != "334054158879686657") {
                 timestamps[event.author.id] = now
 
                 Timer().schedule(timerTask {
