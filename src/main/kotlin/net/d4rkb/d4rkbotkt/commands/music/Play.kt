@@ -25,6 +25,7 @@ class Play : Command(
         if (!Utils.canPlay(ctx.selfMember, ctx.member, channel)) return
 
         if (!selfVoiceState!!.inVoiceChannel()) {
+            ctx.guild.audioManager.isSelfDeafened = true
             ctx.guild.audioManager.openAudioConnection(member.voiceState?.channel)
         }
 
