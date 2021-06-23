@@ -23,6 +23,7 @@ class CommandManager {
         this.addCommand(Eval())
 
         /* ** INFO ** */
+        this.addCommand(Avatar())
         this.addCommand(Botinfo())
         this.addCommand(Ping())
         this.addCommand(Uptime())
