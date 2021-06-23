@@ -2,8 +2,10 @@ package net.d4rkb.d4rkbotkt.utils
 
 import net.d4rkb.d4rkbotkt.lavaplayer.PlayerManager
 import net.dv8tion.jda.api.Permission
+import net.dv8tion.jda.api.entities.Guild
 import net.dv8tion.jda.api.entities.Member
 import net.dv8tion.jda.api.entities.TextChannel
+import net.dv8tion.jda.api.entities.User
 import java.net.MalformedURLException
 import java.net.URL
 import java.time.OffsetDateTime
@@ -41,6 +43,44 @@ object Utils {
 
     fun formatDate(date: OffsetDateTime): String {
         return "${date.dayOfMonth}/${date.monthValue}/${date.year}"
+    }
+
+    fun findUser(query: String, guild: Guild): User? {
+        val jda = guild.jda
+        var user: User? = null
+
+        if (Regex("^[0-9]+$").matches(query) && query.length >= 17 && query.length <= 19) {
+            user = jda.retrieveUserById(query).complete()
+            return user
+        }
+
+        if (Regex("^#?[0-9]{4}$").matches(query)) {
+            user = guild.members.find { it.user.discriminator == query }?.user
+        }
+
+        if (user == null) {
+            var startsWith = false
+            val lcQuery = query.lowercase()
+
+            for (m in guild.members) {
+                val name = m.effectiveName
+
+                if (name == query || name.lowercase() == lcQuery) {
+                    user = m.user
+                    break
+                }
+
+                if (name.startsWith(query) || name.lowercase().startsWith(lcQuery)) {
+                    startsWith = true
+                    user = m.user
+                    continue
+                }
+
+                if (!startsWith && (name.contains(query) || name.lowercase().contains(lcQuery))) user = m.user
+            }
+        }
+
+        return user
     }
 
     fun canPlay(self: Member, member: Member, channel: TextChannel): Boolean {
