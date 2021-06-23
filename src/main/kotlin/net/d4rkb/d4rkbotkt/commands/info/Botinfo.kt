@@ -20,6 +20,7 @@ class Botinfo : Command(
 ) {
     override fun run(ctx: CommandContext) {
         val runtime = Runtime.getRuntime()
+        val rest = ctx.jda.restPing.complete()
 
         val embed = EmbedBuilder()
             .setTitle("<a:blobdance:804026401849475094> Informações sobre mim")
@@ -33,7 +34,7 @@ class Botinfo : Command(
                 "`${Utils.msToDate(ManagementFactory.getRuntimeMXBean().uptime)}`",
                 true)
             .addField(":desktop: Servidores", "`${ctx.jda.guilds.size}`", true)
-            .addField(":ping_pong: Ping", "`${ctx.jda.gatewayPing}ms`", true)
+            .addField(":ping_pong: Ping", "REST: `${rest}ms`\nGateway: `${ctx.jda.gatewayPing}ms`", true)
             .addField("<:badgehypesquad:803665497223987210> Prefixos", "Padrão: `dk.`", true)
             .addField("<:ram:751468688686841986> RAM",
                 "Usada: `${(runtime.totalMemory() - runtime.freeMemory()) / 1024 / 1024}MB`\n" +
