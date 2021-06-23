@@ -28,24 +28,24 @@ class EventListener : ListenerAdapter() {
                     presence.setPresence(OnlineStatus.DO_NOT_DISTURB, Activity.watching("D4rkB#2408"))
                 }
                 (1).toByte() -> {
-                    presence.setPresence(OnlineStatus.ONLINE, Activity.watching("${jda.guilds.size} Servidores"))
+                    presence.setPresence(OnlineStatus.ONLINE, Activity.competing("${jda.guilds.size} Servidores"))
                 }
                 (2).toByte() -> {
                     presence.setPresence(OnlineStatus.ONLINE, Activity.watching("${jda.users.size} Utilizadores"))
                 }
                 (3).toByte() -> {
                     val totalChannels = jda.storeChannels.size + jda.textChannels.size + jda.voiceChannels.size + jda.categories.size
-                    presence.setPresence(OnlineStatus.ONLINE, Activity.streaming("$totalChannels Canais", ""))
+                    presence.setPresence(OnlineStatus.ONLINE, Activity.streaming("$totalChannels Canais", "https://twitch.tv/d4rkb12"))
                 }
                 (4).toByte() -> {
-                    presence.setPresence(OnlineStatus.ONLINE, Activity.competing("@D4rkBot.kt"))
+                    presence.setPresence(OnlineStatus.ONLINE, Activity.playing("@D4rkBot.kt"))
                 }
                 (5).toByte() -> {
                     presence.setPresence(OnlineStatus.ONLINE, Activity.listening("${PlayerManager.getMusicManagersSize()} músicas"))
                 }
                 (6).toByte() -> {
                     val runtimeMXBean = ManagementFactory.getRuntimeMXBean()
-                    presence.setPresence(OnlineStatus.ONLINE, Activity.streaming("Online há ${Utils.msToDate(runtimeMXBean.uptime)}", ""))
+                    presence.setPresence(OnlineStatus.ONLINE, Activity.streaming("Online há ${Utils.msToDate(runtimeMXBean.uptime)}", "https://twitch.tv/d4rkb12"))
                 }
                 else -> {
                     presence.setPresence(OnlineStatus.ONLINE, Activity.watching("x comandos executados"))
@@ -56,8 +56,8 @@ class EventListener : ListenerAdapter() {
         }, 0, 30000)
 
         logger.info("D4rkBot.kt iniciado")
-        logger.info("Utilizadores: ${event.jda.userCache.size()}")
-        logger.info("Servidores: ${event.jda.guildCache.size()}")
+        logger.info("Utilizadores: ${event.jda.users.size}")
+        logger.info("Servidores: ${event.jda.guilds.size}")
     }
 
     override fun onGuildMessageReceived(event: GuildMessageReceivedEvent) {
@@ -72,7 +72,8 @@ class EventListener : ListenerAdapter() {
         if (mentionRegExp.containsMatchIn(raw)) {
             val botPermissions = event.guild.selfMember.getPermissions(event.channel)
             if (botPermissions.contains(Permission.MESSAGE_WRITE)) {
-                event.channel.sendMessage("<a:blobcool:804026346954555432> Olá ${user.asMention} O meu prefixo neste servidor é `${prefix}`. Faz `${prefix}help` para veres o que posso fazer!`").queue()
+                event.channel.sendMessage("<a:blobcool:804026346954555432> Olá ${user.asMention} O meu prefixo neste servidor é `${prefix}`. Faz `${prefix}help` para veres o que posso fazer!`")
+                    .queue()
             }
             return
         }
