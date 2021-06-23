@@ -62,7 +62,6 @@ class TrackScheduler(private val player: AudioPlayer, private val guild: Guild):
     override fun onTrackEnd(player: AudioPlayer, track: AudioTrack, endReason: AudioTrackEndReason) {
         if (endReason.mayStartNext) {
             nextTrack()
-            println(endReason)
         }
     }
 
