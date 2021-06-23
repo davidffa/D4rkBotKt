@@ -13,7 +13,7 @@ import java.time.Instant
 import java.util.concurrent.BlockingQueue
 import java.util.concurrent.LinkedBlockingQueue
 
-class TrackScheduler(val player: AudioPlayer, private val guild: Guild): AudioEventAdapter() {
+class TrackScheduler(private val player: AudioPlayer, private val guild: Guild): AudioEventAdapter() {
     val queue: BlockingQueue<Track>
     var currentTrack: Track? = null
     private var lastMessageSent: Message? = null
@@ -62,6 +62,7 @@ class TrackScheduler(val player: AudioPlayer, private val guild: Guild): AudioEv
     override fun onTrackEnd(player: AudioPlayer, track: AudioTrack, endReason: AudioTrackEndReason) {
         if (endReason.mayStartNext) {
             nextTrack()
+            println(endReason)
         }
     }
 
