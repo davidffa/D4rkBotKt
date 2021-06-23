@@ -14,16 +14,12 @@ import net.dv8tion.jda.api.entities.TextChannel
 import java.time.Instant
 
 object PlayerManager {
-    private val musicManagers: HashMap<Long, GuildMusicManager> = HashMap()
+    val musicManagers: HashMap<Long, GuildMusicManager> = HashMap()
     private val audioPlayerManager = DefaultAudioPlayerManager()
 
     init {
         AudioSourceManagers.registerRemoteSources(this.audioPlayerManager)
         AudioSourceManagers.registerLocalSource(this.audioPlayerManager)
-    }
-
-    fun getMusicManagersSize(): Int {
-        return this.musicManagers.size
     }
 
     fun hasMusicManager(guild: Guild): Boolean {
@@ -57,7 +53,7 @@ object PlayerManager {
             override fun trackLoaded(track: AudioTrack) {
                 musicManager.scheduler.queue(track, requester)
 
-                if (!musicManager.scheduler.queue.isEmpty())
+                if (musicManager.scheduler.currentTrack != null)
                     channel.sendMessage(":bookmark_tabs: Adicionado à lista `${track.info.title}`").queue()
             }
 

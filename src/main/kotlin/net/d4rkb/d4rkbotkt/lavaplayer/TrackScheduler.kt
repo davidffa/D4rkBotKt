@@ -15,7 +15,7 @@ import java.util.concurrent.LinkedBlockingQueue
 
 class TrackScheduler(val player: AudioPlayer, private val guild: Guild): AudioEventAdapter() {
     val queue: BlockingQueue<Track>
-    private var currentTrack: Track? = null
+    var currentTrack: Track? = null
     private var lastMessageSent: Message? = null
 
     init {
@@ -37,7 +37,7 @@ class TrackScheduler(val player: AudioPlayer, private val guild: Guild): AudioEv
             val textChannel = PlayerManager.getMusicManager(this.guild).textChannel
 
             textChannel.sendMessage(":notes: A lista de músicas acabou!").queue()
-            this.destroy(guild.idLong)
+            this.destroy()
             return
         }
 
@@ -45,11 +45,11 @@ class TrackScheduler(val player: AudioPlayer, private val guild: Guild): AudioEv
         this.player.startTrack(currentTrack?.track, false)
     }
 
-    private fun destroy(guildId: Long) {
-        this.lastMessageSent!!.delete().queue()
+    fun destroy() {
+        if (this.lastMessageSent != null) this.lastMessageSent?.delete()?.queue()
         this.player.destroy()
         this.guild.audioManager.closeAudioConnection()
-        PlayerManager.deleteMusicManager(guildId)
+        PlayerManager.deleteMusicManager(guild.idLong)
     }
 
     private fun getThumbnail(identifier: String, source: String): String {
@@ -60,22 +60,16 @@ class TrackScheduler(val player: AudioPlayer, private val guild: Guild): AudioEv
     }
 
     override fun onTrackEnd(player: AudioPlayer, track: AudioTrack, endReason: AudioTrackEndReason) {
-        val textChannel = PlayerManager.getMusicManager(this.guild).textChannel
-
-        if (endReason == AudioTrackEndReason.STOPPED) {
-            textChannel.sendMessage(":stop_button: Parei a música!").queue()
-            this.destroy(this.guild.idLong)
-            return
-        }
-
         if (endReason.mayStartNext) {
             nextTrack()
         }
     }
 
     override fun onTrackStart(player: AudioPlayer, track: AudioTrack) {
-        if (this.lastMessageSent != null)
+        if (this.lastMessageSent != null) {
             this.lastMessageSent!!.delete().queue()
+            this.lastMessageSent = null
+        }
 
         val requester = currentTrack!!.requester
         val textChannel = PlayerManager.getMusicManager(this.guild).textChannel
@@ -91,6 +85,6 @@ class TrackScheduler(val player: AudioPlayer, private val guild: Guild): AudioEv
             .setTimestamp(Instant.now())
             .build()
 
-        textChannel.sendMessageEmbeds(embed).queue{ this.lastMessageSent = it }
+        textChannel.sendMessageEmbeds(embed).complete().also { this.lastMessageSent = it }
     }
 }
