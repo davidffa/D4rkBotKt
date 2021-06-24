@@ -43,6 +43,7 @@ class Help(
             val embed = EmbedBuilder()
                 .setTitle("Ajuda")
                 .setColor(Utils.randColor())
+                .setDescription("Lista de todos os meus comandos [${commands.size}]:")
                 .setFooter(ctx.author.asTag, ctx.author.effectiveAvatarUrl)
                 .setTimestamp(Instant.now())
 
