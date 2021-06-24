@@ -1,6 +1,9 @@
 package net.d4rkb.d4rkbotkt.commands.info
 
+import com.mongodb.client.model.Filters
 import com.sedmelluq.discord.lavaplayer.tools.PlayerLibrary
+import net.d4rkb.d4rkbotkt.D4rkBot
+import net.d4rkb.d4rkbotkt.Database
 import net.d4rkb.d4rkbotkt.command.Command
 import net.d4rkb.d4rkbotkt.command.CommandContext
 import net.d4rkb.d4rkbotkt.utils.Utils
@@ -22,6 +25,10 @@ class Botinfo : Command(
         val runtime = Runtime.getRuntime()
         val rest = ctx.jda.restPing.complete()
 
+        val dbTime = Instant.now().toEpochMilli()
+        Database.botDB.find(Filters.eq("_id", ctx.selfUser.id)).first()
+        val dbPing = Instant.now().toEpochMilli() - dbTime
+
         val embed = EmbedBuilder()
             .setTitle("<a:blobdance:804026401849475094> Informações sobre mim")
             .setColor(Utils.randColor())
@@ -34,8 +41,11 @@ class Botinfo : Command(
                 "`${Utils.msToDate(ManagementFactory.getRuntimeMXBean().uptime)}`",
                 true)
             .addField(":desktop: Servidores", "`${ctx.jda.guilds.size}`", true)
-            .addField(":ping_pong: Ping", "REST: `${rest}ms`\nGateway: `${ctx.jda.gatewayPing}ms`", true)
-            .addField("<:badgehypesquad:803665497223987210> Prefixos", "Padrão: `dk.`", true)
+            .addField("<:badgehypesquad:803665497223987210> Prefixos", "Padrão: `dk.`\n" +
+                    "No servidor: `${D4rkBot.guildCache[ctx.guild.id]!!.prefix}`", true)
+            .addField(":ping_pong: Pings",
+                "REST: `${rest}ms`\nGateway: `${ctx.jda.gatewayPing}ms`\nMongoDB: `${dbPing}ms`",
+                true)
             .addField("<:ram:751468688686841986> RAM",
                 "Usada: `${(runtime.totalMemory() - runtime.freeMemory()) / 1024 / 1024}MB`\n" +
                         "Alocada: `${runtime.totalMemory() / 1024 / 1024}MB`",
