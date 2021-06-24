@@ -72,7 +72,7 @@ class EventListener : ListenerAdapter() {
         if (mentionRegExp.containsMatchIn(raw)) {
             val botPermissions = event.guild.selfMember.getPermissions(event.channel)
             if (botPermissions.contains(Permission.MESSAGE_WRITE)) {
-                event.channel.sendMessage("<a:blobcool:804026346954555432> Olá ${user.asMention} O meu prefixo neste servidor é `${prefix}`. Faz `${prefix}help` para veres o que posso fazer!`")
+                event.channel.sendMessage("<a:blobcool:804026346954555432> Olá ${user.asMention} O meu prefixo neste servidor é `${prefix}`. Faz `${prefix}help` para veres o que posso fazer!")
                     .queue()
             }
             return
