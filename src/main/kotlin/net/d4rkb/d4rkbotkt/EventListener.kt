@@ -1,12 +1,16 @@
 package net.d4rkb.d4rkbotkt
 
+import com.mongodb.client.model.Filters
 import net.d4rkb.d4rkbotkt.command.CommandManager
 import net.d4rkb.d4rkbotkt.lavaplayer.PlayerManager
+import net.d4rkb.d4rkbotkt.utils.GuildCache
 import net.d4rkb.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.OnlineStatus
 import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.entities.Activity
 import net.dv8tion.jda.api.events.ReadyEvent
+import net.dv8tion.jda.api.events.guild.GuildJoinEvent
+import net.dv8tion.jda.api.events.guild.GuildLeaveEvent
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent
 import net.dv8tion.jda.api.hooks.ListenerAdapter
 import org.slf4j.LoggerFactory
@@ -19,6 +23,8 @@ class EventListener : ListenerAdapter() {
     private val manager = CommandManager()
 
     override fun onReady(event: ReadyEvent) {
+        D4rkBot.loadCache()
+
         val jda = event.jda
         val presence = jda.presence
         var id: Byte = 0
@@ -48,7 +54,7 @@ class EventListener : ListenerAdapter() {
                     presence.setPresence(OnlineStatus.ONLINE, Activity.streaming("Online há ${Utils.msToDate(runtimeMXBean.uptime)}", "https://twitch.tv/d4rkb12"))
                 }
                 else -> {
-                    presence.setPresence(OnlineStatus.ONLINE, Activity.watching("x comandos executados"))
+                    presence.setPresence(OnlineStatus.ONLINE, Activity.watching("${D4rkBot.commandsUsed} comandos executados"))
                     id = -1
                 }
             }
@@ -64,7 +70,7 @@ class EventListener : ListenerAdapter() {
         val user = event.author
         if (user.isBot || event.isWebhookMessage) return
 
-        val prefix = "dk."
+        val prefix = D4rkBot.guildCache[event.guild.id]!!.prefix
         val raw = event.message.contentRaw
 
         val mentionRegExp = Regex("^<@!?${event.jda.selfUser.id}>$")
@@ -81,5 +87,14 @@ class EventListener : ListenerAdapter() {
         if (raw.startsWith(prefix)) {
             manager.handle(event)
         }
+    }
+
+    override fun onGuildJoin(event: GuildJoinEvent) {
+        D4rkBot.guildCache[event.guild.id] = GuildCache("dk.")
+    }
+
+    override fun onGuildLeave(event: GuildLeaveEvent) {
+        D4rkBot.guildCache.remove(event.guild.id)
+        Database.guildDB.findOneAndDelete(Filters.eq("_id", event.guild.id))
     }
 }
