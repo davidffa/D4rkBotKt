@@ -22,6 +22,13 @@ class TrackScheduler(private val player: AudioPlayer, private val guild: Guild):
         this.queue = LinkedBlockingQueue()
     }
 
+    fun shuffle() {
+        val arr = ArrayList<Track>()
+        this.queue.drainTo(arr)
+        arr.shuffle()
+        this.queue.addAll(arr)
+    }
+
     fun queue(track: AudioTrack, requester: Member) {
         if (this.queue.isEmpty()) {
             this.currentTrack = Track(track, requester)
@@ -47,6 +54,7 @@ class TrackScheduler(private val player: AudioPlayer, private val guild: Guild):
 
     fun destroy() {
         if (this.lastMessageSent != null) this.lastMessageSent?.delete()?.queue()
+        this.queue.clear()
         this.player.destroy()
         this.guild.audioManager.closeAudioConnection()
         PlayerManager.deleteMusicManager(guild.idLong)
