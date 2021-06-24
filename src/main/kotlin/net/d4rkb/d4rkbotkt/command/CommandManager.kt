@@ -30,6 +30,9 @@ class CommandManager {
 
         /* ** MUSIC ** */
         this.addCommand(Play())
+        this.addCommand(Pause())
+        this.addCommand(Resume())
+        this.addCommand(Shuffle())
         this.addCommand(Stop())
         this.addCommand(Skip())
 
