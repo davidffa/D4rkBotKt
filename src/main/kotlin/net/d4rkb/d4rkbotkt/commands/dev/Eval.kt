@@ -16,6 +16,7 @@ class Eval: Command(
     "Dev",
     botPermissions = listOf(Permission.MESSAGE_WRITE),
     cooldown = 0,
+    args = 1,
     dm = true
 ) {
     private val engine = NashornScriptEngineFactory().scriptEngine
@@ -60,14 +61,14 @@ class Eval: Command(
             val out = engine.eval(
                 "(function() {" +
                         "with (imports) {" +
-                        "return ${ctx.args.joinToString(" ")}" +
+                        ctx.args.joinToString(" ") +
                         "}" +
                         "})();"
             )
 
             ctx.channel.sendMessage(":outbox_tray: **Output:**\n```kt\n${out}\n```").queue()
         }catch (e: Exception) {
-            ctx.channel.sendMessage(":x: **Erro:**```kt\n${e}\n```").queue()
+            ctx.channel.sendMessage(":x: **Erro:**```kt\n${e.message}\n```").queue()
         }
     }
 }
