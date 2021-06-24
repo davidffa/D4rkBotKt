@@ -1,9 +1,11 @@
 package net.d4rkb.d4rkbotkt.command
 
+import net.d4rkb.d4rkbotkt.D4rkBot
 import net.d4rkb.d4rkbotkt.commands.*
 import net.d4rkb.d4rkbotkt.commands.dev.*
 import net.d4rkb.d4rkbotkt.commands.info.*
 import net.d4rkb.d4rkbotkt.commands.music.*
+import net.d4rkb.d4rkbotkt.commands.settings.*
 import net.d4rkb.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent
@@ -39,6 +41,9 @@ class CommandManager {
         /* ** OTHERS ** */
         this.addCommand(Help(this))
 
+        /* ** SETTINGS ** */
+        this.addCommand(Setprefix())
+
         for (command in this.commands) {
             cmdList.add(command.name)
 
@@ -71,8 +76,9 @@ class CommandManager {
     }
 
     fun handle(event: GuildMessageReceivedEvent) {
+        val prefix = D4rkBot.guildCache[event.guild.id]!!.prefix
         val split = event.message.contentRaw
-            .replaceFirst("dk.", "")
+            .replaceFirst(prefix, "")
             .split("\\s+".toRegex())
 
         val invoke = split[0].lowercase()
@@ -106,7 +112,7 @@ class CommandManager {
 
             val member = event.member
 
-            if (member != null) {
+            if (member != null && member.id != "334054158879686657") {
                 val userMissingPermissions =
                     cmd.userPermissions.filter { member.getPermissions(event.channel).contains(it) }
 
@@ -154,7 +160,7 @@ class CommandManager {
             val args = split.subList(1, split.size)
 
             if (cmd.args > args.size) {
-                event.channel.sendMessage(":x: Argumentos em falta! **Usa:** `dk.${cmd.name} ${cmd.usage}`").queue()
+                event.channel.sendMessage(":x: Argumentos em falta! **Usa:** `$prefix${cmd.name} ${cmd.usage}`").queue()
                 return
             }
 
@@ -165,6 +171,8 @@ class CommandManager {
                     timestamps.remove(event.author.id)
                 }, cooldownAmount.toLong())
             }
+
+            D4rkBot.commandsUsed++
 
             val ctx = CommandContext(event, args)
             cmd.run(ctx)
@@ -180,7 +188,7 @@ class CommandManager {
                 }
             }
 
-            val msg = event.channel.sendMessage(":x: Eu não tenho esse comando.\n:thinking: Querias dizer `dk.$suggest`?").complete()
+            val msg = event.channel.sendMessage(":x: Eu não tenho esse comando.\n:thinking: Querias dizer `$prefix$suggest`?").complete()
 
             Timer().schedule(timerTask {
                 msg.delete().queue()

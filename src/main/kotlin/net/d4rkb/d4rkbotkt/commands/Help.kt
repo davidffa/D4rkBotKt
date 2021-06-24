@@ -29,6 +29,7 @@ class Help(
             val info = ArrayList<String>()
             val music = ArrayList<String>()
             val others = ArrayList<String>()
+            val settings = ArrayList<String>()
 
             commands.forEach { cmd ->
                 when (cmd.category) {
@@ -36,14 +37,17 @@ class Help(
                     "Info" -> info.add(cmd.name)
                     "Music" -> music.add(cmd.name)
                     "Others" -> others.add(cmd.name)
+                    "Settings" -> settings.add(cmd.name)
                     else -> others.add(cmd.name)
                 }
             }
 
+            val commandsSize = if (ctx.author.id == "334054158879686657") commands.size else commands.size - dev.size
+
             val embed = EmbedBuilder()
                 .setTitle("Ajuda")
                 .setColor(Utils.randColor())
-                .setDescription("Lista de todos os meus comandos [${commands.size}]:")
+                .setDescription("Lista de todos os meus comandos [${commandsSize}]:")
                 .setFooter(ctx.author.asTag, ctx.author.effectiveAvatarUrl)
                 .setTimestamp(Instant.now())
 
@@ -51,7 +55,9 @@ class Help(
                 embed.addField("> <:kotlin:856168010004037702> Desenvolvedor [${dev.size}]",
                     "```\n${dev.joinToString(" | ")}\n```", false)
             }
-            embed.addField("> :information_source: Informação [${info.size}]",
+            embed.addField("> :gear: Definições [${settings.size}]",
+                "```\n${settings.joinToString(" | ")}\n```", false)
+                .addField("> :information_source: Informação [${info.size}]",
                 "```\n${info.joinToString(" | ")}\n```", false)
                 .addField("> <a:disco:803678643661832233> Música [${music.size}]",
                 "```\n${music.joinToString(" | ")}\n```", false)
