@@ -23,7 +23,7 @@ dependencies {
     implementation(kotlin("stdlib"))
 
     // JDA & Lavaplayer
-    implementation("net.dv8tion:JDA:4.3.0_282")
+    implementation("net.dv8tion:JDA:4.3.0_283")
     implementation("com.sedmelluq:lavaplayer:1.3.77")
 
     // MongoDB driver
