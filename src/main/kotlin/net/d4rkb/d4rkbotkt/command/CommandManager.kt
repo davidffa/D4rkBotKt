@@ -6,6 +6,7 @@ import net.d4rkb.d4rkbotkt.commands.dev.*
 import net.d4rkb.d4rkbotkt.commands.info.*
 import net.d4rkb.d4rkbotkt.commands.music.*
 import net.d4rkb.d4rkbotkt.commands.settings.*
+import net.d4rkb.d4rkbotkt.commands.others.*
 import net.d4rkb.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent
@@ -41,6 +42,7 @@ class CommandManager {
 
         /* ** OTHERS ** */
         this.addCommand(Help(this))
+        this.addCommand(Render())
 
         /* ** SETTINGS ** */
         this.addCommand(Setprefix())
