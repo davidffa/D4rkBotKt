@@ -48,7 +48,7 @@ class TrackScheduler(private val player: AudioPlayer, private val guild: Guild):
         }
 
         if (this.queueLoop) {
-            this.queue(currentTrack!!.track.makeClone(), currentTrack!!.requester)
+            this.queue.offer(Track(currentTrack!!.track.makeClone(), currentTrack!!.requester))
         }
 
         if (this.queue.isEmpty()) {
