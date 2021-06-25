@@ -122,19 +122,19 @@ object Utils {
         val memberVoiceState = member.voiceState
         val selfVoiceState = self.voiceState
 
-        if (!memberVoiceState!!.inVoiceChannel()) {
-            channel.sendMessage(":x: Precisas de estar num canal de voz para executar esse comando!").queue()
-            return false
-        }
-
         if (!selfVoiceState!!.inVoiceChannel() || !PlayerManager.hasMusicManager(self.guild)) {
             channel.sendMessage(":x: Não estou a tocar nada de momento!").queue()
             return false
         }
 
+        if (!memberVoiceState!!.inVoiceChannel()) {
+            channel.sendMessage(":x: Precisas de estar num canal de voz para executar esse comando!").queue()
+            return false
+        }
+
         val memberVoiceChannel = memberVoiceState.channel
 
-        //TODO DJ STUFF (database :/)
+        //TODO DJ STUFF (cache :/)
 
         if (selfVoiceState.inVoiceChannel() && memberVoiceChannel != selfVoiceState.channel) {
             channel.sendMessage(":x: Precisas de estar no meu canal de voz para usar este comando!").queue()

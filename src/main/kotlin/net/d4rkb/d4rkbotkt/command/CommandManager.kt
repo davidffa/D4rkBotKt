@@ -31,6 +31,7 @@ class CommandManager {
         this.addCommand(Uptime())
 
         /* ** MUSIC ** */
+        this.addCommand(Loop())
         this.addCommand(Play())
         this.addCommand(Pause())
         this.addCommand(Resume())

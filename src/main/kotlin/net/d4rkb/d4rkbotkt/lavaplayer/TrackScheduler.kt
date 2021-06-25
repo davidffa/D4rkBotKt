@@ -17,6 +17,8 @@ class TrackScheduler(private val player: AudioPlayer, private val guild: Guild):
     val queue: BlockingQueue<Track>
     var currentTrack: Track? = null
     private var lastMessageSent: Message? = null
+    var queueLoop = false
+    var trackLoop = false
 
     init {
         this.queue = LinkedBlockingQueue()
@@ -40,6 +42,15 @@ class TrackScheduler(private val player: AudioPlayer, private val guild: Guild):
     }
 
     fun nextTrack() {
+        if (this.trackLoop) {
+            this.player.startTrack(currentTrack!!.track.makeClone(), false)
+            return
+        }
+
+        if (this.queueLoop) {
+            this.queue(currentTrack!!.track.makeClone(), currentTrack!!.requester)
+        }
+
         if (this.queue.isEmpty()) {
             val textChannel = PlayerManager.getMusicManager(this.guild).textChannel
 
