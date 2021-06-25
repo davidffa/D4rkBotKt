@@ -1,6 +1,7 @@
 package net.d4rkb.d4rkbotkt
 
 import com.mongodb.client.model.Filters
+import com.mongodb.client.model.Updates
 import net.d4rkb.d4rkbotkt.command.CommandManager
 import net.d4rkb.d4rkbotkt.lavaplayer.PlayerManager
 import net.d4rkb.d4rkbotkt.utils.GuildCache
@@ -8,9 +9,12 @@ import net.d4rkb.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.OnlineStatus
 import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.entities.Activity
+import net.dv8tion.jda.api.entities.TextChannel
 import net.dv8tion.jda.api.events.ReadyEvent
 import net.dv8tion.jda.api.events.guild.GuildJoinEvent
 import net.dv8tion.jda.api.events.guild.GuildLeaveEvent
+import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent
+import net.dv8tion.jda.api.events.guild.member.GuildMemberRemoveEvent
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent
 import net.dv8tion.jda.api.hooks.ListenerAdapter
 import org.slf4j.LoggerFactory
@@ -96,5 +100,62 @@ class EventListener : ListenerAdapter() {
     override fun onGuildLeave(event: GuildLeaveEvent) {
         D4rkBot.guildCache.remove(event.guild.id)
         Database.guildDB.findOneAndDelete(Filters.eq("_id", event.guild.id))
+    }
+
+    override fun onGuildMemberJoin(event: GuildMemberJoinEvent) {
+        val cache = D4rkBot.guildCache[event.guild.id]!!
+
+        if (cache.welcomeChatID != null) {
+            val channel = event.guild.channels.find { it.id == cache.welcomeChatID } as TextChannel?
+
+            if (channel == null) {
+                cache.welcomeChatID = null
+                Database.guildDB.updateOne(Filters.eq("_id", event.guild.id), Updates.set("welcomeChatID", null))
+                return
+            }
+
+            if (event.guild.selfMember.getPermissions(channel).contains(Permission.MESSAGE_WRITE)) {
+                // In future do a canvas image ?? :>
+                channel.sendMessage("`${event.user.asTag}` Bem-Vindo ao servidor ${event.guild.name}").queue()
+            }
+        }
+
+        if (cache.autoRole != null) {
+            val role = event.guild.roles.find { it.id == cache.autoRole }
+
+            if (role == null) {
+                cache.autoRole = null
+                Database.guildDB.updateOne(Filters.eq("_id", event.guild.id), Updates.set("autoRole", null))
+                return
+            }
+
+            var botHighestRole = event.guild.selfMember.roles[0]
+
+            event.guild.selfMember.roles.forEach {
+                if (it.position > botHighestRole.position) botHighestRole = it
+            }
+
+            if (event.guild.selfMember.permissions.contains(Permission.MANAGE_ROLES) && botHighestRole.position > role.position) {
+                event.guild.addRoleToMember(event.member.id, role)
+            }
+        }
+    }
+
+    override fun onGuildMemberRemove(event: GuildMemberRemoveEvent) {
+        val cache = D4rkBot.guildCache[event.guild.id]!!
+
+        if (cache.memberRemoveChatID != null) {
+            val channel = event.guild.channels.find { it.id == cache.memberRemoveChatID } as TextChannel?
+
+            if (channel == null) {
+                cache.memberRemoveChatID = null
+                Database.guildDB.updateOne(Filters.eq("_id", event.guild.id), Updates.set("memberRemoveChatID", null))
+                return
+            }
+
+            if (event.guild.selfMember.getPermissions(channel).contains(Permission.MESSAGE_WRITE)) {
+                channel.sendMessage("`${event.user.asTag}` saiu do servidor.").queue()
+            }
+        }
     }
 }
