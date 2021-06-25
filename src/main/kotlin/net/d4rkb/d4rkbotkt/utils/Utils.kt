@@ -49,8 +49,19 @@ object Utils {
         val jda = guild.jda
         var user: User? = null
 
+        if (Regex("^<@!?[0-9]{17,19}>$").matches(query)) {
+            try {
+                user = jda.retrieveUserById(query.replace(Regex("[<@!>]"), "")).complete()
+            }catch (e: Exception) {}
+
+            return user
+        }
+
         if (Regex("^[0-9]+$").matches(query) && query.length >= 17 && query.length <= 19) {
-            user = jda.retrieveUserById(query).complete()
+            try {
+                user = jda.retrieveUserById(query).complete()
+            }catch (e: Exception) {}
+
             return user
         }
 
