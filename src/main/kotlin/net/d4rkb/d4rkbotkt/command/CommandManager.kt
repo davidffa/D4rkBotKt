@@ -33,6 +33,7 @@ class CommandManager {
 
         /* ** MUSIC ** */
         this.addCommand(Loop())
+        this.addCommand(Nowplaying())
         this.addCommand(Play())
         this.addCommand(Pause())
         this.addCommand(Resume())
