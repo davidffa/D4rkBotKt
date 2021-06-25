@@ -77,7 +77,8 @@ class CommandManager {
     }
 
     fun handle(event: GuildMessageReceivedEvent) {
-        val prefix = D4rkBot.guildCache[event.guild.id]!!.prefix
+        val cache = D4rkBot.guildCache[event.guild.id]!!
+        val prefix = cache.prefix
         val split = event.message.contentRaw
             .replaceFirst(prefix, "")
             .split("\\s+".toRegex())
@@ -86,6 +87,13 @@ class CommandManager {
         val cmd = this.getCommand(invoke)
 
         if (cmd != null) {
+            if (cache.disabledCommands != null && cache.disabledCommands.contains(cmd.name)) {
+                if (event.guild.selfMember.getPermissions(event.channel).contains(Permission.MESSAGE_WRITE)) {
+                    event.channel.sendMessage(":x: Esse comando está desativado neste servidor!").queue()
+                }
+                return
+            }
+
             val botMissingPermissions = cmd.botPermissions.filter { !event.guild.selfMember.getPermissions(event.channel).contains(it) }
 
             if (botMissingPermissions.isNotEmpty()) {
