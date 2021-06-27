@@ -53,7 +53,7 @@ tasks {
     withType<Jar> {
         manifest {
             attributes["Class-Path"] = "/libs/D4rkBot.jar"
-            attributes["Main-Class"] = "me.davidffa.d4rkbotkt.Main"
+            attributes["Main-Class"] = "me.davidffa.d4rkbotkt.Launcher"
         }
     }
 
