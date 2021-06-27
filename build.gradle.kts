@@ -6,7 +6,7 @@ plugins {
     id("com.github.johnrengelman.shadow") version "7.0.0"
 }
 
-group = "net.d4rkb.d4rkbotkt"
+group = "me.davidffa.d4rkbotkt"
 version = "1.0.0"
 
 java {
@@ -17,23 +17,24 @@ java {
 repositories {
     mavenCentral()
     maven("https://m2.dv8tion.net/releases")
+    maven("https://jitpack.io/")
 }
 
 dependencies {
+    // Kotlin
     implementation(kotlin("stdlib"))
+    implementation("ru.gildor.coroutines:kotlin-coroutines-okhttp:1.0")
+    implementation("org.jetbrains.kotlin:kotlin-scripting-jsr223:1.5.20")
 
     // JDA & Lavaplayer
-    implementation("net.dv8tion:JDA:4.3.0_283")
+    implementation("net.dv8tion:JDA:4.3.0_284") {
+        exclude("opus-java")
+    }
+    implementation("com.github.minndevelopment:jda-ktx:d460e2a")
     implementation("com.sedmelluq:lavaplayer:1.3.77")
-
-    // MongoDB driver
-    implementation("org.mongodb:mongodb-driver-sync:4.2.3")
 
     // Logger
     runtimeOnly("ch.qos.logback","logback-classic", "1.2.3")
-
-    // Eval engine
-    implementation("org.openjdk.nashorn:nashorn-core:15.2")
 }
 
 tasks {
@@ -52,7 +53,7 @@ tasks {
     withType<Jar> {
         manifest {
             attributes["Class-Path"] = "/libs/D4rkBot.jar"
-            attributes["Main-Class"] = "net.d4rkb.d4rkbotkt.Main"
+            attributes["Main-Class"] = "me.davidffa.d4rkbotkt.Main"
         }
     }
 
