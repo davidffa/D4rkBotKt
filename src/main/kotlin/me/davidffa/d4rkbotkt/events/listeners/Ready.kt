@@ -1,5 +1,6 @@
 package me.davidffa.d4rkbotkt.events.listeners
 
+import me.davidffa.d4rkbotkt.lavaplayer.PlayerManager
 import me.davidffa.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.OnlineStatus
 import net.dv8tion.jda.api.entities.Activity
@@ -35,7 +36,7 @@ fun onReady(event: ReadyEvent) {
                 presence.setPresence(OnlineStatus.ONLINE, Activity.playing("@D4rkBot.kt"))
             }
             (5).toByte() -> {
-                presence.setPresence(OnlineStatus.ONLINE, Activity.listening("x músicas"))
+                presence.setPresence(OnlineStatus.ONLINE, Activity.listening("${PlayerManager.musicManagers.size} músicas"))
             }
             (6).toByte() -> {
                 val runtimeMXBean = ManagementFactory.getRuntimeMXBean()
