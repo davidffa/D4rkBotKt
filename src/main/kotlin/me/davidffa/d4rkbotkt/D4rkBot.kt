@@ -1,6 +1,9 @@
 package me.davidffa.d4rkbotkt
 
+import com.mongodb.client.model.Updates
 import dev.minn.jda.ktx.injectKTX
+import kotlinx.coroutines.runBlocking
+import me.davidffa.d4rkbotkt.database.GuildCache
 import me.davidffa.d4rkbotkt.events.EventManager
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.JDABuilder
@@ -10,12 +13,53 @@ import net.dv8tion.jda.api.requests.GatewayIntent.*
 import net.dv8tion.jda.api.utils.cache.CacheFlag
 import okhttp3.OkHttpClient
 import org.slf4j.LoggerFactory
+import java.util.*
+import kotlin.collections.HashMap
+import kotlin.concurrent.timerTask
 
 class D4rkBot {
     companion object {
         lateinit var instance: D4rkBot
         lateinit var jda: JDA
+        var commandsUsed = 0
+        val guildCache = HashMap<Long, GuildCache>()
         val okHttpClient = OkHttpClient()
+
+        private var lastCommandsUsed = 0
+
+        suspend fun loadCache() {
+            commandsUsed = Database.botDB.findOneById(jda.selfUser.id)!!.commands
+            this.lastCommandsUsed = commandsUsed
+
+            Timer().schedule(timerTask {
+                if (lastCommandsUsed != commandsUsed) {
+                    lastCommandsUsed = commandsUsed
+                    runBlocking {
+                        Database.botDB.updateOneById(jda.selfUser.id, Updates.set("commands", commandsUsed))
+                    }
+                }
+            }, 30000)
+
+            val dbGuilds = Database.guildDB.find().toList()
+
+            jda.guilds.forEach { guild ->
+                val dbGuild = dbGuilds.find { guild.id == it.id }
+
+                if (dbGuild == null) {
+                    guildCache[guild.idLong] = GuildCache("dk.")
+                    return@forEach
+                }
+
+                guildCache[guild.idLong] = GuildCache(
+                    dbGuild.prefix ?: "dk.",
+                    dbGuild.disabledCmds,
+                    dbGuild.autoRole,
+                    dbGuild.welcomeChatID,
+                    dbGuild.memberRemoveChatID,
+                    dbGuild.djRole
+                )
+            }
+        }
     }
 
     private val logger = LoggerFactory.getLogger(this::class.java)
