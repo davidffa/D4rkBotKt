@@ -1,11 +1,13 @@
 package me.davidffa.d4rkbotkt.command
 
 import dev.minn.jda.ktx.await
+import me.davidffa.d4rkbotkt.D4rkBot
 import me.davidffa.d4rkbotkt.commands.*
 import me.davidffa.d4rkbotkt.commands.dev.*
 import me.davidffa.d4rkbotkt.commands.info.*
 import me.davidffa.d4rkbotkt.commands.music.*
 import me.davidffa.d4rkbotkt.commands.others.*
+import me.davidffa.d4rkbotkt.commands.settings.*
 import me.davidffa.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent
@@ -35,6 +37,7 @@ object CommandManager {
         this.addCommand(Nowplaying())
         this.addCommand(Pause())
         this.addCommand(Play())
+        this.addCommand(Playlist())
         this.addCommand(Resume())
         this.addCommand(Shuffle())
         this.addCommand(Skip())
@@ -45,6 +48,7 @@ object CommandManager {
         this.addCommand(Render())
 
         /* ** SETTINGS ** */
+        this.addCommand(Setprefix())
 
         for (command in this.commands) {
             cmdList.add(command.name)
@@ -79,7 +83,7 @@ object CommandManager {
     }
 
     suspend fun handle(event: GuildMessageReceivedEvent) {
-        val prefix = "dk."
+        val prefix = D4rkBot.guildCache[event.guild.idLong]!!.prefix
         val split = event.message.contentRaw
             .replaceFirst(prefix, "")
             .split("\\s+".toRegex())
@@ -120,7 +124,7 @@ object CommandManager {
             if (member != null && member.id != "334054158879686657") {
                 if (cmd.userPermissions != null) {
                     val userMissingPermissions =
-                        cmd.userPermissions.filter { member.getPermissions(event.channel).contains(it) }
+                        cmd.userPermissions.filter { !member.getPermissions(event.channel).contains(it) }
 
                     if (userMissingPermissions.isNotEmpty()) {
                         if (userMissingPermissions.size > 1) {
@@ -179,7 +183,7 @@ object CommandManager {
                 }, cooldownAmount.toLong())
             }
 
-            val ctx = CommandContext(event, args)
+            val ctx = CommandContext(event, args, prefix)
             cmd.run(ctx)
         }else {
             lateinit var suggest: String
