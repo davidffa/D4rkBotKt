@@ -37,7 +37,7 @@ object CommandManager {
         this.addCommand(Nowplaying())
         this.addCommand(Pause())
         this.addCommand(Play())
-        this.addCommand(Playlist())
+        //this.addCommand(Playlist())
         this.addCommand(Resume())
         this.addCommand(Shuffle())
         this.addCommand(Skip())
