@@ -33,6 +33,9 @@ dependencies {
     implementation("com.github.minndevelopment:jda-ktx:d460e2a")
     implementation("com.sedmelluq:lavaplayer:1.3.77")
 
+    // MongoDB
+    implementation("org.litote.kmongo:kmongo-coroutine:4.2.8")
+
     // Logger
     runtimeOnly("ch.qos.logback","logback-classic", "1.2.3")
 }
