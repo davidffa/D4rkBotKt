@@ -37,6 +37,9 @@ class Eval: Command(
                 import java.time.* 
                 import dev.minn.jda.ktx.Embed
                 import dev.minn.jda.ktx.await
+                import me.davidffa.d4rkbotkt.utils.Utils
+                import me.davidffa.d4rkbotkt.D4rkBot
+                import me.davidffa.d4rkbotkt.Database
                 """.trimIndent()
             )
         }
