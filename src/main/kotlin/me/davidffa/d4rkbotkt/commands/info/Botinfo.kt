@@ -3,6 +3,8 @@ package me.davidffa.d4rkbotkt.commands.info
 import com.sedmelluq.discord.lavaplayer.tools.PlayerLibrary
 import dev.minn.jda.ktx.Embed
 import dev.minn.jda.ktx.await
+import me.davidffa.d4rkbotkt.D4rkBot
+import me.davidffa.d4rkbotkt.Database
 import me.davidffa.d4rkbotkt.command.Command
 import me.davidffa.d4rkbotkt.command.CommandContext
 import me.davidffa.d4rkbotkt.utils.Utils
@@ -23,11 +25,15 @@ class Botinfo : Command(
         val runtime = Runtime.getRuntime()
         val rest = ctx.jda.restPing.await()
 
+        val dbStart = Instant.now().toEpochMilli()
+        Database.botDB.findOneById(ctx.selfUser.id)
+        val dbPing = Instant.now().toEpochMilli() - dbStart
+
         val embed = Embed {
             title = "<a:blobdance:804026401849475094> Informações sobre mim"
             description = "**[Convite](https://discord.com/oauth2/authorize?client_id=${ctx.jda.selfUser.id}&scope=bot&permissions=8)**\n" +
                     "**[Servidor de Suporte](https://discord.gg/dBQnxVCTEw)**\n\n"
-            color = Utils.randColor()
+            color = 15695386
             field {
                 name = ":id: Meu ID"
                 value = "`${ctx.selfUser.id}`"
@@ -46,11 +52,11 @@ class Botinfo : Command(
             }
             field {
                 name = "<:badgehypesquad:803665497223987210> Prefixos"
-                value = "Padrão: `dk.`"
+                value = "Padrão: `dk.`\nNo servidor: `${ctx.prefix}`"
             }
             field {
                 name = ":ping_pong: Pings"
-                value = "REST: `${rest}ms`\nGateway: `${ctx.jda.gatewayPing}ms`"
+                value = "REST: `${rest}ms`\nGateway: `${ctx.jda.gatewayPing}ms`\nMongoDB: `${dbPing}ms`"
             }
             field {
                 name = "<:ram:751468688686841986> RAM"
