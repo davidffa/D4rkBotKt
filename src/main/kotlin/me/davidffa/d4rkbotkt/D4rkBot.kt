@@ -19,7 +19,6 @@ import kotlin.concurrent.timerTask
 
 class D4rkBot {
     companion object {
-        lateinit var instance: D4rkBot
         lateinit var jda: JDA
         var commandsUsed = 0
         val guildCache = HashMap<Long, GuildCache>()
@@ -76,7 +75,17 @@ class D4rkBot {
     )
 
     init {
-        instance = this
+        logger.info(
+            """
+                 
+            [36m    ____    __ __            __      ____           __        __     __ 
+            [36m   / __ \  / // /   _____   / /__   / __ )  ____   / /_      / /__  / /_
+            [36m  / / / / / // /_  / ___/  / //_/  / __  | / __ \ / __/     / //_/ / __/
+            [36m / /_/ / /__  __/ / /     / ,<    / /_/ / / /_/ // /_   _  / ,<   / /_  
+            [36m/_____/    /_/   /_/     /_/|_|  /_____/  \____/ \__/  (_)/_/|_|  \__/                                                                     
+            [0m
+            """.trimIndent()
+        )
 
         try {
             jda = JDABuilder.create(System.getenv("TOKEN"), intents)
