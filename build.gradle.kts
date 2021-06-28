@@ -31,7 +31,7 @@ dependencies {
         exclude("opus-java")
     }
     implementation("com.github.minndevelopment:jda-ktx:d460e2a")
-    implementation("com.sedmelluq:lavaplayer:1.3.77")
+    implementation("com.sedmelluq:lavaplayer:1.3.78")
 
     // MongoDB
     implementation("org.litote.kmongo:kmongo-coroutine:4.2.8")
