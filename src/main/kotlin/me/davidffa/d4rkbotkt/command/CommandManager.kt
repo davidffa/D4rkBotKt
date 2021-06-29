@@ -42,6 +42,7 @@ object CommandManager {
         this.addCommand(Shuffle())
         this.addCommand(Skip())
         this.addCommand(Stop())
+        this.addCommand(Volume())
 
         /* ** OTHERS ** */
         this.addCommand(Help())
