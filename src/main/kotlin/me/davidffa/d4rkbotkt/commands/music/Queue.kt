@@ -75,7 +75,8 @@ class Queue : Command(
         }.toTypedArray()
 
         ctx.channel.sendPaginator(*pages, expireAfter = 10 * 60 * 1000L, filter = {
-            return@sendPaginator true
+            if (it.user.idLong == ctx.author.idLong) return@sendPaginator true
+            return@sendPaginator false
         }).queue()
     }
 }
