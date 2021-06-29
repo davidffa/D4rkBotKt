@@ -67,7 +67,7 @@ class Queue : Command(
                         }.joinToString("\n")
                 color = Utils.randColor()
                 footer {
-                    name = ctx.author.asTag
+                    name = "Página ${chunkedQueue.indexOf(it)+1} de ${chunkedQueue.size}"
                     iconUrl = ctx.author.effectiveAvatarUrl
                 }
                 timestamp = Instant.now()

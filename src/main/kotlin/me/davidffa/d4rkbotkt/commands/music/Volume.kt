@@ -16,7 +16,7 @@ class Volume : Command(
     cooldown = 4
 ){
     override suspend fun run(ctx: CommandContext) {
-        if (!Utils.canUsePlayer(ctx.selfMember, ctx.member, ctx.channel)) return
+        if (!Utils.canUsePlayer(ctx.selfMember, ctx.member, ctx.channel, true)) return
 
         val player = PlayerManager.getMusicManager(ctx.guild.idLong).audioPlayer
 

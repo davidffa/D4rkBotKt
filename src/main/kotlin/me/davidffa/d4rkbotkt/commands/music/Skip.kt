@@ -15,7 +15,7 @@ class Skip: Command(
     cooldown = 2
 ){
     override suspend fun run(ctx: CommandContext) {
-        if (!Utils.canUsePlayer(ctx.selfMember, ctx.member, ctx.channel)) return
+        if (!Utils.canUsePlayer(ctx.selfMember, ctx.member, ctx.channel, true)) return
 
         val musicManager = PlayerManager.getMusicManager(ctx.guild.idLong)
 

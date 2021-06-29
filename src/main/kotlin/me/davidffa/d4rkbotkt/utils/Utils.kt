@@ -139,7 +139,7 @@ object Utils {
         return true
     }
 
-    suspend fun canUsePlayer(self: Member, member: Member, channel: TextChannel, forOwnTrack: Boolean = false): Boolean {
+    suspend fun canUsePlayer(self: Member, member: Member, channel: TextChannel, forOwnTrack: Boolean = false, forAllQueueTracks: Boolean = false): Boolean {
         val memberVoiceState = member.voiceState
         val selfVoiceState = self.voiceState
 
@@ -176,6 +176,12 @@ object Utils {
 
         if (forOwnTrack && player.scheduler.current.requester.idLong == member.idLong) return true
 
+        if (forAllQueueTracks) {
+            if (player.scheduler.queue.find { it.requester.idLong != member.idLong } != null) {
+                return false
+            }
+            return true
+        }
         return false
     }
 
