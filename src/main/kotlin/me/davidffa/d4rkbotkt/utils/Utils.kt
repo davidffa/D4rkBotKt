@@ -172,15 +172,22 @@ object Utils {
             return true
         }
 
+        if (selfVoiceState.channel!!.members.filter { !it.user.isBot }.size <= 2) return true
         if (member.roles.contains(djRole)) return true
-
         if (forOwnTrack && player.scheduler.current.requester.idLong == member.idLong) return true
 
         if (forAllQueueTracks) {
             if (player.scheduler.queue.find { it.requester.idLong != member.idLong } != null) {
+                channel.sendMessage(":x: Todas as músicas da queue têm de ser requisitadas por ti para poderes usar esse comando!").queue()
                 return false
             }
             return true
+        }
+
+        if (forOwnTrack) {
+            channel.sendMessage(":x: Apenas alguém com o cargo de DJ (`${djRole.name}`) ou quem requisitou esta música pode usar esse comando.").queue()
+        }else {
+            channel.sendMessage(":x: Precisas do cargo de DJ (`${djRole.name}`) para poderes usar esse comando.").queue()
         }
         return false
     }
