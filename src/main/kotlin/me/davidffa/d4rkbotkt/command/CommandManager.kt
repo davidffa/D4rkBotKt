@@ -6,6 +6,7 @@ import me.davidffa.d4rkbotkt.commands.*
 import me.davidffa.d4rkbotkt.commands.dev.*
 import me.davidffa.d4rkbotkt.commands.info.*
 import me.davidffa.d4rkbotkt.commands.music.*
+import me.davidffa.d4rkbotkt.commands.music.Queue
 import me.davidffa.d4rkbotkt.commands.others.*
 import me.davidffa.d4rkbotkt.commands.settings.*
 import me.davidffa.d4rkbotkt.utils.Utils
@@ -38,6 +39,7 @@ object CommandManager {
         this.addCommand(Pause())
         this.addCommand(Play())
         //this.addCommand(Playlist())
+        this.addCommand(Queue())
         this.addCommand(Resume())
         this.addCommand(Shuffle())
         this.addCommand(Skip())
