@@ -82,7 +82,7 @@ object PlayerManager {
                         }
                         field {
                             name = ":watch: Duração:"
-                            value = "`${Utils.msToHour(tracks.map { it.duration }.reduce { acc, l -> acc + l })}`"
+                            value = "`${Utils.msToHour(tracks.sumOf { it.duration })}`"
                             inline = false
                         }
                         footer {

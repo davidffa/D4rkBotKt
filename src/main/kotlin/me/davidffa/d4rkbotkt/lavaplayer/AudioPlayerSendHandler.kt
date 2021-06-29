@@ -17,7 +17,7 @@ class AudioPlayerSendHandler(private val audioPlayer: AudioPlayer) : AudioSendHa
         return this.audioPlayer.provide(this.frame)
     }
 
-    override fun provide20MsAudio(): ByteBuffer? {
+    override fun provide20MsAudio(): ByteBuffer {
         return this.buffer.flip()
     }
 

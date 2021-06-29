@@ -183,6 +183,7 @@ object CommandManager {
                 }, cooldownAmount.toLong())
             }
 
+            D4rkBot.commandsUsed++
             val ctx = CommandContext(event, args, prefix)
             cmd.run(ctx)
         }else {

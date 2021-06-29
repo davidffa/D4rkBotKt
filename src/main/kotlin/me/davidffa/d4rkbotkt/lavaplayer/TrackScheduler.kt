@@ -2,6 +2,7 @@ package me.davidffa.d4rkbotkt.lavaplayer
 
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer
 import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter
+import com.sedmelluq.discord.lavaplayer.tools.FriendlyException
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason
 import dev.minn.jda.ktx.Embed
@@ -10,11 +11,14 @@ import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.entities.Member
 import net.dv8tion.jda.api.entities.Message
 import net.dv8tion.jda.api.entities.TextChannel
+import org.slf4j.LoggerFactory
 import java.time.Instant
 import java.util.concurrent.BlockingQueue
 import java.util.concurrent.LinkedBlockingQueue
 
 class TrackScheduler(private val player: AudioPlayer, private val textChannel: TextChannel) : AudioEventAdapter() {
+    private val logger = LoggerFactory.getLogger(this::class.java)
+
     val queue: BlockingQueue<Track>
     lateinit var current: Track
 
@@ -57,6 +61,10 @@ class TrackScheduler(private val player: AudioPlayer, private val textChannel: T
         }
 
         if (this.queue.isEmpty()) {
+            if (Utils.hasPermissions(guild.selfMember, textChannel, listOf(Permission.MESSAGE_WRITE))) {
+                this.textChannel.sendMessage(":notes: A lista de músicas acabou!").queue()
+            }
+
             this.destroy()
             return
         }
@@ -122,5 +130,22 @@ class TrackScheduler(private val player: AudioPlayer, private val textChannel: T
         }
 
         textChannel.sendMessageEmbeds(embed).queue { this.npMessage = it }
+    }
+
+    override fun onTrackException(player: AudioPlayer, track: AudioTrack, exception: FriendlyException) {
+        logger.warn("Ocorreu um erro ao tocar a música ${track.info.identifier}.\nErro: ${exception.stackTrace}")
+    }
+
+    override fun onTrackStuck(player: AudioPlayer, track: AudioTrack, thresholdMs: Long) {
+        logger.warn("Música ${track.info.identifier} presa.\nThreshold: ${thresholdMs}ms")
+    }
+
+    override fun onTrackStuck(
+        player: AudioPlayer,
+        track: AudioTrack,
+        thresholdMs: Long,
+        stackTrace: Array<out StackTraceElement>
+    ) {
+        logger.warn("Música ${track.info.identifier} presa.\nThreshold: ${thresholdMs}ms\nErro: $stackTrace")
     }
 }

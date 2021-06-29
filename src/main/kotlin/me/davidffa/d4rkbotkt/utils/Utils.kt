@@ -312,12 +312,14 @@ object Utils {
             Permission.MANAGE_ROLES -> {
                 return "Gerenciar Cargos"
             }
+            Permission.REQUEST_TO_SPEAK -> {
+                return "Requisitar para falar"
+            }
             Permission.UNKNOWN -> {
                 return "Desconhecido"
             }
         }
         /*
-            REQUEST_TO_SPEAK	0x0100000000 (1 << 32)	Allows for requesting to speak in stage channels. (This permission is under active development and may be changed or removed.)	S
             MANAGE_THREADS *	0x0400000000 (1 << 34)	Allows for deleting and archiving threads, and viewing all private threads	T
             USE_PUBLIC_THREADS	0x0800000000 (1 << 35)	Allows for creating and participating in threads	T
             USE_PRIVATE_THREADS
