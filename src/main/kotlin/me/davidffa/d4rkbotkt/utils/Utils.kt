@@ -1,6 +1,9 @@
 package me.davidffa.d4rkbotkt.utils
 
+import com.mongodb.client.model.Updates
 import dev.minn.jda.ktx.await
+import me.davidffa.d4rkbotkt.D4rkBot
+import me.davidffa.d4rkbotkt.Database
 import me.davidffa.d4rkbotkt.lavaplayer.PlayerManager
 import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.entities.Guild
@@ -48,49 +51,43 @@ object Utils {
     suspend fun findUser(query: String, guild: Guild): User? {
         val jda = guild.jda
         var user: User? = null
+        var id: String? = null
 
-        if (Regex("^<@!?[0-9]{17,19}>$").matches(query)) {
-            try {
-                user = jda.retrieveUserById(query.replace(Regex("[<@!>]"), "")).await()
-            }catch (e: Exception) {}
+        if (Regex("^<@!?[0-9]{17,19}>$").matches(query)) id = query.replace(Regex("[<@!>]"), "")
+        else if (Regex("^[0-9]+$").matches(query)) id = query
 
-            return user
-        }
-
-        if (Regex("^[0-9]+$").matches(query) && query.length >= 17 && query.length <= 19) {
-            try {
-                user = jda.retrieveUserById(query).await()
-            }catch (e: Exception) {}
-
-            return user
-        }
-
-        if (Regex("^#?[0-9]{4}$").matches(query)) {
-            user = guild.members.find { it.user.discriminator == query }?.user
-        }
-
-        if (user == null) {
-            var startsWith = false
-            val lcQuery = query.lowercase()
-
-            for (m in guild.members) {
-                val name = m.effectiveName
-
-                if (name == query || name.lowercase() == lcQuery) {
-                    user = m.user
-                    break
-                }
-
-                if (name.startsWith(query) || name.lowercase().startsWith(lcQuery)) {
-                    startsWith = true
-                    user = m.user
-                    continue
-                }
-
-                if (!startsWith && (name.contains(query) || name.lowercase().contains(lcQuery))) user = m.user
+        if (id != null) {
+            return try {
+                jda.retrieveUserById(query).await()
+            } catch (e: Exception) {
+                null
             }
         }
 
+        if (Regex("^#?[0-9]{4}$").matches(query)) {
+            val u = guild.members.find { it.user.discriminator == query.replace("#", "") }?.user
+            if (u != null) return u
+        }
+
+        var startsWith = false
+        val lcQuery = query.lowercase()
+
+        for (m in guild.members) {
+            val name = m.effectiveName
+
+            if (name == query || name.lowercase() == lcQuery) {
+                user = m.user
+                break
+            }
+
+            if (name.startsWith(query) || name.lowercase().startsWith(lcQuery)) {
+                startsWith = true
+                user = m.user
+                continue
+            }
+
+            if (!startsWith && (name.contains(query) || name.lowercase().contains(lcQuery))) user = m.user
+        }
         return user
     }
 
@@ -98,9 +95,8 @@ object Utils {
         return selfMember.getPermissions(channel).containsAll(permissions)
     }
 
-    fun canPlay(self: Member, member: Member, channel: TextChannel): Boolean {
+    suspend fun canPlay(self: Member, member: Member, channel: TextChannel): Boolean {
         val memberVoiceState = member.voiceState
-        val selfVoiceState = self.voiceState
 
         if (!memberVoiceState!!.inVoiceChannel()) {
             channel.sendMessage(":x: Precisas de estar num canal de voz para executar esse comando!").queue()
@@ -125,19 +121,31 @@ object Utils {
             return false
         }
 
-        if (selfVoiceState!!.inVoiceChannel() && memberVoiceChannel != selfVoiceState.channel) {
-            channel.sendMessage(":x: Precisas de estar no meu canal de voz para usar este comando!").queue()
-            return false
-        }
+        val djRoleID = D4rkBot.guildCache[member.guild.idLong]!!.djRole
 
+        if (djRoleID != null) {
+            val djRole = member.guild.roleCache.getElementById(djRoleID)
+
+            if (djRole == null) {
+                D4rkBot.guildCache[member.guild.idLong]!!.djRole = null
+                Database.guildDB.updateOneById(member.guild.id, Updates.set("djRole", null))
+            }else {
+                if (!member.roles.contains(djRole)) {
+                    channel.sendMessage(":x: Precisas de estar no meu canal de voz para usar este comando!").queue()
+                    return false
+                }
+            }
+        }
         return true
     }
 
-    fun canUsePlayer(self: Member, member: Member, channel: TextChannel): Boolean {
+    suspend fun canUsePlayer(self: Member, member: Member, channel: TextChannel, forOwnTrack: Boolean = false): Boolean {
         val memberVoiceState = member.voiceState
         val selfVoiceState = self.voiceState
 
-        if (!selfVoiceState!!.inVoiceChannel() || !PlayerManager.musicManagers.containsKey(self.guild.idLong)) {
+        val player = PlayerManager.musicManagers[self.guild.idLong]
+
+        if (player == null) {
             channel.sendMessage(":x: Não estou a tocar nada de momento!").queue()
             return false
         }
@@ -149,13 +157,26 @@ object Utils {
 
         val memberVoiceChannel = memberVoiceState.channel
 
-        //TODO DJ STUFF (cache :/)
-
-        if (selfVoiceState.inVoiceChannel() && memberVoiceChannel != selfVoiceState.channel) {
+        if (selfVoiceState!!.inVoiceChannel() && memberVoiceChannel != selfVoiceState.channel) {
             channel.sendMessage(":x: Precisas de estar no meu canal de voz para usar este comando!").queue()
             return false
         }
-        return true
+
+        val djRoleID = D4rkBot.guildCache[member.guild.idLong]!!.djRole ?: return true
+
+        val djRole = member.guild.roleCache.getElementById(djRoleID)
+
+        if (djRole == null) {
+            D4rkBot.guildCache[member.guild.idLong]!!.djRole = null
+            Database.guildDB.updateOneById(member.guild.id, Updates.set("djRole", null))
+            return true
+        }
+
+        if (member.roles.contains(djRole)) return true
+
+        if (forOwnTrack && player.scheduler.current.requester.idLong == member.idLong) return true
+
+        return false
     }
 
     fun isUrl(url: String): Boolean {
@@ -199,125 +220,50 @@ object Utils {
         return cost[lhsLength - 1]
     }
 
-    fun translatePermissions(permissions: List<Permission>): ArrayList<String> {
-        val translatedPerms = ArrayList<String>()
-
-        permissions.forEach { permission ->
-            translatedPerms.add(translatePermission(permission))
+    fun translatePermissions(permissions: List<Permission>): List<String> {
+        return permissions.map {
+            translatePermission(it)
         }
-        return translatedPerms
     }
 
     fun translatePermission(permission: Permission): String {
-        when (permission) {
-            Permission.CREATE_INSTANT_INVITE -> {
-                return "Criar convites"
-            }
-            Permission.KICK_MEMBERS -> {
-                return "Expulsar Membros"
-            }
-            Permission.BAN_MEMBERS -> {
-                return "Banir Membros"
-            }
-            Permission.ADMINISTRATOR -> {
-                return "Administrador"
-            }
-            Permission.MANAGE_CHANNEL -> {
-                return "Gerenciar Canal"
-            }
-            Permission.MANAGE_SERVER -> {
-                return "Gerenciar Servidor"
-            }
-            Permission.VIEW_AUDIT_LOGS -> {
-                return "Ver o registo de auditoria"
-            }
-            Permission.PRIORITY_SPEAKER -> {
-                return "Voz Prioritária"
-            }
-            Permission.VOICE_STREAM -> {
-                return "Transmitir"
-            }
-            Permission.VIEW_CHANNEL -> {
-                return "Ver Canal"
-            }
-            Permission.MESSAGE_WRITE -> {
-                return "Enviar Mensagens"
-            }
-            Permission.MESSAGE_TTS -> {
-                return "Enviar mensagens em TTS"
-            }
-            Permission.MESSAGE_MANAGE -> {
-                return "Gerenciar Mensagens"
-            }
-            Permission.MESSAGE_EMBED_LINKS -> {
-                return "Inserir Links"
-            }
-            Permission.MESSAGE_ATTACH_FILES -> {
-                return "Anexar Arquivos"
-            }
-            Permission.MESSAGE_READ -> {
-                return "Ler mensagens"
-            }
-            Permission.MESSAGE_HISTORY -> {
-                return "Ler o histórico de mensagens"
-            }
-            Permission.MANAGE_PERMISSIONS -> {
-                return "Gerenciar Permissões"
-            }
-            Permission.MESSAGE_MENTION_EVERYONE -> {
-                return "Mencionar everyone"
-            }
-            Permission.MESSAGE_EXT_EMOJI -> {
-                return "Utilizar emojis externos"
-            }
-            Permission.VIEW_GUILD_INSIGHTS -> {
-                return "Ver análises do servidor"
-            }
-            Permission.VOICE_CONNECT -> {
-                return "Conectar ao canal de voz"
-            }
-            Permission.VOICE_SPEAK -> {
-                return "Falar no canal de voz"
-            }
-            Permission.VOICE_MUTE_OTHERS -> {
-                return "Silenciar membros"
-            }
-            Permission.VOICE_DEAF_OTHERS -> {
-                return "Ensurdecer membros"
-            }
-            Permission.VOICE_MOVE_OTHERS -> {
-                return "Mover membros"
-            }
-            Permission.VOICE_USE_VAD -> {
-                return "Usar deteção de voz"
-            }
-            Permission.NICKNAME_CHANGE -> {
-                return "Mudar de nickname"
-            }
-            Permission.NICKNAME_MANAGE -> {
-                return "Gerenciar nicknames"
-            }
-            Permission.MANAGE_WEBHOOKS -> {
-                return "Gerenciar Webhooks"
-            }
-            Permission.MANAGE_EMOTES -> {
-                return "Gerenciar Emojis"
-            }
-            Permission.USE_SLASH_COMMANDS -> {
-                return "Usar commandos de /"
-            }
-            Permission.MESSAGE_ADD_REACTION -> {
-                return "Adicionar reações"
-            }
-            Permission.MANAGE_ROLES -> {
-                return "Gerenciar Cargos"
-            }
-            Permission.REQUEST_TO_SPEAK -> {
-                return "Requisitar para falar"
-            }
-            Permission.UNKNOWN -> {
-                return "Desconhecido"
-            }
+        return when (permission) {
+            Permission.CREATE_INSTANT_INVITE -> "Criar convites"
+            Permission.KICK_MEMBERS -> "Expulsar Membros"
+            Permission.BAN_MEMBERS -> "Banir Membros"
+            Permission.ADMINISTRATOR -> "Administrador"
+            Permission.MANAGE_CHANNEL -> "Gerenciar Canal"
+            Permission.MANAGE_SERVER -> "Gerenciar Servidor"
+            Permission.VIEW_AUDIT_LOGS -> "Ver o registo de auditoria"
+            Permission.PRIORITY_SPEAKER -> "Voz Prioritária"
+            Permission.VOICE_STREAM -> "Transmitir"
+            Permission.VIEW_CHANNEL -> "Ver Canal"
+            Permission.MESSAGE_WRITE -> "Enviar Mensagens"
+            Permission.MESSAGE_TTS -> "Enviar mensagens em TTS"
+            Permission.MESSAGE_MANAGE -> "Gerenciar Mensagens"
+            Permission.MESSAGE_EMBED_LINKS -> "Inserir Links"
+            Permission.MESSAGE_ATTACH_FILES -> "Anexar Arquivos"
+            Permission.MESSAGE_READ -> "Ler mensagens"
+            Permission.MESSAGE_HISTORY -> "Ler o histórico de mensagens"
+            Permission.MANAGE_PERMISSIONS -> "Gerenciar Permissões"
+            Permission.MESSAGE_MENTION_EVERYONE -> "Mencionar everyone"
+            Permission.MESSAGE_EXT_EMOJI -> "Utilizar emojis externos"
+            Permission.VIEW_GUILD_INSIGHTS -> "Ver análises do servidor"
+            Permission.VOICE_CONNECT -> "Conectar ao canal de voz"
+            Permission.VOICE_SPEAK -> "Falar no canal de voz"
+            Permission.VOICE_MUTE_OTHERS -> "Silenciar membros"
+            Permission.VOICE_DEAF_OTHERS -> "Ensurdecer membros"
+            Permission.VOICE_MOVE_OTHERS -> "Mover membros"
+            Permission.VOICE_USE_VAD -> "Usar deteção de voz"
+            Permission.NICKNAME_CHANGE -> "Mudar de nickname"
+            Permission.NICKNAME_MANAGE -> "Gerenciar nicknames"
+            Permission.MANAGE_WEBHOOKS -> "Gerenciar Webhooks"
+            Permission.MANAGE_EMOTES -> "Gerenciar Emojis"
+            Permission.USE_SLASH_COMMANDS -> "Usar commandos de /"
+            Permission.MESSAGE_ADD_REACTION -> "Adicionar reações"
+            Permission.MANAGE_ROLES -> "Gerenciar Cargos"
+            Permission.REQUEST_TO_SPEAK -> "Requisitar para falar"
+            Permission.UNKNOWN -> "Desconhecido"
         }
         /*
             MANAGE_THREADS *	0x0400000000 (1 << 34)	Allows for deleting and archiving threads, and viewing all private threads	T
