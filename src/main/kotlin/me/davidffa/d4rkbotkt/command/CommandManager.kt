@@ -51,6 +51,7 @@ object CommandManager {
         this.addCommand(Render())
 
         /* ** SETTINGS ** */
+        this.addCommand(Djrole())
         this.addCommand(Setprefix())
 
         for (command in this.commands) {
