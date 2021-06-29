@@ -97,6 +97,7 @@ object Utils {
 
     suspend fun canPlay(self: Member, member: Member, channel: TextChannel): Boolean {
         val memberVoiceState = member.voiceState
+        val selfChannel = member.guild.audioManager.connectedChannel
 
         if (!memberVoiceState!!.inVoiceChannel()) {
             channel.sendMessage(":x: Precisas de estar num canal de voz para executar esse comando!").queue()
@@ -120,6 +121,8 @@ object Utils {
             channel.sendMessage(":x: Não tenho permissão para falar no teu canal de voz!").queue()
             return false
         }
+
+        if (selfChannel == null) return true
 
         val djRoleID = D4rkBot.guildCache[member.guild.idLong]!!.djRole
 
