@@ -34,6 +34,7 @@ object CommandManager {
         this.addCommand(Uptime())
 
         /* ** MUSIC ** */
+        this.addCommand(Filters())
         this.addCommand(Loop())
         this.addCommand(Nowplaying())
         this.addCommand(Pause())

@@ -21,6 +21,7 @@ object PlayerManager {
     init {
         AudioSourceManagers.registerRemoteSources(this.audioPlayerManager)
         AudioSourceManagers.registerLocalSource(this.audioPlayerManager)
+        this.audioPlayerManager.configuration.isFilterHotSwapEnabled = true
     }
 
     fun getMusicManager(guildId: Long): GuildMusicManager {

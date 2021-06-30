@@ -17,7 +17,7 @@ java {
 repositories {
     mavenCentral()
     @Suppress("DEPRECATION")
-    jcenter() // JDA-NAS
+    jcenter() // JDA-NAS & lavadsp
     maven("https://m2.dv8tion.net/releases")
     maven("https://jitpack.io/")
 }
@@ -35,6 +35,9 @@ dependencies {
     implementation("com.github.minndevelopment:jda-ktx:d460e2a")
     implementation("com.sedmelluq:lavaplayer:1.3.78")
     implementation("com.sedmelluq:jda-nas:1.1.0")
+
+    // Filters
+    implementation("com.github.natanbc:lavadsp:0.7.7")
 
     // MongoDB
     implementation("org.litote.kmongo:kmongo-coroutine:4.2.8")

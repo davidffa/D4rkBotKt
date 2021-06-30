@@ -78,6 +78,11 @@ class TrackScheduler(private val player: AudioPlayer, private val textChannel: T
         this.queue.clear()
         this.player.destroy()
         this.guild.audioManager.closeAudioConnection()
+
+        if (PlayerManager.getMusicManager(guild.idLong).djtableMessage != null) {
+            PlayerManager.getMusicManager(guild.idLong).djtableMessage?.delete()?.queue()
+            PlayerManager.getMusicManager(guild.idLong).djtableMessage = null
+        }
         PlayerManager.musicManagers.remove(this.guild.idLong)
     }
 
