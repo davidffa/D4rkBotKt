@@ -1,6 +1,7 @@
 package me.davidffa.d4rkbotkt
 
 import com.mongodb.client.model.Updates
+import com.sedmelluq.discord.lavaplayer.jdaudp.NativeAudioSendFactory
 import dev.minn.jda.ktx.injectKTX
 import kotlinx.coroutines.runBlocking
 import me.davidffa.d4rkbotkt.database.GuildCache
@@ -92,6 +93,7 @@ class D4rkBot {
                 .enableCache(CacheFlag.VOICE_STATE)
                 .setStatus(OnlineStatus.IDLE)
                 .setActivity(Activity.playing("A iniciar..."))
+                .setAudioSendFactory(NativeAudioSendFactory())
                 .injectKTX()
                 .build()
 

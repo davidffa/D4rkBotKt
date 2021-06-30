@@ -16,6 +16,8 @@ java {
 
 repositories {
     mavenCentral()
+    @Suppress("DEPRECATION")
+    jcenter() // JDA-NAS
     maven("https://m2.dv8tion.net/releases")
     maven("https://jitpack.io/")
 }
@@ -27,11 +29,12 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-scripting-jsr223:1.5.20")
 
     // JDA & Lavaplayer
-    implementation("net.dv8tion:JDA:4.3.0_287") {
+    implementation("net.dv8tion:JDA:4.3.0_288") {
         exclude("opus-java")
     }
     implementation("com.github.minndevelopment:jda-ktx:d460e2a")
     implementation("com.sedmelluq:lavaplayer:1.3.78")
+    implementation("com.sedmelluq:jda-nas:1.1.0")
 
     // MongoDB
     implementation("org.litote.kmongo:kmongo-coroutine:4.2.8")
