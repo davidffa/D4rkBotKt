@@ -134,6 +134,7 @@ object Utils {
                 Database.guildDB.updateOneById(member.guild.id, Updates.set("djRole", null))
             }else {
                 if (!member.roles.contains(djRole)) {
+                    if (selfChannel.idLong == memberVoiceChannel.idLong) return true
                     channel.sendMessage(":x: Precisas de estar no meu canal de voz para usar este comando!").queue()
                     return false
                 }
