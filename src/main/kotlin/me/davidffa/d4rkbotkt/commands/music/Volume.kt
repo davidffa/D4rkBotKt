@@ -18,10 +18,10 @@ class Volume : Command(
     override suspend fun run(ctx: CommandContext) {
         if (!Utils.canUsePlayer(ctx.selfMember, ctx.member, ctx.channel, true)) return
 
-        val player = PlayerManager.getMusicManager(ctx.guild.idLong).audioPlayer
+        val manager = PlayerManager.getMusicManager(ctx.guild.idLong)
 
         if (ctx.args.isEmpty()) {
-            ctx.channel.sendMessage(":speaker: Volume atual: `${player.volume}`").queue()
+            ctx.channel.sendMessage(":speaker: Volume atual: `${manager.volume * 100}`").queue()
             return
         }
 
@@ -32,7 +32,7 @@ class Volume : Command(
             return
         }
 
-        player.volume = vol
-        ctx.channel.sendMessage(":speaker: Volume alterado para `${player.volume}`").queue()
+        manager.volume = vol / 100f
+        ctx.channel.sendMessage(":speaker: Volume alterado para `${manager.volume * 100}`").queue()
     }
 }

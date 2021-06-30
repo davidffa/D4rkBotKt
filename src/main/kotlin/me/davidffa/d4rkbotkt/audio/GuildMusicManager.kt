@@ -19,6 +19,20 @@ class GuildMusicManager(manager: AudioPlayerManager, val textChannel: TextChanne
 
     val filters = ArrayList<Filter>()
 
+    var volume = 1f
+        set(value) {
+            field = value
+            if (value != 1f) {
+                this.audioPlayer.setFilterFactory(FilterFactory(this.filters, this.volume))
+            }else {
+                if (this.filters.isEmpty()) {
+                    this.audioPlayer.setFilterFactory(null)
+                }else {
+                    this.audioPlayer.setFilterFactory(FilterFactory(this.filters, this.volume))
+                }
+            }
+        }
+
     init {
         this.audioPlayer.addListener(this.scheduler)
     }
@@ -30,12 +44,16 @@ class GuildMusicManager(manager: AudioPlayerManager, val textChannel: TextChanne
         if (filters.isEmpty()) {
             this.clearFilters()
         }else {
-            this.audioPlayer.setFilterFactory(FilterFactory(this.filters))
+            this.audioPlayer.setFilterFactory(FilterFactory(this.filters, this.volume))
         }
     }
 
     fun clearFilters() {
         this.filters.clear()
-        this.audioPlayer.setFilterFactory(null)
+        if (this.volume == 1f) {
+            this.audioPlayer.setFilterFactory(null)
+            return
+        }
+        this.audioPlayer.setFilterFactory(FilterFactory(listOf(), this.volume))
     }
 }
