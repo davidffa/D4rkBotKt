@@ -1,4 +1,4 @@
-package me.davidffa.d4rkbotkt.lavaplayer
+package me.davidffa.d4rkbotkt.audio
 
 import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager

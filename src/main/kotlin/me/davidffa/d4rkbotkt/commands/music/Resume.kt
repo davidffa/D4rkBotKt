@@ -2,7 +2,7 @@ package me.davidffa.d4rkbotkt.commands.music
 
 import me.davidffa.d4rkbotkt.command.Command
 import me.davidffa.d4rkbotkt.command.CommandContext
-import me.davidffa.d4rkbotkt.lavaplayer.PlayerManager
+import me.davidffa.d4rkbotkt.audio.PlayerManager
 import me.davidffa.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.Permission
 

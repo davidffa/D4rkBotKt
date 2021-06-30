@@ -2,7 +2,7 @@ package me.davidffa.d4rkbotkt.commands.dev
 
 import me.davidffa.d4rkbotkt.command.Command
 import me.davidffa.d4rkbotkt.command.CommandContext
-import me.davidffa.d4rkbotkt.lavaplayer.PlayerManager
+import me.davidffa.d4rkbotkt.audio.PlayerManager
 import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.entities.ChannelType
 import javax.script.ScriptEngine

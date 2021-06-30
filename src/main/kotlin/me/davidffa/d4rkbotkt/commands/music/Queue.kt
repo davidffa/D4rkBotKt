@@ -4,7 +4,7 @@ import dev.minn.jda.ktx.Embed
 import dev.minn.jda.ktx.interactions.sendPaginator
 import me.davidffa.d4rkbotkt.command.Command
 import me.davidffa.d4rkbotkt.command.CommandContext
-import me.davidffa.d4rkbotkt.lavaplayer.PlayerManager
+import me.davidffa.d4rkbotkt.audio.PlayerManager
 import me.davidffa.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.Permission
 import java.time.Instant

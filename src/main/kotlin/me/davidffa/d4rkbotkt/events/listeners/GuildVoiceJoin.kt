@@ -1,6 +1,6 @@
 package me.davidffa.d4rkbotkt.events.listeners
 
-import me.davidffa.d4rkbotkt.lavaplayer.PlayerManager
+import me.davidffa.d4rkbotkt.audio.PlayerManager
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceJoinEvent
 
 fun onGuildVoiceJoin(event: GuildVoiceJoinEvent) {

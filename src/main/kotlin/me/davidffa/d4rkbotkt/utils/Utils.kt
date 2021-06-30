@@ -4,7 +4,7 @@ import com.mongodb.client.model.Updates
 import dev.minn.jda.ktx.await
 import me.davidffa.d4rkbotkt.D4rkBot
 import me.davidffa.d4rkbotkt.Database
-import me.davidffa.d4rkbotkt.lavaplayer.PlayerManager
+import me.davidffa.d4rkbotkt.audio.PlayerManager
 import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.entities.Guild
 import net.dv8tion.jda.api.entities.Member
