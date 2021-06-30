@@ -35,7 +35,7 @@ class Queue : Command(
         val header = "<a:disco:803678643661832233> **A tocar:** `${scheduler.current.track.info.title}` " +
                 "(Requisitado por `${scheduler.current.requester.user.asTag}`)\n" +
                 ":alarm_clock: Tempo total da queue (${Utils.msToHour(scheduler.queue.sumOf { it.track.duration })}) " +
-                "----- Total de músicas na queue: ${scheduler.queue.size}\n"
+                "----- Total de músicas na queue: ${scheduler.queue.size}\n\n"
 
         if (scheduler.queue.size <= 10) {
             val embed = Embed {
