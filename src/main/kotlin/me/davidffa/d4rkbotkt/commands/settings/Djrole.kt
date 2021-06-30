@@ -5,6 +5,7 @@ import me.davidffa.d4rkbotkt.D4rkBot
 import me.davidffa.d4rkbotkt.Database
 import me.davidffa.d4rkbotkt.command.Command
 import me.davidffa.d4rkbotkt.command.CommandContext
+import me.davidffa.d4rkbotkt.database.GuildDB
 import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.entities.Role
 
@@ -66,7 +67,7 @@ class Djrole : Command(
                 val roleByName = ctx.guild.roles.find { it.name == ctx.args.joinToString(" ") }
                 if (roleByName != null) newRole = roleByName
                 else {
-                    val roleBySearch = ctx.guild.roles.find { it.name.contains(ctx.args.joinToString(" ").lowercase()) }
+                    val roleBySearch = ctx.guild.roles.find { it.name.lowercase().contains(ctx.args.joinToString(" ").lowercase()) }
                     if (roleBySearch != null) newRole = roleBySearch
                 }
             }
@@ -78,7 +79,11 @@ class Djrole : Command(
         }
 
         cache.djRole = newRole.id
-        Database.guildDB.updateOneById(ctx.guild.id, Updates.set("djRole", newRole.id))
+        val update = Database.guildDB.updateOneById(ctx.guild.id, Updates.set("djRole", newRole.id))
+
+        if (update.matchedCount == 0L) {
+            Database.guildDB.insertOne(GuildDB(ctx.guild.id, djRole = newRole.id))
+        }
 
         ctx.channel.sendMessage("<a:disco:803678643661832233> Cargo `${newRole.name}` setado como cargo de DJ!").queue()
     }
