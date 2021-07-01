@@ -4,7 +4,7 @@ import com.sedmelluq.discord.lavaplayer.filter.FloatPcmAudioFilter
 import com.sedmelluq.discord.lavaplayer.filter.equalizer.Equalizer
 import com.sedmelluq.discord.lavaplayer.format.AudioDataFormat
 
-fun vocals(format: AudioDataFormat, output: FloatPcmAudioFilter): FloatPcmAudioFilter {
+fun vocals(format: AudioDataFormat, output: FloatPcmAudioFilter): List<FloatPcmAudioFilter> {
     val bands = FloatArray(Equalizer.BAND_COUNT)
     bands[0] = -0.25f
     bands[1] = -0.25f
@@ -22,5 +22,5 @@ fun vocals(format: AudioDataFormat, output: FloatPcmAudioFilter): FloatPcmAudioF
     bands[13] = 0.15f
     bands[14] = -0.25f
 
-    return Equalizer(format.channelCount, output, bands)
+    return listOf(Equalizer(format.channelCount, output, bands))
 }

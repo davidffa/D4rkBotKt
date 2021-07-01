@@ -18,7 +18,7 @@ class FilterFactory(private val filters: List<Filter>, private val volume: Float
         val list = mutableListOf<FloatPcmAudioFilter>()
 
         for (filter in filters) {
-            list.add(when (filter) {
+            list.addAll(when (filter) {
                 Filter.BASS -> bass(format, list.lastOrNull() ?: output)
                 Filter.NIGHTCORE -> nightcore(format, list.lastOrNull() ?: output)
                 Filter.POP -> pop(format, list.lastOrNull() ?: output)

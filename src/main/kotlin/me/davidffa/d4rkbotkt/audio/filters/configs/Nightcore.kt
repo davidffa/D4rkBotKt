@@ -6,7 +6,7 @@ import com.sedmelluq.discord.lavaplayer.filter.FloatPcmAudioFilter
 import com.sedmelluq.discord.lavaplayer.filter.equalizer.Equalizer
 import com.sedmelluq.discord.lavaplayer.format.AudioDataFormat
 
-fun nightcore(format: AudioDataFormat, output: FloatPcmAudioFilter): FloatPcmAudioFilter {
+fun nightcore(format: AudioDataFormat, output: FloatPcmAudioFilter): List<FloatPcmAudioFilter> {
     val bands = FloatArray(Equalizer.BAND_COUNT)
     bands[0] = 0.3f
     bands[1] = 0.3f
@@ -20,5 +20,5 @@ fun nightcore(format: AudioDataFormat, output: FloatPcmAudioFilter): FloatPcmAud
     tremolo.depth = 0.3f
     tremolo.frequency = 14f
 
-    return tremolo
+    return listOf(equalizer, timescale, tremolo)
 }
