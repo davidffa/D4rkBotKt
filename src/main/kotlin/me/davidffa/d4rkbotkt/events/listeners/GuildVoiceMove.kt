@@ -36,6 +36,11 @@ fun onGuildVoiceMove(event: GuildVoiceMoveEvent) {
                 ) {
                     manager.textChannel.sendMessage(":x: Saí do canal de voz porque fiquei sozinho mais de 2 minutos.")
                         .queue()
+
+                    if (manager.leaveMessage != null) {
+                        manager.leaveMessage?.delete()?.queue()
+                    }
+
                     manager.scheduler.destroy()
                 }
             }, 2 * 60 * 1000L)

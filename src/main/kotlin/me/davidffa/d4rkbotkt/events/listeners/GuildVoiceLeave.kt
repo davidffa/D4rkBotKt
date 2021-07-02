@@ -17,6 +17,11 @@ fun onGuildVoiceLeave(event: GuildVoiceLeaveEvent) {
             manager.textChannel.sendMessage(":warning: Fui desconectado do canal de voz, por isso limpei a queue.")
                 .queue()
         }
+
+        if (manager.leaveMessage != null) {
+            manager.leaveTimer?.cancel()
+            manager.leaveMessage?.delete()?.queue()
+        }
         manager.scheduler.destroy()
         return
     }
@@ -40,6 +45,10 @@ fun onGuildVoiceLeave(event: GuildVoiceLeaveEvent) {
             if (Utils.hasPermissions(member.guild.selfMember, manager.textChannel, listOf(Permission.MESSAGE_WRITE))) {
                 manager.textChannel.sendMessage(":x: Saí do canal de voz porque fiquei sozinho mais de 2 minutos.")
                     .queue()
+
+                if (manager.leaveMessage != null) {
+                    manager.leaveMessage?.delete()?.queue()
+                }
                 manager.scheduler.destroy()
             }
         }, 2 * 60 * 1000L)
