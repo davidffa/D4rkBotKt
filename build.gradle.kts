@@ -42,6 +42,9 @@ dependencies {
     // MongoDB
     implementation("org.litote.kmongo:kmongo-coroutine:4.2.8")
 
+    // Native System
+    implementation("com.github.oshi:oshi-core:5.7.5")
+
     // Logger
     runtimeOnly("ch.qos.logback","logback-classic", "1.2.3")
 }

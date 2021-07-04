@@ -10,6 +10,7 @@ import me.davidffa.d4rkbotkt.command.CommandContext
 import me.davidffa.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.JDAInfo
 import net.dv8tion.jda.api.Permission
+import oshi.SystemInfo
 import java.lang.management.ManagementFactory
 import java.time.Instant
 
@@ -21,6 +22,11 @@ class Botinfo : Command(
     botPermissions = listOf(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS, Permission.MESSAGE_EXT_EMOJI),
     cooldown = 10
 ) {
+    private val si = SystemInfo()
+    private var cpuTime = 0.0
+    private var uptime = 0.0
+    private var lastSystemCpuLoadTicks: LongArray? = null
+
     override suspend fun run(ctx: CommandContext) {
         val runtime = Runtime.getRuntime()
         val rest = ctx.jda.restPing.await()
@@ -28,6 +34,11 @@ class Botinfo : Command(
         val dbStart = Instant.now().toEpochMilli()
         Database.botDB.findOneById(ctx.selfUser.id)
         val dbPing = Instant.now().toEpochMilli() - dbStart
+
+        var processLoad = getProcessRecentCpuUsage()
+        if (processLoad.isInfinite()) processLoad = 0.0
+
+        val systemLoad = getSystemRecentCpuUsage()
 
         val embed = Embed {
             title = "<a:blobdance:804026401849475094> Informações sobre mim"
@@ -64,6 +75,11 @@ class Botinfo : Command(
                         "Alocada: `${runtime.totalMemory() / 1024 / 1024}MB`"
             }
             field {
+                name = "<a:loading:804026048647659540> CPU"
+                value = "Sistema: `${"%.2f".format(systemLoad * 100)}%`\n" +
+                        "Bot: `${"%.2f".format(processLoad * 100)}%`"
+            }
+            field {
                 name = "<:kotlin:856168010004037702> Versões:"
                 value = "Kotlin: `${KotlinVersion.CURRENT}`\n" +
                         "JVM: `${System.getProperty("java.version")}`\n" +
@@ -79,5 +95,35 @@ class Botinfo : Command(
         }
 
         ctx.channel.sendMessageEmbeds(embed).queue()
+    }
+
+    private fun getSystemRecentCpuUsage(): Double {
+        val hal = si.hardware
+        val processor = hal.processor
+
+        if (lastSystemCpuLoadTicks == null) {
+            lastSystemCpuLoadTicks = processor.systemCpuLoadTicks
+        }
+
+        return processor.getSystemCpuLoadBetweenTicks(lastSystemCpuLoadTicks)
+    }
+
+    private fun getProcessRecentCpuUsage(): Double {
+        val output: Double
+        val hal = si.hardware
+        val os = si.operatingSystem
+        val p = os.getProcess(os.processId)
+
+        output = if (cpuTime != 0.0) {
+            val uptimeDiff = p.upTime - uptime
+            val cpuDiff = (p.kernelTime + p.userTime) - cpuTime
+            cpuDiff / uptimeDiff
+        }else {
+            ((p.kernelTime + p.userTime).toDouble() / p.userTime.toDouble())
+        }
+
+        uptime = p.upTime.toDouble()
+        cpuTime = (p.kernelTime + p.userTime).toDouble()
+        return output / hal.processor.logicalProcessorCount
     }
 }
