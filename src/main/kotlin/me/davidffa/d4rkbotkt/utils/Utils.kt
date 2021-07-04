@@ -58,7 +58,7 @@ object Utils {
 
         if (id != null) {
             return try {
-                jda.retrieveUserById(query).await()
+                jda.retrieveUserById(id).await()
             } catch (e: Exception) {
                 null
             }
