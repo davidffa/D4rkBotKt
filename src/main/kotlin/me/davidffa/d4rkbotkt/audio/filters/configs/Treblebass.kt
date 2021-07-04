@@ -5,11 +5,10 @@ import com.sedmelluq.discord.lavaplayer.filter.equalizer.Equalizer
 import com.sedmelluq.discord.lavaplayer.format.AudioDataFormat
 
 fun treblebass(format: AudioDataFormat, output: FloatPcmAudioFilter): List<FloatPcmAudioFilter> {
-    val bands = FloatArray(Equalizer.BAND_COUNT)
+    val bands = FloatArray(Equalizer.BAND_COUNT){ 0f }
     bands[0] = 0.55f
     bands[1] = 0.55f
     bands[2] = 0.5f
-    bands[3] = 0f
     bands[4] = 0.15f
     bands[5] = 0.3f
     bands[6] = 0.45f

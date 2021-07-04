@@ -5,11 +5,10 @@ import com.sedmelluq.discord.lavaplayer.filter.equalizer.Equalizer
 import com.sedmelluq.discord.lavaplayer.format.AudioDataFormat
 
 fun bass(format: AudioDataFormat, output: FloatPcmAudioFilter): List<FloatPcmAudioFilter> {
-    val bands = FloatArray(Equalizer.BAND_COUNT)
+    val bands = FloatArray(Equalizer.BAND_COUNT){ 0f }
     bands[0] = 0.6f
     bands[1] = 0.67f
     bands[2] = 0.67f
-    bands[3] = 0f
     bands[4] = -0.5f
     bands[5] = 0.15f
     bands[6] = -0.45f
@@ -19,7 +18,6 @@ fun bass(format: AudioDataFormat, output: FloatPcmAudioFilter): List<FloatPcmAud
     bands[10] = 0.55f
     bands[11] = 0.6f
     bands[12] = 0.55f
-    bands[13] = 0f
 
     return listOf(Equalizer(format.channelCount, output, bands))
 }

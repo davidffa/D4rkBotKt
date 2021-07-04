@@ -5,8 +5,7 @@ import com.sedmelluq.discord.lavaplayer.filter.FloatPcmAudioFilter
 import com.sedmelluq.discord.lavaplayer.format.AudioDataFormat
 
 fun eightD(format: AudioDataFormat, output: FloatPcmAudioFilter): List<FloatPcmAudioFilter> {
-    val rotation = RotationPcmAudioFilter(output, format.sampleRate)
-    rotation.setRotationSpeed(0.2)
-
-    return listOf(rotation)
+    return listOf(RotationPcmAudioFilter(output, format.sampleRate).also {
+        it.setRotationSpeed(0.2)
+    })
 }
