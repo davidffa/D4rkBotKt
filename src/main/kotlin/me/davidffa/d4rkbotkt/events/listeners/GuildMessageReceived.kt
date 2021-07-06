@@ -9,7 +9,7 @@ suspend fun onGuildMessageReceived(event: GuildMessageReceivedEvent) {
     val user = event.author
     if (user.isBot || event.isWebhookMessage) return
 
-    val prefix = D4rkBot.guildCache[event.guild.idLong]?.prefix ?: return //Returns if case db has not been initialized yet
+    val prefix = D4rkBot.guildCache[event.guild.idLong]?.prefix ?: return //Returns if db has not been initialized yet
     val raw = event.message.contentRaw
 
     val mentionRegExp = Regex("^<@!?${event.jda.selfUser.id}>$")
