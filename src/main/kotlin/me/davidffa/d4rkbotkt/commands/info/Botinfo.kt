@@ -43,7 +43,7 @@ class Botinfo : Command(
         val embed = Embed {
             title = "<a:blobdance:804026401849475094> Informações sobre mim"
             description = "**[Convite](https://discord.com/oauth2/authorize?client_id=${ctx.jda.selfUser.id}&scope=bot&permissions=8)**\n" +
-                    "**[Servidor de Suporte](https://discord.gg/dBQnxVCTEw)**\n\n"
+                    "**[Servidor de Suporte](https://discord.gg/dBQnxVCTEw)**\n\u200B"
             color = 15695386
             field {
                 name = ":id: Meu ID"
@@ -54,6 +54,10 @@ class Botinfo : Command(
                 value = "`${Utils.formatDate(ctx.selfUser.timeCreated)}`"
             }
             field {
+                name = ":man: Dono"
+                value = "`D4rkB#2408`"
+            }
+            field {
                 name = "<a:infinity:838759634361253929> Uptime"
                 value = "`${Utils.msToDate(ManagementFactory.getRuntimeMXBean().uptime)}`"
             }
@@ -62,8 +66,16 @@ class Botinfo : Command(
                 value = "`${ctx.jda.guilds.size}`"
             }
             field {
+                name = ":busts_in_silhouette: Utilizadores"
+                value = "`${ctx.jda.users.size}`"
+            }
+            field {
                 name = "<:badgehypesquad:803665497223987210> Prefixos"
                 value = "Padrão: `dk.`\nNo servidor: `${ctx.prefix}`"
+            }
+            field {
+                name = "<:thread:861983216223125524> Threads"
+                value = "`${ManagementFactory.getThreadMXBean().threadCount}`"
             }
             field {
                 name = ":ping_pong: Pings"
