@@ -13,7 +13,6 @@ import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.entities.Emoji
-import net.dv8tion.jda.api.entities.Message
 import net.dv8tion.jda.api.events.interaction.ButtonClickEvent
 import net.dv8tion.jda.api.interactions.components.ActionRow
 import net.dv8tion.jda.api.interactions.components.Button
@@ -45,13 +44,16 @@ class Filters : Command(
         val nonce = Base64.getEncoder().encodeToString(nonceBytes)
 
         val bassButton = Button.success("$nonce:bass", Emoji.fromUnicode("1️⃣"))
-        val ncButton = Button.success("$nonce:nightcore", Emoji.fromUnicode("2️⃣"))
-        val popButton = Button.success("$nonce:pop", Emoji.fromUnicode("3️⃣"))
-        val softButton = Button.success("$nonce:soft", Emoji.fromUnicode("4️⃣"))
-        val trebleButton = Button.success("$nonce:treble", Emoji.fromUnicode("5️⃣"))
-        val vaporwaveButton = Button.success("$nonce:vaporwave", Emoji.fromUnicode("6️⃣"))
-        val vocalsButton = Button.success("$nonce:vocals", Emoji.fromUnicode("7️⃣"))
+        val dcButton = Button.success("$nonce:daycore", Emoji.fromUnicode("2️⃣"))
+        val ncButton = Button.success("$nonce:nightcore", Emoji.fromUnicode("3️⃣"))
+        val popButton = Button.success("$nonce:pop", Emoji.fromUnicode("4️⃣"))
+        val softButton = Button.success("$nonce:soft", Emoji.fromUnicode("5️⃣"))
+        val trebleButton = Button.success("$nonce:treble", Emoji.fromUnicode("6️⃣"))
+        val vaporwaveButton = Button.success("$nonce:vaporwave", Emoji.fromUnicode("7️⃣"))
         val eightd = Button.success("$nonce:8d", Emoji.fromUnicode("8️⃣"))
+        val vibratoButton = Button.success("$nonce:vibrato", Emoji.fromUnicode("9️⃣"))
+        val vocalsButton = Button.success("$nonce:vocals", Emoji.fromUnicode("\uD83D\uDD1F"))
+        val karaokeButton = Button.success("$nonce:karaoke", Emoji.fromMarkdown("<:keycap_11:862005088716193793>"))
         val clearButton = Button.danger("$nonce:clear", Emoji.fromUnicode("\uD83D\uDDD1️"))
         val deleteButton = Button.danger("$nonce:close", "Fechar")
 
@@ -64,15 +66,16 @@ class Filters : Command(
             .setTimestamp(Instant.now())
 
         val controls = listOf(
-            ActionRow.of(bassButton, ncButton, popButton, softButton, clearButton),
-            ActionRow.of(trebleButton, vaporwaveButton, vocalsButton, eightd, deleteButton)
+            ActionRow.of(bassButton, dcButton, ncButton, popButton, softButton),
+            ActionRow.of(trebleButton, vaporwaveButton, eightd, vibratoButton, vocalsButton),
+            ActionRow.of(karaokeButton, clearButton, deleteButton)
         )
 
         val msg = ctx.channel.sendMessageEmbeds(embed.build())
             .setActionRows(controls)
             .await()
 
-        val listeners = ArrayList<CoroutineEventListener>()
+        val listeners = mutableListOf<CoroutineEventListener>()
         manager.djtableMessage = msg
 
         val timer = Timer()
@@ -83,6 +86,11 @@ class Filters : Command(
         val bassListener = ctx.jda.onButton("$nonce:bass") {
             if (it.member?.idLong != ctx.member.idLong) return@onButton
             manager.switchFilter(Filter.BASS)
+            editMessage(it, embed, manager.filters)
+        }
+        val dcListener = ctx.jda.onButton("$nonce:daycore") {
+            if (it.member?.idLong != ctx.member.idLong) return@onButton
+            manager.switchFilter(Filter.DAYCORE)
             editMessage(it, embed, manager.filters)
         }
         val ncListener = ctx.jda.onButton("$nonce:nightcore") {
@@ -110,6 +118,11 @@ class Filters : Command(
             manager.switchFilter(Filter.VAPORWAVE)
             editMessage(it, embed, manager.filters)
         }
+        val vibratoListener = ctx.jda.onButton("$nonce:vibrato") {
+            if (it.member?.idLong != ctx.member.idLong) return@onButton
+            manager.switchFilter(Filter.VIBRATO)
+            editMessage(it, embed, manager.filters)
+        }
         val vocalsListener = ctx.jda.onButton("$nonce:vocals") {
             if (it.member?.idLong != ctx.member.idLong) return@onButton
             manager.switchFilter(Filter.VOCALS)
@@ -118,6 +131,11 @@ class Filters : Command(
         val eightdListener = ctx.jda.onButton("$nonce:8d") {
             if (it.member?.idLong != ctx.member.idLong) return@onButton
             manager.switchFilter(Filter.EIGHTD)
+            editMessage(it, embed, manager.filters)
+        }
+        val karaokeListener = ctx.jda.onButton("$nonce:karaoke") {
+            if (it.member?.idLong != ctx.member.idLong) return@onButton
+            manager.switchFilter(Filter.KARAOKE)
             editMessage(it, embed, manager.filters)
         }
         val clearListener = ctx.jda.onButton("$nonce:clear") {
@@ -133,13 +151,16 @@ class Filters : Command(
         }
 
         listeners.add(bassListener)
+        listeners.add(dcListener)
         listeners.add(ncListener)
         listeners.add(popListener)
         listeners.add(softListener)
         listeners.add(trebleListener)
         listeners.add(vaporwaveListener)
+        listeners.add(vibratoListener)
         listeners.add(vocalsListener)
         listeners.add(eightdListener)
+        listeners.add(karaokeListener)
         listeners.add(clearListener)
         listeners.add(closeListener)
     }
@@ -167,13 +188,16 @@ class Filters : Command(
 
     private fun getDescription(filters: List<Filter>): String {
         return  "**1)** Bass ${if (filters.contains(Filter.BASS)) "<:on:764478511875751937>" else "<:off:764478504124416040>"}\n" +
-                "**2)** Nightcore ${if (filters.contains(Filter.NIGHTCORE)) "<:on:764478511875751937>" else "<:off:764478504124416040>"}\n" +
-                "**3)** Pop ${if (filters.contains(Filter.POP)) "<:on:764478511875751937>" else "<:off:764478504124416040>"}\n" +
-                "**4)** Soft ${if (filters.contains(Filter.SOFT)) "<:on:764478511875751937>" else "<:off:764478504124416040>"}\n" +
-                "**5)** Treblebass ${if (filters.contains(Filter.TREBLEBASS)) "<:on:764478511875751937>" else "<:off:764478504124416040>"}\n" +
-                "**6)** Vaporwave ${if (filters.contains(Filter.VAPORWAVE)) "<:on:764478511875751937>" else "<:off:764478504124416040>"}\n" +
-                "**7)** Vocals ${if (filters.contains(Filter.VOCALS)) "<:on:764478511875751937>" else "<:off:764478504124416040>"}\n" +
-                "**8)** 8D ${if (filters.contains(Filter.EIGHTD)) "<:on:764478511875751937>" else "<:off:764478504124416040>"}\n\n" +
+                "**2)** Daycore ${if (filters.contains(Filter.DAYCORE)) "<:on:764478511875751937>" else "<:off:764478504124416040>"}\n" +
+                "**3)** Nightcore ${if (filters.contains(Filter.NIGHTCORE)) "<:on:764478511875751937>" else "<:off:764478504124416040>"}\n" +
+                "**4)** Pop ${if (filters.contains(Filter.POP)) "<:on:764478511875751937>" else "<:off:764478504124416040>"}\n" +
+                "**5)** Soft ${if (filters.contains(Filter.SOFT)) "<:on:764478511875751937>" else "<:off:764478504124416040>"}\n" +
+                "**6)** Treblebass ${if (filters.contains(Filter.TREBLEBASS)) "<:on:764478511875751937>" else "<:off:764478504124416040>"}\n" +
+                "**7)** Vaporwave ${if (filters.contains(Filter.VAPORWAVE)) "<:on:764478511875751937>" else "<:off:764478504124416040>"}\n" +
+                "**8)** 8D ${if (filters.contains(Filter.EIGHTD)) "<:on:764478511875751937>" else "<:off:764478504124416040>"}\n" +
+                "**9)** Vibrato ${if (filters.contains(Filter.VIBRATO)) "<:on:764478511875751937>" else "<:off:764478504124416040>"}\n" +
+                "**10)** Vocals ${if (filters.contains(Filter.VOCALS)) "<:on:764478511875751937>" else "<:off:764478504124416040>"}\n" +
+                "**11)** Karaoke ${if (filters.contains(Filter.KARAOKE)) "<:on:764478511875751937>" else "<:off:764478504124416040>"}\n\n" +
                 ":wastebasket: - Remove todos os filtros"
     }
 }
