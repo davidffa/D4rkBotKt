@@ -14,13 +14,13 @@ import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent
 import java.time.Instant
 import java.util.*
-import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 import kotlin.concurrent.timerTask
 
 object CommandManager {
-    val commands = ArrayList<Command>()
-    private val cmdList: ArrayList<String> = ArrayList()
+    val commands = mutableListOf<Command>()
+    private val cmdList = mutableListOf<String>()
+    private val restrictCmdList = mutableListOf<String>()
     private val cooldowns = HashMap<String, HashMap<String, Long>>()
 
     init {
@@ -55,13 +55,13 @@ object CommandManager {
         this.addCommand(Djrole())
         this.addCommand(Setprefix())
 
-        for (command in this.commands) {
-            cmdList.add(command.name)
-
-            if (command.aliases != null) {
-                for (alias in command.aliases) {
-                    cmdList.add(alias)
-                }
+        this.commands.forEach {
+            if (it.category == "Dev") {
+                this.restrictCmdList.add(it.name)
+                if (it.aliases != null) this.restrictCmdList.addAll(it.aliases)
+            }else {
+                this.cmdList.add(it.name)
+                if (it.aliases != null) this.cmdList.addAll(it.aliases)
             }
         }
     }
@@ -76,11 +76,11 @@ object CommandManager {
         commands.add(cmd)
     }
 
-    fun getCommand(search: String): Command? {
+    fun getCommand(search: String, id: String): Command? {
         val searchLower = search.lowercase()
 
         for (cmd in this.commands) {
-            if (cmd.name == searchLower || (cmd.aliases != null && cmd.aliases.contains(searchLower))) {
+            if ((cmd.name == searchLower || (cmd.aliases != null && cmd.aliases.contains(searchLower))) && (cmd.category != "Dev" || id == "334054158879686657")) {
                 return cmd
             }
         }
@@ -94,7 +94,7 @@ object CommandManager {
             .split("\\s+".toRegex())
 
         val invoke = split[0].lowercase()
-        val cmd = this.getCommand(invoke)
+        val cmd = this.getCommand(invoke, event.author.id)
 
         if (cmd != null) {
             if (cmd.botPermissions != null) {
@@ -200,6 +200,16 @@ object CommandManager {
                 if (distance < minDistance) {
                     minDistance = distance
                     suggest = command
+                }
+            }
+
+            if (event.author.id == "334054158879686657") {
+                for (command in this.restrictCmdList) {
+                    val distance = Utils.levenshteinDistance(invoke, command)
+                    if (distance < minDistance) {
+                        minDistance = distance
+                        suggest = command
+                    }
                 }
             }
 

@@ -6,7 +6,6 @@ import me.davidffa.d4rkbotkt.command.CommandContext
 import me.davidffa.d4rkbotkt.command.CommandManager
 import me.davidffa.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.Permission
-import net.dv8tion.jda.api.entities.MessageEmbed
 import java.time.Instant
 
 class Help : Command(
@@ -88,9 +87,9 @@ class Help : Command(
         }
 
         val search = args[0]
-        val command = CommandManager.getCommand(search)
+        val command = CommandManager.getCommand(search, ctx.author.id)
 
-        if (command == null || (command.category == "Dev" && ctx.author.id != "334054158879686657")) {
+        if (command == null) {
             channel.sendMessage(":x: Comando não encontrado!")
             return
         }
