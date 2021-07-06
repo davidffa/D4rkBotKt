@@ -51,6 +51,17 @@ class Eval: Command(
             return
         }
 
+        if (ctx.args[0].lowercase() == "gc") {
+            val runtime = Runtime.getRuntime()
+            val oldMem = (runtime.totalMemory() - runtime.freeMemory()) / 1024 / 1024
+            System.gc()
+            val newMem = (runtime.totalMemory() - runtime.freeMemory()) / 1024 / 1024
+
+            ctx.channel.sendMessage("<:ram:751468688686841986> O Garbage Collector limpou ${oldMem - newMem}MB de RAM.")
+                .queue()
+            return
+        }
+
         engine.put("event", ctx.event)
         engine.put("message", ctx.message)
         engine.put("channel", ctx.channel)
@@ -68,7 +79,7 @@ class Eval: Command(
             val out = engine.eval(ctx.args.joinToString(" "))
 
             ctx.channel.sendMessage(":outbox_tray: **Output:**\n```kt\n${out}\n```").queue()
-        }catch (e: Exception) {
+        } catch (e: Exception) {
             ctx.channel.sendMessage(":x: **Erro:**```kt\n${e.message}\n```").queue()
         }
     }
