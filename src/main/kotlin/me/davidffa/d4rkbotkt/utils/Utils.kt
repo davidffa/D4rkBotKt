@@ -53,7 +53,7 @@ object Utils {
         var user: User? = null
         var id: String? = null
 
-        if (Regex("^<@!?[0-9]{17,19}>$").matches(query)) id = query.replace(Regex("[<@!>]"), "")
+        if (Regex("^<@!?[0-9]{17,18}>$").matches(query)) id = query.replace(Regex("[<@!>]"), "")
         else if (Regex("^[0-9]+$").matches(query)) id = query
 
         if (id != null) {
