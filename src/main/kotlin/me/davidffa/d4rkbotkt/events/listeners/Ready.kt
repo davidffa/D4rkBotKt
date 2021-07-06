@@ -9,6 +9,8 @@ import net.dv8tion.jda.api.events.ReadyEvent
 import org.slf4j.LoggerFactory
 import java.lang.management.ManagementFactory
 import java.util.*
+import java.util.concurrent.Executors
+import java.util.concurrent.TimeUnit
 import kotlin.concurrent.timerTask
 
 private val logger = LoggerFactory.getLogger("Ready")
@@ -24,7 +26,9 @@ suspend fun onReady(event: ReadyEvent) {
     D4rkBot.loadCache()
     logger.info("Cache carregada")
 
-    Timer().schedule(timerTask {
+    val threadPool = Executors.newSingleThreadScheduledExecutor()
+
+    threadPool.scheduleWithFixedDelay({
         when (id) {
             (0).toByte() -> {
                 presence.setPresence(OnlineStatus.DO_NOT_DISTURB, Activity.watching("D4rkB#2408"))
@@ -55,5 +59,5 @@ suspend fun onReady(event: ReadyEvent) {
             }
         }
         id++
-    }, 0, 30000)
+    }, 0, 30, TimeUnit.SECONDS)
 }

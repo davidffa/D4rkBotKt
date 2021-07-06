@@ -14,9 +14,9 @@ import net.dv8tion.jda.api.requests.GatewayIntent.*
 import net.dv8tion.jda.api.utils.cache.CacheFlag
 import okhttp3.OkHttpClient
 import org.slf4j.LoggerFactory
-import java.util.*
+import java.util.concurrent.Executors
+import java.util.concurrent.TimeUnit
 import kotlin.collections.HashMap
-import kotlin.concurrent.timerTask
 
 class D4rkBot {
     companion object {
@@ -31,14 +31,16 @@ class D4rkBot {
             commandsUsed = Database.botDB.findOneById(jda.selfUser.id)!!.commands
             this.lastCommandsUsed = commandsUsed
 
-            Timer().schedule(timerTask {
+            val threadPool = Executors.newSingleThreadScheduledExecutor()
+
+            threadPool.scheduleWithFixedDelay({
                 if (lastCommandsUsed != commandsUsed) {
                     lastCommandsUsed = commandsUsed
                     runBlocking {
                         Database.botDB.updateOneById(jda.selfUser.id, Updates.set("commands", commandsUsed))
                     }
                 }
-            }, 30000)
+            }, 0, 30, TimeUnit.SECONDS)
 
             val dbGuilds = Database.guildDB.find().toList()
 
