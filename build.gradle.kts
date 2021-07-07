@@ -25,6 +25,7 @@ repositories {
 dependencies {
     // Kotlin
     implementation(kotlin("stdlib"))
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0")
     implementation("ru.gildor.coroutines:kotlin-coroutines-okhttp:1.0")
     implementation("org.jetbrains.kotlin:kotlin-scripting-jsr223:1.5.20")
 
@@ -36,7 +37,7 @@ dependencies {
     implementation("com.sedmelluq:lavaplayer:1.3.78")
     implementation("com.sedmelluq:jda-nas:1.1.0")
 
-    // Filters
+    // Lavaplayer filters
     implementation("com.github.natanbc:lavadsp:0.7.7")
 
     // MongoDB
