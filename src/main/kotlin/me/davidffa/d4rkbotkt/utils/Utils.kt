@@ -118,7 +118,14 @@ object Utils {
             return false
         }
 
-        if (selfChannel == null) return true
+        if (selfChannel == null) {
+            if (memberVoiceChannel.userLimit == memberVoiceChannel.members.size && !selfPermissions.contains(Permission.MANAGE_CHANNEL)) {
+                channel.sendMessage(":x: O teu canal de voz está cheio!").queue()
+                return false
+            }
+            return true
+        }
+
 
         val djRoleID = D4rkBot.guildCache[member.guild.idLong]!!.djRole
 
