@@ -3,7 +3,6 @@ package me.davidffa.d4rkbotkt.commands.info
 import com.sedmelluq.discord.lavaplayer.tools.PlayerLibrary
 import dev.minn.jda.ktx.Embed
 import dev.minn.jda.ktx.await
-import me.davidffa.d4rkbotkt.D4rkBot
 import me.davidffa.d4rkbotkt.Database
 import me.davidffa.d4rkbotkt.command.Command
 import me.davidffa.d4rkbotkt.command.CommandContext
@@ -51,7 +50,7 @@ class Botinfo : Command(
             }
             field {
                 name = ":calendar: Criado em"
-                value = "`${Utils.formatDate(ctx.selfUser.timeCreated)}`"
+                value = "<t:${ctx.selfUser.timeCreated.toInstant().epochSecond}>"
             }
             field {
                 name = ":man: Dono"

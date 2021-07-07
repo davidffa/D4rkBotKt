@@ -44,10 +44,6 @@ object Utils {
         return "${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}"
     }
 
-    fun formatDate(date: OffsetDateTime): String {
-        return "${date.dayOfMonth}/${date.monthValue}/${date.year}"
-    }
-
     suspend fun findUser(query: String, guild: Guild): User? {
         val jda = guild.jda
         var user: User? = null
