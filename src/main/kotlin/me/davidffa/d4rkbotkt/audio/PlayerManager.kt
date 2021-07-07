@@ -2,8 +2,11 @@ package me.davidffa.d4rkbotkt.audio
 
 import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager
+import com.sedmelluq.discord.lavaplayer.player.FunctionalResultHandler
 import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException
+import com.sedmelluq.discord.lavaplayer.tools.io.MessageInput
+import com.sedmelluq.discord.lavaplayer.tools.io.MessageOutput
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack
 import dev.minn.jda.ktx.Embed
@@ -12,16 +15,23 @@ import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.entities.Guild
 import net.dv8tion.jda.api.entities.Member
 import net.dv8tion.jda.api.entities.TextChannel
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
 import java.time.Instant
+import java.util.*
+import kotlin.collections.HashMap
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 
 object PlayerManager {
     val musicManagers: HashMap<Long, GuildMusicManager> = HashMap()
     private val audioPlayerManager = DefaultAudioPlayerManager()
 
     init {
-        AudioSourceManagers.registerRemoteSources(this.audioPlayerManager)
-        AudioSourceManagers.registerLocalSource(this.audioPlayerManager)
-        this.audioPlayerManager.configuration.isFilterHotSwapEnabled = true
+        AudioSourceManagers.registerRemoteSources(audioPlayerManager)
+        AudioSourceManagers.registerLocalSource(audioPlayerManager)
+        audioPlayerManager.configuration.isFilterHotSwapEnabled = true
     }
 
     fun getMusicManager(guildId: Long): GuildMusicManager {
@@ -30,7 +40,7 @@ object PlayerManager {
         throw Error("MusicManager does not exist for guild ${guildId}.")
     }
 
-    private fun getMusicManager(guild: Guild, textChannel: TextChannel): GuildMusicManager {
+    fun getMusicManager(guild: Guild, textChannel: TextChannel): GuildMusicManager {
         return this.musicManagers.computeIfAbsent(guild.idLong) {
             val guildMusicManager = GuildMusicManager(this.audioPlayerManager, textChannel)
 
@@ -109,5 +119,39 @@ object PlayerManager {
                 }
             }
         })
+    }
+
+    fun decodeTrack(base64: String): AudioTrack {
+        val b64 = Base64.getDecoder().decode(base64)
+        return ByteArrayInputStream(b64).use {
+            audioPlayerManager.decodeTrack(MessageInput(it)).decodedTrack
+        }
+    }
+
+    fun encodeTrack(track: AudioTrack): String {
+        return ByteArrayOutputStream().use {
+            audioPlayerManager.encodeTrack(MessageOutput(it), track)
+            Base64.getEncoder().encodeToString(it.toByteArray())
+        }
+    }
+
+    suspend fun search(query: String, limit: Int? = null): List<AudioTrack> {
+        return suspendCoroutine { cont ->
+            val resultHandler = FunctionalResultHandler(
+                { cont.resume(listOf(it)) },
+                {
+                    if (it.tracks.isEmpty()) {
+                        cont.resumeWithException(IllegalStateException("No matches found!"))
+                        return@FunctionalResultHandler
+                    }
+                    if (limit != null) cont.resume(it.tracks.subList(0, limit))
+                    else cont.resume(it.tracks)
+                },
+                { cont.resumeWithException(IllegalStateException("No matches found!")) },
+                { cont.resumeWithException(it) }
+            )
+
+            audioPlayerManager.loadItem(query, resultHandler)
+        }
     }
 }

@@ -93,7 +93,7 @@ class TrackScheduler(private val player: AudioPlayer, private val textChannel: T
         if (source == "youtube") {
             return "https://img.youtube.com/vi/$identifier/maxresdefault.jpg"
         }
-        return ""
+        return "https://i.pinimg.com/564x/a3/a9/29/a3a929cc8d09e88815b89bc071ff4d8d.jpg"
     }
 
     override fun onTrackEnd(player: AudioPlayer, track: AudioTrack, endReason: AudioTrackEndReason) {

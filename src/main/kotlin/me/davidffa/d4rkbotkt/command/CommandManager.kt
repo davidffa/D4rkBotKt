@@ -42,6 +42,7 @@ object CommandManager {
         //this.addCommand(Playlist())
         this.addCommand(Queue())
         this.addCommand(Resume())
+        this.addCommand(Search())
         this.addCommand(Shuffle())
         this.addCommand(Skip())
         this.addCommand(Stop())
