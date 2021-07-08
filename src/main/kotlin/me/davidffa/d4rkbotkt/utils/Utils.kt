@@ -12,7 +12,6 @@ import net.dv8tion.jda.api.entities.TextChannel
 import net.dv8tion.jda.api.entities.User
 import java.net.MalformedURLException
 import java.net.URL
-import java.time.OffsetDateTime
 import java.util.*
 import kotlin.math.min
 
@@ -41,7 +40,11 @@ object Utils {
         val m = (t / 60) % 60
         val h = (t / 60 / 60) % 24
 
-        return "${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}"
+        return if (h != 0L) {
+            "${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}"
+        }else {
+            "${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}"
+        }
     }
 
     suspend fun findUser(query: String, guild: Guild): User? {
