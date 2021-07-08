@@ -110,6 +110,7 @@ class Filters : Command(
                 "soft" -> manager.switchFilter(Filter.SOFT)
                 "treble" -> manager.switchFilter(Filter.TREBLEBASS)
                 "vaporwave" -> manager.switchFilter(Filter.VAPORWAVE)
+                "8d" -> manager.switchFilter(Filter.EIGHTD)
                 "vibrato" -> manager.switchFilter(Filter.VIBRATO)
                 "vocals" -> manager.switchFilter(Filter.VOCALS)
                 "karaoke" -> manager.switchFilter(Filter.KARAOKE)

@@ -127,7 +127,7 @@ class Help : Command(
 
             Timer().schedule(timerTask {
                 ctx.jda.removeEventListener(listener)
-                msg.editMessage(":warning: O tempo expirou!\nUse o comando novamente para continuar a usar o menu!")
+                msg.editMessage(":warning: O tempo expirou!\nUsa o comando novamente para continuar a usar o menu!")
                     .setEmbeds()
                     .setActionRow(menu.asDisabled())
                     .queue(null, ignore(ErrorResponse.UNKNOWN_MESSAGE))
