@@ -75,7 +75,7 @@ class Help : Command(
 
                 val embed = EmbedBuilder {
                     title = "Ajuda"
-                    description = "Quantidade total de comandos [${commandsSize}]"
+                    description = "Quantidade total de comandos [$commandsSize]"
                     color = Utils.randColor()
                     footer {
                         name = ctx.author.asTag
@@ -120,14 +120,16 @@ class Help : Command(
                     }
                 }
 
-                it.editMessageEmbeds(embed.build()).queue()
+                val editedMenu = menu.createCopy()
+                editedMenu.setDefaultOptions(listOf(editedMenu.options.find { op -> op.value == option?.value }))
+                it.editMessageEmbeds(embed.build()).setActionRow(editedMenu.build()).queue()
             }
 
             Timer().schedule(timerTask {
                 ctx.jda.removeEventListener(listener)
                 msg.editMessage(":warning: O tempo expirou!\nUse o comando novamente para continuar a usar o menu!")
                     .setEmbeds()
-                    .setActionRows()
+                    .setActionRow(menu.asDisabled())
                     .queue(null, ignore(ErrorResponse.UNKNOWN_MESSAGE))
             }, 90000L)
             return
