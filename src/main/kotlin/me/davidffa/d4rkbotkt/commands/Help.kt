@@ -70,6 +70,7 @@ class Help : Command(
             val msg = channel.sendMessage("\u200B").setActionRow(menu).await()
 
             val listener = ctx.jda.onSelection("$nonce:help") {
+                if (it.user.idLong != ctx.author.idLong) return@onSelection
                 val option = it.selectedOptions?.first()
 
                 val embed = EmbedBuilder {
