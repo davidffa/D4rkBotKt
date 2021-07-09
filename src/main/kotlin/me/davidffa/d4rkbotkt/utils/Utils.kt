@@ -5,6 +5,7 @@ import dev.minn.jda.ktx.await
 import me.davidffa.d4rkbotkt.D4rkBot
 import me.davidffa.d4rkbotkt.Database
 import me.davidffa.d4rkbotkt.audio.PlayerManager
+import me.davidffa.d4rkbotkt.audio.Track
 import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.entities.Guild
 import net.dv8tion.jda.api.entities.Member
@@ -149,7 +150,7 @@ object Utils {
         return true
     }
 
-    suspend fun canUsePlayer(self: Member, member: Member, channel: TextChannel, forOwnTrack: Boolean = false, forAllQueueTracks: Boolean = false): Boolean {
+    suspend fun canUsePlayer(self: Member, member: Member, channel: TextChannel, forOwnTrack: Boolean = false, forAllQueueTracks: Boolean = false, trackPosition: Int? = null): Boolean {
         val memberVoiceState = member.voiceState
         val selfVoiceState = self.voiceState
 
@@ -172,8 +173,24 @@ object Utils {
             return false
         }
 
-        val djRoleID = D4rkBot.guildCache[member.guild.idLong]!!.djRole ?: return true
+        if (trackPosition != null) {
+            if (player.scheduler.queue.isEmpty()) {
+                channel.sendMessage(":x: A queue está vazia!").queue()
+                return false
+            }
 
+            val queue = player.scheduler.queue.toMutableList()
+            val track = queue.getOrNull(trackPosition - 1)
+
+            if (track == null) {
+                channel.sendMessage(":x: Não há nenhuma música nessa posição da queue.").queue()
+                return false
+            }
+
+            if (track.requester.idLong == member.idLong) return true
+        }
+
+        val djRoleID = D4rkBot.guildCache[member.guild.idLong]!!.djRole ?: return true
         val djRole = member.guild.roleCache.getElementById(djRoleID)
 
         if (djRole == null) {
@@ -195,7 +212,11 @@ object Utils {
         }
 
         if (forOwnTrack) {
-            channel.sendMessage(":x: Apenas alguém com o cargo de DJ (`${djRole.name}`) ou quem requisitou esta música pode usar esse comando.").queue()
+            if (trackPosition != null) {
+                channel.sendMessage(":x: Apenas alguém com o cargo de DJ (`${djRole.name}`) ou quem requisitou a música dessa posição a pode remover da queue.").queue()
+            }else {
+                channel.sendMessage(":x: Apenas alguém com o cargo de DJ (`${djRole.name}`) ou quem requisitou esta música pode usar esse comando.").queue()
+            }
         }else {
             channel.sendMessage(":x: Precisas do cargo de DJ (`${djRole.name}`) para poderes usar esse comando.").queue()
         }
