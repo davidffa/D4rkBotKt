@@ -16,14 +16,5 @@ data class Playlist @BsonCreator constructor(
     @BsonProperty("name")
     val name: String,
     @Nullable @BsonProperty("tracks")
-    val tracks: List<Track>? = null
-)
-
-data class Track @BsonCreator constructor(
-    @BsonProperty("name")
-    val name: String,
-    @BsonProperty("url")
-    val url: String,
-    @BsonProperty("track")
-    val track: String
+    val tracks: List<String>? = null
 )

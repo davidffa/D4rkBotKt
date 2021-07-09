@@ -10,7 +10,6 @@ import me.davidffa.d4rkbotkt.command.CommandContext
 import me.davidffa.d4rkbotkt.database.Playlist
 import me.davidffa.d4rkbotkt.database.UserDB
 import me.davidffa.d4rkbotkt.audio.PlayerManager
-import me.davidffa.d4rkbotkt.database.Track
 import me.davidffa.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.Permission
 import java.time.Instant
@@ -112,6 +111,8 @@ class Playlist : Command(
                     ctx.author.id,
                     Updates.set("playlists.${playlists.indexOf(playlist)}.name", ctx.args[2])
                 )
+
+                ctx.channel.sendMessage(":bookmark: Playlist renomeada com sucesso!").queue()
             }
 
             in listOf("deletar", "apagar", "excluir", "delete") -> {
@@ -179,33 +180,15 @@ class Playlist : Command(
 
                 val header = "**${playlist.name}** - `${playlist.tracks.size}` músicas\n\n"
 
-                if (playlist.tracks.size <= 10) {
-                    val embed = Embed {
-                        title = "<a:disco:803678643661832233> Lista de Músicas"
-                        color = Utils.randColor()
-                        description = header +
-                                playlist.tracks.mapIndexed { index, track ->
-                                    "${index + 1}º - [${track.name}](${track.url})"
-                                }.joinToString("\n")
-                        footer {
-                            name = ctx.author.asTag
-                            iconUrl = ctx.author.effectiveAvatarUrl
-                        }
-                        timestamp = Instant.now()
-                    }
-
-                    ctx.channel.sendMessageEmbeds(embed).queue()
-                    return
-                }
-
                 val chunkedTracks = playlist.tracks.chunked(10)
 
                 val pages = chunkedTracks.map {
                     Embed {
                         title = "<a:disco:803678643661832233> Lista de Músicas"
                         description = header +
-                                it.mapIndexed { index, track ->
-                                    "${index + (chunkedTracks.indexOf(it) * 10) + 1}º - [${track.name}](${track.url})"
+                                it.mapIndexed { index, base64 ->
+                                    val track = PlayerManager.decodeTrack(base64)
+                                    "${index + (chunkedTracks.indexOf(it) * 10) + 1}º - [${track.info.title}](${track.info.uri})"
                                 }.joinToString("\n")
                         color = Utils.randColor()
                         footer {
@@ -215,6 +198,11 @@ class Playlist : Command(
                         timestamp = Instant.now()
                     }
                 }.toTypedArray()
+
+                if (playlist.tracks.size <= 10) {
+                    ctx.channel.sendMessageEmbeds(pages.first()).queue()
+                    return
+                }
 
                 ctx.channel.sendPaginator(*pages, expireAfter = 10 * 60 * 1000L, filter = {
                     if (it.user.idLong == ctx.author.idLong) return@sendPaginator true
@@ -252,20 +240,22 @@ class Playlist : Command(
                     return
                 }
 
-                val track = playlist.tracks.getOrNull(id-1)
+                val base64 = playlist.tracks.getOrNull(id-1)
 
-                if (track == null) {
+                if (base64 == null) {
                     ctx.channel.sendMessage(":x: ID da música inválido!\n**Usa:** ${prefix}playlist detalhes <Nome> para ver o id da música a remover.")
                         .queue()
                     return
                 }
 
+                val track = PlayerManager.decodeTrack(base64)
+
                 Database.userDB.updateOneById(
                     ctx.author.id,
-                    Updates.pull("playlists.${playlists.indexOf(playlist)}.tracks", track)
+                    Updates.pull("playlists.${playlists.indexOf(playlist)}.tracks", base64)
                 )
 
-                ctx.channel.sendMessage("<a:verificado:803678585008816198> Removeste a música `${playlist.tracks[id - 1].name}` da playlist!")
+                ctx.channel.sendMessage("<a:verificado:803678585008816198> Removeste a música `${track.info.title}` da playlist!")
                     .queue()
             }
 
@@ -311,7 +301,7 @@ class Playlist : Command(
 
                 val base64 = PlayerManager.encodeTrack(track)
 
-                if (playlist.tracks?.find{ it.track == base64 } != null) {
+                if (playlist.tracks?.find{ it == base64 } != null) {
                     ctx.channel.sendMessage(":x: Essa música já está na playlist!").queue()
                     return
                 }
@@ -320,7 +310,7 @@ class Playlist : Command(
                     ctx.author.id,
                     Updates.push(
                         "playlists.${playlists.indexOf(playlist)}.tracks",
-                        Track(track.info.title, track.info.uri, base64)
+                        base64
                     )
                 )
 
@@ -391,7 +381,7 @@ class Playlist : Command(
 
                 val musicManager = PlayerManager.getMusicManager(ctx.guild, ctx.channel)
                 playlist.tracks.forEach {
-                    musicManager.scheduler.queue(PlayerManager.decodeTrack(it.track), ctx.member)
+                    musicManager.scheduler.queue(PlayerManager.decodeTrack(it), ctx.member)
                 }
 
                 val embed = Embed {
