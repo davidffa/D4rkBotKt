@@ -7,7 +7,11 @@ import me.davidffa.d4rkbotkt.command.Command
 import me.davidffa.d4rkbotkt.command.CommandContext
 import me.davidffa.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.Permission
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent
+import net.dv8tion.jda.api.entities.Emoji
+import net.dv8tion.jda.api.events.interaction.ButtonClickEvent
+import net.dv8tion.jda.api.interactions.components.ActionRow
+import net.dv8tion.jda.api.interactions.components.Button
+import java.security.SecureRandom
 import java.time.Instant
 import java.util.*
 import kotlin.concurrent.timerTask
@@ -22,10 +26,7 @@ class Search : Command(
     args = 1,
     cooldown = 5
 ) {
-    private val pendingSearches = mutableListOf<Long>()
-
     override suspend fun run(ctx: CommandContext) {
-        if (pendingSearches.contains(ctx.author.idLong)) return
         if (!Utils.canPlay(ctx.selfMember, ctx.member, ctx.channel)) return
 
         val query = if (ctx.args[0].lowercase() == "sc" || ctx.args[0].lowercase() == "yt") {
@@ -50,13 +51,11 @@ class Search : Command(
             null
         } ?: return
 
-        pendingSearches.add(ctx.author.idLong)
         val embed = Embed {
             title = ":mag: Resultados da procura"
-            description = "Envie mensagem com o número da música, (0 para cancelar)\n\n" +
-                    tracks.mapIndexed { i, track ->
-                        "${i+1}º - `${track.info.title}`"
-                    }.joinToString("\n")
+            description = tracks.mapIndexed { i, track ->
+                "**${i+1}º** - [${track.info.title}](${track.info.uri})"
+            }.joinToString("\n")
             color = Utils.randColor()
             footer {
                 name = ctx.author.asTag
@@ -65,39 +64,59 @@ class Search : Command(
             timestamp = Instant.now()
         }
 
-        val msg = ctx.channel.sendMessageEmbeds(embed).await()
+        val nonceBytes = ByteArray(24)
+        SecureRandom().nextBytes(nonceBytes)
+        val nonce = Base64.getEncoder().encodeToString(nonceBytes)
+
+        val one = Button.success("$nonce:1", Emoji.fromUnicode("1️⃣"))
+        val two = Button.success("$nonce:2", Emoji.fromUnicode("2️⃣"))
+        val three = Button.success("$nonce:3", Emoji.fromUnicode("3️⃣"))
+        val four = Button.success("$nonce:4", Emoji.fromUnicode("4️⃣"))
+        val five = Button.success("$nonce:5", Emoji.fromUnicode("5️⃣"))
+        val six = Button.success("$nonce:6", Emoji.fromUnicode("6️⃣"))
+        val seven = Button.success("$nonce:7", Emoji.fromUnicode("7️⃣"))
+        val eight = Button.success("$nonce:8", Emoji.fromUnicode("8️⃣"))
+        val nine = Button.success("$nonce:9", Emoji.fromUnicode("9️⃣"))
+        val ten = Button.success("$nonce:10", Emoji.fromUnicode("\uD83D\uDD1F"))
+        val cancel = Button.danger("$nonce:cancel", Emoji.fromUnicode("\uD83D\uDDD1️"))
+
+        val buttons = listOf(
+            ActionRow.of(one, two, three, four, five),
+            ActionRow.of(six, seven, eight, nine, ten),
+            ActionRow.of(cancel)
+        )
+
+        val msg = ctx.channel.sendMessageEmbeds(embed).setActionRows(buttons).await()
 
         var listener: CoroutineEventListener? = null
 
         val timer = Timer()
         timer.schedule(timerTask {
-            pendingSearches.remove(ctx.author.idLong)
             ctx.jda.removeEventListener(listener)
-            msg.editMessage(":x: Pesquisa cancelada!").setEmbeds().queue()
-        }, 20000L)
+            msg.editMessage(":x: Pesquisa cancelada!").setEmbeds().setActionRows().queue()
+        }, 40000L)
 
-        listener = ctx.jda.listener<GuildMessageReceivedEvent> {
-            if (it.author != ctx.author || it.channel != ctx.channel) return@listener
-            val id = it.message.contentRaw.toIntOrNull()
+        listener = ctx.jda.listener<ButtonClickEvent> {
+            if (it.member != ctx.member || it.channel != ctx.channel) return@listener
+            if (!it.componentId.startsWith(nonce)) return@listener
 
-            if (id == null || id < 0 || id > 10) {
-                ctx.channel.sendMessage(":x: Número inválido!").queue()
-                return@listener
-            }
+            val id = it.componentId.replace("$nonce:", "")
 
             timer.cancel()
-            ctx.jda.removeEventListener(listener)
-            pendingSearches.remove(ctx.author.idLong)
+            ctx.jda.removeEventListener(this)
 
-            if (id == 0) {
-                msg.editMessage(":x: Pesquisa cancelada!").setEmbeds().queue()
+            if (id == "cancel") {
+                it.editMessage(":x: Pesquisa cancelada!").setEmbeds().setActionRows().queue()
                 return@listener
             }
+
+            val index = id.toIntOrNull() ?: return@listener
+
             msg.delete().queue()
 
             if (!Utils.canPlay(ctx.selfMember, ctx.member, ctx.channel)) return@listener
 
-            val track = tracks[id-1]
+            val track = tracks[index-1]
 
             if (!ctx.selfMember.voiceState!!.inVoiceChannel()) {
                 ctx.guild.audioManager.isSelfDeafened = true
