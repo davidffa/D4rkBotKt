@@ -44,6 +44,7 @@ object CommandManager {
         this.addCommand(Remove())
         this.addCommand(Resume())
         this.addCommand(Search())
+        this.addCommand(Seek())
         this.addCommand(Shuffle())
         this.addCommand(Skip())
         this.addCommand(Stop())
