@@ -1,9 +1,6 @@
 package me.davidffa.d4rkbotkt.events
 
 import dev.minn.jda.ktx.listener
-import me.davidffa.d4rkbotkt.D4rkBot
-import me.davidffa.d4rkbotkt.Database
-import me.davidffa.d4rkbotkt.database.GuildCache
 import me.davidffa.d4rkbotkt.events.listeners.*
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.events.GenericEvent
@@ -32,14 +29,5 @@ object EventManager {
                 is GuildMemberRemoveEvent -> onGuildMemberRemove(event)
             }
         }
-    }
-
-    private fun onGuildJoin(event: GuildJoinEvent) {
-        D4rkBot.guildCache[event.guild.idLong] = GuildCache("dk.")
-    }
-
-    private suspend fun onGuildLeave(event: GuildLeaveEvent) {
-        D4rkBot.guildCache.remove(event.guild.idLong)
-        Database.guildDB.deleteOneById(event.guild.id)
     }
 }
