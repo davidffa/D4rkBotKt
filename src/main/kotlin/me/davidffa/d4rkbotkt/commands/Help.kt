@@ -87,33 +87,33 @@ class Help : Command(
                 when (option?.value) {
                     "dev" -> {
                         embed.field {
-                            name = "> <:kotlin:856168010004037702> Desenvolvedor [${dev.size}]"
+                            name = "> Comandos nesta categoria [${dev.size}]"
                             value = "```\n${dev.joinToString(" | ")}\n```"
                         }
                     }
                     "settings" -> {
                         embed.field {
-                            name = "> :gear: Definições [${settings.size}]"
+                            name = "> Comandos nesta categoria [${settings.size}]"
                             value = "```\n${settings.joinToString(" | ")}\n```"
                         }
                     }
                     "info" -> {
                         embed.field {
-                            name = "> :information_source: Informação [${info.size}]"
+                            name = "> Comandos nesta categoria [${info.size}]"
                             value = "```\n${info.joinToString(" | ")}\n```"
                             inline = false
                         }
                     }
                     "music" -> {
                         embed.field {
-                            name = "> <a:disco:803678643661832233> Música [${music.size}]"
+                            name = "> Comandos nesta categoria [${music.size}]"
                             value = "```\n${music.joinToString(" | ")}\n```"
                             inline = false
                         }
                     }
                     "others" -> {
                         embed.field {
-                            name = "> :books: Outros [${others.size}]"
+                            name = "> Comandos nesta categoria [${others.size}]"
                             value = "```\n${others.joinToString(" | ")}\n```"
                             inline = false
                         }
