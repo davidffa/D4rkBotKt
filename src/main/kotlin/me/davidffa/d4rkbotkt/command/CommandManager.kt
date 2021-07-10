@@ -31,7 +31,9 @@ object CommandManager {
         this.addCommand(Avatar())
         this.addCommand(Botinfo())
         this.addCommand(Ping())
+        this.addCommand(Serverinfo())
         this.addCommand(Uptime())
+        this.addCommand(Userinfo())
 
         /* ** MUSIC ** */
         this.addCommand(Filters())
