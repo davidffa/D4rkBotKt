@@ -71,7 +71,7 @@ class Filters : Command(
             timestamp = Instant.now()
         }
 
-        val desc = getDescription(listOf())
+        val desc = getDescription(manager.filters)
         embed.field {
             name = "\u200B"
             value = desc.first

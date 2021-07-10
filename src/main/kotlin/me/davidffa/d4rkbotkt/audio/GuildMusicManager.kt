@@ -17,7 +17,7 @@ class GuildMusicManager(manager: AudioPlayerManager, val textChannel: TextChanne
     var djtableMessage: Message? = null
     var leaveTimer: Timer? = null
 
-    val filters = ArrayList<Filter>()
+    val filters = mutableListOf<Filter>()
 
     var volume = 1f
         set(value) {
