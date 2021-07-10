@@ -379,9 +379,11 @@ class Playlist : Command(
                     ctx.guild.audioManager.openAudioConnection(ctx.member.voiceState?.channel)
                 }
 
+                val tracks = playlist.tracks.map { PlayerManager.decodeTrack(it) }
+
                 val musicManager = PlayerManager.getMusicManager(ctx.guild, ctx.channel)
-                playlist.tracks.forEach {
-                    musicManager.scheduler.queue(PlayerManager.decodeTrack(it), ctx.member)
+                tracks.forEach {
+                    musicManager.scheduler.queue(it, ctx.member)
                 }
 
                 val embed = Embed {
@@ -398,7 +400,7 @@ class Playlist : Command(
                     }
                     field {
                         name = ":watch: Duração:"
-                        value = "`${Utils.msToHour(musicManager.scheduler.queue.sumOf { it.track.duration })}`"
+                        value = "`${Utils.msToHour(tracks.sumOf { it.duration })}`"
                         inline = false
                     }
                     color = Utils.randColor()
