@@ -18,9 +18,7 @@ import kotlin.math.min
 
 object Utils {
     fun randColor(): Int {
-        val rnd = Random()
-
-        return rnd.nextInt(0xffffff + 1)
+        return (0..0xffffff).random()
     }
 
     fun msToDate(time: Long): String {
