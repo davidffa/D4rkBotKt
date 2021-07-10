@@ -138,6 +138,9 @@ class Userinfo : Command(
                 value = "```\n${Utils.translatePermissions(permissions.toList()).joinToString(", ")}```"
                 inline = false
             }
+        }else {
+            ctx.channel.sendMessageEmbeds(page1).queue()
+            return
         }
 
         val page2 = embed.build()
