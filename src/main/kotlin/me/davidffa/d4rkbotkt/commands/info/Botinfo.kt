@@ -3,6 +3,7 @@ package me.davidffa.d4rkbotkt.commands.info
 import com.sedmelluq.discord.lavaplayer.tools.PlayerLibrary
 import dev.minn.jda.ktx.Embed
 import dev.minn.jda.ktx.await
+import me.davidffa.d4rkbotkt.D4rkBot
 import me.davidffa.d4rkbotkt.Database
 import me.davidffa.d4rkbotkt.command.Command
 import me.davidffa.d4rkbotkt.command.CommandContext
@@ -39,10 +40,14 @@ class Botinfo : Command(
 
         val systemLoad = getSystemRecentCpuUsage()
 
+        val hal = si.hardware
+
         val embed = Embed {
             title = "<a:blobdance:804026401849475094> Informações sobre mim"
             description = "**[Convite](https://discord.com/oauth2/authorize?client_id=${ctx.jda.selfUser.id}&scope=bot&permissions=8)**\n" +
-                    "**[Servidor de Suporte](https://discord.gg/dBQnxVCTEw)**\n\u200B"
+                    "**[Servidor de Suporte](https://discord.gg/dBQnxVCTEw)**\n\n" +
+                    "Modelo da CPU: `${hal.processor.processorIdentifier.name}`\n" +
+                    "Total de comandos executados `${D4rkBot.commandsUsed}`\n\u200B"
             color = 15695386
             field {
                 name = ":id: Meu ID"
@@ -50,7 +55,7 @@ class Botinfo : Command(
             }
             field {
                 name = ":calendar: Criado em"
-                value = "<t:${ctx.selfUser.timeCreated.toInstant().epochSecond}>"
+                value = "<t:${ctx.selfUser.timeCreated.toInstant().epochSecond}:d> (<t:${ctx.selfUser.timeCreated.toInstant().epochSecond}:R>)"
             }
             field {
                 name = ":man: Dono"
