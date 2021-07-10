@@ -1,14 +1,16 @@
 package me.davidffa.d4rkbotkt.commands.music
 
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException
+import com.sedmelluq.discord.lavaplayer.track.AudioTrack
 import dev.minn.jda.ktx.*
+import dev.minn.jda.ktx.interactions.SelectionMenu
+import dev.minn.jda.ktx.interactions.option
 import me.davidffa.d4rkbotkt.audio.PlayerManager
 import me.davidffa.d4rkbotkt.command.Command
 import me.davidffa.d4rkbotkt.command.CommandContext
 import me.davidffa.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.entities.Emoji
-import net.dv8tion.jda.api.events.interaction.ButtonClickEvent
 import net.dv8tion.jda.api.interactions.components.ActionRow
 import net.dv8tion.jda.api.interactions.components.Button
 import java.security.SecureRandom
@@ -36,17 +38,17 @@ class Search : Command(
             }
             if (Utils.isUrl(ctx.args[1])) ctx.args[1]
             else "${ctx.args[0]}search:${ctx.args.subList(1, ctx.args.size).joinToString(" ")}"
-        }else {
+        } else {
             if (Utils.isUrl(ctx.args[0])) ctx.args[0]
             else "ytsearch:${ctx.args.joinToString(" ")}"
         }
 
         val tracks = try {
             PlayerManager.search(query, 10)
-        }catch (e: IllegalStateException) {
+        } catch (e: IllegalStateException) {
             ctx.channel.sendMessage(":x: Não encontrei nenhum resultado!").queue()
             null
-        }catch (e: FriendlyException) {
+        } catch (e: FriendlyException) {
             ctx.channel.sendMessage(":x: Ocorreu um erro ao procurar a música!\nErro: ${e.message}").queue()
             null
         } ?: return
@@ -54,7 +56,7 @@ class Search : Command(
         val embed = Embed {
             title = ":mag: Resultados da procura"
             description = tracks.mapIndexed { i, track ->
-                "**${i+1}º** - [${track.info.title}](${track.info.uri})"
+                "**${i + 1}º** - [${track.info.title}](${track.info.uri})"
             }.joinToString("\n")
             color = Utils.randColor()
             footer {
@@ -68,55 +70,51 @@ class Search : Command(
         SecureRandom().nextBytes(nonceBytes)
         val nonce = Base64.getEncoder().encodeToString(nonceBytes)
 
-        val one = Button.success("$nonce:1", Emoji.fromUnicode("1️⃣"))
-        val two = Button.success("$nonce:2", Emoji.fromUnicode("2️⃣"))
-        val three = Button.success("$nonce:3", Emoji.fromUnicode("3️⃣"))
-        val four = Button.success("$nonce:4", Emoji.fromUnicode("4️⃣"))
-        val five = Button.success("$nonce:5", Emoji.fromUnicode("5️⃣"))
-        val six = Button.success("$nonce:6", Emoji.fromUnicode("6️⃣"))
-        val seven = Button.success("$nonce:7", Emoji.fromUnicode("7️⃣"))
-        val eight = Button.success("$nonce:8", Emoji.fromUnicode("8️⃣"))
-        val nine = Button.success("$nonce:9", Emoji.fromUnicode("9️⃣"))
-        val ten = Button.success("$nonce:10", Emoji.fromUnicode("\uD83D\uDD1F"))
+        val menu = SelectionMenu("$nonce:search", "Escolhe as músicas para adicionar à queue", 1..10) {
+            tracks.mapIndexed { i, track ->
+                option(
+                    formatString(track.info.author, 25), "$i", formatString(track.info.title, 50), emoji =
+                    if (i == 9) Emoji.fromUnicode("\uD83D\uDD1F") else Emoji.fromUnicode("${i + 1}️⃣")
+                )
+            }
+        }
+
         val cancel = Button.danger("$nonce:cancel", Emoji.fromUnicode("\uD83D\uDDD1️"))
 
         val buttons = listOf(
-            ActionRow.of(one, two, three, four, five),
-            ActionRow.of(six, seven, eight, nine, ten),
+            ActionRow.of(menu),
             ActionRow.of(cancel)
         )
 
         val msg = ctx.channel.sendMessageEmbeds(embed).setActionRows(buttons).await()
 
-        var listener: CoroutineEventListener? = null
+        var buttonListener: CoroutineEventListener? = null
+        var menuListener: CoroutineEventListener? = null
 
         val timer = Timer()
         timer.schedule(timerTask {
-            ctx.jda.removeEventListener(listener)
+            ctx.jda.removeEventListener(buttonListener)
+            ctx.jda.removeEventListener(menuListener)
             msg.editMessage(":x: Pesquisa cancelada!").setEmbeds().setActionRows().queue()
         }, 40000L)
 
-        listener = ctx.jda.listener<ButtonClickEvent> {
-            if (it.member != ctx.member || it.channel != ctx.channel) return@listener
-            if (!it.componentId.startsWith(nonce)) return@listener
+        menuListener = ctx.jda.onSelection("$nonce:search") {
+            if (it.member != ctx.member || it.channel != ctx.channel) return@onSelection
 
-            val id = it.componentId.replace("$nonce:", "")
+            val ids = it.selectedOptions!!.map { op -> op.value.toInt() }
 
             timer.cancel()
             ctx.jda.removeEventListener(this)
-
-            if (id == "cancel") {
-                it.editMessage(":x: Pesquisa cancelada!").setEmbeds().setActionRows().queue()
-                return@listener
-            }
-
-            val index = id.toIntOrNull() ?: return@listener
-
+            ctx.jda.removeEventListener(buttonListener)
             msg.delete().queue()
 
-            if (!Utils.canPlay(ctx.selfMember, ctx.member, ctx.channel)) return@listener
+            if (!Utils.canPlay(ctx.selfMember, ctx.member, ctx.channel)) return@onSelection
 
-            val track = tracks[index-1]
+            val chosenTracks = mutableListOf<AudioTrack>()
+
+            ids.forEach { i ->
+                chosenTracks.add(tracks[i])
+            }
 
             if (!ctx.selfMember.voiceState!!.inVoiceChannel()) {
                 ctx.guild.audioManager.isSelfDeafened = true
@@ -124,10 +122,40 @@ class Search : Command(
             }
 
             val musicManager = PlayerManager.getMusicManager(ctx.guild, ctx.channel)
-            musicManager.scheduler.queue(track, ctx.member)
-            if (musicManager.scheduler.queue.isNotEmpty()) {
-                ctx.channel.sendMessage(":bookmark_tabs: Adicionado à lista `${track.info.title}`").queue()
+
+            chosenTracks.forEach { track ->
+                musicManager.scheduler.queue(track, ctx.member)
             }
+
+            val embed2 = Embed {
+                title = ":bookmark_tabs: Adicionado à lista"
+                description = chosenTracks.joinToString("\n") { t -> "[${t.info.title}](${t.info.uri})" }
+                color = Utils.randColor()
+                footer {
+                    name = ctx.author.asTag
+                    iconUrl = ctx.author.effectiveAvatarUrl
+                }
+                timestamp = Instant.now()
+            }
+
+            ctx.channel.sendMessageEmbeds(embed2).queue()
         }
+
+        buttonListener = ctx.jda.onButton("$nonce:cancel") {
+            if (it.member != ctx.member) return@onButton
+
+            timer.cancel()
+
+            ctx.jda.removeEventListener(buttonListener)
+            ctx.jda.removeEventListener(menuListener)
+
+            it.editMessage(":x: Pesquisa cancelada!").setEmbeds().setActionRows().queue()
+            return@onButton
+        }
+    }
+
+    private fun formatString(str: String, limit: Int): String {
+        if (str.length <= limit) return str
+        return "${str.substring(0 until limit - 3)}..."
     }
 }
