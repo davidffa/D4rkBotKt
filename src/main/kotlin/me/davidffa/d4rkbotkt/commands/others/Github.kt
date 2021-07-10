@@ -35,6 +35,7 @@ class Github : Command(
         }
 
         val user = DataObject.fromJson(withContext(Dispatchers.IO) { res.body()!!.string() })
+        res.close()
 
         val embed = EmbedBuilder {
             title = "<:github:784791056670654465> Perfil de ${user.getString("login")}"
