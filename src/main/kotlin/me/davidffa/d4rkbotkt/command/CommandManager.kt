@@ -53,6 +53,7 @@ object CommandManager {
         this.addCommand(Volume())
 
         /* ** OTHERS ** */
+        this.addCommand(Github())
         this.addCommand(Help())
         this.addCommand(Render())
 
