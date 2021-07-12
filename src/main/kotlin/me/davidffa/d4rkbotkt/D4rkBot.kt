@@ -72,9 +72,7 @@ class D4rkBot {
         GUILD_VOICE_STATES,
         GUILD_PRESENCES,
         GUILD_MESSAGES,
-        GUILD_MESSAGE_REACTIONS,
-        DIRECT_MESSAGES,
-        DIRECT_MESSAGE_REACTIONS,
+        GUILD_MESSAGE_REACTIONS
     )
 
     init {
@@ -92,7 +90,8 @@ class D4rkBot {
 
         try {
             jda = JDABuilder.create(System.getenv("TOKEN"), intents)
-                .enableCache(CacheFlag.VOICE_STATE)
+                .enableCache(listOf(CacheFlag.VOICE_STATE, CacheFlag.CLIENT_STATUS, CacheFlag.ONLINE_STATUS))
+                .disableCache(listOf(CacheFlag.ACTIVITY, CacheFlag.ROLE_TAGS))
                 .setStatus(OnlineStatus.IDLE)
                 .setActivity(Activity.playing("A iniciar..."))
                 .setAudioSendFactory(NativeAudioSendFactory())
