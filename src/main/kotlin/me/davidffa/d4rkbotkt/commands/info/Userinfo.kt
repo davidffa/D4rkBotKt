@@ -75,18 +75,16 @@ class Userinfo : Command(
                     OnlineStatus.UNKNOWN -> "`Desconhecido`"
                 }
             }
+            val onlineClients = mutableListOf<String>()
+
+            if (member.getOnlineStatus(ClientType.DESKTOP) != OnlineStatus.OFFLINE) onlineClients.add(":computer:")
+            if (member.getOnlineStatus(ClientType.MOBILE) != OnlineStatus.OFFLINE) onlineClients.add(":mobile_phone:")
+            if (member.getOnlineStatus(ClientType.WEB) != OnlineStatus.OFFLINE) onlineClients.add(":globe_with_meridians:")
+
             if (member.activeClients.isNotEmpty()) {
                 embed.field {
                     name = "Dispositivos :technologist:"
-                    value = member.activeClients.joinToString(" ") {
-                        when (it) {
-                            ClientType.DESKTOP -> ":computer:"
-                            ClientType.MOBILE -> ":mobile_phone:"
-                            ClientType.WEB -> ":globe_with_meridians:"
-                            ClientType.UNKNOWN -> ":question:"
-                            null -> ":question:"
-                        }
-                    }
+                    value = onlineClients.joinToString(" - ")
                 }
             }
 
