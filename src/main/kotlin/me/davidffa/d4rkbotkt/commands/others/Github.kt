@@ -39,6 +39,7 @@ class Github : Command(
 
         val embed = EmbedBuilder {
             title = "<:github:784791056670654465> Perfil de ${user.getString("login")}"
+            url = "https://github.com/${user.getString("login")}"
             if (!user.isNull("bio")) description = "```\n${user.getString("bio")}```"
             field {
                 name = ":bust_in_silhouette: Nome"
