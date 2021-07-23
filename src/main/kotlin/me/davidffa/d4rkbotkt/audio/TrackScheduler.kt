@@ -6,15 +6,18 @@ import com.sedmelluq.discord.lavaplayer.tools.FriendlyException
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason
 import dev.minn.jda.ktx.Embed
+import me.davidffa.d4rkbotkt.D4rkBot
 import me.davidffa.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.entities.Member
 import net.dv8tion.jda.api.entities.Message
 import net.dv8tion.jda.api.entities.TextChannel
+import okhttp3.Request
 import org.slf4j.LoggerFactory
 import java.time.Instant
 import java.util.concurrent.BlockingQueue
 import java.util.concurrent.LinkedBlockingQueue
+import kotlin.system.exitProcess
 
 class TrackScheduler(private val player: AudioPlayer, private val textChannel: TextChannel) : AudioEventAdapter() {
     private val logger = LoggerFactory.getLogger(this::class.java)
@@ -45,7 +48,7 @@ class TrackScheduler(private val player: AudioPlayer, private val textChannel: T
         if (!this::current.isInitialized) {
             this.current = track
             this.player.startTrack(audioTrack, true)
-        }else {
+        } else {
             this.queue.offer(track)
         }
     }
@@ -106,7 +109,12 @@ class TrackScheduler(private val player: AudioPlayer, private val textChannel: T
             this.npMessage = null
         }
 
-        if (!Utils.hasPermissions(guild.selfMember, textChannel, listOf(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS))) return
+        if (!Utils.hasPermissions(
+                guild.selfMember,
+                textChannel,
+                listOf(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS)
+            )
+        ) return
 
         val requester = current.requester
 
@@ -142,6 +150,28 @@ class TrackScheduler(private val player: AudioPlayer, private val textChannel: T
 
     override fun onTrackException(player: AudioPlayer, track: AudioTrack, exception: FriendlyException) {
         logger.warn("Ocorreu um erro ao tocar a música ${track.info.identifier}.\nErro: ${exception.printStackTrace()}")
+        if (exception.localizedMessage.contains("429")) {
+            this.textChannel.sendMessage(":warning: Parece que o YouTube me impediu de tocar essa música, aguarda um momento enquanto resolvo esse problema e tenta novamente daqui a uns segundos.")
+                .queue()
+            this.destroy()
+
+            val appName = System.getenv("APPNAME")
+
+            if (appName != null) {
+                val req = Request.Builder()
+                    .url("https://api.heroku.com/apps/${appName}/dynos")
+                    .addHeader("Accept", "application/vnd.heroku+json; version=3")
+                    .addHeader("Authorization", "Bearer ${System.getenv("HEROKUTOKEN")}")
+                    .delete()
+                    .build()
+
+                val res = D4rkBot.okHttpClient.newCall(req).execute()
+
+                if (res.code() != 202) {
+                    exitProcess(1)
+                }
+            }
+        }
     }
 
     override fun onTrackStuck(player: AudioPlayer, track: AudioTrack, thresholdMs: Long) {
