@@ -144,7 +144,7 @@ object PlayerManager {
                         cont.resumeWithException(IllegalStateException("No matches found!"))
                         return@FunctionalResultHandler
                     }
-                    if (limit != null) cont.resume(it.tracks.subList(0, limit))
+                    if (limit != null && it.isSearchResult) cont.resume(it.tracks.subList(0, limit))
                     else cont.resume(it.tracks)
                 },
                 { cont.resumeWithException(IllegalStateException("No matches found!")) },

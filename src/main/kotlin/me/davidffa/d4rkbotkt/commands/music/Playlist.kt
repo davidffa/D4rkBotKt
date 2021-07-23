@@ -277,7 +277,7 @@ class Playlist : Command(
                     return
                 }
 
-                val track: AudioTrack
+                val tracks: List<AudioTrack>
 
                 if (ctx.args.size >= 3) {
                     var query = ctx.args.subList(2, ctx.args.size).joinToString(" ")
@@ -287,35 +287,49 @@ class Playlist : Command(
                     }
 
                     try {
-                        track = PlayerManager.search(query, 1).first()
+                        tracks = PlayerManager.search(query, 1)
                     }catch (e: Exception) {
                         return
                     }
                 }else {
                     if (manager != null) {
-                        track = manager.scheduler.current.track
+                        tracks = listOf(manager.scheduler.current.track)
                     }else {
                         return
                     }
                 }
 
-                val base64 = PlayerManager.encodeTrack(track)
+                if (tracks.size + (playlist.tracks?.size ?: 0) > 50) {
+                    ctx.channel.sendMessage(":x: A playlist só pode ter no máximo 50 músicas!").queue()
+                }
 
-                if (playlist.tracks?.find{ it == base64 } != null) {
+                val base64Array = tracks.map { PlayerManager.encodeTrack(it) }.filter {
+                    if (playlist.tracks != null) {
+                        return@filter !playlist.tracks.contains(it)
+                    }
+                    return@filter true
+                }
+
+                if (base64Array.isEmpty()) {
                     ctx.channel.sendMessage(":x: Essa música já está na playlist!").queue()
                     return
                 }
 
                 Database.userDB.updateOneById(
                     ctx.author.id,
-                    Updates.push(
+                    Updates.pushEach(
                         "playlists.${playlists.indexOf(playlist)}.tracks",
-                        base64
+                        base64Array
                     )
                 )
 
-                ctx.channel.sendMessage("<a:disco:803678643661832233> Música `${track.info.title}` adicionada à playlist!")
-                    .queue()
+                if (tracks.size == 1) {
+                    ctx.channel.sendMessage("<a:disco:803678643661832233> Música `${tracks[0].info.title}` adicionada à playlist!")
+                        .queue()
+                    return
+                }
+
+                ctx.channel.sendMessage("<a:disco:803678643661832233> `${base64Array}` músicas adicionadas à playlist").queue()
             }
 
             in listOf("shuffle", "embaralhar") -> {
