@@ -301,6 +301,7 @@ class Playlist : Command(
 
                 if (tracks.size + (playlist.tracks?.size ?: 0) > 50) {
                     ctx.channel.sendMessage(":x: A playlist só pode ter no máximo 50 músicas!").queue()
+                    return
                 }
 
                 val base64Array = tracks.map { PlayerManager.encodeTrack(it) }.filter {
@@ -329,7 +330,7 @@ class Playlist : Command(
                     return
                 }
 
-                ctx.channel.sendMessage("<a:disco:803678643661832233> `${base64Array}` músicas adicionadas à playlist").queue()
+                ctx.channel.sendMessage("<a:disco:803678643661832233> `${base64Array.size}` músicas adicionadas à playlist").queue()
             }
 
             in listOf("shuffle", "embaralhar") -> {
