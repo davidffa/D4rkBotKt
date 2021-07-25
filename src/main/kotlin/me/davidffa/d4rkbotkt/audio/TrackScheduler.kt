@@ -12,8 +12,12 @@ import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.entities.Member
 import net.dv8tion.jda.api.entities.Message
 import net.dv8tion.jda.api.entities.TextChannel
+import okhttp3.Call
+import okhttp3.Callback
 import okhttp3.Request
+import okhttp3.Response
 import org.slf4j.LoggerFactory
+import java.io.IOException
 import java.time.Instant
 import java.util.concurrent.BlockingQueue
 import java.util.concurrent.LinkedBlockingQueue
@@ -165,11 +169,15 @@ class TrackScheduler(private val player: AudioPlayer, private val textChannel: T
                     .delete()
                     .build()
 
-                val res = D4rkBot.okHttpClient.newCall(req).execute()
+                D4rkBot.okHttpClient.newCall(req).enqueue(object: Callback {
+                    override fun onFailure(call: Call, e: IOException) {
+                        exitProcess(1)
+                    }
 
-                if (res.code() != 202) {
-                    exitProcess(1)
-                }
+                    override fun onResponse(call: Call, response: Response) {
+                        if (response.code() != 202) exitProcess(1)
+                    }
+                })
             }
         }
     }
