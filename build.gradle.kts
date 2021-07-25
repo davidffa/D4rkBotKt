@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
-    kotlin("jvm") version "1.5.20"
+    kotlin("jvm") version "1.5.21"
     id("com.github.johnrengelman.shadow") version "7.0.0"
 }
 
@@ -27,7 +27,7 @@ dependencies {
     implementation(kotlin("stdlib"))
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0")
     implementation("ru.gildor.coroutines:kotlin-coroutines-okhttp:1.0")
-    implementation("org.jetbrains.kotlin:kotlin-scripting-jsr223:1.5.20")
+    implementation("org.jetbrains.kotlin:kotlin-scripting-jsr223:1.5.21")
 
     // JDA & Lavaplayer
     implementation("net.dv8tion:JDA:4.3.0_298") {
