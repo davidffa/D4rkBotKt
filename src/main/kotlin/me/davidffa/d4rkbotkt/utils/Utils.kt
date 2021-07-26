@@ -5,7 +5,6 @@ import dev.minn.jda.ktx.await
 import me.davidffa.d4rkbotkt.D4rkBot
 import me.davidffa.d4rkbotkt.Database
 import me.davidffa.d4rkbotkt.audio.PlayerManager
-import me.davidffa.d4rkbotkt.audio.Track
 import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.entities.Guild
 import net.dv8tion.jda.api.entities.Member
@@ -13,7 +12,6 @@ import net.dv8tion.jda.api.entities.TextChannel
 import net.dv8tion.jda.api.entities.User
 import java.net.MalformedURLException
 import java.net.URL
-import java.util.*
 import kotlin.math.min
 
 object Utils {

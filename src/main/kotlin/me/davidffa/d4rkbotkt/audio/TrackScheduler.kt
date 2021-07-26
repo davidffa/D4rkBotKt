@@ -6,7 +6,11 @@ import com.sedmelluq.discord.lavaplayer.tools.FriendlyException
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason
 import dev.minn.jda.ktx.Embed
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import me.davidffa.d4rkbotkt.D4rkBot
+import me.davidffa.d4rkbotkt.audio.spotify.SpotifyTrack
 import me.davidffa.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.entities.Member
@@ -57,6 +61,29 @@ class TrackScheduler(private val player: AudioPlayer, private val textChannel: T
         }
     }
 
+    fun queue(spotifyTrack: SpotifyTrack) {
+        val track = Track(spotifyTrack, spotifyTrack.requester)
+
+        if (!this::current.isInitialized) {
+            current = track
+            CoroutineScope(Dispatchers.IO).launch {
+                val buildedTrack = current.spotifyTrack!!.build()
+
+                if (buildedTrack == null) {
+                    nextTrack()
+                    return@launch
+                }
+
+                buildedTrack.spotifyTrack = null
+                current = buildedTrack
+
+                player.startTrack(current.track, true)
+            }
+        } else {
+            this.queue.offer(track)
+        }
+    }
+
     fun nextTrack() {
         if (this.trackLoop) {
             this.player.startTrack(current.clone().track, false)
@@ -77,6 +104,23 @@ class TrackScheduler(private val player: AudioPlayer, private val textChannel: T
         }
 
         this.current = this.queue.poll()
+
+        if (this.current.spotifyTrack != null) {
+            CoroutineScope(Dispatchers.IO).launch {
+                val buildedTrack = current.spotifyTrack!!.build()
+
+                if (buildedTrack == null) {
+                    nextTrack()
+                    return@launch
+                }
+
+                buildedTrack.spotifyTrack = null
+                current = buildedTrack
+
+                player.startTrack(current.track, false)
+            }
+            return
+        }
         this.player.startTrack(this.current.track, false)
     }
 

@@ -22,7 +22,7 @@ class Nowplaying : Command(
             return
         }
 
-        ctx.channel.sendMessage("<a:disco:803678643661832233> A tocar: `${musicManager.scheduler.current.track.info.title}`")
+        ctx.channel.sendMessage("<a:disco:803678643661832233> A tocar: `${musicManager.scheduler.current.title}`")
             .queue()
     }
 }

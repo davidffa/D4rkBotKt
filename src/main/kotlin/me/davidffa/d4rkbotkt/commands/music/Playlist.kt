@@ -293,7 +293,7 @@ class Playlist : Command(
                     }
                 }else {
                     if (manager != null) {
-                        tracks = listOf(manager.scheduler.current.track)
+                        tracks = listOf(manager.scheduler.current.track!!)
                     }else {
                         return
                     }
@@ -306,9 +306,9 @@ class Playlist : Command(
 
                 val base64Array = tracks.map { PlayerManager.encodeTrack(it) }.filter {
                     if (playlist.tracks != null) {
-                        return@filter !playlist.tracks.contains(it)
+                        !playlist.tracks.contains(it)
                     }
-                    return@filter true
+                    true
                 }
 
                 if (base64Array.isEmpty()) {

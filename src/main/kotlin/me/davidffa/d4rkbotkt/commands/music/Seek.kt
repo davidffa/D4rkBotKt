@@ -19,7 +19,7 @@ class Seek : Command(
     override suspend fun run(ctx: CommandContext) {
         if (!Utils.canUsePlayer(ctx.selfMember, ctx.member, ctx.channel, true)) return
 
-        val track = PlayerManager.getMusicManager(ctx.guild.idLong).scheduler.current.track
+        val track = PlayerManager.getMusicManager(ctx.guild.idLong).scheduler.current.track!!
 
         var time = 0L
 

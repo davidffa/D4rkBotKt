@@ -32,9 +32,9 @@ class Queue : Command(
             return
         }
 
-        val header = "<a:disco:803678643661832233> **A tocar:** `${scheduler.current.track.info.title}` " +
+        val header = "<a:disco:803678643661832233> **A tocar:** `${scheduler.current.title}` " +
                 "(Requisitado por `${scheduler.current.requester.user.asTag}`)\n" +
-                ":alarm_clock: Tempo total da queue (${Utils.msToHour(scheduler.queue.sumOf { it.track.duration })}) " +
+                ":alarm_clock: Tempo total da queue (${Utils.msToHour(scheduler.queue.sumOf { it.duration })}) " +
                 "----- Total de músicas na queue: ${scheduler.queue.size}\n\n"
 
         if (scheduler.queue.size <= 10) {
@@ -42,7 +42,7 @@ class Queue : Command(
                 title = ":bookmark_tabs: Lista de músicas"
                 description = header +
                         scheduler.queue.mapIndexed { index, track ->
-                            "${index+1}º - `${track.track.info.title}` (Requisitado por `${track.requester.user.asTag}`)"
+                            "${index+1}º - [${track.title}](${track.uri}) (Requisitado por `${track.requester.user.asTag}`)"
                         }.joinToString("\n")
                 color = Utils.randColor()
                 footer {
@@ -63,7 +63,7 @@ class Queue : Command(
                 title = ":bookmark_tabs: Lista de músicas"
                 description = header +
                         it.mapIndexed { index, track ->
-                            "${index + (chunkedQueue.indexOf(it) * 10) + 1}º - `${track.track.info.title}` (Requisitado por `${track.requester.user.asTag}`)"
+                            "${index + (chunkedQueue.indexOf(it) * 10) + 1}º - [${track.title}](${track.uri}) (Requisitado por `${track.requester.user.asTag}`)"
                         }.joinToString("\n")
                 color = Utils.randColor()
                 footer {

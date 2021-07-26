@@ -10,6 +10,8 @@ import com.sedmelluq.discord.lavaplayer.tools.io.MessageOutput
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack
 import dev.minn.jda.ktx.Embed
+import dev.minn.jda.ktx.EmbedBuilder
+import me.davidffa.d4rkbotkt.audio.spotify.Spotify
 import me.davidffa.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.entities.Guild
@@ -27,6 +29,7 @@ import kotlin.coroutines.suspendCoroutine
 object PlayerManager {
     val musicManagers: HashMap<Long, GuildMusicManager> = HashMap()
     private val audioPlayerManager = DefaultAudioPlayerManager()
+    private val spotify = Spotify(System.getenv("SPOTIFYID"), System.getenv("SPOTIFYSECRET"))
 
     init {
         AudioSourceManagers.registerRemoteSources(audioPlayerManager)
@@ -50,8 +53,66 @@ object PlayerManager {
         }
     }
 
-    fun loadAndPlay(requester: Member, channel: TextChannel, trackURL: String) {
+    suspend fun loadAndPlay(requester: Member, channel: TextChannel, trackURL: String) {
         val musicManager = this.getMusicManager(channel.guild, channel)
+
+        val spotifyRegex = "(?:https://open\\.spotify\\.com/|spotify:)(.+)[/:]([A-Za-z0-9]+)".toRegex()
+        val match = spotifyRegex.matchEntire(trackURL)
+
+        if (match != null) {
+            val groups = match.groupValues
+
+            val embed = EmbedBuilder {
+                color = 1947988
+                timestamp = Instant.now()
+                footer {
+                    name = requester.user.asTag
+                    iconUrl = requester.user.effectiveAvatarUrl
+                }
+            }
+
+            when (groups[1]) {
+                "track" -> musicManager.scheduler.queue(spotify.getTrack(groups[2], requester))
+                "album" -> {
+                    embed.title = "<:spotify:869245737282715689> Album carregado"
+                    val album = spotify.getAlbum(groups[2], requester)
+                    album.forEach { musicManager.scheduler.queue(it) }
+
+                    embed.field {
+                        name = "<a:infinity:838759634361253929> Quantidade de músicas:"
+                        value = "`${album.size}`"
+                        inline = false
+                    }
+                    embed.field {
+                        name = ":watch: Duração:"
+                        value = "`${Utils.msToHour(album.sumOf { it.duration })}`"
+                        inline = false
+                    }
+
+                    channel.sendMessageEmbeds(embed.build()).queue()
+                }
+                "playlist" -> {
+                    embed.title = "<:spotify:869245737282715689> Playlist carregada"
+                    val playlist = spotify.getPlaylist(groups[2], requester)
+                    playlist.forEach { musicManager.scheduler.queue(it) }
+
+                    embed.field {
+                        name = "<a:infinity:838759634361253929> Quantidade de músicas:"
+                        value = "`${playlist.size}`"
+                        inline = false
+                    }
+                    embed.field {
+                        name = ":watch: Duração:"
+                        value = "`${Utils.msToHour(playlist.sumOf { it.duration })}`"
+                        inline = false
+                    }
+
+                    channel.sendMessageEmbeds(embed.build()).queue()
+                }
+            }
+
+            return
+        }
 
         this.audioPlayerManager.loadItemOrdered(musicManager, trackURL, object: AudioLoadResultHandler {
             override fun trackLoaded(track: AudioTrack) {
