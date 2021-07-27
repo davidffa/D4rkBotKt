@@ -10,9 +10,6 @@ class Track(var track: AudioTrack?, val requester: Member) {
   val title: String
   get() = track?.info?.title ?: spotifyTrack!!.title
 
-  val artist: String
-  get() = track?.info?.author ?: spotifyTrack!!.artist
-
   val duration: Long
   get() = track?.duration ?: spotifyTrack!!.duration
 
