@@ -56,7 +56,7 @@ object PlayerManager {
     suspend fun loadAndPlay(requester: Member, channel: TextChannel, trackURL: String) {
         val musicManager = this.getMusicManager(channel.guild, channel)
 
-        val spotifyRegex = "(?:https://open\\.spotify\\.com/|spotify:)(.+)[/:]([A-Za-z0-9]+)".toRegex()
+        val spotifyRegex = "(?:https://open\\.spotify\\.com/|spotify:)(.+)[/:]([A-Za-z0-9]+)(.+)".toRegex()
         val match = spotifyRegex.matchEntire(trackURL)
 
         if (match != null) {
