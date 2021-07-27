@@ -6,6 +6,7 @@ import me.davidffa.d4rkbotkt.D4rkBot
 import me.davidffa.d4rkbotkt.Database
 import me.davidffa.d4rkbotkt.audio.PlayerManager
 import net.dv8tion.jda.api.Permission
+import net.dv8tion.jda.api.Permission.*
 import net.dv8tion.jda.api.entities.Guild
 import net.dv8tion.jda.api.entities.Member
 import net.dv8tion.jda.api.entities.TextChannel
@@ -103,23 +104,23 @@ object Utils {
         val memberVoiceChannel = memberVoiceState.channel
         val selfPermissions = self.getPermissions(memberVoiceChannel!!)
 
-        if (!selfPermissions.contains(Permission.VIEW_CHANNEL)) {
+        if (!selfPermissions.contains(VIEW_CHANNEL)) {
             channel.sendMessage(":x: Não tenho permissão para ver o teu canal de voz!").queue()
             return false
         }
 
-        if (!selfPermissions.contains(Permission.VOICE_CONNECT)) {
+        if (!selfPermissions.contains(VOICE_CONNECT)) {
             channel.sendMessage(":x: Não tenho permissão para entrar no teu canal de voz!").queue()
             return false
         }
 
-        if (!selfPermissions.contains(Permission.VOICE_SPEAK)) {
+        if (!selfPermissions.contains(VOICE_SPEAK)) {
             channel.sendMessage(":x: Não tenho permissão para falar no teu canal de voz!").queue()
             return false
         }
 
         if (selfChannel == null) {
-            if (memberVoiceChannel.userLimit == memberVoiceChannel.members.size && !selfPermissions.contains(Permission.MANAGE_CHANNEL)) {
+            if (memberVoiceChannel.userLimit == memberVoiceChannel.members.size && !selfPermissions.contains(MANAGE_CHANNEL)) {
                 channel.sendMessage(":x: O teu canal de voz está cheio!").queue()
                 return false
             }
@@ -268,47 +269,45 @@ object Utils {
 
     fun translatePermission(permission: Permission): String {
         return when (permission) {
-            Permission.CREATE_INSTANT_INVITE -> "Criar convites"
-            Permission.KICK_MEMBERS -> "Expulsar Membros"
-            Permission.BAN_MEMBERS -> "Banir Membros"
-            Permission.ADMINISTRATOR -> "Administrador"
-            Permission.MANAGE_CHANNEL -> "Gerenciar Canal"
-            Permission.MANAGE_SERVER -> "Gerenciar Servidor"
-            Permission.VIEW_AUDIT_LOGS -> "Ver o registo de auditoria"
-            Permission.PRIORITY_SPEAKER -> "Voz Prioritária"
-            Permission.VOICE_STREAM -> "Transmitir"
-            Permission.VIEW_CHANNEL -> "Ver Canal"
-            Permission.MESSAGE_WRITE -> "Enviar Mensagens"
-            Permission.MESSAGE_TTS -> "Enviar mensagens em TTS"
-            Permission.MESSAGE_MANAGE -> "Gerenciar Mensagens"
-            Permission.MESSAGE_EMBED_LINKS -> "Inserir Links"
-            Permission.MESSAGE_ATTACH_FILES -> "Anexar Arquivos"
-            Permission.MESSAGE_READ -> "Ler mensagens"
-            Permission.MESSAGE_HISTORY -> "Ler o histórico de mensagens"
-            Permission.MANAGE_PERMISSIONS -> "Gerenciar Permissões"
-            Permission.MESSAGE_MENTION_EVERYONE -> "Mencionar everyone"
-            Permission.MESSAGE_EXT_EMOJI -> "Utilizar emojis externos"
-            Permission.VIEW_GUILD_INSIGHTS -> "Ver análises do servidor"
-            Permission.VOICE_CONNECT -> "Conectar ao canal de voz"
-            Permission.VOICE_SPEAK -> "Falar no canal de voz"
-            Permission.VOICE_MUTE_OTHERS -> "Silenciar membros"
-            Permission.VOICE_DEAF_OTHERS -> "Ensurdecer membros"
-            Permission.VOICE_MOVE_OTHERS -> "Mover membros"
-            Permission.VOICE_USE_VAD -> "Usar deteção de voz"
-            Permission.NICKNAME_CHANGE -> "Mudar de nickname"
-            Permission.NICKNAME_MANAGE -> "Gerenciar nicknames"
-            Permission.MANAGE_WEBHOOKS -> "Gerenciar Webhooks"
-            Permission.MANAGE_EMOTES -> "Gerenciar Emojis"
-            Permission.USE_SLASH_COMMANDS -> "Usar commandos de /"
-            Permission.MESSAGE_ADD_REACTION -> "Adicionar reações"
-            Permission.MANAGE_ROLES -> "Gerenciar Cargos"
-            Permission.REQUEST_TO_SPEAK -> "Requisitar para falar"
-            Permission.UNKNOWN -> "Desconhecido"
+            CREATE_INSTANT_INVITE -> "Criar convites"
+            KICK_MEMBERS -> "Expulsar Membros"
+            BAN_MEMBERS -> "Banir Membros"
+            ADMINISTRATOR -> "Administrador"
+            MANAGE_CHANNEL -> "Gerenciar Canal"
+            MANAGE_SERVER -> "Gerenciar Servidor"
+            VIEW_AUDIT_LOGS -> "Ver o registo de auditoria"
+            PRIORITY_SPEAKER -> "Voz Prioritária"
+            VOICE_STREAM -> "Transmitir"
+            VIEW_CHANNEL -> "Ver Canal"
+            MESSAGE_WRITE -> "Enviar Mensagens"
+            MESSAGE_TTS -> "Enviar mensagens em TTS"
+            MESSAGE_MANAGE -> "Gerenciar Mensagens"
+            MESSAGE_EMBED_LINKS -> "Inserir Links"
+            MESSAGE_ATTACH_FILES -> "Anexar Arquivos"
+            MESSAGE_READ -> "Ler mensagens"
+            MESSAGE_HISTORY -> "Ler o histórico de mensagens"
+            MANAGE_PERMISSIONS -> "Gerenciar Permissões"
+            MESSAGE_MENTION_EVERYONE -> "Mencionar everyone"
+            MESSAGE_EXT_EMOJI -> "Utilizar emojis externos"
+            VIEW_GUILD_INSIGHTS -> "Ver análises do servidor"
+            VOICE_CONNECT -> "Conectar ao canal de voz"
+            VOICE_SPEAK -> "Falar no canal de voz"
+            VOICE_MUTE_OTHERS -> "Silenciar membros"
+            VOICE_DEAF_OTHERS -> "Ensurdecer membros"
+            VOICE_MOVE_OTHERS -> "Mover membros"
+            VOICE_USE_VAD -> "Usar deteção de voz"
+            NICKNAME_CHANGE -> "Mudar de nickname"
+            NICKNAME_MANAGE -> "Gerenciar nicknames"
+            MANAGE_WEBHOOKS -> "Gerenciar Webhooks"
+            MANAGE_EMOTES -> "Gerenciar Emojis"
+            USE_SLASH_COMMANDS -> "Usar commandos de /"
+            MESSAGE_ADD_REACTION -> "Adicionar reações"
+            MANAGE_ROLES -> "Gerenciar Cargos"
+            REQUEST_TO_SPEAK -> "Requisitar para falar"
+            MANAGE_THREADS -> "Gerenciar Threads"
+            USE_PUBLIC_THREADS -> "Usar Threads públicos"
+            USE_PRIVATE_THREADS -> "Usar Threads privados"
+            UNKNOWN -> "Desconhecido"
         }
-        /*
-            MANAGE_THREADS *	0x0400000000 (1 << 34)	Allows for deleting and archiving threads, and viewing all private threads	T
-            USE_PUBLIC_THREADS	0x0800000000 (1 << 35)	Allows for creating and participating in threads	T
-            USE_PRIVATE_THREADS
-        */
     }
 }
