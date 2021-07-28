@@ -97,26 +97,38 @@ class Userinfo : Command(
             }
         }
 
+        val badges = mutableListOf<String>()
+
+        if (!user.flags.isEmpty()) user.flags.forEach {
+            badges.add(
+                when (it) {
+                    BUG_HUNTER_LEVEL_1 -> "<:badgebughunter:803664937016360991>"
+                    STAFF -> "<:staffbadge:803667272186462258>"
+                    PARTNER -> "<:partnerbadge:803667091429130260>"
+                    HYPESQUAD -> "<:badgehypesquadevents:803665575703478323>"
+                    HYPESQUAD_BRAVERY -> "<:badgehypebravery:803665178720731137>"
+                    HYPESQUAD_BRILLIANCE -> "<:badgehypebrilliance:803665185558102017>"
+                    HYPESQUAD_BALANCE -> "<:badgehypebalance:803665192310800395>"
+                    EARLY_SUPPORTER -> "<:badgeearlysupporter:803665859406725121>"
+                    BUG_HUNTER_LEVEL_2 -> "<:BugHunterLvl2:803665318274400256>"
+                    VERIFIED_BOT -> "<:vBot1:804393321862397952><:vBot2:804393321854140440>"
+                    VERIFIED_DEVELOPER -> "<:dev_badge:803665036769230899>"
+                    CERTIFIED_MODERATOR -> "<:DiscordCertifiedModerator:863424954371932180>"
+                    else -> ""
+                }
+            )
+        }
+
+        if ((member != null && member.timeBoosted != null)) {
+            badges.add("<:badgenitro:803666299556200478>")
+            badges.add("<:badgebooster:803666384373809233>")
+        }else if (user.avatarId?.startsWith("a_") == true)
+            badges.add("<:badgenitro:803666299556200478>")
+
+
         embed.field {
             name = "Emblemas :medal:"
-            value = if (user.flags.isEmpty()) "`Nenhum`"
-                else user.flags.joinToString(" ") {
-                    when (it) {
-                        BUG_HUNTER_LEVEL_1 -> "<:badgebughunter:803664937016360991>"
-                        STAFF -> "<:staffbadge:803667272186462258>"
-                        PARTNER -> "<:partnerbadge:803667091429130260>"
-                        HYPESQUAD -> "<:badgehypesquadevents:803665575703478323>"
-                        HYPESQUAD_BRAVERY -> "<:badgehypebravery:803665178720731137>"
-                        HYPESQUAD_BRILLIANCE -> "<:badgehypebrilliance:803665185558102017>"
-                        HYPESQUAD_BALANCE -> "<:badgehypebalance:803665192310800395>"
-                        EARLY_SUPPORTER -> "<:badgeearlysupporter:803665859406725121>"
-                        BUG_HUNTER_LEVEL_2 -> "<:BugHunterLvl2:803665318274400256>"
-                        VERIFIED_BOT -> "<:vBot1:804393321862397952><:vBot2:804393321854140440>"
-                        VERIFIED_DEVELOPER -> "<:dev_badge:803665036769230899>"
-                        CERTIFIED_MODERATOR -> "<:DiscordCertifiedModerator:863424954371932180>"
-                        else -> ""
-                    }
-            }
+            value = if (badges.isEmpty()) "`Nenhum`" else badges.joinToString(" ")
         }
 
         val page1 = embed.build()
