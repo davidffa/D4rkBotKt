@@ -20,149 +20,160 @@ import java.util.*
 import kotlin.concurrent.timerTask
 
 class Help : Command(
-    "help",
-    "Mostra a lista de comandos do bot.",
-    aliases = listOf("ajuda", "comandos", "commands", "cmds"),
-    category = "Others",
-    botPermissions = listOf(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS),
-    cooldown = 6
+  "help",
+  "Mostra a lista de comandos do bot.",
+  aliases = listOf("ajuda", "comandos", "commands", "cmds"),
+  category = "Others",
+  botPermissions = listOf(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS),
+  cooldown = 6
 ) {
-    override suspend fun run(ctx: CommandContext) {
-        val args = ctx.args
-        val channel = ctx.channel
+  override suspend fun run(ctx: CommandContext) {
+    val args = ctx.args
+    val channel = ctx.channel
 
-        if (args.isEmpty()) {
-            val commands = CommandManager.commands
+    if (args.isEmpty()) {
+      val commands = CommandManager.commands
 
-            val dev = mutableListOf<String>()
-            val info = mutableListOf<String>()
-            val music = mutableListOf<String>()
-            val others = mutableListOf<String>()
-            val settings = mutableListOf<String>()
+      val dev = mutableListOf<String>()
+      val info = mutableListOf<String>()
+      val music = mutableListOf<String>()
+      val others = mutableListOf<String>()
+      val settings = mutableListOf<String>()
 
-            commands.forEach { cmd ->
-                when (cmd.category) {
-                    "Dev" -> dev.add(cmd.name)
-                    "Info" -> info.add(cmd.name)
-                    "Music" -> music.add(cmd.name)
-                    "Others" -> others.add(cmd.name)
-                    "Settings" -> settings.add(cmd.name)
-                    else -> others.add(cmd.name)
-                }
-            }
+      commands.forEach { cmd ->
+        when (cmd.category) {
+          "Dev" -> dev.add(cmd.name)
+          "Info" -> info.add(cmd.name)
+          "Music" -> music.add(cmd.name)
+          "Others" -> others.add(cmd.name)
+          "Settings" -> settings.add(cmd.name)
+          else -> others.add(cmd.name)
+        }
+      }
 
-            val commandsSize = if (ctx.author.id == "334054158879686657") commands.size else commands.size - dev.size
+      val commandsSize = if (ctx.author.id == "334054158879686657") commands.size else commands.size - dev.size
 
-            val nonceBytes = ByteArray(24)
-            SecureRandom().nextBytes(nonceBytes)
-            val nonce = Base64.getEncoder().encodeToString(nonceBytes)
+      val nonceBytes = ByteArray(24)
+      SecureRandom().nextBytes(nonceBytes)
+      val nonce = Base64.getEncoder().encodeToString(nonceBytes)
 
-            val menu = SelectionMenu("$nonce:help", "Escolhe uma categoria de comandos para ver") {
-                if (ctx.author.id == "334054158879686657") {
-                    option("Desenvolvedor", "dev", "Comandos de desenvolvedor", Emoji.fromMarkdown("<:kotlin:856168010004037702>"))
-                }
-                option("Definições", "settings", "Comandos de configuração do bot", Emoji.fromUnicode("⚙️"))
-                option("Informação", "info", "Comandos de informação geral", Emoji.fromUnicode("ℹ️"))
-                option("Música", "music", "Comandos de música", Emoji.fromMarkdown("<a:disco:803678643661832233>"))
-                option("Outros", "others", "Outros comandos de utilidade", Emoji.fromUnicode("\uD83D\uDCDA"))
-            }
+      val menu = SelectionMenu("$nonce:help", "Escolhe uma categoria de comandos para ver") {
+        if (ctx.author.id == "334054158879686657") {
+          option(
+            "Desenvolvedor",
+            "dev",
+            "Comandos de desenvolvedor",
+            Emoji.fromMarkdown("<:kotlin:856168010004037702>")
+          )
+        }
+        option("Definições", "settings", "Comandos de configuração do bot", Emoji.fromUnicode("⚙️"))
+        option("Informação", "info", "Comandos de informação geral", Emoji.fromUnicode("ℹ️"))
+        option("Música", "music", "Comandos de música", Emoji.fromMarkdown("<a:disco:803678643661832233>"))
+        option("Outros", "others", "Outros comandos de utilidade", Emoji.fromUnicode("\uD83D\uDCDA"))
+      }
 
-            val msg = channel.sendMessage("\u200B").setActionRow(menu).await()
+      val msg = channel.sendMessage("\u200B").setActionRow(menu).await()
 
-            val listener = ctx.jda.onSelection("$nonce:help") {
-                if (it.user.idLong != ctx.author.idLong) return@onSelection
-                val option = it.selectedOptions?.first()
+      val listener = ctx.jda.onSelection("$nonce:help") {
+        if (it.user.idLong != ctx.author.idLong) return@onSelection
+        val option = it.selectedOptions?.first()
 
-                val embed = EmbedBuilder {
-                    title = "Ajuda"
-                    description = "Quantidade total de comandos [$commandsSize]"
-                    color = Utils.randColor()
-                    footer {
-                        name = ctx.author.asTag
-                        iconUrl = ctx.author.effectiveAvatarUrl
-                    }
-                    timestamp = Instant.now()
-                }
-
-                when (option?.value) {
-                    "dev" -> {
-                        embed.field {
-                            name = "> Comandos nesta categoria [${dev.size}]"
-                            value = "```\n${dev.joinToString(" | ")}\n```"
-                        }
-                    }
-                    "settings" -> {
-                        embed.field {
-                            name = "> Comandos nesta categoria [${settings.size}]"
-                            value = "```\n${settings.joinToString(" | ")}\n```"
-                        }
-                    }
-                    "info" -> {
-                        embed.field {
-                            name = "> Comandos nesta categoria [${info.size}]"
-                            value = "```\n${info.joinToString(" | ")}\n```"
-                            inline = false
-                        }
-                    }
-                    "music" -> {
-                        embed.field {
-                            name = "> Comandos nesta categoria [${music.size}]"
-                            value = "```\n${music.joinToString(" | ")}\n```"
-                            inline = false
-                        }
-                    }
-                    "others" -> {
-                        embed.field {
-                            name = "> Comandos nesta categoria [${others.size}]"
-                            value = "```\n${others.joinToString(" | ")}\n```"
-                            inline = false
-                        }
-                    }
-                }
-
-                val editedMenu = menu.createCopy()
-                editedMenu.setDefaultOptions(listOf(editedMenu.options.find { op -> op.value == option?.value }))
-                it.editMessageEmbeds(embed.build()).setActionRow(editedMenu.build()).queue()
-            }
-
-            Timer().schedule(timerTask {
-                ctx.jda.removeEventListener(listener)
-                msg.editMessage(":warning: O tempo expirou!\nUsa o comando novamente para continuar a usar o menu!")
-                    .setEmbeds()
-                    .setActionRow(menu.asDisabled())
-                    .queue(null, ignore(ErrorResponse.UNKNOWN_MESSAGE))
-            }, 90000L)
-            return
+        val embed = EmbedBuilder {
+          title = "Ajuda"
+          description = "Quantidade total de comandos [$commandsSize]"
+          color = Utils.randColor()
+          footer {
+            name = ctx.author.asTag
+            iconUrl = ctx.author.effectiveAvatarUrl
+          }
+          timestamp = Instant.now()
         }
 
-        val search = args[0]
-        val command = CommandManager.getCommand(search, ctx.author.id)
-
-        if (command == null) {
-            channel.sendMessage(":x: Comando não encontrado!")
-            return
-        }
-
-        val desc = listOf(
-            "**Nome:** ${command.name}",
-            "**Descrição:** ${command.description}",
-            "**Alternativas:** ${if (command.aliases != null) command.aliases.joinToString(", ") else "Nenhuma"}",
-            "**Cooldown:** ${command.cooldown} segundo(s)",
-            "**Permissões do bot:** ${if (command.botPermissions != null) Utils.translatePermissions(command.botPermissions).joinToString(", ") else "Nenhuma"}",
-            "**Permissões de utilizador:** ${if (command.userPermissions != null) Utils.translatePermissions(command.userPermissions).joinToString(", ") else "Nenhuma"}"
-        )
-
-        val embed = Embed {
-            title = "Ajuda do comando ${args.joinToString("")}"
-            color = Utils.randColor()
-            description = desc.joinToString("\n")
-            footer {
-                name = ctx.author.asTag
-                iconUrl = ctx.author.effectiveAvatarUrl
+        when (option?.value) {
+          "dev" -> {
+            embed.field {
+              name = "> Comandos nesta categoria [${dev.size}]"
+              value = "```\n${dev.joinToString(" | ")}\n```"
             }
-            timestamp = Instant.now()
+          }
+          "settings" -> {
+            embed.field {
+              name = "> Comandos nesta categoria [${settings.size}]"
+              value = "```\n${settings.joinToString(" | ")}\n```"
+            }
+          }
+          "info" -> {
+            embed.field {
+              name = "> Comandos nesta categoria [${info.size}]"
+              value = "```\n${info.joinToString(" | ")}\n```"
+              inline = false
+            }
+          }
+          "music" -> {
+            embed.field {
+              name = "> Comandos nesta categoria [${music.size}]"
+              value = "```\n${music.joinToString(" | ")}\n```"
+              inline = false
+            }
+          }
+          "others" -> {
+            embed.field {
+              name = "> Comandos nesta categoria [${others.size}]"
+              value = "```\n${others.joinToString(" | ")}\n```"
+              inline = false
+            }
+          }
         }
 
-        channel.sendMessageEmbeds(embed).queue()
+        val editedMenu = menu.createCopy()
+        editedMenu.setDefaultOptions(listOf(editedMenu.options.find { op -> op.value == option?.value }))
+        it.editMessageEmbeds(embed.build()).setActionRow(editedMenu.build()).queue()
+      }
+
+      Timer().schedule(timerTask {
+        ctx.jda.removeEventListener(listener)
+        msg.editMessage(":warning: O tempo expirou!\nUsa o comando novamente para continuar a usar o menu!")
+          .setEmbeds()
+          .setActionRow(menu.asDisabled())
+          .queue(null, ignore(ErrorResponse.UNKNOWN_MESSAGE))
+      }, 90000L)
+      return
     }
+
+    val search = args[0]
+    val command = CommandManager.getCommand(search, ctx.author.id)
+
+    if (command == null) {
+      channel.sendMessage(":x: Comando não encontrado!")
+      return
+    }
+
+    val desc = listOf(
+      "**Nome:** ${command.name}",
+      "**Descrição:** ${command.description}",
+      "**Alternativas:** ${if (command.aliases != null) command.aliases.joinToString(", ") else "Nenhuma"}",
+      "**Cooldown:** ${command.cooldown} segundo(s)",
+      "**Permissões do bot:** ${
+        if (command.botPermissions != null) Utils.translatePermissions(command.botPermissions)
+          .joinToString(", ") else "Nenhuma"
+      }",
+      "**Permissões de utilizador:** ${
+        if (command.userPermissions != null) Utils.translatePermissions(command.userPermissions)
+          .joinToString(", ") else "Nenhuma"
+      }"
+    )
+
+    val embed = Embed {
+      title = "Ajuda do comando ${args.joinToString("")}"
+      color = Utils.randColor()
+      description = desc.joinToString("\n")
+      footer {
+        name = ctx.author.asTag
+        iconUrl = ctx.author.effectiveAvatarUrl
+      }
+      timestamp = Instant.now()
+    }
+
+    channel.sendMessageEmbeds(embed).queue()
+  }
 }

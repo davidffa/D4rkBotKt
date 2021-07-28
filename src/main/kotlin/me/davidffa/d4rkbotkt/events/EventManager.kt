@@ -15,19 +15,19 @@ import net.dv8tion.jda.api.events.guild.voice.GuildVoiceMoveEvent
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent
 
 object EventManager {
-    fun manage(jda: JDA) {
-        jda.listener<GenericEvent> { event ->
-            when (event) {
-                is ReadyEvent -> onReady(event)
-                is GuildMessageReceivedEvent -> onGuildMessageReceived(event)
-                is GuildVoiceJoinEvent -> onGuildVoiceJoin(event)
-                is GuildVoiceLeaveEvent -> onGuildVoiceLeave(event)
-                is GuildVoiceMoveEvent -> onGuildVoiceMove(event)
-                is GuildJoinEvent -> onGuildJoin(event)
-                is GuildLeaveEvent -> onGuildLeave(event)
-                is GuildMemberJoinEvent -> onGuildMemberJoin(event)
-                is GuildMemberRemoveEvent -> onGuildMemberRemove(event)
-            }
-        }
+  fun manage(jda: JDA) {
+    jda.listener<GenericEvent> { event ->
+      when (event) {
+        is ReadyEvent -> onReady(event)
+        is GuildMessageReceivedEvent -> onGuildMessageReceived(event)
+        is GuildVoiceJoinEvent -> onGuildVoiceJoin(event)
+        is GuildVoiceLeaveEvent -> onGuildVoiceLeave(event)
+        is GuildVoiceMoveEvent -> onGuildVoiceMove(event)
+        is GuildJoinEvent -> onGuildJoin(event)
+        is GuildLeaveEvent -> onGuildLeave(event)
+        is GuildMemberJoinEvent -> onGuildMemberJoin(event)
+        is GuildMemberRemoveEvent -> onGuildMemberRemove(event)
+      }
     }
+  }
 }

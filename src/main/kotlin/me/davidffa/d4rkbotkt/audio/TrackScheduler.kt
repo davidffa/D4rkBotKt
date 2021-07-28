@@ -28,214 +28,214 @@ import java.util.concurrent.LinkedBlockingQueue
 import kotlin.system.exitProcess
 
 class TrackScheduler(private val player: AudioPlayer, private val textChannel: TextChannel) : AudioEventAdapter() {
-    private val logger = LoggerFactory.getLogger(this::class.java)
+  private val logger = LoggerFactory.getLogger(this::class.java)
 
-    val queue: BlockingQueue<Track>
-    lateinit var current: Track
+  val queue: BlockingQueue<Track>
+  lateinit var current: Track
 
-    private val guild = textChannel.guild
-    private var npMessage: Message? = null
+  private val guild = textChannel.guild
+  private var npMessage: Message? = null
 
-    var queueLoop = false
-    var trackLoop = false
+  var queueLoop = false
+  var trackLoop = false
 
-    init {
-        this.queue = LinkedBlockingQueue()
+  init {
+    this.queue = LinkedBlockingQueue()
+  }
+
+  fun shuffle() {
+    val cpy = ArrayList<Track>()
+    this.queue.drainTo(cpy)
+    cpy.shuffle()
+    this.queue.addAll(cpy)
+  }
+
+  fun queue(audioTrack: AudioTrack, requester: Member) {
+    val track = Track(audioTrack, requester)
+
+    if (!this::current.isInitialized) {
+      this.current = track
+      this.player.startTrack(audioTrack, true)
+    } else {
+      this.queue.offer(track)
     }
+  }
 
-    fun shuffle() {
-        val cpy = ArrayList<Track>()
-        this.queue.drainTo(cpy)
-        cpy.shuffle()
-        this.queue.addAll(cpy)
-    }
+  fun queue(spotifyTrack: SpotifyTrack) {
+    val track = Track(spotifyTrack, spotifyTrack.requester)
 
-    fun queue(audioTrack: AudioTrack, requester: Member) {
-        val track = Track(audioTrack, requester)
+    if (!this::current.isInitialized) {
+      current = track
+      CoroutineScope(Dispatchers.IO).launch {
+        val buildedTrack = current.spotifyTrack!!.build()
 
-        if (!this::current.isInitialized) {
-            this.current = track
-            this.player.startTrack(audioTrack, true)
-        } else {
-            this.queue.offer(track)
-        }
-    }
-
-    fun queue(spotifyTrack: SpotifyTrack) {
-        val track = Track(spotifyTrack, spotifyTrack.requester)
-
-        if (!this::current.isInitialized) {
-            current = track
-            CoroutineScope(Dispatchers.IO).launch {
-                val buildedTrack = current.spotifyTrack!!.build()
-
-                if (buildedTrack == null) {
-                    nextTrack()
-                    return@launch
-                }
-
-                buildedTrack.spotifyTrack = null
-                current = buildedTrack
-
-                player.startTrack(current.track, true)
-            }
-        } else {
-            this.queue.offer(track)
-        }
-    }
-
-    fun nextTrack() {
-        if (this.trackLoop) {
-            this.player.startTrack(current.clone().track, false)
-            return
+        if (buildedTrack == null) {
+          nextTrack()
+          return@launch
         }
 
-        if (this.queueLoop) {
-            this.queue.offer(current.clone())
-        }
+        buildedTrack.spotifyTrack = null
+        current = buildedTrack
 
-        if (this.queue.isEmpty()) {
-            if (Utils.hasPermissions(guild.selfMember, textChannel, listOf(Permission.MESSAGE_WRITE))) {
-                this.textChannel.sendMessage(":notes: A lista de músicas acabou!").queue()
-            }
+        player.startTrack(current.track, true)
+      }
+    } else {
+      this.queue.offer(track)
+    }
+  }
 
-            this.destroy()
-            return
-        }
-
-        this.current = this.queue.poll()
-
-        if (this.current.spotifyTrack != null) {
-            CoroutineScope(Dispatchers.IO).launch {
-                val buildedTrack = current.spotifyTrack!!.build()
-
-                if (buildedTrack == null) {
-                    nextTrack()
-                    return@launch
-                }
-
-                buildedTrack.spotifyTrack = null
-                current = buildedTrack
-
-                player.startTrack(current.track, false)
-            }
-            return
-        }
-        this.player.startTrack(this.current.track, false)
+  fun nextTrack() {
+    if (this.trackLoop) {
+      this.player.startTrack(current.clone().track, false)
+      return
     }
 
-    fun destroy() {
-        if (this.npMessage != null) this.npMessage?.delete()?.queue()
-        this.queue.clear()
-        this.player.destroy()
-        this.guild.audioManager.closeAudioConnection()
+    if (this.queueLoop) {
+      this.queue.offer(current.clone())
+    }
 
-        val manager = PlayerManager.getMusicManager(guild.idLong)
+    if (this.queue.isEmpty()) {
+      if (Utils.hasPermissions(guild.selfMember, textChannel, listOf(Permission.MESSAGE_WRITE))) {
+        this.textChannel.sendMessage(":notes: A lista de músicas acabou!").queue()
+      }
 
-        if (manager.djtableMessage != null) {
-            manager.djtableMessage?.delete()?.queue()
-            manager.djtableMessage = null
+      this.destroy()
+      return
+    }
+
+    this.current = this.queue.poll()
+
+    if (this.current.spotifyTrack != null) {
+      CoroutineScope(Dispatchers.IO).launch {
+        val buildedTrack = current.spotifyTrack!!.build()
+
+        if (buildedTrack == null) {
+          nextTrack()
+          return@launch
         }
 
-        PlayerManager.musicManagers.remove(this.guild.idLong)
+        buildedTrack.spotifyTrack = null
+        current = buildedTrack
+
+        player.startTrack(current.track, false)
+      }
+      return
+    }
+    this.player.startTrack(this.current.track, false)
+  }
+
+  fun destroy() {
+    if (this.npMessage != null) this.npMessage?.delete()?.queue()
+    this.queue.clear()
+    this.player.destroy()
+    this.guild.audioManager.closeAudioConnection()
+
+    val manager = PlayerManager.getMusicManager(guild.idLong)
+
+    if (manager.djtableMessage != null) {
+      manager.djtableMessage?.delete()?.queue()
+      manager.djtableMessage = null
     }
 
-    private fun getThumbnail(identifier: String, source: String): String {
-        if (source == "youtube") {
-            return "https://img.youtube.com/vi/$identifier/maxresdefault.jpg"
-        }
-        return "https://i.pinimg.com/564x/a3/a9/29/a3a929cc8d09e88815b89bc071ff4d8d.jpg"
+    PlayerManager.musicManagers.remove(this.guild.idLong)
+  }
+
+  private fun getThumbnail(identifier: String, source: String): String {
+    if (source == "youtube") {
+      return "https://img.youtube.com/vi/$identifier/maxresdefault.jpg"
+    }
+    return "https://i.pinimg.com/564x/a3/a9/29/a3a929cc8d09e88815b89bc071ff4d8d.jpg"
+  }
+
+  override fun onTrackEnd(player: AudioPlayer, track: AudioTrack, endReason: AudioTrackEndReason) {
+    if (endReason.mayStartNext) nextTrack()
+  }
+
+  override fun onTrackStart(player: AudioPlayer, track: AudioTrack) {
+    if (this.npMessage != null) {
+      this.npMessage?.delete()?.queue()
+      this.npMessage = null
     }
 
-    override fun onTrackEnd(player: AudioPlayer, track: AudioTrack, endReason: AudioTrackEndReason) {
-        if (endReason.mayStartNext) nextTrack()
+    if (!Utils.hasPermissions(
+        guild.selfMember,
+        textChannel,
+        listOf(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS)
+      )
+    ) return
+
+    val requester = current.requester
+
+    val embed = Embed {
+      title = "<a:disco:803678643661832233> A tocar"
+      color = Utils.randColor()
+      url = track.info.uri
+      thumbnail = getThumbnail(track.identifier, track.sourceManager.sourceName)
+      field {
+        name = ":page_with_curl: Nome:"
+        value = "`${track.info.title}`"
+        inline = false
+      }
+      field {
+        name = ":technologist: Enviado por:"
+        value = "`${track.info.author}`"
+        inline = false
+      }
+      field {
+        name = ":watch: Duração:"
+        value = if (!track.info.isStream) "`${Utils.msToHour(track.info.length)}`" else ":infinity:"
+        inline = false
+      }
+      footer {
+        name = requester.user.asTag
+        iconUrl = requester.user.effectiveAvatarUrl
+      }
+      timestamp = Instant.now()
     }
 
-    override fun onTrackStart(player: AudioPlayer, track: AudioTrack) {
-        if (this.npMessage != null) {
-            this.npMessage?.delete()?.queue()
-            this.npMessage = null
-        }
+    textChannel.sendMessageEmbeds(embed).queue { this.npMessage = it }
+  }
 
-        if (!Utils.hasPermissions(
-                guild.selfMember,
-                textChannel,
-                listOf(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS)
-            )
-        ) return
+  override fun onTrackException(player: AudioPlayer, track: AudioTrack, exception: FriendlyException) {
+    logger.warn("Ocorreu um erro ao tocar a música ${track.info.identifier}.\nErro: ${exception.printStackTrace()}")
+    if (exception.localizedMessage.contains("429")) {
+      this.textChannel.sendMessage(":warning: Parece que o YouTube me impediu de tocar essa música, aguarda um momento enquanto resolvo esse problema e tenta novamente daqui a uns segundos.")
+        .queue()
+      this.destroy()
 
-        val requester = current.requester
+      val appName = System.getenv("APPNAME")
 
-        val embed = Embed {
-            title = "<a:disco:803678643661832233> A tocar"
-            color = Utils.randColor()
-            url = track.info.uri
-            thumbnail = getThumbnail(track.identifier, track.sourceManager.sourceName)
-            field {
-                name = ":page_with_curl: Nome:"
-                value = "`${track.info.title}`"
-                inline = false
-            }
-            field {
-                name = ":technologist: Enviado por:"
-                value = "`${track.info.author}`"
-                inline = false
-            }
-            field {
-                name = ":watch: Duração:"
-                value = if (!track.info.isStream) "`${Utils.msToHour(track.info.length)}`" else ":infinity:"
-                inline = false
-            }
-            footer {
-                name = requester.user.asTag
-                iconUrl = requester.user.effectiveAvatarUrl
-            }
-            timestamp = Instant.now()
-        }
+      if (appName != null) {
+        val req = Request.Builder()
+          .url("https://api.heroku.com/apps/${appName}/dynos")
+          .addHeader("Accept", "application/vnd.heroku+json; version=3")
+          .addHeader("Authorization", "Bearer ${System.getenv("HEROKUTOKEN")}")
+          .delete()
+          .build()
 
-        textChannel.sendMessageEmbeds(embed).queue { this.npMessage = it }
+        D4rkBot.okHttpClient.newCall(req).enqueue(object : Callback {
+          override fun onFailure(call: Call, e: IOException) {
+            exitProcess(1)
+          }
+
+          override fun onResponse(call: Call, response: Response) {
+            if (response.code() != 202) exitProcess(1)
+          }
+        })
+      }
     }
+  }
 
-    override fun onTrackException(player: AudioPlayer, track: AudioTrack, exception: FriendlyException) {
-        logger.warn("Ocorreu um erro ao tocar a música ${track.info.identifier}.\nErro: ${exception.printStackTrace()}")
-        if (exception.localizedMessage.contains("429")) {
-            this.textChannel.sendMessage(":warning: Parece que o YouTube me impediu de tocar essa música, aguarda um momento enquanto resolvo esse problema e tenta novamente daqui a uns segundos.")
-                .queue()
-            this.destroy()
+  override fun onTrackStuck(player: AudioPlayer, track: AudioTrack, thresholdMs: Long) {
+    logger.warn("Música ${track.info.identifier} presa.\nThreshold: ${thresholdMs}ms")
+  }
 
-            val appName = System.getenv("APPNAME")
-
-            if (appName != null) {
-                val req = Request.Builder()
-                    .url("https://api.heroku.com/apps/${appName}/dynos")
-                    .addHeader("Accept", "application/vnd.heroku+json; version=3")
-                    .addHeader("Authorization", "Bearer ${System.getenv("HEROKUTOKEN")}")
-                    .delete()
-                    .build()
-
-                D4rkBot.okHttpClient.newCall(req).enqueue(object: Callback {
-                    override fun onFailure(call: Call, e: IOException) {
-                        exitProcess(1)
-                    }
-
-                    override fun onResponse(call: Call, response: Response) {
-                        if (response.code() != 202) exitProcess(1)
-                    }
-                })
-            }
-        }
-    }
-
-    override fun onTrackStuck(player: AudioPlayer, track: AudioTrack, thresholdMs: Long) {
-        logger.warn("Música ${track.info.identifier} presa.\nThreshold: ${thresholdMs}ms")
-    }
-
-    override fun onTrackStuck(
-        player: AudioPlayer,
-        track: AudioTrack,
-        thresholdMs: Long,
-        stackTrace: Array<out StackTraceElement>
-    ) {
-        logger.warn("Música ${track.info.identifier} presa.\nThreshold: ${thresholdMs}ms\nErro: $stackTrace")
-    }
+  override fun onTrackStuck(
+    player: AudioPlayer,
+    track: AudioTrack,
+    thresholdMs: Long,
+    stackTrace: Array<out StackTraceElement>
+  ) {
+    logger.warn("Música ${track.info.identifier} presa.\nThreshold: ${thresholdMs}ms\nErro: $stackTrace")
+  }
 }

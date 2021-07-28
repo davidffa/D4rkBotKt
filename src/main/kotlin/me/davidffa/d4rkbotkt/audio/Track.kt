@@ -8,15 +8,15 @@ class Track(var track: AudioTrack?, val requester: Member) {
   var spotifyTrack: SpotifyTrack? = null
 
   val title: String
-  get() = track?.info?.title ?: spotifyTrack!!.title
+    get() = track?.info?.title ?: spotifyTrack!!.title
 
   val duration: Long
-  get() = track?.duration ?: spotifyTrack!!.duration
+    get() = track?.duration ?: spotifyTrack!!.duration
 
   val uri: String
-  get() = track?.info?.uri ?: spotifyTrack!!.uri
+    get() = track?.info?.uri ?: spotifyTrack!!.uri
 
-  constructor(spotifyTrack: SpotifyTrack, requester: Member): this(null, requester) {
+  constructor(spotifyTrack: SpotifyTrack, requester: Member) : this(null, requester) {
     this.spotifyTrack = spotifyTrack
   }
 
