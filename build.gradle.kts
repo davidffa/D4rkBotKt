@@ -25,7 +25,7 @@ repositories {
 dependencies {
   // Kotlin
   implementation(kotlin("stdlib"))
-  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0")
+  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1")
   implementation("ru.gildor.coroutines:kotlin-coroutines-okhttp:1.0")
   implementation("org.jetbrains.kotlin:kotlin-scripting-jsr223:1.5.21")
 
@@ -44,10 +44,10 @@ dependencies {
   implementation("org.litote.kmongo:kmongo-coroutine:4.2.8")
 
   // Native System
-  implementation("com.github.oshi:oshi-core:5.7.5")
+  implementation("com.github.oshi:oshi-core:5.8.0")
 
   // Logger
-  runtimeOnly("ch.qos.logback", "logback-classic", "1.2.3")
+  runtimeOnly("ch.qos.logback", "logback-classic", "1.2.5")
 }
 
 tasks {
