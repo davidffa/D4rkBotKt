@@ -31,6 +31,7 @@ object CommandManager {
         this.addCommand(Avatar())
         this.addCommand(Botinfo())
         this.addCommand(Ping())
+        this.addCommand(Roleinfo())
         this.addCommand(Serverinfo())
         this.addCommand(Uptime())
         this.addCommand(Userinfo())
