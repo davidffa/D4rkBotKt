@@ -4,6 +4,7 @@ import com.mongodb.client.model.Updates
 import com.sedmelluq.discord.lavaplayer.jdaudp.NativeAudioSendFactory
 import dev.minn.jda.ktx.injectKTX
 import kotlinx.coroutines.runBlocking
+import me.davidffa.d4rkbotkt.database.BotDB
 import me.davidffa.d4rkbotkt.database.GuildCache
 import me.davidffa.d4rkbotkt.events.EventManager
 import net.dv8tion.jda.api.JDA
@@ -28,7 +29,14 @@ class D4rkBot {
         private var lastCommandsUsed = 0
 
         suspend fun loadCache() {
-            commandsUsed = Database.botDB.findOneById(jda.selfUser.id)!!.commands
+            var botDB = Database.botDB.findOneById(jda.selfUser.id)
+
+            if (botDB == null) {
+                botDB = BotDB(jda.selfUser.id, 0, listOf(), listOf())
+                Database.botDB.insertOne(botDB)
+            }
+
+            commandsUsed = botDB.commands
             this.lastCommandsUsed = commandsUsed
 
             val threadPool = Executors.newSingleThreadScheduledExecutor()
