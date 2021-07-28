@@ -64,7 +64,7 @@ class Roleinfo : Command(
       field {
         name = ":8ball: Permissões"
         value =
-          "```\n${Utils.translatePermissions(role.permissions.stream().toList()).joinToString(", ")}```"
+          "```\n${Utils.translatePermissions(role.permissions.toList()).joinToString(", ")}```"
         inline = false
       }
       timestamp = Instant.now()
