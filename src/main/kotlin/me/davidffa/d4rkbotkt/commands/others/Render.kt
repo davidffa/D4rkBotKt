@@ -9,11 +9,10 @@ import me.davidffa.d4rkbotkt.command.Command
 import me.davidffa.d4rkbotkt.command.CommandContext
 import me.davidffa.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.Permission
-import okhttp3.MediaType
 import okhttp3.Request
-import okhttp3.RequestBody
 import ru.gildor.coroutines.okhttp.await
 import java.io.ByteArrayOutputStream
+import java.net.URLEncoder
 import java.time.Instant
 import java.util.zip.Inflater
 
@@ -50,13 +49,11 @@ class Render : Command(
 
     msg.editMessage("<a:loading2:805088089319407667> A renderizar a página...").queue()
 
-    val json = "{\"url\":\"${url}\"}"
-    val body = RequestBody.create(MediaType.parse("application/json"), json)
+    val renderURL = withContext(Dispatchers.IO) { "${System.getenv("RENDERAPIURL")}?url=${URLEncoder.encode(url, "utf-8")}" }
 
     val renderReq = Request.Builder()
-      .url(System.getenv("RENDERAPIURL"))
+      .url(renderURL)
       .addHeader("Authorization", System.getenv("RENDERAPITOKEN"))
-      .post(body)
       .build()
 
     val renderRes = D4rkBot.okHttpClient.newCall(renderReq).await().body() ?: return
