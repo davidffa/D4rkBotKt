@@ -6,6 +6,7 @@ import me.davidffa.d4rkbotkt.Database
 import me.davidffa.d4rkbotkt.command.Command
 import me.davidffa.d4rkbotkt.command.CommandContext
 import me.davidffa.d4rkbotkt.database.GuildDB
+import me.davidffa.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.entities.Role
 
@@ -57,21 +58,7 @@ class Djrole : Command(
             return
         }
 
-        var newRole: Role? = null
-
-        if (ctx.message.mentionedRoles.isNotEmpty()) newRole = ctx.message.mentionedRoles[0]
-        else {
-            val roleById = ctx.guild.roles.find { it.id == ctx.args[0] }
-            if (roleById != null) newRole = roleById
-            else {
-                val roleByName = ctx.guild.roles.find { it.name == ctx.args.joinToString(" ") }
-                if (roleByName != null) newRole = roleByName
-                else {
-                    val roleBySearch = ctx.guild.roles.find { it.name.lowercase().contains(ctx.args.joinToString(" ").lowercase()) }
-                    if (roleBySearch != null) newRole = roleBySearch
-                }
-            }
-        }
+        val newRole = Utils.findRole(ctx.args.joinToString(" "), ctx.guild)
 
         if (newRole == null) {
             ctx.channel.sendMessage(":x: Cargo não encontrado!").queue()

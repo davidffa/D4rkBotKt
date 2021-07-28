@@ -7,10 +7,7 @@ import me.davidffa.d4rkbotkt.Database
 import me.davidffa.d4rkbotkt.audio.PlayerManager
 import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.Permission.*
-import net.dv8tion.jda.api.entities.Guild
-import net.dv8tion.jda.api.entities.Member
-import net.dv8tion.jda.api.entities.TextChannel
-import net.dv8tion.jda.api.entities.User
+import net.dv8tion.jda.api.entities.*
 import java.net.MalformedURLException
 import java.net.URL
 import kotlin.math.min
@@ -86,6 +83,38 @@ object Utils {
             if (!startsWith && (name.contains(query) || name.lowercase().contains(lcQuery))) user = m.user
         }
         return user
+    }
+
+    fun findRole(query: String, guild: Guild): Role? {
+        val id = if (Regex("^<&\\d{17,18}>$").matches(query)) query.replace(Regex("[<&>]"), "")
+            else if (Regex("^[0-9]+$").matches(query)) query
+            else null
+
+        if (id != null) {
+            return guild.roleCache.getElementById(id)
+        }
+
+        var role: Role? = null
+        var startsWith = false
+        val lcQuery = query.lowercase()
+
+        for (m in guild.roleCache) {
+            val name = m.name
+
+            if (name == query || name.lowercase() == lcQuery) {
+                role = m
+                break
+            }
+
+            if (name.startsWith(query) || name.lowercase().startsWith(lcQuery)) {
+                startsWith = true
+                role = m
+                continue
+            }
+
+            if (!startsWith && (name.contains(query) || name.lowercase().contains(lcQuery))) role = m
+        }
+        return role
     }
 
     fun hasPermissions(selfMember: Member, channel: TextChannel, permissions: List<Permission>): Boolean {
