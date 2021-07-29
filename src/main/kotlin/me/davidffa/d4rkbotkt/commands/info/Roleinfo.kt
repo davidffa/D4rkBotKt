@@ -64,7 +64,10 @@ class Roleinfo : Command(
       field {
         name = ":8ball: Permissões"
         value =
-          "```\n${Utils.translatePermissions(role.permissions.toList()).joinToString(", ")}```"
+          "```\n${
+            if (role.permissions.isEmpty()) "Nenhuma"
+            else Utils.translatePermissions(role.permissions.toList()).joinToString(", ")
+          }```"
         inline = false
       }
       timestamp = Instant.now()
