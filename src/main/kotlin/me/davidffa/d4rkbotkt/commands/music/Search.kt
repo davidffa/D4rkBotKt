@@ -31,9 +31,9 @@ class Search : Command(
   override suspend fun run(ctx: CommandContext) {
     if (!Utils.canPlay(ctx.selfMember, ctx.member, ctx.channel)) return
 
-    val query = if (ctx.args[0].lowercase() == "sc" || ctx.args[0].lowercase() == "yt") {
+    val query = if (listOf("yt", "ytm", "sc").contains(ctx.args[0].lowercase())) {
       if (ctx.args.size < 2) {
-        ctx.channel.sendMessage(":x: **Usa:** ${ctx.prefix}search [yt/sc] <Nome da música>").queue()
+        ctx.channel.sendMessage(":x: **Usa:** ${ctx.prefix}search [yt/ytm/sc] <Nome da música>").queue()
         return
       }
       if (Utils.isUrl(ctx.args[1])) ctx.args[1]
@@ -99,7 +99,10 @@ class Search : Command(
     }, 40000L)
 
     menuListener = ctx.jda.onSelection("$nonce:search") {
-      if (it.member != ctx.member || it.channel != ctx.channel) return@onSelection
+      if (it.member != ctx.member) {
+        it.reply(":x: Não podes interagir aqui!\n**Usa:** `${ctx.prefix}${name}` para poderes interagir.").setEphemeral(true).queue()
+        return@onSelection
+      }
 
       val ids = it.selectedOptions!!.map { op -> op.value.toInt() }
 
@@ -142,7 +145,10 @@ class Search : Command(
     }
 
     buttonListener = ctx.jda.onButton("$nonce:cancel") {
-      if (it.member != ctx.member) return@onButton
+      if (it.member != ctx.member) {
+        it.reply(":x: Não podes interagir aqui!\n**Usa:** `${ctx.prefix}${name}` para poderes interagir.").setEphemeral(true).queue()
+        return@onButton
+      }
 
       timer.cancel()
 
