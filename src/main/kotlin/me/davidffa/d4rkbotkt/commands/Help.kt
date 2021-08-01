@@ -75,7 +75,10 @@ class Help : Command(
       val msg = channel.sendMessage("\u200B").setActionRow(menu).await()
 
       val listener = ctx.jda.onSelection("$nonce:help") {
-        if (it.user.idLong != ctx.author.idLong) return@onSelection
+        if (it.user.idLong != ctx.author.idLong) {
+          it.reply(":x: Não podes interagir aqui!\n**Usa:** `${ctx.prefix}${name}` para poderes interagir.").setEphemeral(true).queue()
+          return@onSelection
+        }
         val option = it.selectedOptions?.first()
 
         val embed = EmbedBuilder {

@@ -99,8 +99,12 @@ class Filters : Command(
     }, 60000)
 
     val menuListener = ctx.jda.onSelection("$nonce:filters") {
-      val selection = it.selectedOptions?.first()!!
-      if (it.member?.idLong != ctx.member.idLong) return@onSelection
+      if (it.member?.idLong != ctx.member.idLong) {
+        it.reply(":x: Não podes interagir aqui!\n**Usa:** `${ctx.prefix}${name}` para poderes interagir.").setEphemeral(true).queue()
+        return@onSelection
+      }
+
+      val selection = it.selectedOptions!!.first()
 
       when (selection.value) {
         "bass" -> manager.switchFilter(Filter.BASS)
@@ -120,12 +124,18 @@ class Filters : Command(
     }
 
     val clearListener = ctx.jda.onButton("$nonce:clear") {
-      if (it.member?.idLong != ctx.member.idLong) return@onButton
+      if (it.member?.idLong != ctx.member.idLong) {
+        it.reply(":x: Não podes interagir aqui!\n**Usa:** `${ctx.prefix}${name}` para poderes interagir.").setEphemeral(true).queue()
+        return@onButton
+      }
       manager.clearFilters()
       editMessage(it, embed, manager.filters)
     }
     val closeListener = ctx.jda.onButton("$nonce:close") {
-      if (it.member?.idLong != ctx.member.idLong) return@onButton
+      if (it.member?.idLong != ctx.member.idLong) {
+        it.reply(":x: Não podes interagir aqui!\n**Usa:** `${ctx.prefix}${name}` para poderes interagir.").setEphemeral(true).queue()
+        return@onButton
+      }
       timer.cancel()
       close(ctx.jda, listeners, manager)
       it.deferEdit().queue()
