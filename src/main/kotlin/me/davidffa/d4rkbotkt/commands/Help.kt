@@ -147,7 +147,7 @@ class Help : Command(
     val command = CommandManager.getCommand(search, ctx.author.id)
 
     if (command == null) {
-      channel.sendMessage(":x: Comando não encontrado!")
+      channel.sendMessage(":x: Comando não encontrado!").queue()
       return
     }
 
