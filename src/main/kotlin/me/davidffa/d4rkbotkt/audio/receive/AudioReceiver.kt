@@ -18,10 +18,10 @@ class AudioReceiver(
 
   private val encoder = LameEncoder(
     AudioFormat(48000.0f, 16, 2, true, true),
-    256,
+    96,
     MPEGMode.STEREO,
     Lame.QUALITY_MIDDLE_LOW,
-    true
+    false
   )
 
   private val stream: OutputStream
