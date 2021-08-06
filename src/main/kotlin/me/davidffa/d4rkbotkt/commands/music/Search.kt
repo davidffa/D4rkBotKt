@@ -123,6 +123,7 @@ class Search : Command(
       if (!ctx.selfMember.voiceState!!.inVoiceChannel()) {
         ctx.guild.audioManager.isSelfDeafened = true
         ctx.guild.audioManager.isSelfMuted = false
+        ctx.guild.audioManager.openAudioConnection(ctx.member.voiceState?.channel)
       }
 
       val musicManager = PlayerManager.getMusicManager(ctx.guild, ctx.channel)
