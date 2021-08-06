@@ -30,6 +30,7 @@ object CommandManager {
     /* ** INFO ** */
     this.addCommand(Avatar())
     this.addCommand(Botinfo())
+    this.addCommand(Channelinfo())
     this.addCommand(Invite())
     this.addCommand(Ping())
     this.addCommand(Roleinfo())

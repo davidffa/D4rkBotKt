@@ -64,7 +64,6 @@ object Utils {
       if (u != null) return u
     }
 
-    var startsWith = false
     val lcQuery = query.lowercase()
 
     for (m in guild.members) {
@@ -76,12 +75,11 @@ object Utils {
       }
 
       if (name.startsWith(query) || name.lowercase().startsWith(lcQuery)) {
-        startsWith = true
         user = m.user
-        continue
+        break
       }
 
-      if (!startsWith && (name.contains(query) || name.lowercase().contains(lcQuery))) user = m.user
+      if (name.contains(query) || name.lowercase().contains(lcQuery)) user = m.user
     }
     return user
   }
@@ -96,7 +94,6 @@ object Utils {
     }
 
     var role: Role? = null
-    var startsWith = false
     val lcQuery = query.lowercase()
 
     for (m in guild.roleCache) {
@@ -108,14 +105,43 @@ object Utils {
       }
 
       if (name.startsWith(query) || name.lowercase().startsWith(lcQuery)) {
-        startsWith = true
         role = m
-        continue
+        break
       }
 
-      if (!startsWith && (name.contains(query) || name.lowercase().contains(lcQuery))) role = m
+      if (name.contains(query) || name.lowercase().contains(lcQuery)) role = m
     }
     return role
+  }
+
+  fun findChannel(query: String, guild: Guild): GuildChannel? {
+    val id = if (Regex("^<&\\d{17,18}>$").matches(query)) query.replace(Regex("[<#>]"), "")
+    else if (Regex("^\\d{17,18}$").matches(query)) query
+    else null
+
+    if (id != null) {
+      return guild.getGuildChannelById(id)
+    }
+
+    var channel: GuildChannel? = null
+    val lcQuery = query.lowercase()
+
+    for (m in guild.channels) {
+      val name = m.name
+
+      if (name == query || name.lowercase() == lcQuery) {
+        channel = m
+        break
+      }
+
+      if (name.startsWith(query) || name.lowercase().startsWith(lcQuery)) {
+        channel = m
+        break
+      }
+
+      if (name.contains(query) || name.lowercase().contains(lcQuery)) channel = m
+    }
+    return channel
   }
 
   fun hasPermissions(selfMember: Member, channel: TextChannel, permissions: List<Permission>): Boolean {
