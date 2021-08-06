@@ -27,9 +27,8 @@ class Play : Command(
 
     if (!selfVoiceState!!.inVoiceChannel()) {
       ctx.guild.audioManager.isSelfDeafened = true
-      ctx.guild.audioManager.openAudioConnection(member.voiceState?.channel)
-    }else if (ReceiverManager.receiveManagers.contains(ctx.guild.idLong)) {
       ctx.guild.audioManager.isSelfMuted = false
+      ctx.guild.audioManager.openAudioConnection(member.voiceState?.channel)
     }
 
     var link = ctx.args.joinToString(" ")

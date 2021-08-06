@@ -41,8 +41,10 @@ class AudioReceiver(
     val inputBuffer = combinedAudio.getAudioData(volume)
     val outputBuffer = ByteArray(inputBuffer.size)
 
-    val bytesWritten = encoder.encodeBuffer(inputBuffer, 0, inputBuffer.size, outputBuffer)
-    stream.write(outputBuffer, 0, bytesWritten)
+    try {
+      val bytesWritten = encoder.encodeBuffer(inputBuffer, 0, inputBuffer.size, outputBuffer)
+      stream.write(outputBuffer, 0, bytesWritten)
+    }catch (e: Exception) {}
   }
 
   fun close() {

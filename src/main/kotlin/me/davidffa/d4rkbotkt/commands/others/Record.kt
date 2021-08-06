@@ -29,20 +29,15 @@ class Record : Command(
     val receiverManager = ReceiverManager.receiveManagers[ctx.guild.idLong]
 
     if (receiverManager != null) {
-      if (!PlayerManager.musicManagers.contains(ctx.guild.idLong))
-        ctx.guild.audioManager.closeAudioConnection()
-      else {
-        ctx.guild.audioManager.receivingHandler = null
-        ctx.guild.audioManager.isSelfDeafened = true
-      }
-
+      ctx.guild.audioManager.closeAudioConnection()
+      ctx.guild.audioManager.receivingHandler = null
 
       receiverManager.timer.cancel()
       receiverManager.audioReceiver.close()
 
-      val file = File("./records/record-${ctx.guild.id}.mp3")
-
       ReceiverManager.receiveManagers.remove(ctx.guild.idLong)
+
+      val file = File("./records/record-${ctx.guild.id}.mp3")
 
       ctx.channel
         .sendMessage(":stop_button: Parei de gravar!")
@@ -54,10 +49,9 @@ class Record : Command(
     }
 
     if (!selfVoiceState!!.inVoiceChannel()) {
+      ctx.guild.audioManager.isSelfDeafened = false
       ctx.guild.audioManager.isSelfMuted = true
       ctx.guild.audioManager.openAudioConnection(ctx.member.voiceState?.channel)
-    }else {
-      ctx.guild.audioManager.isSelfDeafened = false
     }
 
     val audioReceiver = AudioReceiver(ctx.guild.id)
@@ -66,9 +60,12 @@ class Record : Command(
 
     val timer = Timer()
     timer.schedule(timerTask {
-      val file = File("./records/record-${ctx.guild.id}.mp3")
-
       ReceiverManager.receiveManagers.remove(ctx.guild.idLong)
+      ctx.guild.audioManager.closeAudioConnection()
+
+      ctx.guild.audioManager.receivingHandler = null
+
+      val file = File("./records/record-${ctx.guild.id}.mp3")
 
       ctx.channel
         .sendMessage(":stop_button: Parei de gravar! (foi atingido o limite de 7 minutos).")

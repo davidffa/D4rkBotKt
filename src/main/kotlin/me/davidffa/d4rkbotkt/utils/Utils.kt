@@ -5,6 +5,7 @@ import dev.minn.jda.ktx.await
 import me.davidffa.d4rkbotkt.D4rkBot
 import me.davidffa.d4rkbotkt.Database
 import me.davidffa.d4rkbotkt.audio.PlayerManager
+import me.davidffa.d4rkbotkt.audio.receive.ReceiverManager
 import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.Permission.*
 import net.dv8tion.jda.api.entities.*
@@ -149,6 +150,12 @@ object Utils {
         return false
       }
     }
+
+    if (PlayerManager.musicManagers.contains(self.guild.idLong)) {
+      channel.sendMessage(":x: Não posso gravar áudio enquanto toco música!").queue()
+      return false
+    }
+
     return true
   }
 
@@ -185,6 +192,11 @@ object Utils {
         return false
       }
       return true
+    }
+
+    if (ReceiverManager.receiveManagers.contains(self.guild.idLong)) {
+      channel.sendMessage(":x: Não posso tocar música enquanto gravo áudio!").queue()
+      return false
     }
 
     val djRoleID = D4rkBot.guildCache[member.guild.idLong]!!.djRole
