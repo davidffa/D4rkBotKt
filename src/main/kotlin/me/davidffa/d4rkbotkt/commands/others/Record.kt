@@ -29,8 +29,8 @@ class Record : Command(
     val receiverManager = ReceiverManager.receiveManagers[ctx.guild.idLong]
 
     if (receiverManager != null) {
-      ctx.guild.audioManager.closeAudioConnection()
       ctx.guild.audioManager.receivingHandler = null
+      ctx.guild.audioManager.closeAudioConnection()
 
       receiverManager.timer.cancel()
       receiverManager.audioReceiver.close()
@@ -60,10 +60,11 @@ class Record : Command(
 
     val timer = Timer()
     timer.schedule(timerTask {
-      ReceiverManager.receiveManagers.remove(ctx.guild.idLong)
+      ctx.guild.audioManager.receivingHandler = null
       ctx.guild.audioManager.closeAudioConnection()
 
-      ctx.guild.audioManager.receivingHandler = null
+      ReceiverManager.receiveManagers[ctx.guild.idLong]!!.audioReceiver.close()
+      ReceiverManager.receiveManagers.remove(ctx.guild.idLong)
 
       val file = File("./records/record-${ctx.guild.id}.mp3")
 
