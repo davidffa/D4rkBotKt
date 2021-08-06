@@ -7,6 +7,7 @@ import me.davidffa.d4rkbotkt.audio.receive.Receiver
 import me.davidffa.d4rkbotkt.audio.receive.ReceiverManager
 import me.davidffa.d4rkbotkt.command.Command
 import me.davidffa.d4rkbotkt.command.CommandContext
+import me.davidffa.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.Permission
 import java.io.File
 import java.util.*
@@ -21,6 +22,8 @@ class Record : Command(
   botPermissions = listOf(Permission.MESSAGE_WRITE)
 ) {
   override suspend fun run(ctx: CommandContext) {
+    if (!Utils.canRecord(ctx.selfMember, ctx.member, ctx.channel)) return
+
     val selfVoiceState = ctx.selfMember.voiceState
 
     val receiverManager = ReceiverManager.receiveManagers[ctx.guild.idLong]
@@ -73,7 +76,7 @@ class Record : Command(
         .queue {
           file.delete()
         }
-    }, 7 * 60 * 1000)
+    }, 7 * 60 * 1000L)
 
     ReceiverManager.receiveManagers[ctx.guild.idLong] = Receiver(audioReceiver, timer)
   }

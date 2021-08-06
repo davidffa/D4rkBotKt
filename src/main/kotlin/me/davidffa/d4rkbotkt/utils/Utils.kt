@@ -121,6 +121,37 @@ object Utils {
     return selfMember.getPermissions(channel).containsAll(permissions)
   }
 
+  fun canRecord(self: Member, member: Member, channel: TextChannel): Boolean {
+    val memberVoiceState = member.voiceState
+    val selfChannel = member.guild.audioManager.connectedChannel
+
+    if (!memberVoiceState!!.inVoiceChannel()) {
+      channel.sendMessage(":x: Precisas de estar num canal de voz para executar esse comando!").queue()
+      return false
+    }
+
+    val memberVoiceChannel = memberVoiceState.channel
+    val selfPermissions = self.getPermissions(memberVoiceChannel!!)
+
+    if (!selfPermissions.contains(VIEW_CHANNEL)) {
+      channel.sendMessage(":x: Não tenho permissão para ver o teu canal de voz!").queue()
+      return false
+    }
+
+    if (!selfPermissions.contains(VOICE_CONNECT)) {
+      channel.sendMessage(":x: Não tenho permissão para entrar no teu canal de voz!").queue()
+      return false
+    }
+
+    if (selfChannel == null) {
+      if (memberVoiceChannel.userLimit == memberVoiceChannel.members.size && !selfPermissions.contains(MANAGE_CHANNEL)) {
+        channel.sendMessage(":x: O teu canal de voz está cheio!").queue()
+        return false
+      }
+    }
+    return true
+  }
+
   suspend fun canPlay(self: Member, member: Member, channel: TextChannel): Boolean {
     val memberVoiceState = member.voiceState
     val selfChannel = member.guild.audioManager.connectedChannel
@@ -155,7 +186,6 @@ object Utils {
       }
       return true
     }
-
 
     val djRoleID = D4rkBot.guildCache[member.guild.idLong]!!.djRole
 
