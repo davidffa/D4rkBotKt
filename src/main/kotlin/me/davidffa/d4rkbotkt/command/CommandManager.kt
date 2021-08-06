@@ -7,8 +7,7 @@ import me.davidffa.d4rkbotkt.commands.dev.Eval
 import me.davidffa.d4rkbotkt.commands.info.*
 import me.davidffa.d4rkbotkt.commands.music.*
 import me.davidffa.d4rkbotkt.commands.music.Queue
-import me.davidffa.d4rkbotkt.commands.others.Github
-import me.davidffa.d4rkbotkt.commands.others.Render
+import me.davidffa.d4rkbotkt.commands.others.*
 import me.davidffa.d4rkbotkt.commands.settings.Djrole
 import me.davidffa.d4rkbotkt.commands.settings.Setprefix
 import me.davidffa.d4rkbotkt.utils.Utils
@@ -58,6 +57,7 @@ object CommandManager {
     /* ** OTHERS ** */
     this.addCommand(Github())
     this.addCommand(Help())
+    this.addCommand(Record())
     this.addCommand(Render())
 
     /* ** SETTINGS ** */

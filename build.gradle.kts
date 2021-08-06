@@ -37,6 +37,9 @@ dependencies {
   implementation("com.sedmelluq:lavaplayer:1.3.78")
   implementation("com.sedmelluq:jda-nas:1.1.0")
 
+  // Audio converter
+  implementation("com.cloudburst:java-lame:3.98.4")
+
   // Lavaplayer filters
   implementation("com.github.natanbc:lavadsp:0.7.7")
 

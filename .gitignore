@@ -14,3 +14,6 @@ bin/
 # Gradle
 .gradle/
 !gradle/wrapper/gradle-wrapper.jar
+
+# Bot folders
+records

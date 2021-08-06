@@ -10,6 +10,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import me.davidffa.d4rkbotkt.D4rkBot
+import me.davidffa.d4rkbotkt.audio.receive.ReceiverManager
 import me.davidffa.d4rkbotkt.audio.spotify.SpotifyTrack
 import me.davidffa.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.Permission
@@ -128,7 +129,11 @@ class TrackScheduler(private val player: AudioPlayer, private val textChannel: T
     if (this.npMessage != null) this.npMessage?.delete()?.queue()
     this.queue.clear()
     this.player.destroy()
-    this.guild.audioManager.closeAudioConnection()
+
+    if (ReceiverManager.receiveManagers.contains(guild.idLong)) {
+      this.guild.audioManager.sendingHandler = null
+      this.guild.audioManager.isSelfMuted = true
+    }else this.guild.audioManager.closeAudioConnection()
 
     val manager = PlayerManager.getMusicManager(guild.idLong)
 

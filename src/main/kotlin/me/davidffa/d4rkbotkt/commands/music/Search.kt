@@ -6,6 +6,7 @@ import dev.minn.jda.ktx.*
 import dev.minn.jda.ktx.interactions.SelectionMenu
 import dev.minn.jda.ktx.interactions.option
 import me.davidffa.d4rkbotkt.audio.PlayerManager
+import me.davidffa.d4rkbotkt.audio.receive.ReceiverManager
 import me.davidffa.d4rkbotkt.command.Command
 import me.davidffa.d4rkbotkt.command.CommandContext
 import me.davidffa.d4rkbotkt.utils.Utils
@@ -122,6 +123,8 @@ class Search : Command(
       if (!ctx.selfMember.voiceState!!.inVoiceChannel()) {
         ctx.guild.audioManager.isSelfDeafened = true
         ctx.guild.audioManager.openAudioConnection(ctx.member.voiceState?.channel)
+      }else if (ReceiverManager.receiveManagers.contains(ctx.guild.idLong)) {
+        ctx.guild.audioManager.isSelfMuted = false
       }
 
       val musicManager = PlayerManager.getMusicManager(ctx.guild, ctx.channel)

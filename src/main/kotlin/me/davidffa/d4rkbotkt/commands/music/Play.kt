@@ -1,6 +1,7 @@
 package me.davidffa.d4rkbotkt.commands.music
 
 import me.davidffa.d4rkbotkt.audio.PlayerManager
+import me.davidffa.d4rkbotkt.audio.receive.ReceiverManager
 import me.davidffa.d4rkbotkt.command.Command
 import me.davidffa.d4rkbotkt.command.CommandContext
 import me.davidffa.d4rkbotkt.utils.Utils
@@ -27,6 +28,8 @@ class Play : Command(
     if (!selfVoiceState!!.inVoiceChannel()) {
       ctx.guild.audioManager.isSelfDeafened = true
       ctx.guild.audioManager.openAudioConnection(member.voiceState?.channel)
+    }else if (ReceiverManager.receiveManagers.contains(ctx.guild.idLong)) {
+      ctx.guild.audioManager.isSelfMuted = false
     }
 
     var link = ctx.args.joinToString(" ")
