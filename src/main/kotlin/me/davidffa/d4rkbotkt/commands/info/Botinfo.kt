@@ -102,7 +102,7 @@ class Botinfo : Command(
         value = "Kotlin: `${KotlinVersion.CURRENT}`\n" +
                 "JVM: `${System.getProperty("java.version")}`\n" +
                 "JDA: `${JDAInfo.VERSION}`\n" +
-                "Lavaplayer: `${PlayerLibrary.VERSION}`"
+                "Lavaplayer (fork): `${PlayerLibrary.VERSION}`"
       }
       thumbnail = ctx.selfUser.effectiveAvatarUrl
       footer {

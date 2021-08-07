@@ -13,7 +13,7 @@ class SpotifyTrack(
 ) {
   suspend fun build(): Track? {
     val track = try {
-      PlayerManager.search("ytsearch:$title - $artist", 1).firstOrNull()
+      PlayerManager.search("ytmsearch:$title - $artist", 1).firstOrNull()
     } catch (e: Exception) {
       null
     } ?: return null

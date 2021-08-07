@@ -34,7 +34,7 @@ dependencies {
     exclude("opus-java")
   }
   implementation("com.github.minndevelopment:jda-ktx:ea0a1b2")
-  implementation("com.sedmelluq:lavaplayer:1.3.78")
+  implementation("com.github.Walkyst:lavaplayer-fork:9ba7f9a")
   implementation("com.sedmelluq:jda-nas:1.1.0")
 
   // Audio converter
