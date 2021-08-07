@@ -8,8 +8,7 @@ import me.davidffa.d4rkbotkt.commands.info.*
 import me.davidffa.d4rkbotkt.commands.music.*
 import me.davidffa.d4rkbotkt.commands.music.Queue
 import me.davidffa.d4rkbotkt.commands.others.*
-import me.davidffa.d4rkbotkt.commands.settings.Djrole
-import me.davidffa.d4rkbotkt.commands.settings.Setprefix
+import me.davidffa.d4rkbotkt.commands.settings.*
 import me.davidffa.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent
@@ -63,6 +62,7 @@ object CommandManager {
 
     /* ** SETTINGS ** */
     this.addCommand(Djrole())
+    this.addCommand(Logs())
     this.addCommand(Setprefix())
 
     this.commands.forEach {

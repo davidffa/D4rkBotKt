@@ -12,10 +12,14 @@ data class GuildDB @BsonCreator constructor(
   val prefix: String? = null,
   @Nullable @BsonProperty("disabledCmds")
   val disabledCmds: List<String>? = null,
+  @Nullable @BsonProperty("welcomeMessagesEnabled")
+  val welcomeMessagesEnabled: Boolean? = null,
   @Nullable @BsonProperty("welcomeChatID")
   val welcomeChatID: String? = null,
   @Nullable @BsonProperty("memberRemoveChatID")
   val memberRemoveChatID: String? = null,
+  @Nullable @BsonProperty("memberRemoveMessagesEnabled")
+  val memberRemoveMessagesEnabled: Boolean? = null,
   @Nullable @BsonProperty("autoRole")
   val autoRole: String? = null,
   @Nullable @BsonProperty("djRole")

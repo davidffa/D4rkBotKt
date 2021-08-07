@@ -63,7 +63,9 @@ class D4rkBot {
           dbGuild.prefix ?: "dk.",
           dbGuild.disabledCmds,
           dbGuild.autoRole,
+          dbGuild.welcomeMessagesEnabled,
           dbGuild.welcomeChatID,
+          dbGuild.memberRemoveMessagesEnabled,
           dbGuild.memberRemoveChatID,
           dbGuild.djRole
         )
