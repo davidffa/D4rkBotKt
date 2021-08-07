@@ -54,6 +54,7 @@ class Filters : Command(
       option("Vibrato", "vibrato", emoji = Emoji.fromUnicode("9️⃣"))
       option("Vocals", "vocals", emoji = Emoji.fromUnicode("\uD83D\uDD1F"))
       option("Karaoke", "karaoke", emoji = Emoji.fromMarkdown("<:keycap_11:862005088716193793>"))
+      option("Distortion", "distortion", emoji = Emoji.fromMarkdown("<:keycap_12:873556905983868928>"))
     }
 
     val clearButton = Button.danger("$nonce:clear", Emoji.fromUnicode("\uD83D\uDDD1️"))
@@ -118,6 +119,7 @@ class Filters : Command(
         "vibrato" -> manager.switchFilter(Filter.VIBRATO)
         "vocals" -> manager.switchFilter(Filter.VOCALS)
         "karaoke" -> manager.switchFilter(Filter.KARAOKE)
+        "distortion" -> manager.switchFilter(Filter.DISTORTION)
       }
 
       editMessage(it, embed, manager.filters)
@@ -190,7 +192,8 @@ class Filters : Command(
               "8D ${if (filters.contains(Filter.EIGHTD)) "<:on:764478511875751937>" else "<:off:764478504124416040>"}\n" +
               "Vibrato ${if (filters.contains(Filter.VIBRATO)) "<:on:764478511875751937>" else "<:off:764478504124416040>"}\n" +
               "Vocals ${if (filters.contains(Filter.VOCALS)) "<:on:764478511875751937>" else "<:off:764478504124416040>"}\n" +
-              "Karaoke ${if (filters.contains(Filter.KARAOKE)) "<:on:764478511875751937>" else "<:off:764478504124416040>"}"
+              "Karaoke ${if (filters.contains(Filter.KARAOKE)) "<:on:764478511875751937>" else "<:off:764478504124416040>"}\n" +
+              "Distortion ${if (filters.contains(Filter.DISTORTION)) "<:on:764478511875751937>" else "<:off:764478504124416040>"}"
 
     return Pair(first, second)
   }
