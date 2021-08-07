@@ -99,7 +99,7 @@ class Logs : Command(
     globalTimer.schedule(timerTask {
       removeListeners(listeners, ctx.jda)
       mainMessage.editMessage(":warning: Acabou o tempo!\nUsa o comando novamente para continuar a configurar as logs!").setEmbeds().setActionRows().queue()
-    }, 5 * 60 * 1000L)
+    }, 3 * 60 * 1000L)
 
     val menuListener = ctx.jda.onSelection("$nonce:logs") {
       if (it.member != ctx.member) {
@@ -217,7 +217,7 @@ class Logs : Command(
         globalTimer.schedule(timerTask {
           removeListeners(listeners, ctx.jda)
           mainMessage.editMessage(":warning: Acabou o tempo!\nUsa o comando novamente para continuar a configurar as logs!").setEmbeds().setActionRows().queue()
-        }, 5 * 60 * 1000L)
+        }, 3 * 60 * 1000L)
 
         msg.editOriginal("").setEmbeds(generateEmbed(ctx.author, guildData, welcomeChat, memberRemoveChat)).setActionRow(menu).queue()
       }
