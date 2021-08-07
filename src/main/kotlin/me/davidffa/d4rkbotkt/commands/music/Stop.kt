@@ -15,7 +15,7 @@ class Stop : Command(
   cooldown = 4
 ) {
   override suspend fun run(ctx: CommandContext) {
-    if (!Utils.canUsePlayer(ctx.selfMember, ctx.member, ctx.channel)) return
+    if (!Utils.canUsePlayer(ctx.selfMember, ctx.member, ctx.channel, forOwnTrack = false, forAllQueueTracks = true)) return
 
     val musicManager = PlayerManager.getMusicManager(ctx.guild.idLong)
 
