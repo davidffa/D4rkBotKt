@@ -144,13 +144,6 @@ class TrackScheduler(private val player: AudioPlayer, private val textChannel: T
     PlayerManager.musicManagers.remove(this.guild.idLong)
   }
 
-  private fun getThumbnail(identifier: String, source: String): String {
-    if (source == "youtube") {
-      return "https://img.youtube.com/vi/$identifier/maxresdefault.jpg"
-    }
-    return "https://i.pinimg.com/564x/a3/a9/29/a3a929cc8d09e88815b89bc071ff4d8d.jpg"
-  }
-
   override fun onTrackEnd(player: AudioPlayer, track: AudioTrack, endReason: AudioTrackEndReason) {
     if (endReason.mayStartNext) nextTrack()
   }
@@ -174,7 +167,7 @@ class TrackScheduler(private val player: AudioPlayer, private val textChannel: T
       title = "<a:disco:803678643661832233> A tocar"
       color = Utils.randColor()
       url = track.info.uri
-      thumbnail = getThumbnail(track.identifier, track.sourceManager.sourceName)
+      thumbnail = track.info.artworkUrl
       field {
         name = ":page_with_curl: Nome:"
         value = "`${track.info.title}`"
