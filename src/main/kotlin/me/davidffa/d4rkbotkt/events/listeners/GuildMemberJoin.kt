@@ -12,12 +12,15 @@ suspend fun onGuildMemberJoin(event: GuildMemberJoinEvent) {
   val cache = D4rkBot.guildCache[event.guild.idLong]!!
   val welcomeChatID = cache.welcomeChatID
 
+  if (cache.welcomeMessagesEnabled != true) return
+
   if (welcomeChatID != null) {
     val channel = event.guild.getGuildChannelById(welcomeChatID) as TextChannel?
 
     if (channel == null) {
       cache.welcomeChatID = null
-      Database.guildDB.updateOneById(event.guild.id, Updates.set("welcomeChatID", null))
+      cache.welcomeMessagesEnabled = false
+      Database.guildDB.updateOneById(event.guild.id, Updates.combine(Updates.set("welcomeChatID", null), Updates.set("welcomeMessagesEnabled", false)))
       return
     }
 

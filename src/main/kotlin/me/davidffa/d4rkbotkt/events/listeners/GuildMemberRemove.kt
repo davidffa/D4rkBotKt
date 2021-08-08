@@ -12,12 +12,15 @@ suspend fun onGuildMemberRemove(event: GuildMemberRemoveEvent) {
   val cache = D4rkBot.guildCache[event.guild.idLong]!!
   val memberRemoveChatID = cache.memberRemoveChatID
 
+  if (cache.memberRemoveMessagesEnabled != true) return
+
   if (memberRemoveChatID != null) {
     val channel = event.guild.getGuildChannelById(memberRemoveChatID) as TextChannel?
 
     if (channel == null) {
       cache.memberRemoveChatID = null
-      Database.guildDB.updateOneById(event.guild.id, Updates.set("memberRemoveChatID", null))
+      cache.memberRemoveMessagesEnabled = false
+      Database.guildDB.updateOneById(event.guild.id, Updates.combine(Updates.set("memberRemoveChatID", null), Updates.set("memberRemoveMessagesEnabled", false)))
       return
     }
 
