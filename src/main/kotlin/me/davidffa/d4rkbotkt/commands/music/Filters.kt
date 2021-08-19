@@ -55,6 +55,7 @@ class Filters : Command(
       option("Vocals", "vocals", emoji = Emoji.fromUnicode("\uD83D\uDD1F"))
       option("Karaoke", "karaoke", emoji = Emoji.fromMarkdown("<:keycap_11:862005088716193793>"))
       option("Distortion", "distortion", emoji = Emoji.fromMarkdown("<:keycap_12:873556905983868928>"))
+      option("Lowpass", "lowpass", emoji = Emoji.fromMarkdown("<:keycap_13:877959573653319742>"))
     }
 
     val clearButton = Button.danger("$nonce:clear", Emoji.fromUnicode("\uD83D\uDDD1️"))
@@ -120,6 +121,7 @@ class Filters : Command(
         "vocals" -> manager.switchFilter(Filter.VOCALS)
         "karaoke" -> manager.switchFilter(Filter.KARAOKE)
         "distortion" -> manager.switchFilter(Filter.DISTORTION)
+        "lowpass" -> manager.switchFilter(Filter.LOWPASS)
       }
 
       editMessage(it, embed, manager.filters)
@@ -185,15 +187,16 @@ class Filters : Command(
               "Nightcore ${if (filters.contains(Filter.NIGHTCORE)) "<:on:764478511875751937>" else "<:off:764478504124416040>"}\n" +
               "Pop ${if (filters.contains(Filter.POP)) "<:on:764478511875751937>" else "<:off:764478504124416040>"}\n" +
               "Soft ${if (filters.contains(Filter.SOFT)) "<:on:764478511875751937>" else "<:off:764478504124416040>"}\n" +
-              "Treblebass ${if (filters.contains(Filter.TREBLEBASS)) "<:on:764478511875751937>" else "<:off:764478504124416040>"}"
+              "Treblebass ${if (filters.contains(Filter.TREBLEBASS)) "<:on:764478511875751937>" else "<:off:764478504124416040>"}\n" +
+              "Vaporwave ${if (filters.contains(Filter.VAPORWAVE)) "<:on:764478511875751937>" else "<:off:764478504124416040>"}"
 
     val second =
-      "Vaporwave ${if (filters.contains(Filter.VAPORWAVE)) "<:on:764478511875751937>" else "<:off:764478504124416040>"}\n" +
-              "8D ${if (filters.contains(Filter.EIGHTD)) "<:on:764478511875751937>" else "<:off:764478504124416040>"}\n" +
+      "8D ${if (filters.contains(Filter.EIGHTD)) "<:on:764478511875751937>" else "<:off:764478504124416040>"}\n" +
               "Vibrato ${if (filters.contains(Filter.VIBRATO)) "<:on:764478511875751937>" else "<:off:764478504124416040>"}\n" +
               "Vocals ${if (filters.contains(Filter.VOCALS)) "<:on:764478511875751937>" else "<:off:764478504124416040>"}\n" +
               "Karaoke ${if (filters.contains(Filter.KARAOKE)) "<:on:764478511875751937>" else "<:off:764478504124416040>"}\n" +
-              "Distortion ${if (filters.contains(Filter.DISTORTION)) "<:on:764478511875751937>" else "<:off:764478504124416040>"}"
+              "Distortion ${if (filters.contains(Filter.DISTORTION)) "<:on:764478511875751937>" else "<:off:764478504124416040>"}\n" +
+              "Lowpass ${if (filters.contains(Filter.LOWPASS)) "<:on:764478511875751937>" else "<:off:764478504124416040>"}"
 
     return Pair(first, second)
   }

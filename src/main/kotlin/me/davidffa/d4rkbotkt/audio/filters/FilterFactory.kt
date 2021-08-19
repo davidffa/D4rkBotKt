@@ -32,6 +32,7 @@ class FilterFactory(private val filters: List<Filter>, private val volume: Float
           Filter.VOCALS -> vocals(format, list.lastOrNull() ?: output)
           Filter.EIGHTD -> eightD(format, list.lastOrNull() ?: output)
           Filter.DISTORTION -> distortion(format, list.lastOrNull() ?: output)
+          Filter.LOWPASS -> lowpass(format, list.lastOrNull() ?: output)
         }
       )
     }
