@@ -132,7 +132,7 @@ class TrackScheduler(private val player: AudioPlayer, private val textChannel: T
 
     if (ReceiverManager.receiveManagers.contains(guild.idLong)) {
       this.guild.audioManager.sendingHandler = null
-    }else this.guild.audioManager.closeAudioConnection()
+    } else this.guild.audioManager.closeAudioConnection()
 
     val manager = PlayerManager.getMusicManager(guild.idLong)
 

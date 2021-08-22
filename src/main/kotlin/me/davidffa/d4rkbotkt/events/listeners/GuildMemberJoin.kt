@@ -20,7 +20,10 @@ suspend fun onGuildMemberJoin(event: GuildMemberJoinEvent) {
     if (channel == null) {
       cache.welcomeChatID = null
       cache.welcomeMessagesEnabled = false
-      Database.guildDB.updateOneById(event.guild.id, Updates.combine(Updates.set("welcomeChatID", null), Updates.set("welcomeMessagesEnabled", false)))
+      Database.guildDB.updateOneById(
+        event.guild.id,
+        Updates.combine(Updates.set("welcomeChatID", null), Updates.set("welcomeMessagesEnabled", false))
+      )
       return
     }
 

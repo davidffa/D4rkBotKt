@@ -20,7 +20,10 @@ suspend fun onGuildMemberRemove(event: GuildMemberRemoveEvent) {
     if (channel == null) {
       cache.memberRemoveChatID = null
       cache.memberRemoveMessagesEnabled = false
-      Database.guildDB.updateOneById(event.guild.id, Updates.combine(Updates.set("memberRemoveChatID", null), Updates.set("memberRemoveMessagesEnabled", false)))
+      Database.guildDB.updateOneById(
+        event.guild.id,
+        Updates.combine(Updates.set("memberRemoveChatID", null), Updates.set("memberRemoveMessagesEnabled", false))
+      )
       return
     }
 
