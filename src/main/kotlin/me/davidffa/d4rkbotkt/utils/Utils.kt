@@ -175,6 +175,11 @@ object Utils {
         channel.sendMessage(":x: O teu canal de voz está cheio!").queue()
         return false
       }
+    } else {
+      if (selfChannel.idLong != memberVoiceChannel.idLong) {
+        channel.sendMessage(":x: Precisas de estar no meu canal de voz para executar esse comando!").queue()
+        return false
+      }
     }
 
     if (PlayerManager.musicManagers.contains(self.guild.idLong)) {

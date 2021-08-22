@@ -1,7 +1,6 @@
 package me.davidffa.d4rkbotkt.commands.others
 
 import dev.minn.jda.ktx.await
-import me.davidffa.d4rkbotkt.audio.PlayerManager
 import me.davidffa.d4rkbotkt.audio.receive.AudioReceiver
 import me.davidffa.d4rkbotkt.audio.receive.Receiver
 import me.davidffa.d4rkbotkt.audio.receive.ReceiverManager
