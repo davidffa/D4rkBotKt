@@ -1,5 +1,7 @@
 package me.davidffa.d4rkbotkt.command
 
+import me.davidffa.d4rkbotkt.D4rkBot
+import me.davidffa.d4rkbotkt.Translator
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.entities.*
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent
@@ -23,4 +25,12 @@ interface ICommandContext {
     get() = this.jda.selfUser
   val selfMember: Member
     get() = this.guild.selfMember
+
+  fun t(path: String, placeholders: List<String>? = null): String {
+    return Translator.t(
+      path,
+      D4rkBot.guildCache[guild.idLong]!!.locale,
+      placeholders
+    )
+  }
 }

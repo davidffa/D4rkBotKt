@@ -20,10 +20,10 @@ class Pause : Command(
     val musicManager = PlayerManager.getMusicManager(ctx.guild.idLong)
 
     if (musicManager.audioPlayer.isPaused) {
-      ctx.channel.sendMessage(":play_pause: Música resumida!").queue()
+      ctx.channel.sendMessage(ctx.t("commands.resume")).queue()
       musicManager.audioPlayer.isPaused = false
     } else {
-      ctx.channel.sendMessage(":pause_button: Música pausada!").queue()
+      ctx.channel.sendMessage(ctx.t("commands.pause")).queue()
       musicManager.audioPlayer.isPaused = true
     }
   }

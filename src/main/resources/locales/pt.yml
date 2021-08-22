@@ -1,0 +1,168 @@
+commands:
+  avatar:
+    title: ":frame_photo: Avatar de {0}"
+    description: ":diamond_shape_with_a_dot_inside: [Clica aqui]({0}) para baixar o avatar!"
+  botinfo:
+    title: "<a:blobdance:804026401849475094> Informações sobre mim"
+    description: "**[Convite](https://discord.com/oauth2/authorize?client_id={0}&scope=bot+applications.commands&permissions=8)**\n**[Servidor de Suporte](https://discord.gg/dBQnxVCTEw)**\n\nModelo da CPU: `{1}`\nTotal de comandos executados `{2}`\n\u200B"
+    fields:
+      id: ":id: Meu ID"
+      owner: ":man: Dono"
+      servers: ":desktop: Servidores"
+      users: ":busts_in_silhouette: Utilizadores"
+      prefixes:
+        name: "<:badgehypesquad:803665497223987210> Prefixos"
+        value: "Padrão: `{0}`\nNeste servidor: `{1}`"
+      ram:
+        value: "Usada: `{0}MB`\nAlocada: `{1}MB`"
+      cpu:
+        value: "Sistema: `{0}%`\nBot: `{1}%`"
+      versions: "<:kotlin:856168010004037702> Versões"
+  channelinfo:
+    channeltypes:
+      text: "Texto"
+      news: "Anúncios"
+      voice: "Voz"
+      category: "Categoria"
+      store: "Loja"
+      stage: "Palco"
+      unknown: "Desconhecido"
+    title: "Informações do canal {0}"
+    fields:
+      type:
+        name: ":diamond_shape_with_a_dot_inside: Tipo"
+      position:
+        name: ":trophy: Posição"
+      category:
+        name: ":flag_white: Categoria"
+        none: "None"
+      bitrate:
+        name: ":notes: Taxa de bits"
+      region:
+        name: ":map: Região"
+      members:
+        name: ":busts_in_silhouette: Limite de membros"
+      topic:
+        name: ":question: Tópico"
+  invite:
+    title: "Convite"
+    desctitle: "<a:blobdance:804026401849475094> **Adiciona-me ao teu servidor com um dos links abaixo**"
+    admin: "Com permissão de admin"
+    needed: "Com todas as permissões necessárias"
+    withoutperms: "Sem permissões"
+    withoutslash: "Sem slash commands"
+    support: "Servidor de Suporte"
+  roleinfo:
+    title: "Informações do cargo {0}"
+    fields:
+      mentionable:
+        name: "@ Mencionável"
+      mention:
+        name: "@ Menção"
+      position:
+        name: ":military_medal: Posição"
+      hoist:
+        name: ":beginner: Separado"
+      managed:
+        name: ":robot: Gerenciado"
+      members:
+        name: ":busts_in_silhouette: Membros"
+      permissions:
+        name: ":8ball: Permissões"
+        value:
+          none: "Nenhuma"
+  serverinfo:
+    title: "Informações do servidor {0}"
+    owner: ":crown: Dono do servidor"
+    nsfw:
+      name: ":underage: Filtro NSFW"
+      norole: "Sem cargo"
+      all: "Tudo"
+      disabled: "Desligado"
+    afk: ":zzz: Canal de AFK"
+    rules: ":bookmark_tabs: Canal de Regras"
+    verificationlevel:
+      name: ":police_officer: Nível de Verificação"
+      low: "Baixo"
+      medium: "Médio"
+      high: "Alto"
+      veryhigh: "Muito Alto"
+    botjoined:
+      name: ":calendar: I joined on"
+    boosts:
+      level: "Nível:"
+      amount: "Quantidade:"
+    emojis:
+      static: "Estáticos:"
+      animated: "Animados:"
+    members:
+      name: "Membros"
+      idle: "Ausente:"
+      dnd: "Ocupado:"
+    channels:
+      name: "Canais"
+      text: "Texto:"
+      voice: "Voz:"
+      stage: "Palco:"
+      news: "Anúncios:"
+      store: "Loja:"
+      categories: "Categorias:"
+    roles: "Cargos"
+  userinfo:
+    title: ":information_source: Informação sobre {}"
+    mention: ":man_raising_hand: Menção"
+    created:
+      name: ":calendar: Conta criada em"
+    joined:
+      name: ":date: Entrou em"
+    status:
+      idle: "Ausente"
+      dnd: "Ocupado"
+      invisible: "Invisível"
+    devices: "Dispositivos"
+    joinedrank: ":trophy: Rank de entrada"
+    badges: "Emblemas :medal:"
+    roles: "Cargos"
+    permissions:
+      name: ":8ball: Permissões neste canal"
+      none: "Nenhuma"
+  filters:
+    alreadyopen: ":x: Já existe uma mesa de DJ aberta!"
+    menuplaceholder: "Escolhe um filtro para ativar/desativar"
+    close: "Fechar"
+    title: ":level_slider: Mesa de DJ"
+    removeall: ":wastebasket: - Remove todos os filtros"
+    closetable: "<a:disco:803678643661832233> Mesa de DJ fechada!"
+  loop:
+    track:
+      switchOn: "<a:disco:803678643661832233> Música atual em loop!"
+      switchOff: "<a:disco:803678643661832233> Loop da música atual desativado!"
+    queue:
+      switchOn: ":bookmark_tabs: Queue em loop!"
+      switchOff: ":bookmark_tabs: Loop da queue desativado!"
+    wrongusage: ":x: **Usa:** `{}`"
+  nowplaying: "<a:disco:803678643661832233> A tocar: `{0}`"
+  pause: ":pause_button: Música pausada!"
+  resume: ":play_pause: Música retomada!"
+
+errors:
+  user:
+    notfound: ":x: Utilizador não encontrado!"
+  channels:
+    notfound: ":x: Canal não encontrado!"
+  roles:
+    notfound: ":x: Cargo não encontrado!"
+  cannotinteract: ":x: Não podes interagir aqui!\n**Usa:** `{0}{1}` para poderes interagir."
+  notplaying: ":x: Não estou a tocar nada de momento!"
+  alreadyplaying: ":x: A música já está a tocar!"
+
+utils:
+  created:
+    name: ":calendar: Criado em"
+    value: "<t:{0}:d> (<t:{0}:R>)"
+
+global:
+  none: "Nenhum"
+  yes: "Sim"
+  no: "Não"
+  unknown: "Desconhecido"

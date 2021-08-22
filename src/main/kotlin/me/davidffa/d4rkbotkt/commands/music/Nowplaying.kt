@@ -18,11 +18,11 @@ class Nowplaying : Command(
     val musicManager = PlayerManager.musicManagers[ctx.guild.idLong]
 
     if (musicManager == null) {
-      ctx.channel.sendMessage(":x: Não estou a tocar nada de momento!").queue()
+      ctx.channel.sendMessage(ctx.t("errors.notplaying")).queue()
       return
     }
 
-    ctx.channel.sendMessage("<a:disco:803678643661832233> A tocar: `${musicManager.scheduler.current.title}`")
+    ctx.channel.sendMessage(ctx.t("commands.nowplaying", listOf(musicManager.scheduler.current.title)))
       .queue()
   }
 }

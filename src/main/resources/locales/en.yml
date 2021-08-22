@@ -1,0 +1,171 @@
+commands:
+  avatar:
+    title: ":frame_photo: {0}'s avatar"
+    description: ":diamond_shape_with_a_dot_inside: [Click here]({0}) to download the avatar!"
+  botinfo:
+    title: "<a:blobdance:804026401849475094> Information about me"
+    description: "**[Invite](https://discord.com/oauth2/authorize?client_id={0}&scope=bot+applications.commands&permissions=8)**\n**[Support server](https://discord.gg/dBQnxVCTEw)**\n\nCPU Model: `{1}`\nTotal executed commands `{2}`\n\u200B"
+    fields:
+      id: ":id: My ID"
+      owner: ":man: Owner"
+      servers: ":desktop: Servers"
+      users: ":busts_in_silhouette: Users"
+      prefixes:
+        name: "<:badgehypesquad:803665497223987210> Prefixes"
+        value: "Default: `{0}`\nIn this server: `{1}`"
+      ram:
+        value: "Used: `{0}MB`\nAllocated: `{1}MB`"
+      cpu:
+        value: "System: `{0}%`\nBot: `{1}%`"
+      versions: "<:kotlin:856168010004037702> Versions"
+  channelinfo:
+    channeltypes:
+      text: "Text"
+      news: "News"
+      voice: "Voice"
+      category: "Category"
+      store: "Store"
+      stage: "Stage"
+      unknown: "Unknown"
+    title: "Channel {0} info"
+    fields:
+      type:
+        name: ":diamond_shape_with_a_dot_inside: Type"
+      position:
+        name: ":trophy: Position"
+      category:
+        name: ":flag_white: Category"
+        none: "None"
+      bitrate:
+        name: ":notes: Bitrate"
+      region:
+        name: ":map: Region"
+      members:
+        name: ":busts_in_silhouette: Member limit"
+      topic:
+        name: ":question: Topic"
+  invite:
+    title: "Invite"
+    desctitle: "<a:blobdance:804026401849475094> **Add me to your server using one of the invitations below**"
+    admin: "With administrator permission"
+    needed: "With all needed permissions"
+    withoutperms: "Without permissions"
+    withoutslash: "Without slash commands"
+    support: "Support Server"
+  roleinfo:
+    title: "Role {0} info"
+    fields:
+      mentionable:
+        name: "@ Mentionable"
+      mention:
+        name: "@ Mention"
+      position:
+        name: ":military_medal: Position"
+      hoist:
+        name: ":beginner: Hoist"
+      managed:
+        name: ":robot: Managed"
+      members:
+        name: ":busts_in_silhouette: Members"
+      permissions:
+        name: ":8ball: Permissions"
+        value:
+          none: "None"
+  serverinfo:
+    title: "Server {0} information"
+    owner: ":crown: Server owner"
+    nsfw:
+      name: ":underage: NSFW Filter"
+      norole: "No role"
+      all: "All"
+      disabled: "Disabled"
+    afk: ":zzz: AFK Channel"
+    rules: ":bookmark_tabs: Rules channel"
+    verificationlevel:
+      name: ":police_officer: Verification level"
+      low: "Low"
+      medium: "Medium"
+      high: "High"
+      veryhigh: "Very High"
+    botjoined:
+      name: ":calendar: I joined on"
+      value: "<t:{0}:d> (<t:{0}:R>)"
+    boosts:
+      name: "<:badgebooster:803666384373809233> Boosts"
+      level: "Level:"
+      amount: "Amount:"
+    emojis:
+      name: ":grinning: Emojis"
+      static: "Static:"
+      animated: "Animated:"
+    members:
+      name: "Members"
+      idle: "Idle:"
+      dnd: "Do not disturb:"
+    channels:
+      name: "Channels"
+      text: "Text:"
+      voice: "Voice:"
+      stage: "Stage:"
+      news: "News:"
+      store: "Store:"
+      categories: "Categories:"
+    roles: "Roles"
+  userinfo:
+    title: ":information_source: {0} information"
+    mention: ":man_raising_hand: Mention"
+    created:
+      name: ":calendar: Account created on"
+    joined:
+      name: ":date: Joined at"
+    status:
+      idle: "Idle"
+      dnd: "Do not disturb"
+      invisible: "Invisible"
+    devices: "Devices"
+    joinedrank: ":trophy: Join Rank"
+    badges: "Badges :medal:"
+    roles: "Roles"
+    permissions:
+      name: ":8ball: Permissions in this channel"
+      none: "None"
+  filters:
+    alreadyopen: ":x: There is already an open DJ table!"
+    menuplaceholder: "Choose a filter to enable/disable"
+    close: "Close"
+    title: ":level_slider: DJ Table"
+    removeall: ":wastebasket: - Remove all filters"
+    closetable: "<a:disco:803678643661832233> DJ table closed!"
+  loop:
+    track:
+      switchOn: "<a:disco:803678643661832233> Current song in loop!"
+      switchOff: "<a:disco:803678643661832233> Current song loop disabled!"
+    queue:
+      switchOn: ":bookmark_tabs: Queue in loop!"
+      switchOff: ":bookmark_tabs: Queue loop disabled!"
+    wrongusage: ":x: **Use:** `{0}`"
+  nowplaying: "<a:disco:803678643661832233> Now playing: `{0}`"
+  pause: ":pause_button: Paused music!"
+  resume: ":play_pause: Resumed music!"
+
+errors:
+  user:
+    notfound: ":x: User not found!"
+  channels:
+    notfound: ":x: Channel not found!"
+  roles:
+    notfound: ":x: Role not found!"
+  cannotinteract: ":x: You can't interact here!\n**Use:** `{0}{1}` to be able to interact."
+  notplaying: ":x: I'm not playing anything at the moment!"
+  alreadyplaying: ":x: The music is already playing!"
+
+utils:
+  created:
+    name: ":calendar: Created on"
+    value: "<t:{0}:d> (<t:{0}:R>)"
+
+global:
+  none: "None"
+  'yes': "Yes"
+  'no': "No"
+  unknown: "Unknown"

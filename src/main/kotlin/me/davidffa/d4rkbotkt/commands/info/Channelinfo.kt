@@ -28,26 +28,26 @@ class Channelinfo : Command(
     }else ctx.channel
 
     if (channel == null) {
-      ctx.channel.sendMessage(":x: Canal não encontrado!").queue()
+      ctx.channel.sendMessage(ctx.t("errors.channels.notfound")).queue()
       return
     }
 
     val channelType = when (channel.type) {
       TEXT -> {
         if (channel is TextChannel) {
-          if (channel.isNews) "Anúncios"
-          else "Texto"
-        }else "Desconhecido"
+          if (channel.isNews) ctx.t("commands.channelinfo.channeltypes.news")
+          else ctx.t("commands.channelinfo.channeltypes.text")
+        }else ctx.t("commands.channelinfo.channeltypes.unknown")
       }
-      VOICE -> "Voz"
-      CATEGORY -> "Categoria"
-      STORE -> "Loja"
-      STAGE -> "Palco"
-      else -> "Desconhecido"
+      VOICE -> ctx.t("commands.channelinfo.channeltypes.voice")
+      CATEGORY -> ctx.t("commands.channelinfo.channeltypes.category")
+      STORE -> ctx.t("commands.channelinfo.channeltypes.store")
+      STAGE -> ctx.t("commands.channelinfo.channeltypes.stage")
+      else -> ctx.t("commands.channelinfo.channeltypes.unknown")
     }
 
     val embed = Embed {
-      title = "Informações do canal ${channel.name}"
+      title = ctx.t("commands.channelinfo.title", listOf(channel.name))
       color = Utils.randColor()
 
       field {
@@ -55,57 +55,57 @@ class Channelinfo : Command(
         value = "`${channel.id}`"
       }
       field {
-        name = ":diamond_shape_with_a_dot_inside: Tipo"
+        name = ctx.t("commands.channelinfo.fields.type.name")
         value = "`$channelType`"
       }
       field {
-        name = ":calendar: Criado em"
-        value = "<t:${channel.timeCreated.toEpochSecond()}:d> (<t:${channel.timeCreated.toEpochSecond()}:R>)"
+        name = ctx.t("utils.created.name")
+        value = ctx.t("utils.created.value", listOf(channel.timeCreated.toEpochSecond().toString()))
       }
       field {
-        name = ":trophy: Posição"
+        name = ctx.t("commands.channelinfo.fields.position.name")
         value = "`${channel.position}`"
       }
       if (channel.type != CATEGORY) {
         field {
-          name = ":flag_white: Categoria"
-          value = "`${if (channel.parent != null) channel.parent!!.name else "Nenhuma"}`"
+          name = ctx.t("commands.channelinfo.fields.category.name")
+          value = "`${if (channel.parent != null) channel.parent!!.name else ctx.t("commands.channelinfo.fields.category.none")}`"
         }
       }
 
       when (channel) {
         is VoiceChannel -> {
           field {
-            name = ":notes: Taxa de bits"
+            name = ctx.t("commands.channelinfo.fields.bitrate.name")
             value = "`${channel.bitrate} Kbps`"
           }
           field {
-            name = ":map: Região"
+            name = ctx.t("commands.channelinfo.fields.region.name")
             value = convertRegion(channel.region)
           }
           field {
-            name = ":busts_in_silhouette: Limite de membros"
-            value = "`${if (channel.userLimit == 0) "Nenhum" else channel.userLimit}`"
+            name = ctx.t("commands.channelinfo.fields.members.name")
+            value = "`${if (channel.userLimit == 0) ctx.t("global.none") else channel.userLimit}`"
           }
         }
         is StageChannel -> {
           field {
-            name = ":notes: Taxa de bits"
+            name = ctx.t("commands.channelinfo.fields.bitrate.name")
             value = "`${channel.bitrate} Kbps`"
           }
           field {
-            name = ":map: Região"
+            name = ctx.t("commands.channelinfo.fields.region.name")
             value = convertRegion(channel.region)
           }
           field {
-            name = ":busts_in_silhouette: Limite de membros"
-            value = "`${if (channel.userLimit == 0) "Nenhum" else channel.userLimit}`"
+            name = ctx.t("commands.channelinfo.fields.members.name")
+            value = "`${if (channel.userLimit == 0) ctx.t("global.none") else channel.userLimit}`"
           }
         }
         is TextChannel -> {
           field {
-            name = ":question: Tópico"
-            value = "```\n${channel.topic ?: "Nenhum"}```"
+            name = ctx.t("commands.channelinfo.fields.topic.name")
+            value = "```\n${channel.topic ?: ctx.t("global.none")}```"
             inline = false
           }
         }
@@ -158,7 +158,7 @@ class Channelinfo : Command(
       VIP_US_EAST -> "VIP :flag_us:"
       VIP_US_SOUTH -> "VIP :flag_us:"
       VIP_US_WEST -> "VIP :flag_us:"
-      Region.UNKNOWN -> "`Desconhecida`"
+      Region.UNKNOWN -> ":question:"
       AUTOMATIC -> "`Auto`"
     }
   }

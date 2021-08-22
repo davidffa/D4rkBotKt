@@ -22,9 +22,9 @@ class Serverinfo : Command(
   cooldown = 5
 ) {
   override suspend fun run(ctx: CommandContext) {
-    var online = 0;
-    var idle = 0;
-    var dnd = 0;
+    var online = 0
+    var idle = 0
+    var dnd = 0
     var offline = 0
 
     ctx.guild.members.forEach {
@@ -37,77 +37,75 @@ class Serverinfo : Command(
     }
 
     val embed = EmbedBuilder {
-      title = ":information_source: Informações do servidor ${ctx.guild.name}"
+      title = ctx.t("commands.serverinfo.title", listOf(ctx.guild.name))
       field {
         name = ":id: ID"
         value = ctx.guild.id
       }
       field {
-        name = ":crown: Dono do servidor"
+        name = ctx.t("commands.serverinfo.owner")
         value = "${ctx.guild.owner?.asMention}"
       }
       field {
-        name = ":underage: Filtro NSFW"
+        name = ctx.t("commands.serverinfo.nsfw.name")
         value = when (ctx.guild.explicitContentLevel) {
-          NO_ROLE -> "Sem cargo"
-          ALL -> "Tudo"
-          else -> "Desativado"
+          NO_ROLE -> ctx.t("commands.serverinfo.nsfw.norole")
+          ALL -> ctx.t("commands.serverinfo.nsfw.all")
+          else -> ctx.t("commands.serverinfo.nsfw.disabled")
         }
       }
       field {
-        name = ":zzz: Canal AFK"
-        value = if (ctx.guild.afkChannel != null) ctx.guild.afkChannel!!.asMention else "Nenhum"
+        name = ctx.t("commands.serverinfo.afk")
+        value = if (ctx.guild.afkChannel != null) ctx.guild.afkChannel!!.asMention else ctx.t("global.none")
       }
       field {
-        name = ":bookmark_tabs: Canal de regras"
-        value = if (ctx.guild.rulesChannel != null) ctx.guild.rulesChannel!!.asMention else "Nenhum"
+        name = ctx.t("commands.serverinfo.rules")
+        value = if (ctx.guild.rulesChannel != null) ctx.guild.rulesChannel!!.asMention else ctx.t("global.none")
       }
       field {
-        name = ":police_officer: Nível de verificação"
+        name = ctx.t("commands.serverinfo.verificationlevel.name")
         value = when (ctx.guild.verificationLevel) {
-          LOW -> "Baixo"
-          MEDIUM -> "Médio"
-          HIGH -> "Alto"
-          VERY_HIGH -> "Muito Alto"
-          else -> "Nenhum"
+          LOW -> ctx.t("commands.serverinfo.verificationlevel.low")
+          MEDIUM -> ctx.t("commands.serverinfo.verificationlevel.medium")
+          HIGH -> ctx.t("commands.serverinfo.verificationlevel.high")
+          VERY_HIGH -> ctx.t("commands.serverinfo.verificationlevel.veryhigh")
+          else -> ctx.t("global.none")
         }
       }
       field {
-        name = ":date: Criado em"
-        value =
-          "<t:${ctx.guild.timeCreated.toInstant().epochSecond}:d> (<t:${ctx.guild.timeCreated.toInstant().epochSecond}:R>)"
+        name = ctx.t("utils.created.name")
+        value = ctx.t("utils.created.value", listOf(ctx.guild.timeCreated.toEpochSecond().toString()))
       }
       field {
-        name = ":calendar: Entrei em"
-        value =
-          "<t:${ctx.guild.selfMember.timeJoined.toInstant().epochSecond}:d> (<t:${ctx.guild.selfMember.timeJoined.toInstant().epochSecond}:R>)"
+        name = ctx.t("commands.serverinfo.botjoined.name")
+        value = ctx.t("utils.created.value", listOf(ctx.selfMember.timeJoined.toEpochSecond().toString()))
       }
       field {
         name = "<:badgebooster:803666384373809233> Boosts"
-        value = "Nível: ${getBoostTier(ctx.guild.boostTier)}\n" +
-                "Quantidade: ${ctx.guild.boostCount}"
+        value = "${ctx.t("commands.serverinfo.boosts.level")} ${getBoostTier(ctx.guild.boostTier)}\n" +
+                "${ctx.t("commands.serverinfo.boosts.amount")} ${ctx.guild.boostCount}"
       }
       field {
         name = ":grinning: Emojis [${ctx.guild.emotes.size}]"
-        value = "Estáticos: ${ctx.guild.emotes.filter { !it.isAnimated }.size}\n" +
-                "Animados: ${ctx.guild.emotes.filter { it.isAnimated }.size}"
+        value = "${ctx.t("commands.serverinfo.emojis.static")} ${ctx.guild.emotes.filter { !it.isAnimated }.size}\n" +
+                "${ctx.t("commands.serverinfo.emojis.animated")} ${ctx.guild.emotes.filter { it.isAnimated }.size}"
       }
       field {
-        name = ":busts_in_silhouette: Membros [${ctx.guild.memberCount}]"
+        name = ":busts_in_silhouette: ${ctx.t("commands.serverinfo.members.name")} [${ctx.guild.memberCount}]"
         value = "<:online:804049640437448714> Online: $online\n" +
-                "<:idle:804049737383673899> Ausente: $idle\n" +
-                "<:dnd:804049759328403486> Ocupado: $dnd\n" +
+                "<:idle:804049737383673899> ${ctx.t("commands.serverinfo.members.idle")} $idle\n" +
+                "<:dnd:804049759328403486> ${ctx.t("commands.serverinfo.members.dnd")} $dnd\n" +
                 "<:offline:804049815713480715> Offline: $offline\n" +
                 "<:bot:804028762307821578> Bots: ${ctx.guild.members.filter { it.user.isBot }.size}"
       }
       field {
-        name = ":white_small_square: Canais [${ctx.guild.channels.size}]"
-        value = "<:chat:804050576647913522> Texto: ${ctx.guild.textChannels.filter { !it.isNews }.size}\n" +
-                ":microphone2: Voz: ${ctx.guild.voiceChannels.size}\n" +
-                "<:stage:828651062184378389> Palco: ${ctx.guild.stageChannels.size}\n" +
-                ":loudspeaker: Anúncios: ${ctx.guild.textChannels.filter { it.isNews }.size}\n" +
-                ":shopping_bags: Loja: ${ctx.guild.storeChannels.size}\n" +
-                ":diamond_shape_with_a_dot_inside: Categorias: ${ctx.guild.categories.size}"
+        name = ":white_small_square: ${ctx.t("commands.serverinfo.channels.name")} [${ctx.guild.channels.size}]"
+        value = "<:chat:804050576647913522> ${ctx.t("commands.serverinfo.channels.text")} ${ctx.guild.textChannels.filter { !it.isNews }.size}\n" +
+                ":microphone2: ${ctx.t("commands.serverinfo.channels.voice")} ${ctx.guild.voiceChannels.size}\n" +
+                "<:stage:828651062184378389> ${ctx.t("commands.serverinfo.channels.stage")} ${ctx.guild.stageChannels.size}\n" +
+                ":loudspeaker: ${ctx.t("commands.serverinfo.channels.news")} ${ctx.guild.textChannels.filter { it.isNews }.size}\n" +
+                ":shopping_bags: ${ctx.t("commands.serverinfo.channels.store")} ${ctx.guild.storeChannels.size}\n" +
+                ":diamond_shape_with_a_dot_inside: ${ctx.t("commands.serverinfo.channels.categories")} ${ctx.guild.categories.size}"
       }
       color = Utils.randColor()
       footer {
@@ -123,7 +121,7 @@ class Serverinfo : Command(
     val page1 = embed.build()
 
     embed.builder.clearFields()
-    embed.description = "**Cargos [${ctx.guild.roles.size}]**\n${ctx.guild.roles.joinToString(" ") { it.asMention }}"
+    embed.description = "**${ctx.t("commands.serverinfo.roles")} [${ctx.guild.roles.size}]**\n${ctx.guild.roles.joinToString(" ") { it.asMention }}"
 
     val page2 = embed.build()
 

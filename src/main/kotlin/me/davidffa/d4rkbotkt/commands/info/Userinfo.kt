@@ -25,15 +25,14 @@ class Userinfo : Command(
     else Utils.findUser(ctx.args.joinToString(" "), ctx.guild)
 
     if (user == null) {
-      ctx.channel.sendMessage(":x: Utilizador não encontrado!").queue()
+      ctx.channel.sendMessage(ctx.t("errors.user.notfound")).queue()
       return
     }
 
     val member = ctx.guild.memberCache.getElementById(user.id)
 
     val embed = EmbedBuilder {
-      title =
-        ":information_source: Informações de ${if (user.isBot) "<:bot:804028762307821578>" else ""}${member?.effectiveName ?: user.name}"
+      title = ctx.t("commands.userinfo.title", listOf("${if (user.isBot) "<:bot:804028762307821578>" else ""}${member?.effectiveName ?: user.name}"))
       color = Utils.randColor()
       field {
         name = ":id: ID"
@@ -44,12 +43,12 @@ class Userinfo : Command(
         value = "`${user.asTag}`"
       }
       field {
-        name = ":man_raising_hand: Menção"
+        name = ctx.t("commands.userinfo.mention")
         value = user.asMention
       }
       field {
-        name = ":calendar: Conta criada em"
-        value = "<t:${user.timeCreated.toInstant().epochSecond}:d> (<t:${user.timeCreated.toInstant().epochSecond}:R>)"
+        name = ctx.t("commands.userinfo.created.name")
+        value = ctx.t("utils.created.value", listOf(user.timeCreated.toEpochSecond().toString()))
       }
       thumbnail = "${user.effectiveAvatarUrl}?size=4096"
       footer {
@@ -61,19 +60,18 @@ class Userinfo : Command(
 
     if (member != null) {
       embed.field {
-        name = ":date: Entrada no servidor"
-        value =
-          "<t:${member.timeJoined.toInstant().epochSecond}:d> (<t:${member.timeJoined.toInstant().epochSecond}:R>)"
+        name = ctx.t("commands.userinfo.joined.name")
+        value = ctx.t("utils.created.value", listOf(member.timeJoined.toEpochSecond().toString()))
       }
       embed.field {
         name = ":shrug: Status"
         value = when (member.onlineStatus) {
           OnlineStatus.ONLINE -> "`Online`"
-          OnlineStatus.IDLE -> "`Ausente`"
-          OnlineStatus.DO_NOT_DISTURB -> "`Ocupado`"
-          OnlineStatus.INVISIBLE -> "`Invisível`"
+          OnlineStatus.IDLE -> "`${ctx.t("commands.userinfo.status.idle")}`"
+          OnlineStatus.DO_NOT_DISTURB -> "`${ctx.t("commands.userinfo.status.dnd")}`"
+          OnlineStatus.INVISIBLE -> "`${ctx.t("commands.userinfo.status.invisible")}`"
           OnlineStatus.OFFLINE -> "`Offline`"
-          OnlineStatus.UNKNOWN -> "`Desconhecido`"
+          OnlineStatus.UNKNOWN -> "`${ctx.t("global.unknown")}`"
         }
       }
       val onlineClients = mutableListOf<String>()
@@ -84,7 +82,7 @@ class Userinfo : Command(
 
       if (member.activeClients.isNotEmpty()) {
         embed.field {
-          name = "Dispositivos :technologist:"
+          name = "${ctx.t("commands.userinfo.devices")} :technologist:"
           value = onlineClients.joinToString(" - ")
         }
       }
@@ -93,7 +91,7 @@ class Userinfo : Command(
       val pos = sortedMembers.indexOf(member) + 1
 
       embed.field {
-        name = ":trophy: Rank de entrada"
+        name = ctx.t("commands.userinfo.joinedrank")
         value = "`${pos}º/${ctx.guild.memberCount}`"
       }
     }
@@ -128,8 +126,8 @@ class Userinfo : Command(
 
 
     embed.field {
-      name = "Emblemas :medal:"
-      value = if (badges.isEmpty()) "`Nenhum`" else badges.joinToString(" ")
+      name = ctx.t("commands.userinfo.badges")
+      value = if (badges.isEmpty()) "`${ctx.t("global.none")}`" else badges.joinToString(" ")
     }
 
     val page1 = embed.build()
@@ -137,16 +135,19 @@ class Userinfo : Command(
     if (member != null) {
       embed.builder.clearFields()
       embed.field {
-        name = ":medal: Cargos (${member.roles.size})"
-        value = if (member.roles.isEmpty()) "Nenhum"
+        name = ":medal: ${ctx.t("commands.userinfo.roles")} (${member.roles.size})"
+        value = if (member.roles.isEmpty()) ctx.t("global.none")
         else member.roles.joinToString(" ") { it.asMention }
       }
 
       val permissions = member.getPermissions(ctx.channel)
 
       embed.field {
-        name = ":8ball: Permissões neste canal"
-        value = "```\n${Utils.translatePermissions(permissions.toList()).joinToString(", ")}```"
+        name = ctx.t("commands.userinfo.permissions.name")
+        value = "```\n${
+          if (permissions.isEmpty()) ctx.t("commands.userinfo.permissions.name")
+          else Utils.translatePermissions(permissions.toList()).joinToString(", ")
+        }```"
         inline = false
       }
     } else {

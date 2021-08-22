@@ -20,10 +20,10 @@ class Resume : Command(
     val musicManager = PlayerManager.getMusicManager(ctx.guild.idLong)
 
     if (musicManager.audioPlayer.isPaused) {
-      ctx.channel.sendMessage(":play_pause: Música resumida!").queue()
+      ctx.channel.sendMessage(ctx.t("commands.resume")).queue()
       musicManager.audioPlayer.isPaused = false
     } else {
-      ctx.channel.sendMessage(":x: A música já está a tocar!").queue()
+      ctx.channel.sendMessage(ctx.t("errors.alreadyplaying")).queue()
     }
   }
 }

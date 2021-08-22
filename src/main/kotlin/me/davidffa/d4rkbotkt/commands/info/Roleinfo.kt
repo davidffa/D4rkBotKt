@@ -20,52 +20,52 @@ class Roleinfo : Command(
     val role = Utils.findRole(ctx.args.joinToString(" "), ctx.guild)
 
     if (role == null) {
-      ctx.channel.sendMessage(":x: Cargo não encontrado!").queue()
+      ctx.channel.sendMessage(ctx.t("errors.roles.notfound")).queue()
       return
     }
 
     val embed = Embed {
-      title = "Informações do cargo ${role.name}"
+      title = ctx.t("commands.roleinfo.title", listOf(role.name))
       color = role.colorRaw
       field {
         name = ":id: ID"
         value = "`${role.id}`"
       }
       field {
-        name = ":calendar: Criado em"
-        value = "<t:${role.timeCreated.toEpochSecond()}:d> (<t:${role.timeCreated.toEpochSecond()}:R>)"
+        name = ctx.t("utils.created.name")
+        value = ctx.t("utils.created.value", listOf(role.timeCreated.toEpochSecond().toString()))
       }
       field {
-        name = "@ Mencionável"
-        value = "`${if (role.isMentionable) "Sim" else "Não"}`"
+        name = ctx.t("commands.roleinfo.fields.mentionable.name")
+        value = "`${if (role.isMentionable) ctx.t("global.yes") else ctx.t("global.no")}`"
       }
 
       field {
-        name = "@ Menção"
+        name = ctx.t("commands.roleinfo.fields.mention.name")
         value = role.asMention
       }
 
       field {
-        name = ":military_medal: Posição"
+        name = ctx.t("commands.roleinfo.fields.position.name")
         value = "`${role.position}`"
       }
       field {
-        name = ":beginner: Separado"
-        value = "`${if (role.isHoisted) "Sim" else "Não"}`"
+        name = ctx.t("commands.roleinfo.fields.hoist.name")
+        value = "`${if (role.isHoisted) ctx.t("global.yes") else ctx.t("global.no")}`"
       }
       field {
-        name = ":robot: Gerenciado"
-        value = "`${if (role.isManaged) "Sim" else "Não"}`"
+        name = ctx.t("commands.roleinfo.fields.managed.name")
+        value = "`${if (role.isManaged) ctx.t("global.yes") else ctx.t("global.no")}`"
       }
       field {
-        name = ":busts_in_silhouette: Membros"
+        name = ctx.t("commands.roleinfo.fields.position.name")
         value = "`${ctx.guild.members.filter { it.roles.contains(role) }.size}`"
       }
       field {
-        name = ":8ball: Permissões"
+        name = ctx.t("commands.roleinfo.fields.permissions.name")
         value =
           "```\n${
-            if (role.permissions.isEmpty()) "Nenhuma"
+            if (role.permissions.isEmpty()) ctx.t("commands.roleinfo.fields.permissions.value.none")
             else Utils.translatePermissions(role.permissions.toList()).joinToString(", ")
           }```"
         inline = false
