@@ -20,6 +20,6 @@ class Stop : Command(
     val musicManager = PlayerManager.getMusicManager(ctx.guild.idLong)
 
     musicManager.scheduler.destroy()
-    ctx.channel.sendMessage(":stop_button: Parei a música!").queue()
+    ctx.channel.sendMessage(ctx.t("commands.stop")).queue()
   }
 }

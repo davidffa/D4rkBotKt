@@ -144,6 +144,30 @@ commands:
   nowplaying: "<a:disco:803678643661832233> A tocar: `{0}`"
   pause: ":pause_button: Música pausada!"
   resume: ":play_pause: Música retomada!"
+  queue:
+    header: "<a:disco:803678643661832233> **A tocar:** `{0}` (Requisitado por {1})\n:alarm_clock: Tempo total da queue {2} ----- Total de músicas na queue: {3}\n\n"
+    title: ":bookmark_tabs: Lista de músicas"
+    requestedBy: "Requisitado por `{0}`"
+    page: "Página {0} de {1}"
+  remove: ":bookmark_tabs: Música removida da posição {0}."
+  search:
+    usage: ":x: **Usa:** {0}search [yt/ytm/sc] <Nome da música>"
+    errorSearching: ":x: Ocorreu um erro ao procurar a música!\nErro: {0}"
+    title: ":mag: Resultados da procura"
+    placeholder: "Escolhe as músicas para adicionar à queue"
+    cancel: ":x: Pesquisa cancelada!"
+    added: ":bookmark_tabs: Adicionado à lista"
+  seek:
+    invalidFormat: ":x: Formato inválido! Tenta da forma `hh:mm:ss`, `mm:ss` ou `ss`"
+    range: ":x: O tempo só pode variar entre **0** e **{0}**."
+    seeked: ":fast_forward: Posição da música setada para `{0}`."
+  shuffle: ":minidisc: Lista de músicas embaralhada!"
+  skip: ":fast_forward: Música pulada!"
+  stop: ":stop_button: Parei a música!"
+  volume:
+    current: ":speaker: Volume atual: `{0}`"
+    range: ":x: O volume tem de variar entre 0 e 500"
+    changed: ":speaker: Volume alterado para `{0}`"
 
 errors:
   user:
@@ -155,6 +179,9 @@ errors:
   cannotinteract: ":x: Não podes interagir aqui!\n**Usa:** `{0}{1}` para poderes interagir."
   notplaying: ":x: Não estou a tocar nada de momento!"
   alreadyplaying: ":x: A música já está a tocar!"
+  emptyqueue: ":x: A queue está vazia!"
+  invalidNumber: ":x: Número inválido!"
+  noMatches: ":x: Não encontrei nenhum resultado!"
 
 utils:
   created:

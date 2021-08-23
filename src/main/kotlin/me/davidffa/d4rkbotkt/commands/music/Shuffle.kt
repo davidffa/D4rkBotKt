@@ -26,11 +26,11 @@ class Shuffle : Command(
     val musicManager = PlayerManager.getMusicManager(ctx.guild.idLong)
 
     if (musicManager.scheduler.queue.isEmpty()) {
-      ctx.channel.sendMessage(":x: A lista de músicas está vazia!").queue()
+      ctx.channel.sendMessage(ctx.t("errors.emptyqueue")).queue()
       return
     }
 
     musicManager.scheduler.shuffle()
-    ctx.channel.sendMessage(":minidisc: Lista de músicas embaralhada!").queue()
+    ctx.channel.sendMessage(ctx.t("commands.shuffle")).queue()
   }
 }

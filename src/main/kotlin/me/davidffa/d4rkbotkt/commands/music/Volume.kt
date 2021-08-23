@@ -21,18 +21,18 @@ class Volume : Command(
     val manager = PlayerManager.getMusicManager(ctx.guild.idLong)
 
     if (ctx.args.isEmpty()) {
-      ctx.channel.sendMessage(":speaker: Volume atual: `${(manager.volume * 100f).toInt()}`").queue()
+      ctx.channel.sendMessage(ctx.t("commands.volume.current", listOf((manager.volume * 100f).toInt().toString()))).queue()
       return
     }
 
     val vol = ctx.args[0].toIntOrNull()
 
-    if (vol == null || vol < 0 || vol > 200) {
-      ctx.channel.sendMessage(":x: O volume tem de variar entre 0 e 200").queue()
+    if (vol == null || vol < 0 || vol > 500) {
+      ctx.channel.sendMessage(ctx.t("commands.volume.range")).queue()
       return
     }
 
     manager.volume = vol / 100f
-    ctx.channel.sendMessage(":speaker: Volume alterado para `${(manager.volume * 100f).toInt()}`").queue()
+    ctx.channel.sendMessage(ctx.t("commands.volume.changed", listOf((manager.volume * 100f).toInt().toString()))).queue()
   }
 }

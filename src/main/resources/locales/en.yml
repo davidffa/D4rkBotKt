@@ -147,6 +147,30 @@ commands:
   nowplaying: "<a:disco:803678643661832233> Now playing: `{0}`"
   pause: ":pause_button: Paused music!"
   resume: ":play_pause: Resumed music!"
+  queue:
+    header: "<a:disco:803678643661832233> **Playing:** `{0}` (Requested by {1})\n:alarm_clock: Queue duration {2} ----- Total queue tracks: {3}\n\n"
+    title: ":bookmark_tabs: List of tracks"
+    requestedBy: "Requested by `{0}`"
+    page: "Page {0} of {1}"
+  remove: ":bookmark_tabs: Removed track from {0} position."
+  search:
+    usage: ":x: **Use:** {0}search [yt/ytm/sc] <Track name>"
+    errorSearching: ":x: An error has occurred when looking for the song!\nError: {0}"
+    title: ":mag: Search results"
+    placeholder: "Choose the songs to add to the queue"
+    cancel: ":x: Search canceled!"
+    added: ":bookmark_tabs: Added to queue"
+  seek:
+    invalidFormat: ":x: Invalid format! Try `hh:mm:ss`, `mm:ss` or `ss`"
+    range: ":x: The time can only vary between **0** and **{0}**."
+    seeked: ":fast_forward: Track position set to `{0}`."
+  shuffle: ":minidisc: Queue shuffled!"
+  skip: ":fast_forward: Track skipped!"
+  stop: ":stop_button: Track stopped!"
+  volume:
+    current: ":speaker: Current volume: `{0}`"
+    range: ":x: The volume can only vary between 0 and 500"
+    changed: ":speaker: Volume set to `{0}`"
 
 errors:
   user:
@@ -158,6 +182,9 @@ errors:
   cannotinteract: ":x: You can't interact here!\n**Use:** `{0}{1}` to be able to interact."
   notplaying: ":x: I'm not playing anything at the moment!"
   alreadyplaying: ":x: The music is already playing!"
+  emptyqueue: ":x: The queue is empty!"
+  invalidNumber: ":x: Invalid number!"
+  noMatches: ":x: I didn't find any results!"
 
 utils:
   created:

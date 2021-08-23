@@ -20,7 +20,7 @@ class Remove : Command(
   override suspend fun run(ctx: CommandContext) {
     val pos = ctx.args[0].toIntOrNull()
     if (pos == null) {
-      ctx.channel.sendMessage(":x: Número inválido!").queue()
+      ctx.channel.sendMessage(ctx.t("errors.invalidNumber")).queue()
       return
     }
 
@@ -41,6 +41,6 @@ class Remove : Command(
     tracks.removeAt(pos - 1)
     musicManager.scheduler.queue.addAll(tracks)
 
-    ctx.channel.sendMessage(":bookmark_tabs: Música removida da posição ${pos}.").queue()
+    ctx.channel.sendMessage(ctx.t("commands.remove", listOf(pos.toString()))).queue()
   }
 }

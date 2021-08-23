@@ -20,7 +20,7 @@ class Skip : Command(
     val musicManager = PlayerManager.getMusicManager(ctx.guild.idLong)
 
     if (musicManager.scheduler.queue.isNotEmpty()) {
-      ctx.channel.sendMessage(":fast_forward: Música pulada!").queue()
+      ctx.channel.sendMessage(ctx.t("commands.skip")).queue()
     }
     musicManager.scheduler.nextTrack()
   }
