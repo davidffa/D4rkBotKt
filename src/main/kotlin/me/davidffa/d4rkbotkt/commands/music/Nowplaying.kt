@@ -43,6 +43,11 @@ class Nowplaying : Command(
         inline = false
       }
       field {
+        name = ":technologist: Enviado por:"
+        value = "`${track.info.author}`"
+        inline = false
+      }
+      field {
         name = ":man: Requisitado por"
         value = "`${musicManager.scheduler.current.requester.user.asTag}`"
         inline = false
