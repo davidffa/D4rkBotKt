@@ -31,7 +31,7 @@ class Nowplaying : Command(
       title = "<a:disco:803678643661832233> A tocar"
       color = Utils.randColor()
       if (!track.info.isStream) {
-        description = "```\n" +
+        description = "```py\n" +
                 getProgressBar((track.position / 1000).toInt(), (track.info.length / 1000).toInt()) +
                 "\n${Utils.msToHour(track.position)}                     " +
                 Utils.msToHour(track.info.length) +
