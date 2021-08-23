@@ -71,6 +71,11 @@ class Channelinfo : Command(
           name = ":flag_white: Categoria"
           value = "`${if (channel.parent != null) channel.parent!!.name else "Nenhuma"}`"
         }
+      }else {
+        field {
+          name = "<:chat:804050576647913522> Quantidade de canais na categoria"
+          value = "`${ctx.guild.channels.filter { it.parent == channel }.size }`"
+        }
       }
 
       when (channel) {
