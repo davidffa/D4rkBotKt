@@ -303,8 +303,8 @@ class Playlist : Command(
           }
         }
 
-        if (tracks.size + (playlist.tracks?.size ?: 0) > 50) {
-          ctx.channel.sendMessage(":x: A playlist só pode ter no máximo 50 músicas!").queue()
+        if (tracks.size + (playlist.tracks?.size ?: 0) > 70) {
+          ctx.channel.sendMessage(":x: A playlist pode ter no máximo 70 músicas!").queue()
           return
         }
 
