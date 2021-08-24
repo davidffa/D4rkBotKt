@@ -30,7 +30,7 @@ class Github : Command(
     val res = D4rkBot.okHttpClient.newCall(req).await()
 
     if (res.code() != 200) {
-      ctx.channel.sendMessage(":x: Perfil não encontrado!").queue()
+      ctx.channel.sendMessage(ctx.t("commands.github.profileNotFound")).queue()
       return
     }
 
@@ -38,27 +38,27 @@ class Github : Command(
     res.close()
 
     val embed = EmbedBuilder {
-      title = "<:github:784791056670654465> Perfil de ${user.getString("login")}"
+      title = ctx.t("commands.github.title", listOf(user.getString("login")))
       url = "https://github.com/${user.getString("login")}"
       if (!user.isNull("bio")) description = "```\n${user.getString("bio")}```"
       field {
-        name = ":bust_in_silhouette: Nome"
+        name = ctx.t("commands.github.name")
         value = if (!user.isNull("name")) user.getString("name") else user.getString("login")
       }
       field {
-        name = ":id: ID"
+        name = ctx.t("commands.github.id")
         value = user.getString("id")
       }
       field {
-        name = ":open_file_folder: Repositórios públicos"
+        name = ctx.t("commands.github.publicRepos")
         value = user.getString("public_repos")
       }
       field {
-        name = "<:followers:784795303156908032> Seguidores"
+        name = ctx.t("commands.github.followers")
         value = user.getString("followers")
       }
       field {
-        name = ":busts_in_silhouette: A seguir"
+        name = ctx.t("commands.github.following")
         value = user.getString("following")
 
       }
@@ -80,7 +80,7 @@ class Github : Command(
 
     if (!user.isNull("company")) {
       embed.field {
-        name = ":classical_building: Empresa"
+        name = ctx.t("commands.github.company")
         value = user.getString("company")
       }
     }
@@ -95,20 +95,20 @@ class Github : Command(
 
     if (!user.isNull("location")) {
       embed.field {
-        name = ":map: Localização"
+        name = ctx.t("commands.github.location")
         value = user.getString("location")
       }
     }
 
     embed.field {
-      name = ":calendar: Criado em"
+      name = ctx.t("commands.github.created")
       value = "<t:${Instant.parse(user.getString("created_at")).epochSecond}:d> (<t:${
         Instant.parse(user.getString("created_at")).epochSecond
       }:R>)"
     }
 
     embed.field {
-      name = ":calendar: Atualizado em"
+      name = ctx.t("commands.github.updated")
       value = "<t:${Instant.parse(user.getString("updated_at")).epochSecond}:d> (<t:${
         Instant.parse(user.getString("updated_at")).epochSecond
       }:R>)"

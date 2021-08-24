@@ -28,13 +28,13 @@ class Render : Command(
 ) {
   override suspend fun run(ctx: CommandContext) {
     if (!ctx.channel.isNSFW && ctx.author.id != "334054158879686657") {
-      ctx.channel.sendMessage(":x: Só podes usar este comando em um canal NSFW.").queue()
+      ctx.channel.sendMessage(ctx.t("commands.render.nsfwOnly")).queue()
       return
     }
 
     val url = if (ctx.args[0].startsWith("http")) ctx.args[0] else "http://${ctx.args[0]}"
 
-    val msg = ctx.channel.sendMessage("<a:loading2:805088089319407667> A verificar se o URL é válido...").await()
+    val msg = ctx.channel.sendMessage(ctx.t("commands.render.checkUrl")).await()
 
     val request = Request.Builder()
       .url(url)
@@ -43,11 +43,11 @@ class Render : Command(
     try {
       D4rkBot.okHttpClient.newCall(request).await().close()
     } catch (e: Exception) {
-      msg.editMessage(":x: Site offline!").queue()
+      msg.editMessage(ctx.t("commands.render.offline")).queue()
       return
     }
 
-    msg.editMessage("<a:loading2:805088089319407667> A renderizar a página...").queue()
+    msg.editMessage(ctx.t("commands.render.rendering")).queue()
 
     val renderURL = withContext(Dispatchers.IO) { "${System.getenv("RENDERAPIURL")}?url=${URLEncoder.encode(url, "utf-8")}" }
 

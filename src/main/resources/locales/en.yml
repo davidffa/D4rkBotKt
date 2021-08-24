@@ -213,6 +213,27 @@ commands:
     current: ":speaker: Current volume: `{0}`"
     range: ":x: The volume can only vary between 0 and 500"
     changed: ":speaker: Volume set to `{0}`"
+  github:
+    profileNotFound: ":x: Profile not found!"
+    title: "<:github:784791056670654465> {0} profile"
+    name: ":bust_in_silhouette: Name"
+    id: ":id: ID"
+    publicRepos: ":open_file_folder: Public repositories"
+    followers: "<:followers:784795303156908032> Followers"
+    following: ":busts_in_silhouette: Following"
+    company: ":classical_building: Company"
+    location: ":map: Location"
+    created: ":calendar: Created at"
+    updated: ":calendar: Updated at"
+  record:
+    start: ":red_circle: I started recording (max 8 minutes)!"
+    stop: ":stop_button: I stopped recording!"
+    timeout: ":stop_button: I stopped recording! (the 8 min limit has been reached)."
+  render:
+    nsfwOnly: ":x: You can only use this command on an NSFW channel."
+    checkUrl: "<a:loading2:805088089319407667> Checking if the URL is valid..."
+    offline: ":x: Offline site!"
+    rendering: "<a:loading2:805088089319407667> Rendering page..."
 
 errors:
   user:

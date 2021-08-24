@@ -210,6 +210,27 @@ commands:
     current: ":speaker: Volume atual: `{0}`"
     range: ":x: O volume tem de variar entre 0 e 500"
     changed: ":speaker: Volume alterado para `{0}`"
+  github:
+    profileNotFound: ":x: Perfil não encontrado!"
+    title: "<:github:784791056670654465> Perfil de {0}"
+    name: ":bust_in_silhouette: Nome"
+    id: ":id: ID"
+    publicRepos: ":open_file_folder: Repositórios públicos"
+    followers: "<:followers:784795303156908032> Seguidores"
+    following: ":busts_in_silhouette: A seguir"
+    company: ":classical_building: Empresa"
+    location: ":map: Localização"
+    created: ":calendar: Criado em"
+    updated: ":calendar: Atualizado em"
+  record:
+    start: ":red_circle: Comecei a gravar (máximo de 8 minutos)!"
+    stop: ":stop_button: Parei de gravar!"
+    timeout: ":stop_button: Parei de gravar! (foi atingido o limite de 8 minutos)."
+  render:
+    nsfwOnly: ":x: Só podes usar este comando em um canal NSFW."
+    checkUrl: "<a:loading2:805088089319407667> A verificar se o URL é válido..."
+    offline: ":x: Site offline!"
+    rendering: "<a:loading2:805088089319407667> A renderizar a página..."
 
 errors:
   user:

@@ -40,7 +40,7 @@ class Record : Command(
       val file = File("./records/record-${ctx.guild.id}.mp3")
 
       ctx.channel
-        .sendMessage(":stop_button: Parei de gravar!")
+        .sendMessage(ctx.t("commands.record.stop"))
         .addFile(file, "record.mp3")
         .await()
 
@@ -56,7 +56,7 @@ class Record : Command(
 
     val audioReceiver = AudioReceiver(ctx.guild.id)
     ctx.guild.audioManager.receivingHandler = audioReceiver
-    ctx.channel.sendMessage(":red_circle: Comecei a gravar (máximo de 8 minutos)!").queue()
+    ctx.channel.sendMessage(ctx.t("commands.record.start")).queue()
 
     val timer = Timer()
     timer.schedule(timerTask {
@@ -69,8 +69,8 @@ class Record : Command(
       val file = File("./records/record-${ctx.guild.id}.mp3")
 
       ctx.channel
-        .sendMessage(":stop_button: Parei de gravar! (foi atingido o limite de 8 minutos).")
-        .addFile(file)
+        .sendMessage(ctx.t("commands.record.timeout"))
+        .addFile(file, "record.mp3")
         .queue {
           file.delete()
         }
