@@ -144,6 +144,48 @@ commands:
   nowplaying: "<a:disco:803678643661832233> A tocar: `{0}`"
   pause: ":pause_button: Música pausada!"
   resume: ":play_pause: Música retomada!"
+  playlist:
+    tracks: "músicas"
+    help:
+      title: "Ajuda do comando Playlist"
+      description: "```md\n# {0}playlist criar <Nome> - Cria uma playlist\n# {0}playlist apagar <Nome> - Apaga uma playlist\n# {0}playlist renomear <Nome Antigo> <Nome Novo> - Renomeia uma playlist\n# {0}playlist detalhes <Nome> - Lista todas as músicas de uma playlist\n# {0}playlist shuffle <Nome> - Embaralha as músicas de uma playlist\n# {0}playlist listar - Lista de todas as tuas playlists\n# {0}playlist adicionar <Nome> [Nome da música] - Adiciona a uma playlist a música que está a tocar ou uma música específica\n# {0}playlist remover <Nome> <Número da música> - Remove uma música da playlist\n# {0}playlist tocar <Nome> - Adiciona à queue todas as músicas de uma playlist"
+    usage:
+      create: ":x: **Usa:** {0}playlist criar <Nome da Playlist>"
+      rename: ":x: **Usa:** {0}playlist renomear <Nome Antigo> <Nome Novo>"
+      details: ":x: **Usa:** {0}playlist detalhes <Nome da playlist>"
+      remove: ":x: **Usa:** {0}playlist remover <Nome da playlist> <ID>"
+      add: ":x: **Usa:** {0}playlist add <Nome da playlist> [Música]"
+      shuffle: ":x: **Usa:** {0}playlist shuffle <Nome da playlist>"
+      play: ":x: **Usa:** {0}playlist play <Nome da playlist>"
+    errors:
+      playListNameLength: ":x: O nome da playlist não pode ter mais do que 32 caracteres."
+      maxPlaylists: ":x: Não podes ter mais de 50 playlists"
+      sameNamePlaylist: ":x: Já tens uma playlist com esse nome!"
+      noPlaylists: ":x: Não tens nenhuma playlist!"
+      playlistNotFound: ":x: Não tens nenhuma playlist com esse nome!"
+      emptyPlaylist: ":x: Essa playlist não tem músicas!"
+      notNumber: ":x: O ID da música é um número!"
+      invalidId: ":x: ID da música inválido!\n**Usa:** {0}playlist detalhes <Nome> para ver o id da música a remover."
+      maxPlaylistSize: ":x: A playlist só pode ter no máximo 70 músicas!"
+      trackAlreadyExists: ":x: Essa música já está na playlist!"
+    playlistCreated: "<a:disco:803678643661832233> Playlist criada com sucesso!"
+    renamed: ":bookmark: Playlist renomeada com sucesso!"
+    deleted: ":wastebasket: Playlist apagada com sucesso!"
+    list:
+      title: "<a:disco:803678643661832233> Lista de Playlists"
+    details:
+      title: "<a:disco:803678643661832233> Lista de Músicas"
+      page: "Página {0} de {1}"
+    remove: "<a:verificado:803678585008816198> Removeste a música `{0}` da playlist!"
+    add:
+      track: "<a:disco:803678643661832233> Música `{0}` adicionada à playlist!"
+      tracks: "<a:disco:803678643661832233> `{0}` músicas adicionadas à playlist"
+    shuffle: "<a:verificado:803678585008816198> Playlist embaralhada com sucesso!"
+    play:
+      title: "<a:disco:803678643661832233> Playlist Carregada"
+      name: ":page_with_curl: Nome:"
+      amount: "<a:infinity:838759634361253929> Quantidade de músicas:"
+      duration: ":watch: Duração:"
   queue:
     header: "<a:disco:803678643661832233> **A tocar:** `{0}` (Requisitado por {1})\n:alarm_clock: Tempo total da queue {2} ----- Total de músicas na queue: {3}\n\n"
     title: ":bookmark_tabs: Lista de músicas"
