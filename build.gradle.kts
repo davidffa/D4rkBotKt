@@ -2,7 +2,7 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-  kotlin("jvm") version "1.5.21"
+  kotlin("jvm") version "1.5.30"
   id("com.github.johnrengelman.shadow") version "7.0.0"
 }
 
@@ -27,7 +27,7 @@ dependencies {
   implementation(kotlin("stdlib"))
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1")
   implementation("ru.gildor.coroutines:kotlin-coroutines-okhttp:1.0")
-  implementation("org.jetbrains.kotlin:kotlin-scripting-jsr223:1.5.21")
+  implementation("org.jetbrains.kotlin:kotlin-scripting-jsr223:1.5.30")
 
   // JDA & Lavaplayer
   implementation("net.dv8tion:JDA:4.3.0_310") {
@@ -47,7 +47,7 @@ dependencies {
   implementation("org.litote.kmongo:kmongo-coroutine:4.2.8")
 
   // Native System
-  implementation("com.github.oshi:oshi-core:5.8.0")
+  implementation("com.github.oshi:oshi-core:5.8.1")
 
   // Logger
   runtimeOnly("ch.qos.logback", "logback-classic", "1.2.5")
