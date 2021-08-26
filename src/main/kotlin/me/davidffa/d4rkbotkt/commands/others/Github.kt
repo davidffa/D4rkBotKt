@@ -87,7 +87,7 @@ class Github : Command(
 
     if (!user.isNull("twitter_username")) {
       embed.field {
-        name = ":e_mail: Email"
+        name = "<:twitter:785165170547753002> Twitter"
         value =
           "[@${user.getString("twitter_username")}](https://twitter.com/${user.getString("twitter_username")})"
       }
