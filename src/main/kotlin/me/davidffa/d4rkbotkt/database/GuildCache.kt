@@ -11,5 +11,5 @@ data class GuildCache(
   var memberRemoveMessagesEnabled: Boolean? = null,
   var memberRemoveChatID: String? = null,
   var djRole: String? = null,
-  var locale: Locale = Locale.EN
+  var locale: Locale = Locale.PT
 )
