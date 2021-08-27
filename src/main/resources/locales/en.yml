@@ -263,7 +263,7 @@ commands:
       channel: "Channel:"
   setlang:
     langNotFound: ":x: Language not found!\nSupported languages: pt, en"
-    success: "<a:verificado:803678585008816198> Language changed to {0}"
+    success: "<a:verificado:803678585008816198> Language changed to `{0}`"
   setprefix:
     maxLength: ":x: My prefix cannot exceed 5 characters."
     success: "<a:verificado:803678585008816198> My prefix has been changed to `{0}`"

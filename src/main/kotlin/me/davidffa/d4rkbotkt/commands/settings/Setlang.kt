@@ -40,6 +40,7 @@ class Setlang : Command(
 
       else -> {
         ctx.channel.sendMessage(ctx.t("commands.setlang.langNotFound")).queue()
+        return
       }
     }
 
