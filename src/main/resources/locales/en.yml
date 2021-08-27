@@ -1,4 +1,5 @@
 commands:
+  eval: "Run a kotlin code and return its result."
   avatar:
     title: ":frame_photo: {0}'s avatar"
     description: ":diamond_shape_with_a_dot_inside: [Click here]({0}) to download the avatar!"

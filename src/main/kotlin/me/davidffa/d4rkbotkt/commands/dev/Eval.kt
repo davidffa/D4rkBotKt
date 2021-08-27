@@ -10,7 +10,6 @@ import javax.script.ScriptEngineManager
 
 class Eval : Command(
   "eval",
-  "Executa um código e retorna o seu resultado.",
   aliases = listOf("e", "evl", "evaluate"),
   "<código>",
   "Dev",
