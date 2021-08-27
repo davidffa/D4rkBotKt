@@ -64,6 +64,7 @@ object CommandManager {
     /* ** SETTINGS ** */
     this.addCommand(Djrole())
     this.addCommand(Logs())
+    this.addCommand(Setlang())
     this.addCommand(Setprefix())
 
     this.commands.forEach {

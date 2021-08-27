@@ -23,5 +23,7 @@ data class GuildDB @BsonCreator constructor(
   @Nullable @BsonProperty("autoRole")
   val autoRole: String? = null,
   @Nullable @BsonProperty("djRole")
-  val djRole: String? = null
+  val djRole: String? = null,
+  @Nullable @BsonProperty("lang")
+  val lang: String? = null
 )

@@ -257,6 +257,9 @@ commands:
       enabled: "Ativado <:on:764478511875751937>"
       disabled: "Desativado <:off:764478504124416040>"
       channel: "Canal:"
+  setlang:
+    langNotFound: ":x: Idioma não encontrado!\nIdiomas disponíveis: pt, en"
+    success: "<a:verificado:803678585008816198> Linguagem alterada para {0}"
   setprefix:
     maxLength: ":x: O meu prefixo não pode ultrapassar os 5 caracteres."
     success: "<a:verificado:803678585008816198> O meu prefixo foi alterado para `{0}`"
@@ -318,7 +321,8 @@ help:
   record: "Grava áudio no canal de voz e envia em MP3."
   render: "Renderiza uma página web."
   djrole: "Seta o cargo de DJ."
-  logs: "Configura os canais onde irei enviar as logs (mensagem bem-vindo etc).",
+  logs: "Configura os canais onde irei enviar as logs (mensagem bem-vindo etc)."
+  setlang: "Seta o idioma do bot"
   setprefix: "Muda o meu prefixo no servidor."
   help: "Mostra a lista de comandos do bot."
 
