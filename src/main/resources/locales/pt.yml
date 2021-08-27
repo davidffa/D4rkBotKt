@@ -392,8 +392,8 @@ utils:
 
 global:
   none: "Nenhum"
-  yes: "Sim"
-  no: "Não"
+  'yes': "Sim"
+  'no': "Não"
   unknown: "Desconhecido"
 
 permissions:
