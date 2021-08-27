@@ -10,7 +10,6 @@ import java.time.Instant
 
 class Nowplaying : Command(
   "nowplaying",
-  "Mostra a música que está a tocar.",
   listOf("np", "tocando"),
   botPermissions = listOf(Permission.MESSAGE_WRITE),
   category = "Music",
@@ -21,14 +20,14 @@ class Nowplaying : Command(
     val musicManager = PlayerManager.musicManagers[ctx.guild.idLong]
 
     if (musicManager == null) {
-      ctx.channel.sendMessage(":x: Não estou a tocar nada de momento!").queue()
+      ctx.channel.sendMessage(ctx.t("errors.notplaying")).queue()
       return
     }
 
     val track = musicManager.scheduler.current.track!!
 
     val embed = Embed {
-      title = "<a:disco:803678643661832233> A tocar"
+      title = ctx.t("commands.nowplaying.title")
       color = Utils.randColor()
       if (!track.info.isStream) {
         description = "```py\n" +
@@ -38,17 +37,17 @@ class Nowplaying : Command(
                 "\n```"
       }
       field {
-        name = ":newspaper: Nome"
+        name = ctx.t("commands.nowplaying.name")
         value = "`${musicManager.scheduler.current.title}`"
         inline = false
       }
       field {
-        name = ":technologist: Enviado por:"
+        name = ctx.t("commands.nowplaying.author")
         value = "`${track.info.author}`"
         inline = false
       }
       field {
-        name = ":man: Requisitado por"
+        name = ctx.t("commands.nowplaying.requester")
         value = "`${musicManager.scheduler.current.requester.user.asTag}`"
         inline = false
       }

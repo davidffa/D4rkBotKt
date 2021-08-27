@@ -145,7 +145,11 @@ commands:
       switchOn: ":bookmark_tabs: Queue in loop!"
       switchOff: ":bookmark_tabs: Queue loop disabled!"
     wrongusage: ":x: **Use:** `{0}`"
-  nowplaying: "<a:disco:803678643661832233> Now playing: `{0}`"
+  nowplaying:
+    title: "<a:disco:803678643661832233> Now playing"
+    name: ":newspaper: Name"
+    author: ":technologist: Author"
+    requester: ":man: Requested by"
   pause: ":pause_button: Paused music!"
   resume: ":play_pause: Resumed music!"
   playlist:
