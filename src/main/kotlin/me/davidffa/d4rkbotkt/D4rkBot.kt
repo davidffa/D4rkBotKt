@@ -67,7 +67,8 @@ class D4rkBot {
           dbGuild.welcomeChatID,
           dbGuild.memberRemoveMessagesEnabled,
           dbGuild.memberRemoveChatID,
-          dbGuild.djRole
+          dbGuild.djRole,
+          if (dbGuild.lang == "en") Locale.EN else Locale.PT
         )
       }
     }
