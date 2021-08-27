@@ -109,7 +109,7 @@ commands:
       categories: "Categorias:"
     roles: "Cargos"
   userinfo:
-    title: ":information_source: Informação sobre {}"
+    title: ":information_source: Informação sobre {0}"
     mention: ":man_raising_hand: Menção"
     created:
       name: ":calendar: Conta criada em"
