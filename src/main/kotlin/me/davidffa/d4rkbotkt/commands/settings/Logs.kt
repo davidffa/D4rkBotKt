@@ -239,7 +239,7 @@ class Logs : Command(
       }
       field {
         name = ctx.t("commands.logs.menu.leave")
-        value = "${if (guildData.memberRemoveMessagesEnabled == true) ctx.t("commands.logs.embed.welcome.enabled") else ctx.t("commands.logs.embed.welcome.disabled")}\n" +
+        value = "${if (guildData.memberRemoveMessagesEnabled == true) ctx.t("commands.logs.embed.enabled") else ctx.t("commands.logs.embed.disabled")}\n" +
                 "${ctx.t("commands.logs.embed.channel")} ${memberRemoveChat?.asMention ?: ctx.t("global.none")}"
         inline = false
       }
