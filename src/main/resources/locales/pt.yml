@@ -301,6 +301,19 @@ errors:
   emptyqueue: ":x: A queue está vazia!"
   invalidNumber: ":x: Número inválido!"
   noMatches: ":x: Não encontrei nenhum resultado!"
+  notInVoiceChannel: ":x: Precisas de estar num canal de voz para executar esse comando!"
+  notInBotVC: ":x: Precisas de estar no meu canal de voz para usar este comando!"
+  missingViewPerm: ":x: Não tenho permissão para ver o teu canal de voz!"
+  missingConnectPerm: ":x: Não tenho permissão para entrar no teu canal de voz!"
+  missingSpeakPerm: ":x: Não tenho permissão para falar no teu canal de voz!"
+  fullVoiceChannel: ":x: O teu canal de voz está cheio!"
+  recordWhilePlaying: ":x: Não posso gravar áudio enquanto toco música!"
+  playWhileRecording: ":x: Não posso tocar música enquanto gravo áudio!"
+  noTrackAtPosition: ":x: Não há nenhuma música nessa posição da queue."
+  allQueueRequested: ":x: Todas as músicas da queue têm de ser requisitadas por ti para poderes usar esse comando!"
+  onlyDJAndOther: ":x: Apenas alguém com o cargo de DJ (`{0}`) ou quem requisitou a música dessa posição a pode remover da queue."
+  onlyDJAndCurrent: ":x: Apenas alguém com o cargo de DJ (`{0}`) ou quem requisitou esta música pode usar esse comando."
+  onlyDJ: ":x: Precisas do cargo de DJ (`{0}`) para poderes usar esse comando."
 
 utils:
   created:

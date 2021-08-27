@@ -304,6 +304,19 @@ errors:
   emptyqueue: ":x: The queue is empty!"
   invalidNumber: ":x: Invalid number!"
   noMatches: ":x: I didn't find any results!"
+  notInVoiceChannel: ":x: You need to be on a voice channel to execute this command!"
+  notInBotVC: ":x: You need to be on my voice channel to use this command!"
+  missingViewPerm: ":x: I don't have permission to view your voice channel!"
+  missingConnectPerm: ":x: I'm not allowed to join your voice channel!"
+  missingSpeakPerm: ":x: I'm not allowed to speak on your voice channel!"
+  fullVoiceChannel: ":x: Your voice channel is full!"
+  recordWhilePlaying: ":x: I can't record while playing music!"
+  playWhileRecording: ":x: I can't play music while recording audio!"
+  noTrackAtPosition: ":x: There is no song in that queue position."
+  allQueueRequested: ":x: All songs in the queue must be requested by you in order to use this command!"
+  onlyDJAndOther: ":x: Only someone with the DJ role (`{0}`) or who has requested the song from that position can remove it from the queue."
+  onlyDJAndCurrent: ":x: Only someone with the DJ role (`{0}`) or who requested this song can use this command."
+  onlyDJ: ":x: You need the DJ role (`{0}`) to be able to use this command."
 
 utils:
   created:

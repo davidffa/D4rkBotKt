@@ -148,12 +148,12 @@ object Utils {
     return selfMember.getPermissions(channel).containsAll(permissions)
   }
 
-  fun canRecord(self: Member, member: Member, channel: TextChannel): Boolean {
+  fun canRecord(t: (String) -> String, self: Member, member: Member, channel: TextChannel): Boolean {
     val memberVoiceState = member.voiceState
     val selfChannel = member.guild.audioManager.connectedChannel
 
     if (!memberVoiceState!!.inVoiceChannel()) {
-      channel.sendMessage(":x: Precisas de estar num canal de voz para executar esse comando!").queue()
+      channel.sendMessage(t("errors.notInVoiceChannel")).queue()
       return false
     }
 
@@ -161,36 +161,36 @@ object Utils {
     val selfPermissions = self.getPermissions(memberVoiceChannel!!)
 
     if (!selfPermissions.contains(VIEW_CHANNEL)) {
-      channel.sendMessage(":x: Não tenho permissão para ver o teu canal de voz!").queue()
+      channel.sendMessage(t("errors.missingViewPerm")).queue()
       return false
     }
 
     if (!selfPermissions.contains(VOICE_CONNECT)) {
-      channel.sendMessage(":x: Não tenho permissão para entrar no teu canal de voz!").queue()
+      channel.sendMessage(t("errors.missingConnectPerm")).queue()
       return false
     }
 
     if (selfChannel == null) {
       if (memberVoiceChannel.userLimit == memberVoiceChannel.members.size && !selfPermissions.contains(MANAGE_CHANNEL)) {
-        channel.sendMessage(":x: O teu canal de voz está cheio!").queue()
+        channel.sendMessage(t("errors.fullVoiceChannel")).queue()
         return false
       }
     }
 
     if (PlayerManager.musicManagers.contains(self.guild.idLong)) {
-      channel.sendMessage(":x: Não posso gravar áudio enquanto toco música!").queue()
+      channel.sendMessage(t("errors.recordWhilePlaying")).queue()
       return false
     }
 
     return true
   }
 
-  suspend fun canPlay(self: Member, member: Member, channel: TextChannel): Boolean {
+  suspend fun canPlay(t: (String) -> String, self: Member, member: Member, channel: TextChannel): Boolean {
     val memberVoiceState = member.voiceState
     val selfChannel = member.guild.audioManager.connectedChannel
 
     if (!memberVoiceState!!.inVoiceChannel()) {
-      channel.sendMessage(":x: Precisas de estar num canal de voz para executar esse comando!").queue()
+      channel.sendMessage(t("errors.notInVoiceChannel")).queue()
       return false
     }
 
@@ -198,30 +198,30 @@ object Utils {
     val selfPermissions = self.getPermissions(memberVoiceChannel!!)
 
     if (!selfPermissions.contains(VIEW_CHANNEL)) {
-      channel.sendMessage(":x: Não tenho permissão para ver o teu canal de voz!").queue()
+      channel.sendMessage(t("errors.missingViewPerm")).queue()
       return false
     }
 
     if (!selfPermissions.contains(VOICE_CONNECT)) {
-      channel.sendMessage(":x: Não tenho permissão para entrar no teu canal de voz!").queue()
+      channel.sendMessage(t("errors.missingConnectPerm")).queue()
       return false
     }
 
     if (!selfPermissions.contains(VOICE_SPEAK)) {
-      channel.sendMessage(":x: Não tenho permissão para falar no teu canal de voz!").queue()
+      channel.sendMessage(t("errors.missingSpeakPerm")).queue()
       return false
     }
 
     if (selfChannel == null) {
       if (memberVoiceChannel.userLimit == memberVoiceChannel.members.size && !selfPermissions.contains(MANAGE_CHANNEL)) {
-        channel.sendMessage(":x: O teu canal de voz está cheio!").queue()
+        channel.sendMessage(t("errors.fullVoiceChannel")).queue()
         return false
       }
       return true
     }
 
     if (ReceiverManager.receiveManagers.contains(self.guild.idLong)) {
-      channel.sendMessage(":x: Não posso tocar música enquanto gravo áudio!").queue()
+      channel.sendMessage(t("errors.playWhileRecording")).queue()
       return false
     }
 
@@ -236,7 +236,7 @@ object Utils {
       } else {
         if (!member.roles.contains(djRole)) {
           if (selfChannel.idLong == memberVoiceChannel.idLong) return true
-          channel.sendMessage(":x: Precisas de estar no meu canal de voz para usar este comando!").queue()
+          channel.sendMessage(t("errors.notInBotVC")).queue()
           return false
         }
       }
@@ -245,6 +245,7 @@ object Utils {
   }
 
   suspend fun canUsePlayer(
+    t: (String, List<String>?) -> String,
     self: Member,
     member: Member,
     channel: TextChannel,
@@ -258,25 +259,25 @@ object Utils {
     val player = PlayerManager.musicManagers[self.guild.idLong]
 
     if (player == null) {
-      channel.sendMessage(":x: Não estou a tocar nada de momento!").queue()
+      channel.sendMessage(t("errors.notplaying", null)).queue()
       return false
     }
 
     if (!memberVoiceState!!.inVoiceChannel()) {
-      channel.sendMessage(":x: Precisas de estar num canal de voz para executar esse comando!").queue()
+      channel.sendMessage(t("errors.notInVoiceChannel", null)).queue()
       return false
     }
 
     val memberVoiceChannel = memberVoiceState.channel
 
     if (selfVoiceState!!.inVoiceChannel() && memberVoiceChannel != selfVoiceState.channel) {
-      channel.sendMessage(":x: Precisas de estar no meu canal de voz para usar este comando!").queue()
+      channel.sendMessage(t("errors.notInBotVC", null)).queue()
       return false
     }
 
     if (trackPosition != null) {
       if (player.scheduler.queue.isEmpty()) {
-        channel.sendMessage(":x: A queue está vazia!").queue()
+        channel.sendMessage(t("errors.emptyqueue", null)).queue()
         return false
       }
 
@@ -284,7 +285,7 @@ object Utils {
       val track = queue.getOrNull(trackPosition - 1)
 
       if (track == null) {
-        channel.sendMessage(":x: Não há nenhuma música nessa posição da queue.").queue()
+        channel.sendMessage(t("errors.noTrackAtPosition", null)).queue()
         return false
       }
 
@@ -306,7 +307,7 @@ object Utils {
 
     if (forAllQueueTracks) {
       if (player.scheduler.queue.find { it.requester.idLong != member.idLong } != null) {
-        channel.sendMessage(":x: Todas as músicas da queue têm de ser requisitadas por ti para poderes usar esse comando!")
+        channel.sendMessage(t("errors.allQueueRequested", null))
           .queue()
         return false
       }
@@ -315,14 +316,14 @@ object Utils {
 
     if (forOwnTrack) {
       if (trackPosition != null) {
-        channel.sendMessage(":x: Apenas alguém com o cargo de DJ (`${djRole.name}`) ou quem requisitou a música dessa posição a pode remover da queue.")
+        channel.sendMessage(t("errors.onlyDJAndOther", listOf(djRole.name)))
           .queue()
       } else {
-        channel.sendMessage(":x: Apenas alguém com o cargo de DJ (`${djRole.name}`) ou quem requisitou esta música pode usar esse comando.")
+        channel.sendMessage(t("errors.onlyDJAndCurrent", listOf(djRole.name)))
           .queue()
       }
     } else {
-      channel.sendMessage(":x: Precisas do cargo de DJ (`${djRole.name}`) para poderes usar esse comando.").queue()
+      channel.sendMessage(t("errors.onlyDJ", listOf(djRole.name))).queue()
     }
     return false
   }
