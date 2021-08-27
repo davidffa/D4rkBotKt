@@ -233,7 +233,7 @@ class Logs : Command(
       color = Utils.randColor()
       field {
         name = ctx.t("commands.logs.menu.welcome")
-        value = "${if (guildData.welcomeMessagesEnabled == true) ctx.t("commands.logs.embed.welcome.enabled") else ctx.t("commands.logs.embed.welcome.disabled")}\n" +
+        value = "${if (guildData.welcomeMessagesEnabled == true) ctx.t("commands.logs.embed.enabled") else ctx.t("commands.logs.embed.disabled")}\n" +
                 "${ctx.t("commands.logs.embed.channel")} ${welcomeChat?.asMention ?: ctx.t("global.none")}"
         inline = false
       }
