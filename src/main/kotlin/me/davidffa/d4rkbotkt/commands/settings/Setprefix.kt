@@ -23,7 +23,7 @@ class Setprefix : Command(
     val prefix = ctx.args.joinToString(" ")
 
     if (prefix.length > 5) {
-      ctx.channel.sendMessage(":x: O meu prefixo não pode ultrapassar os 5 caracteres.").queue()
+      ctx.channel.sendMessage(ctx.t("commands.setprefix.maxLength")).queue()
       return
     }
 
@@ -34,6 +34,6 @@ class Setprefix : Command(
       Database.guildDB.insertOne(GuildDB(ctx.guild.id, prefix))
     }
 
-    ctx.channel.sendMessage("<a:verificado:803678585008816198> O meu prefixo foi alterado para `${prefix}`").queue()
+    ctx.channel.sendMessage(ctx.t("commands.setprefix.success", listOf(prefix))).queue()
   }
 }

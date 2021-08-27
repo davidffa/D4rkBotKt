@@ -15,7 +15,6 @@ import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.entities.Emoji
 import net.dv8tion.jda.api.entities.MessageEmbed
 import net.dv8tion.jda.api.entities.TextChannel
-import net.dv8tion.jda.api.entities.User
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent
 import net.dv8tion.jda.api.interactions.components.ActionRow
 import net.dv8tion.jda.api.interactions.components.Button
@@ -58,23 +57,23 @@ class Logs : Command(
       }
     }
 
-    val embed = generateEmbed(ctx.author, guildData, welcomeChat, memberRemoveChat)
+    val embed = generateEmbed(ctx, guildData, welcomeChat, memberRemoveChat)
 
     val nonceBytes = ByteArray(24)
     SecureRandom().nextBytes(nonceBytes)
     val nonce = Base64.getEncoder().encodeToString(nonceBytes)
 
-    val menu = SelectionMenu("$nonce:logs", "Escolhe o tipo de logs a configurar") {
-      option("Mensagens de bem-vindo", "welcome", emoji = Emoji.fromUnicode("\uD83D\uDC4B"))
-      option("Mensagens de saída", "leave", emoji = Emoji.fromUnicode("\uD83D\uDEAA"))
+    val menu = SelectionMenu("$nonce:logs", ctx.t("commands.logs.menu.placeholder")) {
+      option(ctx.t("commands.logs.menu.welcome"), "welcome", emoji = Emoji.fromUnicode("\uD83D\uDC4B"))
+      option(ctx.t("commands.logs.menu.leave"), "leave", emoji = Emoji.fromUnicode("\uD83D\uDEAA"))
     }
 
     val descEmbed = Embed {
-      title = ":gear: Configuração de logs"
+      title = ctx.t("commands.logs.title")
       color = Utils.randColor()
-      description = ":white_check_mark: - Ativar\n" +
-              ":x: - Desativar\n" +
-              "<:chat:804050576647913522> - Escolher o canal"
+      description = ":white_check_mark: - ${ctx.t("commands.logs.enable")}\n" +
+              ":x: - ${ctx.t("commands.logs.disable")}\n" +
+              "<:chat:804050576647913522> - ${ctx.t("commands.logs.channel")}"
       timestamp = Instant.now()
       footer {
         name = ctx.author.asTag
@@ -98,12 +97,12 @@ class Logs : Command(
 
     globalTimer.schedule(timerTask {
       removeListeners(listeners, ctx.jda)
-      mainMessage.editMessage(":warning: Acabou o tempo!\nUsa o comando novamente para continuar a configurar as logs!").setEmbeds().setActionRows().queue()
+      mainMessage.editMessage(ctx.t("commands.logs.timeout")).setEmbeds().setActionRows().queue()
     }, 3 * 60 * 1000L)
 
     val menuListener = ctx.jda.onSelection("$nonce:logs") {
       if (it.member != ctx.member) {
-        it.reply(":x: Não podes interagir aqui!\n**Usa:** `${ctx.prefix}${name}` para poderes interagir.").setEphemeral(true).queue()
+        it.reply(ctx.t("errors.cannotinteract", listOf(ctx.prefix, name))).setEphemeral(true).queue()
         return@onSelection
       }
 
@@ -117,7 +116,7 @@ class Logs : Command(
 
     val onButtonListener = ctx.jda.onButton("$nonce:on") {
       if (it.member != ctx.member) {
-        it.reply(":x: Não podes interagir aqui!\n**Usa:** `${ctx.prefix}${name}` para poderes interagir.").setEphemeral(true).queue()
+        it.reply(ctx.t("errors.cannotinteract", listOf(ctx.prefix, name))).setEphemeral(true).queue()
         return@onButton
       }
 
@@ -127,21 +126,21 @@ class Logs : Command(
             guildData.welcomeMessagesEnabled = true
             Database.guildDB.updateOneById(ctx.guild.id, Updates.set("welcomeMessagesEnabled", true))
           }
-          it.editMessageEmbeds(generateEmbed(ctx.author, guildData, welcomeChat, memberRemoveChat)).setActionRow(menu).queue()
+          it.editMessageEmbeds(generateEmbed(ctx, guildData, welcomeChat, memberRemoveChat)).setActionRow(menu).queue()
         }
         LogType.REMOVE -> {
           if (guildData.memberRemoveMessagesEnabled == null || guildData.memberRemoveMessagesEnabled == false) {
             guildData.memberRemoveMessagesEnabled = true
             Database.guildDB.updateOneById(ctx.guild.id, Updates.set("memberRemoveMessagesEnabled", true))
           }
-          it.editMessageEmbeds(generateEmbed(ctx.author, guildData, welcomeChat, memberRemoveChat)).setActionRow(menu).queue()
+          it.editMessageEmbeds(generateEmbed(ctx, guildData, welcomeChat, memberRemoveChat)).setActionRow(menu).queue()
         }
       }
     }
 
     val offButtonListener = ctx.jda.onButton("$nonce:off") {
       if (it.member != ctx.member) {
-        it.reply(":x: Não podes interagir aqui!\n**Usa:** `${ctx.prefix}${name}` para poderes interagir.").setEphemeral(true).queue()
+        it.reply(ctx.t("errors.cannotinteract", listOf(ctx.prefix, name))).setEphemeral(true).queue()
         return@onButton
       }
 
@@ -151,32 +150,32 @@ class Logs : Command(
             guildData.welcomeMessagesEnabled = false
             Database.guildDB.updateOneById(ctx.guild.id, Updates.set("welcomeMessagesEnabled", false))
           }
-          it.editMessageEmbeds(generateEmbed(ctx.author, guildData, welcomeChat, memberRemoveChat)).setActionRow(menu).queue()
+          it.editMessageEmbeds(generateEmbed(ctx, guildData, welcomeChat, memberRemoveChat)).setActionRow(menu).queue()
         }
         LogType.REMOVE -> {
           if (guildData.memberRemoveMessagesEnabled == true) {
             guildData.memberRemoveMessagesEnabled = false
             Database.guildDB.updateOneById(ctx.guild.id, Updates.set("memberRemoveMessagesEnabled", false))
           }
-          it.editMessageEmbeds(generateEmbed(ctx.author, guildData, welcomeChat, memberRemoveChat)).setActionRow(menu).queue()
+          it.editMessageEmbeds(generateEmbed(ctx, guildData, welcomeChat, memberRemoveChat)).setActionRow(menu).queue()
         }
       }
     }
 
     val channelButtonListener = ctx.jda.onButton("$nonce:channel") {
       if (it.member != ctx.member) {
-        it.reply(":x: Não podes interagir aqui!\n**Usa:** `${ctx.prefix}${name}` para poderes interagir.").setEphemeral(true).queue()
+        it.reply(ctx.t("errors.cannotinteract", listOf(ctx.prefix, name))).setEphemeral(true).queue()
         return@onButton
       }
 
       globalTimer.cancel()
 
       val type = when (logType) {
-        LogType.WELCOME -> "bem-vindo"
-        LogType.REMOVE -> "saída"
+        LogType.WELCOME -> ctx.t("commands.logs.welcome")
+        LogType.REMOVE -> ctx.t("commands.logs.leave")
       }
 
-      val msg = it.editMessage("Escreve o canal ou ID do canal para setar as mensagens de $type").setEmbeds().setActionRows().await()
+      val msg = it.editMessage(ctx.t("commands.logs.setChannel", listOf(type))).setEmbeds().setActionRows().await()
 
       var msgListener: CoroutineEventListener? = null
 
@@ -186,7 +185,7 @@ class Logs : Command(
         ctx.jda.removeEventListener(msgListener)
         removeListeners(listeners, ctx.jda)
 
-        msg.editOriginal(":warning: Acabou o tempo!\nUsa o comando novamente para continuar a configurar as logs!").queue()
+        msg.editOriginal(ctx.t("commands.logs.timeout")).queue()
       }, 30000L)
 
       msgListener = ctx.jda.listener<GuildMessageReceivedEvent> { e ->
@@ -216,10 +215,10 @@ class Logs : Command(
         globalTimer = Timer()
         globalTimer.schedule(timerTask {
           removeListeners(listeners, ctx.jda)
-          mainMessage.editMessage(":warning: Acabou o tempo!\nUsa o comando novamente para continuar a configurar as logs!").setEmbeds().setActionRows().queue()
+          mainMessage.editMessage(ctx.t("commands.logs.timeout")).setEmbeds().setActionRows().queue()
         }, 3 * 60 * 1000L)
 
-        msg.editOriginal("").setEmbeds(generateEmbed(ctx.author, guildData, welcomeChat, memberRemoveChat)).setActionRow(menu).queue()
+        msg.editOriginal("").setEmbeds(generateEmbed(ctx, guildData, welcomeChat, memberRemoveChat)).setActionRow(menu).queue()
       }
     }
 
@@ -229,27 +228,27 @@ class Logs : Command(
     listeners.add(channelButtonListener)
   }
 
-  private fun generateEmbed(author: User, guildData: GuildCache, welcomeChat: TextChannel?, memberRemoveChat: TextChannel?): MessageEmbed {
+  private fun generateEmbed(ctx: CommandContext, guildData: GuildCache, welcomeChat: TextChannel?, memberRemoveChat: TextChannel?): MessageEmbed {
     return Embed {
-      title = ":gear: Configuração de logs"
+      title = ctx.t("commands.logs.title")
       color = Utils.randColor()
       field {
-        name = "Mensagens de bem-vindo"
-        value = "${if (guildData.welcomeMessagesEnabled == true) "Ativado <:on:764478511875751937>" else "Desativado <:off:764478504124416040>"}\n" +
-                "Canal: ${welcomeChat?.asMention ?: "Nenhum"}"
+        name = ctx.t("commands.logs.menu.welcome")
+        value = "${if (guildData.welcomeMessagesEnabled == true) ctx.t("commands.logs.embed.welcome.enabled") else ctx.t("commands.logs.embed.welcome.disabled")}\n" +
+                "${ctx.t("commands.logs.embed.channel")} ${welcomeChat?.asMention ?: ctx.t("global.none")}"
         inline = false
       }
       field {
-        name = "Mensagens de saída"
-        value = "${if (guildData.memberRemoveMessagesEnabled == true) "Ativado <:on:764478511875751937>" else "Desativado <:off:764478504124416040>"}\n" +
-                "Canal: ${memberRemoveChat?.asMention ?: "Nenhum"}"
+        name = ctx.t("commands.logs.menu.leave")
+        value = "${if (guildData.memberRemoveMessagesEnabled == true) ctx.t("commands.logs.embed.welcome.enabled") else ctx.t("commands.logs.embed.welcome.disabled")}\n" +
+                "${ctx.t("commands.logs.embed.channel")} ${memberRemoveChat?.asMention ?: ctx.t("global.none")}"
         inline = false
       }
 
       timestamp = Instant.now()
       footer {
-        name = author.asTag
-        iconUrl = author.effectiveAvatarUrl
+        name = ctx.author.asTag
+        iconUrl = ctx.author.effectiveAvatarUrl
       }
     }
   }

@@ -231,6 +231,35 @@ commands:
     checkUrl: "<a:loading2:805088089319407667> A verificar se o URL é válido..."
     offline: ":x: Site offline!"
     rendering: "<a:loading2:805088089319407667> A renderizar a página..."
+  djrole:
+    errors:
+      noRole: ":x: Nenhum cargo de DJ setado. **Usa:** `{0}djrole <Cargo>` para setar um cargo de DJ."
+      roleDeleted: ":x: O cargo de DJ antigo foi apagado! **Usa:** `{0}djrole <Cargo>` para setar um novo cargo de DJ."
+      missingPermission: ":x: Precisas da permissão `Gerenciar Cargos` para usar este comando."
+      disabled: ":x: O cargo de DJ não está ativo!"
+    currentRole: "<a:disco:803678643661832233> Cargo de DJ atual: `{0}`\n**Usa:** `{1}djrole <Cargo> (0 para desativar)`"
+    usage: "<a:disco:803678643661832233> Cargo de DJ desativado. **Usa:** `{0}djrole <Cargo>` para setar um novo cargo de DJ."
+    success: "<a:disco:803678643661832233> Cargo `{0}` setado como cargo de DJ!"
+  logs:
+    menu:
+      placeholder: "Escolhe o tipo de logs a configurar"
+      welcome: "Mensagens de bem-vindo"
+      leave: "Mensagens de saída"
+    title: ":gear: Configuração de logs"
+    enable: "Ativar"
+    disable: "Desativar"
+    channel: "Escolher o canal"
+    timeout: ":warning: Acabou o tempo!\nUsa o comando novamente para continuar a configurar as logs!"
+    welcome: "bem-vindo"
+    leave: "saída"
+    setChannel: "Escreve o canal ou ID do canal para setar as mensagens de {0}"
+    embed:
+      enabled: "Ativado <:on:764478511875751937>"
+      disabled: "Desativado <:off:764478504124416040>"
+      channel: "Canal:"
+  setprefix:
+    maxLength: ":x: O meu prefixo não pode ultrapassar os 5 caracteres."
+    success: "<a:verificado:803678585008816198> O meu prefixo foi alterado para `{0}`"
 
 errors:
   user:

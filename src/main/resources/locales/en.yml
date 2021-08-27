@@ -234,6 +234,35 @@ commands:
     checkUrl: "<a:loading2:805088089319407667> Checking if the URL is valid..."
     offline: ":x: Offline site!"
     rendering: "<a:loading2:805088089319407667> Rendering page..."
+  djrole:
+    errors:
+      noRole: ":x: No DJ role set. **Use:** `{0}djrole <Role>` to set a DJ role."
+      roleDeleted: ":x: The old DJ role was deleted! **Use:** `{0}djrole <Role>` to set a new DJ role."
+      missingPermission: ":x: You need `Manage Guild` permission to use this command."
+      disabled: ":x: The DJ role is not active!"
+    currentRole: "<a:disco:803678643661832233> Current DJ role: `{0}`\n**Use:** `{1}djrole <Role> (0 to disable)`"
+    usage: "<a:disco:803678643661832233> DJ role disabled! **Use:** `{0}djrole <Role>` to set a new DJ role."
+    success: "<a:disco:803678643661832233> Role `{0}` set as DJ role!"
+  logs:
+    menu:
+      placeholder: "Choose the type of logs to configure"
+      welcome: "Welcome messages"
+      leave: "Leave messages"
+    title: ":gear: Log settings"
+    enable: "Enable"
+    disable: "Disable"
+    channel: "Choose the channel"
+    timeout: ":warning: Time expired!\nUse the command again to continue configuring logs!"
+    welcome: "welcome"
+    leave: "leave"
+    setChannel: "Write the channel name or channel ID to set {0} messages"
+    embed:
+      enabled: "Enabled <:on:764478511875751937>"
+      disabled: "Disabled <:off:764478504124416040>"
+      channel: "Channel:"
+  setprefix:
+    maxLength: ":x: My prefix cannot exceed 5 characters."
+    success: "<a:verificado:803678585008816198> My prefix has been changed to `{0}`"
 
 errors:
   user:
