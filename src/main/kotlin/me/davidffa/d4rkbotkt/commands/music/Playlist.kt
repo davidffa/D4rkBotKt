@@ -33,7 +33,7 @@ class Playlist : Command(
       title = ctx.t("commands.playlist.help.title")
       description = "${
         ctx.t("commands.playlist.help.description", listOf(ctx.prefix)).split("\n").joinToString("\n─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─\n")
-      }─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─```"
+      }\n─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─```"
       color = Utils.randColor()
       footer {
         name = ctx.author.asTag
