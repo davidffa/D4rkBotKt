@@ -10,6 +10,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import me.davidffa.d4rkbotkt.D4rkBot
+import me.davidffa.d4rkbotkt.Translator
 import me.davidffa.d4rkbotkt.audio.receive.ReceiverManager
 import me.davidffa.d4rkbotkt.audio.spotify.SpotifyTrack
 import me.davidffa.d4rkbotkt.utils.Utils
@@ -42,6 +43,10 @@ class TrackScheduler(private val player: AudioPlayer, private val textChannel: T
 
   init {
     this.queue = LinkedBlockingQueue()
+  }
+
+  fun t(path: String, placeholders: List<String>? = null): String {
+    return Translator.t(path, D4rkBot.guildCache[guild.idLong]!!.locale, placeholders)
   }
 
   fun shuffle() {
@@ -97,7 +102,7 @@ class TrackScheduler(private val player: AudioPlayer, private val textChannel: T
 
     if (this.queue.isEmpty()) {
       if (Utils.hasPermissions(guild.selfMember, textChannel, listOf(Permission.MESSAGE_WRITE))) {
-        this.textChannel.sendMessage(":notes: A lista de músicas acabou!").queue()
+        this.textChannel.sendMessage(t("music.queueEnd")).queue()
       }
 
       this.destroy()
@@ -164,22 +169,22 @@ class TrackScheduler(private val player: AudioPlayer, private val textChannel: T
     val requester = current.requester
 
     val embed = Embed {
-      title = "<a:disco:803678643661832233> A tocar"
+      title = t("music.playing.title")
       color = Utils.randColor()
       url = track.info.uri
       thumbnail = track.info.artworkUrl
       field {
-        name = ":page_with_curl: Nome:"
+        name = t("music.playing.name")
         value = "`${track.info.title}`"
         inline = false
       }
       field {
-        name = ":technologist: Enviado por:"
+        name = t("music.playing.author")
         value = "`${track.info.author}`"
         inline = false
       }
       field {
-        name = ":watch: Duração:"
+        name = t("music.playing.duration")
         value = if (!track.info.isStream) "`${Utils.msToHour(track.info.length)}`" else ":infinity:"
         inline = false
       }
@@ -196,7 +201,7 @@ class TrackScheduler(private val player: AudioPlayer, private val textChannel: T
   override fun onTrackException(player: AudioPlayer, track: AudioTrack, exception: FriendlyException) {
     logger.warn("Ocorreu um erro ao tocar a música ${track.info.identifier}.\nErro: ${exception.printStackTrace()}")
     if (exception.localizedMessage.contains("429")) {
-      this.textChannel.sendMessage(":warning: Parece que o YouTube me impediu de tocar essa música, aguarda um momento enquanto resolvo esse problema e tenta novamente daqui a uns segundos.")
+      this.textChannel.sendMessage(t("music.ratelimit"))
         .queue()
       this.destroy()
 

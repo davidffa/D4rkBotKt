@@ -261,6 +261,24 @@ commands:
     maxLength: ":x: O meu prefixo não pode ultrapassar os 5 caracteres."
     success: "<a:verificado:803678585008816198> O meu prefixo foi alterado para `{0}`"
 
+music:
+  queueEnd: ":notes: A lista de músicas acabou!"
+  playlistLoadedTitle: "<a:disco:803678643661832233> Playlist Carregada"
+  playing:
+    title: "<a:disco:803678643661832233> A tocar"
+    name: ":page_with_curl: Nome:"
+    author: ":technologist: Enviado por:"
+    duration: ":watch: Duração:"
+  ratelimit: ":warning: Parece que o YouTube me impediu de tocar essa música, aguarda um momento enquanto resolvo esse problema e tenta novamente daqui a uns segundos."
+  spotify:
+    albumTitle: "<:spotify:869245737282715689> Album carregado"
+    playlistTitle: "<:spotify:869245737282715689> Playlist carregada"
+  size: "<a:infinity:838759634361253929> Quantidade de músicas:"
+  duration: ":watch: Duração:"
+  queued: ":bookmark_tabs: Adicionado à lista `{0}`"
+  noMatches: ":x: Não encontrei nenhum resultado!"
+  error: ":x: Ocorreu um erro ao carregar a música! (`{0}`)"
+
 errors:
   user:
     notfound: ":x: Utilizador não encontrado!"

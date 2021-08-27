@@ -264,6 +264,24 @@ commands:
     maxLength: ":x: My prefix cannot exceed 5 characters."
     success: "<a:verificado:803678585008816198> My prefix has been changed to `{0}`"
 
+music:
+  queueEnd: ":notes: Queue ended!"
+  playlistLoadedTitle: "<a:disco:803678643661832233> Playlist loaded"
+  playing:
+    title: "<a:disco:803678643661832233> Playing"
+    name: ":page_with_curl: Name:"
+    author: ":technologist: Author:"
+    duration: ":watch: Duration:"
+  ratelimit: ":warning: Looks like YouTube stopped me from playing this song, wait a moment while I fix this problem and try again in a few seconds."
+  spotify:
+    albumTitle: "<:spotify:869245737282715689> Album loaded"
+    playlistTitle: "<:spotify:869245737282715689> Playlist loaded"
+  size: "<a:infinity:838759634361253929> Tracks:"
+  duration: ":watch: Duration:"
+  queued: ":bookmark_tabs: Added to queue `{0}`"
+  noMatches: ":x: I didn't find any results!"
+  error: ":x: There was an error when loading the song! (`{0}`)"
+
 errors:
   user:
     notfound: ":x: User not found!"
