@@ -279,6 +279,15 @@ music:
   noMatches: ":x: Não encontrei nenhum resultado!"
   error: ":x: Ocorreu um erro ao carregar a música! (`{0}`)"
 
+events:
+  welcome: ":tada: `{0}` bem-vindo ao servidor `{1}`."
+  leave: ":door: `{0}` saiu do servidor."
+  message: "<a:blobcool:804026346954555432> Olá {0} O meu prefixo neste servidor é `{1}`. Faz `{1}help` para veres o que posso fazer!"
+  voice:
+    disconnected: ":warning: Fui desconectado do canal de voz, por isso limpei a queue."
+    leaveWarning: ":warning: Pausei a música porque fiquei sozinho no canal de voz, se ninguem aparecer irei sair em 2 minutos."
+    leave: ":x: Saí do canal de voz porque fiquei sozinho mais de 2 minutos."
+
 errors:
   user:
     notfound: ":x: Utilizador não encontrado!"

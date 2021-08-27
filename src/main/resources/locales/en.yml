@@ -282,6 +282,15 @@ music:
   noMatches: ":x: I didn't find any results!"
   error: ":x: There was an error when loading the song! (`{0}`)"
 
+events:
+  welcome: ":tada: `{0}` welcome to `{1}` server."
+  leave: ":door: `{0}` left the server."
+  message: "<a:blobcool:804026346954555432> Hi {0}! My prefix on this server is `{1}`. Write `{1}help` to see what I can do!"
+  voice:
+    disconnected: ":warning: I was disconnected from the voice channel, so I cleared the queue."
+    leaveWarning: ":warning: I paused the song because I was alone in the voice channel, if no one shows up I will leave in 2 minutes."
+    leave: ":x: I left the voice channel because I was alone for more than 2 minutes."
+
 errors:
   user:
     notfound: ":x: User not found!"
