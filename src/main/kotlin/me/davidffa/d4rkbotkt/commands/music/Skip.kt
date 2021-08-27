@@ -8,14 +8,13 @@ import net.dv8tion.jda.api.Permission
 
 class Skip : Command(
   "skip",
-  "Pula a música atual.",
   listOf("s", "pular"),
   category = "Music",
   botPermissions = listOf(Permission.MESSAGE_WRITE),
   cooldown = 2
 ) {
   override suspend fun run(ctx: CommandContext) {
-    if (!Utils.canUsePlayer(ctx.selfMember, ctx.member, ctx.channel, true)) return
+    if (!Utils.canUsePlayer(ctx::t, ctx.selfMember, ctx.member, ctx.channel, true)) return
 
     val musicManager = PlayerManager.getMusicManager(ctx.guild.idLong)
 

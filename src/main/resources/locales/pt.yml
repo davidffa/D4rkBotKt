@@ -260,6 +260,67 @@ commands:
   setprefix:
     maxLength: ":x: O meu prefixo não pode ultrapassar os 5 caracteres."
     success: "<a:verificado:803678585008816198> O meu prefixo foi alterado para `{0}`"
+  help:
+    menu:
+      placeholder: "Escolhe uma categoria de comandos para ver"
+      settings:
+        label: "Definições"
+        description: "Comandos de configuração do bot"
+      info:
+        label: "Informação"
+        description: "Comandos de informação geral"
+      music:
+        label: "Música"
+        description: "Comandos de música"
+      others:
+        label: "Outros"
+        description: "Outros comandos de utilidade"
+    title: "Ajuda"
+    description: "Quantidade total de comandos"
+    category: "> Comandos nesta categoria"
+    timeout: ":warning: O tempo expirou!\nUsa o comando novamente para continuar a usar o menu!"
+    notFound: ":x: Comando não encontrado!"
+    none: "Nenhuma"
+    desc:
+      name: "Nome:"
+      description: "Descrição:"
+      aliases: "Alternativas:"
+      botPerms: "Permissões do bot:"
+      userPerms: "Permissões de utilizador:"
+      title: "Ajuda do comando {0}"
+
+help:
+  avatar: "Mostra o teu avatar ou de outra pessoa em uma imagem grande."
+  botinfo: "Informações sobre mim."
+  channelinfo: "Mostra informações sobre um canal do servidor."
+  invite: "Envia o link do meu convite."
+  ping: "Mostra o ping de envio de mensagens e o da API"
+  roleinfo: "Informação sobre um cargo no servidor."
+  serverinfo: "Informações sobre o servidor."
+  uptime: "Mostra à quanto tempo estou online."
+  userinfo: "Informações sobre alguém."
+  filters: "Adiciona filtros à música."
+  loop: "Repete a queue ou a música atual."
+  nowplaying: "Mostra a música que está a tocar."
+  pause: "Pausa a música atual."
+  play: "Toca uma música ou adiciona-a na lista."
+  playlist: "Cria uma playlist, adiciona músicas a uma playlist ou adiciona à queue uma playlist."
+  queue: "Vê as músicas que estão na queue."
+  remove: "Remove uma música da queue."
+  resume: "Retoma a música atual."
+  search: "Procura uma música no YouTube ou na SoundCloud e toca-a."
+  seek: "Avança para um tempo específico da música."
+  shuffle: "Embaralha a lista de músicas."
+  skip: "Pula a música atual."
+  stop: "Para de tocar música e limpa a lista de músicas."
+  volume: "Altera o volume da música."
+  github: "Informações sobre algum perfil do github."
+  record: "Grava áudio no canal de voz e envia em MP3."
+  render: "Renderiza uma página web."
+  djrole: "Seta o cargo de DJ."
+  logs: "Configura os canais onde irei enviar as logs (mensagem bem-vindo etc).",
+  setprefix: "Muda o meu prefixo no servidor."
+  help: "Mostra a lista de comandos do bot."
 
 music:
   queueEnd: ":notes: A lista de músicas acabou!"

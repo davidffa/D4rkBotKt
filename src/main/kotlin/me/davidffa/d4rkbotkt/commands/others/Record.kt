@@ -15,14 +15,13 @@ import kotlin.concurrent.timerTask
 
 class Record : Command(
   "record",
-  "Grava áudio no canal de voz e envia em MP3.",
   listOf("rec", "gravar"),
   category = "Others",
   cooldown = 8,
   botPermissions = listOf(Permission.MESSAGE_WRITE)
 ) {
   override suspend fun run(ctx: CommandContext) {
-    if (!Utils.canRecord(ctx.selfMember, ctx.member, ctx.channel)) return
+    if (!Utils.canRecord(ctx::t, ctx.selfMember, ctx.member, ctx.channel)) return
 
     val selfVoiceState = ctx.selfMember.voiceState
 

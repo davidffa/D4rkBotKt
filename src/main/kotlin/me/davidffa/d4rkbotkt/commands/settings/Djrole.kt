@@ -11,7 +11,6 @@ import net.dv8tion.jda.api.Permission
 
 class Djrole : Command(
   "djrole",
-  "Seta o cargo de DJ.",
   listOf("dj", "cargodj"),
   "[Cargo/0]",
   "Settings",

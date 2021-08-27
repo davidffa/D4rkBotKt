@@ -8,7 +8,6 @@ import java.lang.management.ManagementFactory
 
 class Uptime : Command(
   "uptime",
-  "Mostra à quanto tempo estou online.",
   listOf("ontime"),
   botPermissions = listOf(Permission.MESSAGE_WRITE),
   category = "Info",

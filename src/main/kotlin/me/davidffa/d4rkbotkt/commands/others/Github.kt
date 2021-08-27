@@ -15,7 +15,6 @@ import java.time.Instant
 
 class Github : Command(
   "github",
-  "Informações sobre algum perfil do github.",
   usage = "<Nome>",
   botPermissions = listOf(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS),
   cooldown = 5,

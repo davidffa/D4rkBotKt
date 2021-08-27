@@ -21,7 +21,6 @@ import kotlin.concurrent.timerTask
 
 class Search : Command(
   "search",
-  "Procura uma música no YouTube ou na SoundCloud e toca-a.",
   listOf("procurar", "searchmusic"),
   "[yt/sc] <Nome da música>",
   "Music",
@@ -30,7 +29,7 @@ class Search : Command(
   cooldown = 5
 ) {
   override suspend fun run(ctx: CommandContext) {
-    if (!Utils.canPlay(ctx.selfMember, ctx.member, ctx.channel)) return
+    if (!Utils.canPlay(ctx::t, ctx.selfMember, ctx.member, ctx.channel)) return
 
     val query = if (listOf("yt", "ytm", "sc").contains(ctx.args[0].lowercase())) {
       if (ctx.args.size < 2) {
@@ -112,7 +111,7 @@ class Search : Command(
       ctx.jda.removeEventListener(buttonListener)
       msg.delete().queue()
 
-      if (!Utils.canPlay(ctx.selfMember, ctx.member, ctx.channel)) return@onSelection
+      if (!Utils.canPlay(ctx::t, ctx.selfMember, ctx.member, ctx.channel)) return@onSelection
 
       val chosenTracks = mutableListOf<AudioTrack>()
 

@@ -22,14 +22,13 @@ import kotlin.concurrent.timerTask
 
 class Filters : Command(
   "filters",
-  "Adiciona filtros à música.",
   listOf("musicfilters", "filtros", "audiofilters", "djtable"),
   category = "Music",
   cooldown = 5,
   botPermissions = listOf(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS)
 ) {
   override suspend fun run(ctx: CommandContext) {
-    if (!Utils.canUsePlayer(ctx.selfMember, ctx.member, ctx.channel, true)) return
+    if (!Utils.canUsePlayer(ctx::t, ctx.selfMember, ctx.member, ctx.channel, true)) return
 
     val manager = PlayerManager.getMusicManager(ctx.guild.idLong)
 

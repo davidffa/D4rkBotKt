@@ -16,7 +16,6 @@ import java.time.Instant
 
 class Playlist : Command(
   "playlist",
-  "Cria uma playlist, adiciona músicas a uma playlist ou adiciona à queue uma playlist.",
   category = "Music",
   botPermissions = listOf(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS),
   cooldown = 5
@@ -358,7 +357,7 @@ class Playlist : Command(
       }
 
       in listOf("play", "tocar") -> {
-        if (!Utils.canPlay(ctx.selfMember, ctx.member, ctx.channel)) return
+        if (!Utils.canPlay(ctx::t, ctx.selfMember, ctx.member, ctx.channel)) return
 
         if (playlists == null || playlists.isEmpty()) {
           ctx.channel.sendMessage(ctx.t("commands.playlist.errors.noPlaylists")).queue()

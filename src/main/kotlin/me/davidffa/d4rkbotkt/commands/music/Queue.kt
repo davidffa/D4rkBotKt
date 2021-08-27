@@ -11,7 +11,6 @@ import java.time.Instant
 
 class Queue : Command(
   "queue",
-  "Vê as músicas que estão na queue.",
   listOf("q"),
   botPermissions = listOf(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS),
   category = "Music",

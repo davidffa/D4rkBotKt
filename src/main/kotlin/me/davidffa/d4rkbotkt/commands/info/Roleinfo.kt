@@ -9,7 +9,6 @@ import java.time.Instant
 
 class Roleinfo : Command(
   "roleinfo",
-  "Informação sobre um cargo no servidor.",
   usage = "<Cargo/ID>",
   args = 1,
   botPermissions = listOf(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS),

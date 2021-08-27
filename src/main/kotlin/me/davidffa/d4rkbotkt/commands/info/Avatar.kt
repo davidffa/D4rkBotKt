@@ -9,7 +9,6 @@ import java.time.Instant
 
 class Avatar : Command(
   "avatar",
-  "Mostra o teu avatar ou de outra pessoa em uma imagem grande.",
   listOf("av"),
   "[ID/Nome]",
   "Info",

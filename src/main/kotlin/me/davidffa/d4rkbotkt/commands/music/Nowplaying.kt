@@ -7,7 +7,6 @@ import net.dv8tion.jda.api.Permission
 
 class Nowplaying : Command(
   "nowplaying",
-  "Mostra a música que está a tocar.",
   listOf("np", "tocando"),
   botPermissions = listOf(Permission.MESSAGE_WRITE),
   category = "Music",

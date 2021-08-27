@@ -25,7 +25,6 @@ import kotlin.concurrent.timerTask
 
 class Logs : Command(
   "logs",
-  "Configura os canais onde irei enviar as logs (mensagem bem-vindo etc).",
   listOf("logconfig", "configlogs"),
   category = "Settings",
   botPermissions = listOf(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS),

@@ -8,7 +8,6 @@ import net.dv8tion.jda.api.Permission
 
 class Loop : Command(
   "loop",
-  "Repete a queue ou a música atual.",
   listOf("repeat"),
   "<Track/Queue>",
   "Music",
@@ -17,7 +16,7 @@ class Loop : Command(
   args = 1
 ) {
   override suspend fun run(ctx: CommandContext) {
-    if (!Utils.canUsePlayer(ctx.selfMember, ctx.member, ctx.channel)) return
+    if (!Utils.canUsePlayer(ctx::t, ctx.selfMember, ctx.member, ctx.channel)) return
 
     val musicManager = PlayerManager.getMusicManager(ctx.guild.idLong)
 

@@ -9,7 +9,6 @@ import java.time.Instant
 
 class Invite : Command(
   "invite",
-  "Envia o link do meu convite.",
   listOf("inv", "convite"),
   category = "Info",
   botPermissions = listOf(Permission.MESSAGE_WRITE)

@@ -13,7 +13,6 @@ import java.time.Instant
 
 class Userinfo : Command(
   "userinfo",
-  "Informações sobre alguém.",
   listOf("ui"),
   "[nome/id]",
   "Info",

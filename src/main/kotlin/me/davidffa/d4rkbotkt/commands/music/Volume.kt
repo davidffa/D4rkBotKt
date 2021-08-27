@@ -8,7 +8,6 @@ import net.dv8tion.jda.api.Permission
 
 class Volume : Command(
   "volume",
-  "Altera o volume da música.",
   listOf("vol"),
   "[valor]",
   "Music",
@@ -16,7 +15,7 @@ class Volume : Command(
   cooldown = 4
 ) {
   override suspend fun run(ctx: CommandContext) {
-    if (!Utils.canUsePlayer(ctx.selfMember, ctx.member, ctx.channel, true)) return
+    if (!Utils.canUsePlayer(ctx::t, ctx.selfMember, ctx.member, ctx.channel, true)) return
 
     val manager = PlayerManager.getMusicManager(ctx.guild.idLong)
 

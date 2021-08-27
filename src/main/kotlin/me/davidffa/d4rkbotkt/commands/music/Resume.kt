@@ -8,14 +8,13 @@ import net.dv8tion.jda.api.Permission
 
 class Resume : Command(
   "resume",
-  "Retoma a música atual.",
   listOf("retomar"),
   category = "Music",
   cooldown = 4,
   botPermissions = listOf(Permission.MESSAGE_WRITE)
 ) {
   override suspend fun run(ctx: CommandContext) {
-    if (!Utils.canUsePlayer(ctx.selfMember, ctx.member, ctx.channel)) return
+    if (!Utils.canUsePlayer(ctx::t, ctx.selfMember, ctx.member, ctx.channel)) return
 
     val musicManager = PlayerManager.getMusicManager(ctx.guild.idLong)
 

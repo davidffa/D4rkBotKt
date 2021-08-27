@@ -18,7 +18,6 @@ import java.util.zip.Inflater
 
 class Render : Command(
   "render",
-  "Renderiza uma página web.",
   listOf("renderizar", "webrender"),
   "<URL>",
   "Others",

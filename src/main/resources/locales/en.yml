@@ -263,6 +263,67 @@ commands:
   setprefix:
     maxLength: ":x: My prefix cannot exceed 5 characters."
     success: "<a:verificado:803678585008816198> My prefix has been changed to `{0}`"
+  help:
+    menu:
+      placeholder: "Choose a category of commands to view"
+      settings:
+        label: "Settings"
+        description: "Bot settings commands"
+      info:
+        label: "Information"
+        description: "General information commands"
+      music:
+        label: "Music"
+        description: "Music commands"
+      others:
+        label: "Others"
+        description: "Other utility commands"
+    title: "Help"
+    description: "Total amount of commands"
+    category: "> Commands in this category"
+    timeout: ":warning: Time expired!\nUse the command again to continue using the menu!"
+    notFound: ":x: Command not found!"
+    none: "None"
+    desc:
+      name: "Name:"
+      description: "Description:"
+      aliases: "Aliases:"
+      botPerms: "Bot permissions:"
+      userPerms: "User permissions:"
+      title: "Command {0} help"
+
+help:
+  avatar: "Show your avatar or someone else's in a large image."
+  botinfo: "Information about me."
+  channelinfo: "Show information about a server channel."
+  invite: "Send my invitation link."
+  ping: "Show message sending ping and API ping"
+  roleinfo: "Information about a role on the server."
+  serverinfo: "Information about this server."
+  uptime: "Show how long I've been online."
+  userinfo: "Information about someone."
+  filters: "Add filters to music."
+  loop: "Repeat the queue or the current song."
+  nowplaying: "Shows the currently playing song."
+  pause: "Pause the current song."
+  play: "Play a song or add it to the queue."
+  playlist: "Create a playlist, add songs to a playlist or add a playlist to the queue."
+  queue: "See the songs that are in the queue."
+  remove: "Remove a song from the queue."
+  resume: "Resume the current song."
+  search: "Search for a song on YouTube or SoundCloud and play it."
+  seek: "Advances to a specific time in the song."
+  shuffle: "Shuffle the queue"
+  skip: "Skip the current song."
+  stop: "Stop playing music and clear the queue."
+  volume: "Change player volume."
+  github: "Information about some github profile."
+  record: "Records audio in the voice channel and sends it in MP3."
+  render: "Render a web page."
+  djrole: "Setup DJ role."
+  logs: "Configure the channels where I will send the logs (welcome message etc).",
+  setprefix: "Change my prefix on the server."
+  help: "Displays the bot command list."
 
 music:
   queueEnd: ":notes: Queue ended!"

@@ -9,7 +9,6 @@ import kotlin.math.pow
 
 class Seek : Command(
   "seek",
-  "Avança para um tempo específico da música.",
   usage = "<Tempo>",
   category = "Music",
   botPermissions = listOf(Permission.MESSAGE_WRITE),
@@ -17,7 +16,7 @@ class Seek : Command(
   cooldown = 2
 ) {
   override suspend fun run(ctx: CommandContext) {
-    if (!Utils.canUsePlayer(ctx.selfMember, ctx.member, ctx.channel, true)) return
+    if (!Utils.canUsePlayer(ctx::t, ctx.selfMember, ctx.member, ctx.channel, true)) return
 
     val track = PlayerManager.getMusicManager(ctx.guild.idLong).scheduler.current.track!!
 

@@ -15,7 +15,6 @@ import java.time.Instant
 
 class Serverinfo : Command(
   "serverinfo",
-  "Informações sobre o servidor.",
   listOf("si", "svinfo"),
   botPermissions = listOf(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS),
   category = "Info",

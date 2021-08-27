@@ -8,13 +8,13 @@ import net.dv8tion.jda.api.Permission
 
 class Shuffle : Command(
   "shuffle",
-  "Embaralha a lista de músicas.",
   category = "Music",
   cooldown = 8,
   botPermissions = listOf(Permission.MESSAGE_WRITE),
 ) {
   override suspend fun run(ctx: CommandContext) {
     if (!Utils.canUsePlayer(
+        ctx::t,
         ctx.selfMember,
         ctx.member,
         ctx.channel,

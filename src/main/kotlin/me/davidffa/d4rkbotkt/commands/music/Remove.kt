@@ -9,7 +9,6 @@ import net.dv8tion.jda.api.Permission
 
 class Remove : Command(
   "remove",
-  "Remove uma música da queue.",
   listOf("remover"),
   "<Posição>",
   "Music",
@@ -25,6 +24,7 @@ class Remove : Command(
     }
 
     if (!Utils.canUsePlayer(
+        ctx::t,
         ctx.selfMember,
         ctx.member,
         ctx.channel,

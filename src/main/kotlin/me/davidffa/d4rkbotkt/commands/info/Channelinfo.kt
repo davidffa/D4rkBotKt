@@ -15,7 +15,6 @@ import java.time.Instant
 
 class Channelinfo : Command(
   "channelinfo",
-  "Mostra informações sobre um canal do servidor.",
   listOf("chinfo"),
   "[ID do canal/Nome]",
   "Info",

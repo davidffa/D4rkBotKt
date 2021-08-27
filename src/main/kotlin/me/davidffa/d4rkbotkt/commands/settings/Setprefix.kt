@@ -10,7 +10,6 @@ import net.dv8tion.jda.api.Permission
 
 class Setprefix : Command(
   "setprefix",
-  "Muda o meu prefixo no servidor.",
   listOf("prefix", "prefixo", "setarprefixo", "setprefixo"),
   "<Prefixo>",
   "Settings",

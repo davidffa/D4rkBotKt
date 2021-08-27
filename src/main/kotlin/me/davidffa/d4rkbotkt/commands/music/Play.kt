@@ -9,7 +9,6 @@ import net.dv8tion.jda.api.Permission
 
 class Play : Command(
   "play",
-  "Toca uma música ou adiciona-a na lista.",
   aliases = listOf("p", "tocar"),
   "<Nome/URL>",
   "Music",
@@ -23,7 +22,7 @@ class Play : Command(
     val selfVoiceState = self.voiceState
     val member = ctx.member
 
-    if (!Utils.canPlay(ctx.selfMember, ctx.member, channel)) return
+    if (!Utils.canPlay(ctx::t, ctx.selfMember, ctx.member, channel)) return
 
     if (!selfVoiceState!!.inVoiceChannel()) {
       ctx.guild.audioManager.isSelfDeafened = true
