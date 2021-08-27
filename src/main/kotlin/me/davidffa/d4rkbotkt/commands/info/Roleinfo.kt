@@ -57,7 +57,7 @@ class Roleinfo : Command(
         value = "`${if (role.isManaged) ctx.t("global.yes") else ctx.t("global.no")}`"
       }
       field {
-        name = ctx.t("commands.roleinfo.fields.position.name")
+        name = ctx.t("commands.roleinfo.fields.members.name")
         value = "`${ctx.guild.members.filter { it.roles.contains(role) }.size}`"
       }
       field {
