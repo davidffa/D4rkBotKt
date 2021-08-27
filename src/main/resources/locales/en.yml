@@ -1,0 +1,446 @@
+commands:
+  eval: "Run a kotlin code and return its result."
+  avatar:
+    title: ":frame_photo: {0}'s avatar"
+    description: ":diamond_shape_with_a_dot_inside: [Click here]({0}) to download the avatar!"
+  botinfo:
+    title: "<a:blobdance:804026401849475094> Information about me"
+    description: "**[Invite](https://discord.com/oauth2/authorize?client_id={0}&scope=bot+applications.commands&permissions=8)**\n**[Support server](https://discord.gg/dBQnxVCTEw)**\n\nCPU Model: `{1}`\nTotal executed commands `{2}`\n\u200B"
+    fields:
+      id: ":id: My ID"
+      owner: ":man: Owner"
+      servers: ":desktop: Servers"
+      users: ":busts_in_silhouette: Users"
+      prefixes:
+        name: "<:badgehypesquad:803665497223987210> Prefixes"
+        value: "Default: `{0}`\nIn this server: `{1}`"
+      ram:
+        value: "Used: `{0}MB`\nAllocated: `{1}MB`"
+      cpu:
+        value: "System: `{0}%`\nBot: `{1}%`"
+      versions: "<:kotlin:856168010004037702> Versions"
+  channelinfo:
+    channeltypes:
+      text: "Text"
+      news: "News"
+      voice: "Voice"
+      category: "Category"
+      store: "Store"
+      stage: "Stage"
+      unknown: "Unknown"
+    title: "Channel {0} info"
+    fields:
+      type:
+        name: ":diamond_shape_with_a_dot_inside: Type"
+      position:
+        name: ":trophy: Position"
+      category:
+        name: ":flag_white: Category"
+        none: "None"
+      bitrate:
+        name: ":notes: Bitrate"
+      region:
+        name: ":map: Region"
+      members:
+        name: ":busts_in_silhouette: Member limit"
+      topic:
+        name: ":question: Topic"
+  invite:
+    title: "Invite"
+    desctitle: "<a:blobdance:804026401849475094> **Add me to your server using one of the invitations below**"
+    admin: "With administrator permission"
+    needed: "With all needed permissions"
+    withoutperms: "Without permissions"
+    withoutslash: "Without slash commands"
+    support: "Support Server"
+  roleinfo:
+    title: "Role {0} info"
+    fields:
+      mentionable:
+        name: "@ Mentionable"
+      mention:
+        name: "@ Mention"
+      position:
+        name: ":military_medal: Position"
+      hoist:
+        name: ":beginner: Hoist"
+      managed:
+        name: ":robot: Managed"
+      members:
+        name: ":busts_in_silhouette: Members"
+      permissions:
+        name: ":8ball: Permissions"
+        value:
+          none: "None"
+  serverinfo:
+    title: "Server {0} information"
+    owner: ":crown: Server owner"
+    nsfw:
+      name: ":underage: NSFW Filter"
+      norole: "No role"
+      all: "All"
+      disabled: "Disabled"
+    afk: ":zzz: AFK Channel"
+    rules: ":bookmark_tabs: Rules channel"
+    verificationlevel:
+      name: ":police_officer: Verification level"
+      low: "Low"
+      medium: "Medium"
+      high: "High"
+      veryhigh: "Very High"
+    botjoined:
+      name: ":calendar: I joined on"
+      value: "<t:{0}:d> (<t:{0}:R>)"
+    boosts:
+      name: "<:badgebooster:803666384373809233> Boosts"
+      level: "Level:"
+      amount: "Amount:"
+    emojis:
+      name: ":grinning: Emojis"
+      static: "Static:"
+      animated: "Animated:"
+    members:
+      name: "Members"
+      idle: "Idle:"
+      dnd: "Do not disturb:"
+    channels:
+      name: "Channels"
+      text: "Text:"
+      voice: "Voice:"
+      stage: "Stage:"
+      news: "News:"
+      store: "Store:"
+      categories: "Categories:"
+    roles: "Roles"
+  userinfo:
+    title: ":information_source: {0} information"
+    mention: ":man_raising_hand: Mention"
+    created:
+      name: ":calendar: Account created on"
+    joined:
+      name: ":date: Joined at"
+    status:
+      idle: "Idle"
+      dnd: "Do not disturb"
+      invisible: "Invisible"
+    devices: "Devices"
+    joinedrank: ":trophy: Join Rank"
+    badges: "Badges :medal:"
+    roles: "Roles"
+    permissions:
+      name: ":8ball: Permissions in this channel"
+      none: "None"
+  filters:
+    alreadyopen: ":x: There is already an open DJ table!"
+    menuplaceholder: "Choose a filter to enable/disable"
+    close: "Close"
+    title: ":level_slider: DJ Table"
+    removeall: ":wastebasket: - Remove all filters"
+    closetable: "<a:disco:803678643661832233> DJ table closed!"
+  loop:
+    track:
+      switchOn: "<a:disco:803678643661832233> Current song in loop!"
+      switchOff: "<a:disco:803678643661832233> Current song loop disabled!"
+    queue:
+      switchOn: ":bookmark_tabs: Queue in loop!"
+      switchOff: ":bookmark_tabs: Queue loop disabled!"
+    wrongusage: ":x: **Use:** `{0}`"
+  nowplaying: "<a:disco:803678643661832233> Now playing: `{0}`"
+  pause: ":pause_button: Paused music!"
+  resume: ":play_pause: Resumed music!"
+  playlist:
+    tracks: "tracks"
+    help:
+      title: "Playlist command help"
+      description: "```md\n# {0}playlist create <Name> - Create a playlist\n# {0}playlist delete <Name> - Delete a playlist\n# {0}playlist rename <Old Name> <New Name> - Rename a playlist\n# {0}playlist details <Name> - List all tracks of a playlist\n# {0}playlist shuffle <Name> - Shuffles a playlist\n# {0}playlist list - List of all your playlists\n# {0}playlist add <Name> [Music name] - Adds the currently playing song or a specific song to a playlist\n# {0}playlist remove <Name> <Track ID> - Remove a track from a playlist\n# {0}playlist play <Name> - Play a playlist"
+    usage:
+      create: ":x: **Use:** {0}playlist create <Playlist name>"
+      rename: ":x: **Use:** {0}playlist rename <Old Name> <New Name>"
+      details: ":x: **Use:** {0}playlist details <Playlist name>"
+      remove: ":x: **Use:** {0}playlist remove <Playlist name> <ID>"
+      add: ":x: **Use:** {0}playlist add <Playlist name> [Music name]"
+      shuffle: ":x: **Use:** {0}playlist shuffle <Playlist name>"
+      play: ":x: **Use:** {0}playlist play <Playlist name>"
+    errors:
+      playListNameLength: ":x: The playlist name cannot be longer than 32 characters."
+      maxPlaylists: ":x: You cannot have more than 50 playlists"
+      sameNamePlaylist: ":x: You already have a playlist with that name!"
+      noPlaylists: ":x: You don't have any playlists!"
+      playlistNotFound: ":x: You don't have a playlist with that name!"
+      emptyPlaylist: ":x: That playlist has no songs!"
+      notNumber: ":x: The track ID must be an number!"
+      invalidId: ":x: Invalid track ID!\n**Use:** {0}playlist details <Playlist Name> to see the track ID."
+      maxPlaylistSize: ":x: The playlist can only have a maximum of 70 songs!"
+      trackAlreadyExists: ":x: This song is already on the playlist!"
+    playlistCreated: "<a:disco:803678643661832233> Playlist created!"
+    renamed: ":bookmark: Playlist renamed!"
+    deleted: ":wastebasket: Playlist deleted!"
+    list:
+      title: "<a:disco:803678643661832233> List of playlists"
+    details:
+      title: "<a:disco:803678643661832233> List of tracks"
+      page: "Page {0} of {1}"
+    remove: "<a:verificado:803678585008816198> You removed the track `{0}` from the playlist!"
+    add:
+      track: "<a:disco:803678643661832233> Track `{0}` added to playlist!"
+      tracks: "<a:disco:803678643661832233> `{0}` tracks added to playlist"
+    shuffle: "<a:verificado:803678585008816198> Playlist shuffled!"
+    play:
+      title: "<a:disco:803678643661832233> Playlist Loaded"
+      name: ":page_with_curl: Name:"
+      amount: "<a:infinity:838759634361253929> Number of tracks:"
+      duration: ":watch: Duration:"
+  queue:
+    header: "<a:disco:803678643661832233> **Playing:** `{0}` (Requested by {1})\n:alarm_clock: Queue duration {2} ----- Total queue tracks: {3}\n\n"
+    title: ":bookmark_tabs: List of tracks"
+    requestedBy: "Requested by `{0}`"
+    page: "Page {0} of {1}"
+  remove: ":bookmark_tabs: Removed track from {0} position."
+  search:
+    usage: ":x: **Use:** {0}search [yt/ytm/sc] <Track name>"
+    errorSearching: ":x: An error has occurred when looking for the song!\nError: {0}"
+    title: ":mag: Search results"
+    placeholder: "Choose the songs to add to the queue"
+    cancel: ":x: Search canceled!"
+    added: ":bookmark_tabs: Added to queue"
+  seek:
+    invalidFormat: ":x: Invalid format! Try `hh:mm:ss`, `mm:ss` or `ss`"
+    range: ":x: The time can only vary between **0** and **{0}**."
+    seeked: ":fast_forward: Track position set to `{0}`."
+  shuffle: ":minidisc: Queue shuffled!"
+  skip: ":fast_forward: Track skipped!"
+  stop: ":stop_button: Track stopped!"
+  volume:
+    current: ":speaker: Current volume: `{0}`"
+    range: ":x: The volume can only vary between 0 and 500"
+    changed: ":speaker: Volume set to `{0}`"
+  github:
+    profileNotFound: ":x: Profile not found!"
+    title: "<:github:784791056670654465> {0} profile"
+    name: ":bust_in_silhouette: Name"
+    id: ":id: ID"
+    publicRepos: ":open_file_folder: Public repositories"
+    followers: "<:followers:784795303156908032> Followers"
+    following: ":busts_in_silhouette: Following"
+    company: ":classical_building: Company"
+    location: ":map: Location"
+    created: ":calendar: Created at"
+    updated: ":calendar: Updated at"
+  record:
+    start: ":red_circle: I started recording (max 8 minutes)!"
+    stop: ":stop_button: I stopped recording!"
+    timeout: ":stop_button: I stopped recording! (the 8 min limit has been reached)."
+  render:
+    nsfwOnly: ":x: You can only use this command on an NSFW channel."
+    checkUrl: "<a:loading2:805088089319407667> Checking if the URL is valid..."
+    offline: ":x: Offline site!"
+    rendering: "<a:loading2:805088089319407667> Rendering page..."
+  djrole:
+    errors:
+      noRole: ":x: No DJ role set. **Use:** `{0}djrole <Role>` to set a DJ role."
+      roleDeleted: ":x: The old DJ role was deleted! **Use:** `{0}djrole <Role>` to set a new DJ role."
+      missingPermission: ":x: You need `Manage Guild` permission to use this command."
+      disabled: ":x: The DJ role is not active!"
+    currentRole: "<a:disco:803678643661832233> Current DJ role: `{0}`\n**Use:** `{1}djrole <Role> (0 to disable)`"
+    usage: "<a:disco:803678643661832233> DJ role disabled! **Use:** `{0}djrole <Role>` to set a new DJ role."
+    success: "<a:disco:803678643661832233> Role `{0}` set as DJ role!"
+  logs:
+    menu:
+      placeholder: "Choose the type of logs to configure"
+      welcome: "Welcome messages"
+      leave: "Leave messages"
+    title: ":gear: Log settings"
+    enable: "Enable"
+    disable: "Disable"
+    channel: "Choose the channel"
+    timeout: ":warning: Time expired!\nUse the command again to continue configuring logs!"
+    welcome: "welcome"
+    leave: "leave"
+    setChannel: "Write the channel name or channel ID to set {0} messages"
+    embed:
+      enabled: "Enabled <:on:764478511875751937>"
+      disabled: "Disabled <:off:764478504124416040>"
+      channel: "Channel:"
+  setlang:
+    langNotFound: ":x: Language not found!\nSupported languages: pt, en"
+    success: "<a:verificado:803678585008816198> Language changed to `{0}`"
+  setprefix:
+    maxLength: ":x: My prefix cannot exceed 5 characters."
+    success: "<a:verificado:803678585008816198> My prefix has been changed to `{0}`"
+  help:
+    menu:
+      placeholder: "Choose a category of commands to view"
+      settings:
+        label: "Settings"
+        description: "Bot settings commands"
+      info:
+        label: "Information"
+        description: "General information commands"
+      music:
+        label: "Music"
+        description: "Music commands"
+      others:
+        label: "Others"
+        description: "Other utility commands"
+    title: "Help"
+    description: "Total amount of commands"
+    category: "> Commands in this category"
+    timeout: ":warning: Time expired!\nUse the command again to continue using the menu!"
+    notFound: ":x: Command not found!"
+    none: "None"
+    desc:
+      name: "Name:"
+      description: "Description:"
+      aliases: "Aliases:"
+      botPerms: "Bot permissions:"
+      userPerms: "User permissions:"
+      title: "Command {0} help"
+
+help:
+  avatar: "Show your avatar or someone else's in a large image."
+  botinfo: "Information about me."
+  channelinfo: "Show information about a server channel."
+  invite: "Send my invitation link."
+  ping: "Show message sending ping and API ping"
+  roleinfo: "Information about a role on the server."
+  serverinfo: "Information about this server."
+  uptime: "Show how long I've been online."
+  userinfo: "Information about someone."
+  filters: "Add filters to music."
+  loop: "Repeat the queue or the current song."
+  nowplaying: "Shows the currently playing song."
+  pause: "Pause the current song."
+  play: "Play a song or add it to the queue."
+  playlist: "Create a playlist, add songs to a playlist or add a playlist to the queue."
+  queue: "See the songs that are in the queue."
+  remove: "Remove a song from the queue."
+  resume: "Resume the current song."
+  search: "Search for a song on YouTube or SoundCloud and play it."
+  seek: "Advances to a specific time in the song."
+  shuffle: "Shuffle the queue"
+  skip: "Skip the current song."
+  stop: "Stop playing music and clear the queue."
+  volume: "Change player volume."
+  github: "Information about some github profile."
+  record: "Records audio in the voice channel and sends it in MP3."
+  render: "Render a web page."
+  djrole: "Setup DJ role."
+  logs: "Configure the channels where I will send the logs (welcome message etc)."
+  setlang: "Set bot language"
+  setprefix: "Change my prefix on the server."
+  help: "Displays the bot command list."
+
+music:
+  queueEnd: ":notes: Queue ended!"
+  playlistLoadedTitle: "<a:disco:803678643661832233> Playlist loaded"
+  playing:
+    title: "<a:disco:803678643661832233> Playing"
+    name: ":page_with_curl: Name:"
+    author: ":technologist: Author:"
+    duration: ":watch: Duration:"
+  ratelimit: ":warning: Looks like YouTube stopped me from playing this song, wait a moment while I fix this problem and try again in a few seconds."
+  spotify:
+    albumTitle: "<:spotify:869245737282715689> Album loaded"
+    playlistTitle: "<:spotify:869245737282715689> Playlist loaded"
+  size: "<a:infinity:838759634361253929> Tracks:"
+  duration: ":watch: Duration:"
+  queued: ":bookmark_tabs: Added to queue `{0}`"
+  noMatches: ":x: I didn't find any results!"
+  error: ":x: There was an error when loading the song! (`{0}`)"
+
+events:
+  welcome: ":tada: `{0}` welcome to `{1}` server."
+  leave: ":door: `{0}` left the server."
+  message: "<a:blobcool:804026346954555432> Hi {0}! My prefix on this server is `{1}`. Write `{1}help` to see what I can do!"
+  voice:
+    disconnected: ":warning: I was disconnected from the voice channel, so I cleared the queue."
+    leaveWarning: ":warning: I paused the song because I was alone in the voice channel, if no one shows up I will leave in 2 minutes."
+    leave: ":x: I left the voice channel because I was alone for more than 2 minutes."
+
+errors:
+  user:
+    notfound: ":x: User not found!"
+  channels:
+    notfound: ":x: Channel not found!"
+  roles:
+    notfound: ":x: Role not found!"
+  cannotinteract: ":x: You can't interact here!\n**Use:** `{0}{1}` to be able to interact."
+  notplaying: ":x: I'm not playing anything at the moment!"
+  alreadyplaying: ":x: The music is already playing!"
+  emptyqueue: ":x: The queue is empty!"
+  invalidNumber: ":x: Invalid number!"
+  noMatches: ":x: I didn't find any results!"
+  notInVoiceChannel: ":x: You need to be on a voice channel to execute this command!"
+  notInBotVC: ":x: You need to be on my voice channel to use this command!"
+  missingViewPerm: ":x: I don't have permission to view your voice channel!"
+  missingConnectPerm: ":x: I'm not allowed to join your voice channel!"
+  missingSpeakPerm: ":x: I'm not allowed to speak on your voice channel!"
+  fullVoiceChannel: ":x: Your voice channel is full!"
+  recordWhilePlaying: ":x: I can't record while playing music!"
+  playWhileRecording: ":x: I can't play music while recording audio!"
+  noTrackAtPosition: ":x: There is no song in that queue position."
+  allQueueRequested: ":x: All songs in the queue must be requested by you in order to use this command!"
+  onlyDJAndOther: ":x: Only someone with the DJ role (`{0}`) or who has requested the song from that position can remove it from the queue."
+  onlyDJAndCurrent: ":x: Only someone with the DJ role (`{0}`) or who requested this song can use this command."
+  onlyDJ: ":x: You need the DJ role (`{0}`) to be able to use this command."
+
+utils:
+  created:
+    name: ":calendar: Created on"
+    value: "<t:{0}:d> (<t:{0}:R>)"
+
+global:
+  none: "None"
+  'yes': "Yes"
+  'no': "No"
+  unknown: "Unknown"
+
+permissions:
+  createInstantInvite: "Create Invites"
+  kickMembers: "Kick Members"
+  banMembers: "Ban Members"
+  administrator: "Administrator"
+  manageChannel: "Manage Channel"
+  manageServer: "Manage Server"
+  viewAuditLogs: "View Audit Logs"
+  prioritySpeaker: "Priority Speaker"
+  voiceStream: "Stream"
+  viewChannel: "View Channel"
+  messageWrite: "Send Messages"
+  messageTTS: "Send TTS Messages"
+  messageManage: "Manage Messages"
+  messageEmbedLinks: "Embed Links"
+  messageAttachFiles: "Attach Files"
+  messageRead: "Read Messages"
+  messageHistory: "Read Message History"
+  managePermissions: "Manage Permissions"
+  mentionEveryone: "Mention everyone"
+  extEmoji: "Use external emojis"
+  viewGuildInsights: "View guild insights"
+  voiceConnect: "Connect to voice channel"
+  voiceSpeak: "Speak on voice channel"
+  voiceMute: "Silenciar Membros"
+  voiceDeaf: "Deaf Members"
+  voiceMove: "Move Members"
+  voiceVad: "Use voice detection"
+  nicknameChange: "Change nickname"
+  manageNicknames: "Manage nicknames"
+  manageWebhooks: "Manage webhooks"
+  manageEmotes: "Manage Emojis"
+  useSlashCommands: "Use slash commands"
+  addReactions: "Add reactions"
+  manageRoles: "Manage Roles"
+  requestToSpeak: "Request to speak"
+  manageThreads: "Manage Threads"
+  usePublicThreads: "Use public Threads"
+  usePrivateThreads: "Use private Threads"
+  unknown: "Unknown"
+
+commandManager:
+  botNeedPermissions: ":x: I need `{0}` permissions to run that command!"
+  botNeedPermission: ":x: I need `{0}` permission to run that command!"
+  userNeedPermissions: ":x: You need `{0}` permissions to use that command!"
+  userNeedPermission: ":x: You need `{0}` permission to use that command!"
+  cooldown: ":clock1: Wait more `{0}` seconds to use the command `{1}` again."
+  argsMissing: ":x: Missing arguments! **Use:** `{0}`"
+  didUMean: ":x: I don't have that command.\n:thinking: Did you mean `{0}`?"

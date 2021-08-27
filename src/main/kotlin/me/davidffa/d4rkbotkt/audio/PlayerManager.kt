@@ -73,17 +73,17 @@ object PlayerManager {
       when (groups[1]) {
         "track" -> musicManager.scheduler.queue(spotify.getTrack(groups[2], requester))
         "album" -> {
-          embed.title = "<:spotify:869245737282715689> Album carregado"
+          embed.title = musicManager.scheduler.t("music.spotify.albumTitle")
           val album = spotify.getAlbum(groups[2], requester)
           album.forEach { musicManager.scheduler.queue(it) }
 
           embed.field {
-            name = "<a:infinity:838759634361253929> Quantidade de músicas:"
+            name = musicManager.scheduler.t("music.size")
             value = "`${album.size}`"
             inline = false
           }
           embed.field {
-            name = ":watch: Duração:"
+            name = musicManager.scheduler.t("music.duration")
             value = "`${Utils.msToHour(album.sumOf { it.duration })}`"
             inline = false
           }
@@ -91,17 +91,17 @@ object PlayerManager {
           channel.sendMessageEmbeds(embed.build()).queue()
         }
         "playlist" -> {
-          embed.title = "<:spotify:869245737282715689> Playlist carregada"
+          embed.title = musicManager.scheduler.t("music.spotify.playlistTitle")
           val playlist = spotify.getPlaylist(groups[2], requester)
           playlist.forEach { musicManager.scheduler.queue(it) }
 
           embed.field {
-            name = "<a:infinity:838759634361253929> Quantidade de músicas:"
+            name = musicManager.scheduler.t("music.size")
             value = "`${playlist.size}`"
             inline = false
           }
           embed.field {
-            name = ":watch: Duração:"
+            name = musicManager.scheduler.t("music.duration")
             value = "`${Utils.msToHour(playlist.sumOf { it.duration })}`"
             inline = false
           }
@@ -109,7 +109,6 @@ object PlayerManager {
           channel.sendMessageEmbeds(embed.build()).queue()
         }
       }
-
       return
     }
 
@@ -123,7 +122,7 @@ object PlayerManager {
             listOf(Permission.MESSAGE_WRITE)
           )
         ) {
-          channel.sendMessage(":bookmark_tabs: Adicionado à lista `${track.info.title}`").queue()
+          channel.sendMessage(musicManager.scheduler.t("music.queued", listOf(track.info.title))).queue()
         }
       }
 
@@ -139,7 +138,7 @@ object PlayerManager {
               listOf(Permission.MESSAGE_WRITE)
             )
           ) {
-            channel.sendMessage(":bookmark_tabs: Adicionado à lista `${tracks[0].info.title}`").queue()
+            channel.sendMessage(musicManager.scheduler.t("music.queued", listOf(tracks[0].info.title))).queue()
           }
           return
         }
@@ -153,21 +152,21 @@ object PlayerManager {
           )
         ) {
           val embed = Embed {
-            title = "<a:disco:803678643661832233> Playlist Carregada"
+            title = musicManager.scheduler.t("music.playlistLoadedTitle")
             color = Utils.randColor()
             url = trackURL
             field {
-              name = ":page_with_curl: Nome:"
+              name = musicManager.scheduler.t("music.playing.name")
               value = "`${playlist.name}`"
               inline = false
             }
             field {
-              name = "<a:infinity:838759634361253929> Quantidade de músicas:"
+              name = musicManager.scheduler.t("music.size")
               value = "`${tracks.size}`"
               inline = false
             }
             field {
-              name = ":watch: Duração:"
+              name = musicManager.scheduler.t("music.duration")
               value = "`${Utils.msToHour(tracks.sumOf { it.duration })}`"
               inline = false
             }
@@ -184,13 +183,13 @@ object PlayerManager {
 
       override fun noMatches() {
         if (Utils.hasPermissions(channel.guild.selfMember, channel, listOf(Permission.MESSAGE_WRITE))) {
-          channel.sendMessage(":x: Não encontrei nenhum resultado!").queue()
+          channel.sendMessage(musicManager.scheduler.t("music.noMatches")).queue()
         }
       }
 
       override fun loadFailed(exception: FriendlyException) {
         if (Utils.hasPermissions(channel.guild.selfMember, channel, listOf(Permission.MESSAGE_WRITE))) {
-          channel.sendMessage(":x: Ocorreu um erro ao carregar a música! (`${exception.message}`)").queue()
+          channel.sendMessage(musicManager.scheduler.t("music.error", listOf(exception.message.toString()))).queue()
         }
       }
     })

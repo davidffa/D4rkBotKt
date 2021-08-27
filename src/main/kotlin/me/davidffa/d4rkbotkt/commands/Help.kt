@@ -21,7 +21,6 @@ import kotlin.concurrent.timerTask
 
 class Help : Command(
   "help",
-  "Mostra a lista de comandos do bot.",
   aliases = listOf("ajuda", "comandos", "commands", "cmds"),
   category = "Others",
   botPermissions = listOf(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS),
@@ -57,7 +56,7 @@ class Help : Command(
       SecureRandom().nextBytes(nonceBytes)
       val nonce = Base64.getEncoder().encodeToString(nonceBytes)
 
-      val menu = SelectionMenu("$nonce:help", "Escolhe uma categoria de comandos para ver") {
+      val menu = SelectionMenu("$nonce:help", ctx.t("commands.help.menu.placeholder")) {
         if (ctx.author.id == "334054158879686657") {
           option(
             "Desenvolvedor",
@@ -66,24 +65,24 @@ class Help : Command(
             Emoji.fromMarkdown("<:kotlin:856168010004037702>")
           )
         }
-        option("Definições", "settings", "Comandos de configuração do bot", Emoji.fromUnicode("⚙️"))
-        option("Informação", "info", "Comandos de informação geral", Emoji.fromUnicode("ℹ️"))
-        option("Música", "music", "Comandos de música", Emoji.fromMarkdown("<a:disco:803678643661832233>"))
-        option("Outros", "others", "Outros comandos de utilidade", Emoji.fromUnicode("\uD83D\uDCDA"))
+        option(ctx.t("commands.help.menu.settings.label"), "settings", ctx.t("commands.help.menu.settings.description"), Emoji.fromUnicode("⚙️"))
+        option(ctx.t("commands.help.menu.info.label"), "info", ctx.t("commands.help.menu.info.description"), Emoji.fromUnicode("ℹ️"))
+        option(ctx.t("commands.help.menu.music.label"), "music", ctx.t("commands.help.menu.music.description"), Emoji.fromMarkdown("<a:disco:803678643661832233>"))
+        option(ctx.t("commands.help.menu.others.label"), "others", ctx.t("commands.help.menu.others.description"), Emoji.fromUnicode("\uD83D\uDCDA"))
       }
 
       val msg = channel.sendMessage("\u200B").setActionRow(menu).await()
 
       val listener = ctx.jda.onSelection("$nonce:help") {
         if (it.user.idLong != ctx.author.idLong) {
-          it.reply(":x: Não podes interagir aqui!\n**Usa:** `${ctx.prefix}${name}` para poderes interagir.").setEphemeral(true).queue()
+          it.reply(ctx.t("errors.cannotinteract", listOf(ctx.prefix, name))).setEphemeral(true).queue()
           return@onSelection
         }
         val option = it.selectedOptions?.first()
 
         val embed = EmbedBuilder {
-          title = "Ajuda"
-          description = "Quantidade total de comandos [$commandsSize]"
+          title = ctx.t("commands.help.title")
+          description = "${ctx.t("commands.help.description")} [$commandsSize]"
           color = Utils.randColor()
           footer {
             name = ctx.author.asTag
@@ -95,33 +94,33 @@ class Help : Command(
         when (option?.value) {
           "dev" -> {
             embed.field {
-              name = "> Comandos nesta categoria [${dev.size}]"
+              name = "${ctx.t("commands.help.category")} [${dev.size}]"
               value = "```\n${dev.joinToString(" | ")}\n```"
             }
           }
           "settings" -> {
             embed.field {
-              name = "> Comandos nesta categoria [${settings.size}]"
+              name = "${ctx.t("commands.help.category")} [${settings.size}]"
               value = "```\n${settings.joinToString(" | ")}\n```"
             }
           }
           "info" -> {
             embed.field {
-              name = "> Comandos nesta categoria [${info.size}]"
+              name = "${ctx.t("commands.help.category")} [${info.size}]"
               value = "```\n${info.joinToString(" | ")}\n```"
               inline = false
             }
           }
           "music" -> {
             embed.field {
-              name = "> Comandos nesta categoria [${music.size}]"
+              name = "${ctx.t("commands.help.category")} [${music.size}]"
               value = "```\n${music.joinToString(" | ")}\n```"
               inline = false
             }
           }
           "others" -> {
             embed.field {
-              name = "> Comandos nesta categoria [${others.size}]"
+              name = "${ctx.t("commands.help.category")} [${others.size}]"
               value = "```\n${others.joinToString(" | ")}\n```"
               inline = false
             }
@@ -135,7 +134,7 @@ class Help : Command(
 
       Timer().schedule(timerTask {
         ctx.jda.removeEventListener(listener)
-        msg.editMessage(":warning: O tempo expirou!\nUsa o comando novamente para continuar a usar o menu!")
+        msg.editMessage(ctx.t("commands.help.timeout"))
           .setEmbeds()
           .setActionRow(menu.asDisabled())
           .queue(null, ignore(ErrorResponse.UNKNOWN_MESSAGE))
@@ -147,27 +146,27 @@ class Help : Command(
     val command = CommandManager.getCommand(search, ctx.author.id)
 
     if (command == null) {
-      channel.sendMessage(":x: Comando não encontrado!").queue()
+      channel.sendMessage(ctx.t("commands.help.notFound")).queue()
       return
     }
 
     val desc = listOf(
-      "**Nome:** ${command.name}",
-      "**Descrição:** ${command.description}",
-      "**Alternativas:** ${if (command.aliases != null) command.aliases.joinToString(", ") else "Nenhuma"}",
+      "**${ctx.t("commands.help.desc.name")}** ${command.name}",
+      "**${ctx.t("commands.help.desc.description")}** ${ctx.t("help.${command.name.lowercase()}")}",
+      "**${ctx.t("commands.help.desc.aliases")}** ${if (command.aliases != null) command.aliases.joinToString(", ") else "Nenhuma"}",
       "**Cooldown:** ${command.cooldown} segundo(s)",
-      "**Permissões do bot:** ${
-        if (command.botPermissions != null) Utils.translatePermissions(command.botPermissions)
-          .joinToString(", ") else "Nenhuma"
+      "**${ctx.t("commands.help.desc.botPerms")}** ${
+        if (command.botPermissions != null) Utils.translatePermissions(command.botPermissions, ctx::t)
+          .joinToString(", ") else ctx.t("commands.help.none")
       }",
-      "**Permissões de utilizador:** ${
-        if (command.userPermissions != null) Utils.translatePermissions(command.userPermissions)
-          .joinToString(", ") else "Nenhuma"
+      "**${ctx.t("commands.help.desc.userPerms")}** ${
+        if (command.userPermissions != null) Utils.translatePermissions(command.userPermissions, ctx::t)
+          .joinToString(", ") else ctx.t("commands.help.none")
       }"
     )
 
     val embed = Embed {
-      title = "Ajuda do comando ${args.joinToString("")}"
+      title = ctx.t("commands.help.desc.title", listOf(args.first()))
       color = Utils.randColor()
       description = desc.joinToString("\n")
       footer {

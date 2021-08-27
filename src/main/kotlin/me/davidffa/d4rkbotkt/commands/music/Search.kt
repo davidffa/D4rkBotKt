@@ -21,7 +21,6 @@ import kotlin.concurrent.timerTask
 
 class Search : Command(
   "search",
-  "Procura uma música no YouTube ou na SoundCloud e toca-a.",
   listOf("procurar", "searchmusic"),
   "[yt/sc] <Nome da música>",
   "Music",
@@ -30,11 +29,11 @@ class Search : Command(
   cooldown = 5
 ) {
   override suspend fun run(ctx: CommandContext) {
-    if (!Utils.canPlay(ctx.selfMember, ctx.member, ctx.channel)) return
+    if (!Utils.canPlay(ctx::t, ctx.selfMember, ctx.member, ctx.channel)) return
 
     val query = if (listOf("yt", "ytm", "sc").contains(ctx.args[0].lowercase())) {
       if (ctx.args.size < 2) {
-        ctx.channel.sendMessage(":x: **Usa:** ${ctx.prefix}search [yt/ytm/sc] <Nome da música>").queue()
+        ctx.channel.sendMessage(ctx.t("commands.search.usage", listOf(ctx.prefix))).queue()
         return
       }
       if (Utils.isUrl(ctx.args[1])) ctx.args[1]
@@ -47,15 +46,15 @@ class Search : Command(
     val tracks = try {
       PlayerManager.search(query, 10)
     } catch (e: IllegalStateException) {
-      ctx.channel.sendMessage(":x: Não encontrei nenhum resultado!").queue()
+      ctx.channel.sendMessage(ctx.t("errors.noMatches")).queue()
       null
     } catch (e: FriendlyException) {
-      ctx.channel.sendMessage(":x: Ocorreu um erro ao procurar a música!\nErro: ${e.message}").queue()
+      ctx.channel.sendMessage(ctx.t("commands.search.errorSearching", listOf(e.message.toString()))).queue()
       null
     } ?: return
 
     val embed = Embed {
-      title = ":mag: Resultados da procura"
+      title = ctx.t("commands.search.title")
       description = tracks.mapIndexed { i, track ->
         "**${i + 1}º** - [${track.info.title}](${track.info.uri})"
       }.joinToString("\n")
@@ -71,7 +70,7 @@ class Search : Command(
     SecureRandom().nextBytes(nonceBytes)
     val nonce = Base64.getEncoder().encodeToString(nonceBytes)
 
-    val menu = SelectionMenu("$nonce:search", "Escolhe as músicas para adicionar à queue", 1..10) {
+    val menu = SelectionMenu("$nonce:search", ctx.t("commands.search.placeholder"), 1..10) {
       tracks.mapIndexed { i, track ->
         option(
           formatString(track.info.author, 25), "$i", formatString(track.info.title, 50), emoji =
@@ -96,12 +95,12 @@ class Search : Command(
     timer.schedule(timerTask {
       ctx.jda.removeEventListener(buttonListener)
       ctx.jda.removeEventListener(menuListener)
-      msg.editMessage(":x: Pesquisa cancelada!").setEmbeds().setActionRows().queue()
+      msg.editMessage(ctx.t("commands.search.cancel")).setEmbeds().setActionRows().queue()
     }, 40000L)
 
     menuListener = ctx.jda.onSelection("$nonce:search") {
       if (it.member != ctx.member) {
-        it.reply(":x: Não podes interagir aqui!\n**Usa:** `${ctx.prefix}${name}` para poderes interagir.").setEphemeral(true).queue()
+        it.reply(ctx.t("errors.cannotinteract", listOf(ctx.prefix, name))).setEphemeral(true).queue()
         return@onSelection
       }
 
@@ -112,7 +111,7 @@ class Search : Command(
       ctx.jda.removeEventListener(buttonListener)
       msg.delete().queue()
 
-      if (!Utils.canPlay(ctx.selfMember, ctx.member, ctx.channel)) return@onSelection
+      if (!Utils.canPlay(ctx::t, ctx.selfMember, ctx.member, ctx.channel)) return@onSelection
 
       val chosenTracks = mutableListOf<AudioTrack>()
 
@@ -133,7 +132,7 @@ class Search : Command(
       }
 
       val embed2 = Embed {
-        title = ":bookmark_tabs: Adicionado à lista"
+        title = ctx.t("commands.search.added")
         description = chosenTracks.joinToString("\n") { t -> "[${t.info.title}](${t.info.uri})" }
         color = Utils.randColor()
         footer {
@@ -148,7 +147,7 @@ class Search : Command(
 
     buttonListener = ctx.jda.onButton("$nonce:cancel") {
       if (it.member != ctx.member) {
-        it.reply(":x: Não podes interagir aqui!\n**Usa:** `${ctx.prefix}${name}` para poderes interagir.").setEphemeral(true).queue()
+        it.reply(ctx.t("errors.cannotinteract", listOf(ctx.prefix, name))).setEphemeral(true).queue()
         return@onButton
       }
 
@@ -157,7 +156,7 @@ class Search : Command(
       ctx.jda.removeEventListener(buttonListener)
       ctx.jda.removeEventListener(menuListener)
 
-      it.editMessage(":x: Pesquisa cancelada!").setEmbeds().setActionRows().queue()
+      it.editMessage(ctx.t("commands.search.cancel")).setEmbeds().setActionRows().queue()
       return@onButton
     }
   }

@@ -9,7 +9,6 @@ import net.dv8tion.jda.api.Permission
 
 class Remove : Command(
   "remove",
-  "Remove uma música da queue.",
   listOf("remover"),
   "<Posição>",
   "Music",
@@ -20,11 +19,12 @@ class Remove : Command(
   override suspend fun run(ctx: CommandContext) {
     val pos = ctx.args[0].toIntOrNull()
     if (pos == null) {
-      ctx.channel.sendMessage(":x: Número inválido!").queue()
+      ctx.channel.sendMessage(ctx.t("errors.invalidNumber")).queue()
       return
     }
 
     if (!Utils.canUsePlayer(
+        ctx::t,
         ctx.selfMember,
         ctx.member,
         ctx.channel,
@@ -41,6 +41,6 @@ class Remove : Command(
     tracks.removeAt(pos - 1)
     musicManager.scheduler.queue.addAll(tracks)
 
-    ctx.channel.sendMessage(":bookmark_tabs: Música removida da posição ${pos}.").queue()
+    ctx.channel.sendMessage(ctx.t("commands.remove", listOf(pos.toString()))).queue()
   }
 }

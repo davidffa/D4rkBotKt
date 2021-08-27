@@ -8,7 +8,6 @@ import net.dv8tion.jda.api.Permission
 
 class Loop : Command(
   "loop",
-  "Repete a queue ou a música atual.",
   listOf("repeat"),
   "<Track/Queue>",
   "Music",
@@ -17,26 +16,24 @@ class Loop : Command(
   args = 1
 ) {
   override suspend fun run(ctx: CommandContext) {
-    if (!Utils.canUsePlayer(ctx.selfMember, ctx.member, ctx.channel)) return
+    if (!Utils.canUsePlayer(ctx::t, ctx.selfMember, ctx.member, ctx.channel)) return
 
     val musicManager = PlayerManager.getMusicManager(ctx.guild.idLong)
 
     when (ctx.args[0].lowercase()) {
       "track" -> {
         musicManager.scheduler.trackLoop = !musicManager.scheduler.trackLoop
-        if (musicManager.scheduler.trackLoop) ctx.channel.sendMessage("<a:disco:803678643661832233> Música atual em loop!")
+        if (musicManager.scheduler.trackLoop) ctx.channel.sendMessage(ctx.t("commands.loop.track.switchOn"))
           .queue()
-        else ctx.channel.sendMessage("<a:disco:803678643661832233> Loop da música atual desativado!").queue()
+        else ctx.channel.sendMessage(ctx.t("commands.loop.track.switchOff")).queue()
       }
       "queue" -> {
         musicManager.scheduler.queueLoop = !musicManager.scheduler.queueLoop
-        if (musicManager.scheduler.queueLoop) ctx.channel.sendMessage(":bookmark_tabs: Queue em loop!").queue()
-        else ctx.channel.sendMessage(":bookmark_tabs: Loop da queue desativado!").queue()
+        if (musicManager.scheduler.queueLoop) ctx.channel.sendMessage(ctx.t("commands.loop.queue.switchOn")).queue()
+        else ctx.channel.sendMessage(ctx.t("commands.loop.queue.switchOff")).queue()
       }
       else -> {
-        val prefix = "dk."
-
-        ctx.channel.sendMessage(":x: **Usa:** `$prefix${this.name} ${this.usage}`").queue()
+        ctx.channel.sendMessage(ctx.t("commands.loop.wrongusage", listOf("${ctx.prefix}${this.name} ${this.usage}"))).queue()
       }
     }
   }

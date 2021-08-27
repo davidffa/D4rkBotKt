@@ -43,6 +43,9 @@ dependencies {
   // Lavaplayer filters
   implementation("com.github.natanbc:lavadsp:0.7.7")
 
+  // YAML
+  implementation("org.yaml:snakeyaml:1.29")
+
   // MongoDB
   implementation("org.litote.kmongo:kmongo-coroutine:4.2.8")
 

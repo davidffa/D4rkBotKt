@@ -16,7 +16,6 @@ import java.time.Instant
 
 class Botinfo : Command(
   "botinfo",
-  "Informações sobre mim.",
   aliases = listOf("info", "bi"),
   category = "Info",
   botPermissions = listOf(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS, Permission.MESSAGE_EXT_EMOJI),
@@ -43,24 +42,19 @@ class Botinfo : Command(
     val hal = si.hardware
 
     val embed = Embed {
-      title = "<a:blobdance:804026401849475094> Informações sobre mim"
-      description =
-        "**[Convite](https://discord.com/oauth2/authorize?client_id=${ctx.jda.selfUser.id}&scope=bot&permissions=8)**\n" +
-                "**[Servidor de Suporte](https://discord.gg/dBQnxVCTEw)**\n\n" +
-                "Modelo da CPU: `${hal.processor.processorIdentifier.name}`\n" +
-                "Total de comandos executados `${D4rkBot.commandsUsed}`\n\u200B"
+      title = ctx.t("commands.botinfo.title")
+      description = ctx.t("commands.botinfo.description", listOf(ctx.jda.selfUser.id, hal.processor.processorIdentifier.name, D4rkBot.commandsUsed.toString()))
       color = 15695386
       field {
-        name = ":id: Meu ID"
+        name = ctx.t("commands.botinfo.fields.id")
         value = "`${ctx.selfUser.id}`"
       }
       field {
-        name = ":calendar: Criado em"
-        value =
-          "<t:${ctx.selfUser.timeCreated.toInstant().epochSecond}:d> (<t:${ctx.selfUser.timeCreated.toInstant().epochSecond}:R>)"
+        name = ctx.t("utils.created.name")
+        value = ctx.t("utils.created.value", listOf(ctx.jda.selfUser.timeCreated.toEpochSecond().toString()))
       }
       field {
-        name = ":man: Dono"
+        name = ctx.t("commands.botinfo.fields.owner")
         value = "`D4rkB#2408`"
       }
       field {
@@ -68,16 +62,16 @@ class Botinfo : Command(
         value = "`${Utils.msToDate(ManagementFactory.getRuntimeMXBean().uptime)}`"
       }
       field {
-        name = ":desktop: Servidores"
+        name = ctx.t("commands.botinfo.fields.servers")
         value = "`${ctx.jda.guilds.size}`"
       }
       field {
-        name = ":busts_in_silhouette: Utilizadores"
+        name = ctx.t("commands.botinfo.fields.users")
         value = "`${ctx.jda.users.size}`"
       }
       field {
-        name = "<:badgehypesquad:803665497223987210> Prefixos"
-        value = "Padrão: `dk.`\nNo servidor: `${ctx.prefix}`"
+        name = ctx.t("commands.botinfo.fields.prefixes.name")
+        value = ctx.t("commands.botinfo.fields.prefixes.value", listOf("dk.", ctx.prefix))
       }
       field {
         name = "<:thread:861983216223125524> Threads"
@@ -89,16 +83,14 @@ class Botinfo : Command(
       }
       field {
         name = "<:ram:751468688686841986> RAM"
-        value = "Usada: `${(runtime.totalMemory() - runtime.freeMemory()) / 1024 / 1024}MB`\n" +
-                "Alocada: `${runtime.totalMemory() / 1024 / 1024}MB`"
+        value = ctx.t("commands.botinfo.fields.ram.value", listOf(((runtime.totalMemory() - runtime.freeMemory()) / 1024 / 1024).toString(), (runtime.totalMemory() / 1024 / 1024).toString()))
       }
       field {
         name = "<a:loading:804026048647659540> CPU"
-        value = "Sistema: `${"%.2f".format(systemLoad * 100)}%`\n" +
-                "Bot: `${"%.2f".format(processLoad * 100)}%`"
+        value = ctx.t("commands.botinfo.fields.cpu.value", listOf("%.2f".format(systemLoad * 100), "%.2f".format(processLoad * 100)))
       }
       field {
-        name = "<:kotlin:856168010004037702> Versões:"
+        name = ctx.t("commands.botinfo.fields.versions")
         value = "Kotlin: `${KotlinVersion.CURRENT}`\n" +
                 "JVM: `${System.getProperty("java.version")}`\n" +
                 "JDA: `${JDAInfo.VERSION}`\n" +

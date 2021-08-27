@@ -11,7 +11,6 @@ import java.time.Instant
 
 class Queue : Command(
   "queue",
-  "Vê as músicas que estão na queue.",
   listOf("q"),
   botPermissions = listOf(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS),
   category = "Music",
@@ -21,28 +20,25 @@ class Queue : Command(
     val musicManager = PlayerManager.musicManagers[ctx.guild.idLong]
 
     if (musicManager == null) {
-      ctx.channel.sendMessage(":x: Não estou a tocar nada de momento!").queue()
+      ctx.channel.sendMessage(ctx.t("errors.notplaying")).queue()
       return
     }
 
     val scheduler = musicManager.scheduler
 
     if (scheduler.queue.isEmpty()) {
-      ctx.channel.sendMessage(":x: A queue está vazia!").queue()
+      ctx.channel.sendMessage(ctx.t("errors.emptyqueue")).queue()
       return
     }
 
-    val header = "<a:disco:803678643661832233> **A tocar:** `${scheduler.current.title}` " +
-            "(Requisitado por `${scheduler.current.requester.user.asTag}`)\n" +
-            ":alarm_clock: Tempo total da queue (${Utils.msToHour(scheduler.queue.sumOf { it.duration })}) " +
-            "----- Total de músicas na queue: ${scheduler.queue.size}\n\n"
+    val header = ctx.t("commands.queue.header", listOf(scheduler.current.title, scheduler.current.requester.user.asTag, Utils.msToHour(scheduler.queue.sumOf { it.duration }), scheduler.queue.size.toString()))
 
     if (scheduler.queue.size <= 10) {
       val embed = Embed {
-        title = ":bookmark_tabs: Lista de músicas"
+        title = ctx.t("commands.queue.title")
         description = header +
                 scheduler.queue.mapIndexed { index, track ->
-                  "${index + 1}º - [${track.title}](${track.uri}) (Requisitado por `${track.requester.user.asTag}`)"
+                  "${index + 1}º - [${track.title}](${track.uri}) (${ctx.t("commands.queue.requestedBy", listOf(track.requester.user.asTag))})"
                 }.joinToString("\n")
         color = Utils.randColor()
         footer {
@@ -60,14 +56,14 @@ class Queue : Command(
 
     val pages = chunkedQueue.map {
       Embed {
-        title = ":bookmark_tabs: Lista de músicas"
+        title = ctx.t("commands.queue.title")
         description = header +
                 it.mapIndexed { index, track ->
-                  "${index + (chunkedQueue.indexOf(it) * 10) + 1}º - [${track.title}](${track.uri}) (Requisitado por `${track.requester.user.asTag}`)"
+                  "${index + (chunkedQueue.indexOf(it) * 10) + 1}º - [${track.title}](${track.uri}) (${ctx.t("commands.queue.requestedBy", listOf(track.requester.user.asTag))})"
                 }.joinToString("\n")
         color = Utils.randColor()
         footer {
-          name = "Página ${chunkedQueue.indexOf(it) + 1} de ${chunkedQueue.size}"
+          name = ctx.t("commands.queue.page", listOf((chunkedQueue.indexOf(it) + 1).toString(), chunkedQueue.size.toString()))
           iconUrl = ctx.author.effectiveAvatarUrl
         }
         timestamp = Instant.now()

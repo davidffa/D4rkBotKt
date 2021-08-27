@@ -3,6 +3,7 @@ package me.davidffa.d4rkbotkt.events.listeners
 import com.mongodb.client.model.Updates
 import me.davidffa.d4rkbotkt.D4rkBot
 import me.davidffa.d4rkbotkt.Database
+import me.davidffa.d4rkbotkt.Translator
 import me.davidffa.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.entities.TextChannel
@@ -28,6 +29,6 @@ suspend fun onGuildMemberJoin(event: GuildMemberJoinEvent) {
     }
 
     if (!Utils.hasPermissions(event.guild.selfMember, channel, listOf(Permission.MESSAGE_WRITE))) return
-    channel.sendMessage(":tada: `${event.member.user.asTag}` bem-vindo ao servidor `${event.guild.name}`.").queue()
+    channel.sendMessage(Translator.t("events.welcome", cache.locale, listOf(event.member.user.asTag, event.guild.name))).queue()
   }
 }

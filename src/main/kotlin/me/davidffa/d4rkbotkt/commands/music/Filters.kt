@@ -22,19 +22,18 @@ import kotlin.concurrent.timerTask
 
 class Filters : Command(
   "filters",
-  "Adiciona filtros à música.",
   listOf("musicfilters", "filtros", "audiofilters", "djtable"),
   category = "Music",
   cooldown = 5,
   botPermissions = listOf(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS)
 ) {
   override suspend fun run(ctx: CommandContext) {
-    if (!Utils.canUsePlayer(ctx.selfMember, ctx.member, ctx.channel, true)) return
+    if (!Utils.canUsePlayer(ctx::t, ctx.selfMember, ctx.member, ctx.channel, true)) return
 
     val manager = PlayerManager.getMusicManager(ctx.guild.idLong)
 
     if (manager.djtableMessage != null) {
-      ctx.channel.sendMessage(":x: Já existe uma mesa de DJ aberta!").queue()
+      ctx.channel.sendMessage(ctx.t("commands.filters.alreadyopen")).queue()
       return
     }
 
@@ -42,7 +41,7 @@ class Filters : Command(
     SecureRandom().nextBytes(nonceBytes)
     val nonce = Base64.getEncoder().encodeToString(nonceBytes)
 
-    val menu = SelectionMenu("$nonce:filters", "Escolhe um filtro para ativar/desativar") {
+    val menu = SelectionMenu("$nonce:filters", ctx.t("commands.filters.menuplaceholder")) {
       option("Bass", "bass", emoji = Emoji.fromUnicode("1️⃣"))
       option("Daycore", "daycore", emoji = Emoji.fromUnicode("2️⃣"))
       option("Nightcore", "nightcore", emoji = Emoji.fromUnicode("3️⃣"))
@@ -60,12 +59,12 @@ class Filters : Command(
     }
 
     val clearButton = Button.danger("$nonce:clear", Emoji.fromUnicode("\uD83D\uDDD1️"))
-    val deleteButton = Button.danger("$nonce:close", "Fechar")
+    val deleteButton = Button.danger("$nonce:close", ctx.t("commands.filters.close"))
 
     val embed = EmbedBuilder {
-      title = ":level_slider: Mesa de DJ"
+      title = ctx.t("commands.filters.title")
       color = Utils.randColor()
-      description = ":wastebasket: - Remove todos os filtros"
+      description = ctx.t("commands.filters.removeall")
       thumbnail = "https://i.pinimg.com/564x/a3/a9/29/a3a929cc8d09e88815b89bc071ff4d8d.jpg"
       footer {
         name = ctx.author.asTag
@@ -98,12 +97,12 @@ class Filters : Command(
 
     val timer = Timer()
     timer.schedule(timerTask {
-      close(ctx.jda, listeners, manager)
+      close(ctx, listeners, manager)
     }, 60000)
 
     val menuListener = ctx.jda.onSelection("$nonce:filters") {
       if (it.member?.idLong != ctx.member.idLong) {
-        it.reply(":x: Não podes interagir aqui!\n**Usa:** `${ctx.prefix}${name}` para poderes interagir.").setEphemeral(true).queue()
+        it.reply(ctx.t("errors.cannotinteract", listOf(ctx.prefix, name))).setEphemeral(true).queue()
         return@onSelection
       }
 
@@ -131,7 +130,7 @@ class Filters : Command(
 
     val clearListener = ctx.jda.onButton("$nonce:clear") {
       if (it.member?.idLong != ctx.member.idLong) {
-        it.reply(":x: Não podes interagir aqui!\n**Usa:** `${ctx.prefix}${name}` para poderes interagir.").setEphemeral(true).queue()
+        it.reply(ctx.t("errors.cannotinteract", listOf(ctx.prefix, name))).setEphemeral(true).queue()
         return@onButton
       }
       manager.clearFilters()
@@ -139,11 +138,11 @@ class Filters : Command(
     }
     val closeListener = ctx.jda.onButton("$nonce:close") {
       if (it.member?.idLong != ctx.member.idLong) {
-        it.reply(":x: Não podes interagir aqui!\n**Usa:** `${ctx.prefix}${name}` para poderes interagir.").setEphemeral(true).queue()
+        it.reply(ctx.t("errors.cannotinteract", listOf(ctx.prefix, name))).setEphemeral(true).queue()
         return@onButton
       }
       timer.cancel()
-      close(ctx.jda, listeners, manager)
+      close(ctx, listeners, manager)
       it.deferEdit().queue()
     }
 
@@ -152,14 +151,14 @@ class Filters : Command(
     listeners.add(closeListener)
   }
 
-  private fun close(jda: JDA, listeners: List<CoroutineEventListener>, manager: GuildMusicManager) {
+  private fun close(ctx: CommandContext, listeners: List<CoroutineEventListener>, manager: GuildMusicManager) {
     listeners.forEach {
-      jda.removeEventListener(it)
+      ctx.jda.removeEventListener(it)
     }
 
     val msg = manager.djtableMessage ?: return
 
-    msg.editMessage("<a:disco:803678643661832233> Mesa de DJ fechada!")
+    msg.editMessage(ctx.t("commands.filters.closetable"))
       .setEmbeds(emptyList())
       .setActionRows(emptyList())
       .queue()

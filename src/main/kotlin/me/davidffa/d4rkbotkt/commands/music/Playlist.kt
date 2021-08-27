@@ -6,7 +6,6 @@ import dev.minn.jda.ktx.Embed
 import dev.minn.jda.ktx.interactions.sendPaginator
 import me.davidffa.d4rkbotkt.Database
 import me.davidffa.d4rkbotkt.audio.PlayerManager
-import me.davidffa.d4rkbotkt.audio.receive.ReceiverManager
 import me.davidffa.d4rkbotkt.command.Command
 import me.davidffa.d4rkbotkt.command.CommandContext
 import me.davidffa.d4rkbotkt.database.Playlist
@@ -17,13 +16,11 @@ import java.time.Instant
 
 class Playlist : Command(
   "playlist",
-  "Cria uma playlist, adiciona músicas a uma playlist ou adiciona à queue uma playlist.",
   category = "Music",
   botPermissions = listOf(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS),
   cooldown = 5
 ) {
   override suspend fun run(ctx: CommandContext) {
-    val prefix = ctx.prefix
     val manager = PlayerManager.musicManagers[ctx.guild.idLong]
 
     val userdata = Database.userDB.findOneById(ctx.author.id)
@@ -33,20 +30,10 @@ class Playlist : Command(
     }
 
     val helpEmbed = Embed {
-      title = "Ajuda do comando PlayList"
+      title = ctx.t("commands.playlist.help.title")
       description = "${
-        listOf(
-          "```md\n# ${prefix}playlist criar <Nome> - Cria uma playlist\n",
-          "# ${prefix}playlist apagar <Nome> - Apaga uma playlist\n",
-          "# ${prefix}playlist renomear <Nome Antigo> <Nome Novo> - Renomeia uma playlist\n",
-          "# ${prefix}playlist detalhes <Nome> - Lista todas as músicas de uma playlist\n",
-          "# ${prefix}playlist shuffle <Nome> - Embaralha as músicas de uma playlist\n",
-          "# ${prefix}playlist listar - Lista de todas as tuas playlists\n",
-          "# ${prefix}playlist adicionar <Nome> [Nome da música] - Adiciona a uma playlist a música que está a tocar ou uma música específica\n",
-          "# ${prefix}playlist remover <Nome> <Número da música> - Remove uma música da playlist\n",
-          "# ${prefix}playlist tocar <Nome> - Adiciona à queue todas as músicas de uma playlist"
-        ).joinToString("─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─\n")
-      }```"
+        ctx.t("commands.playlist.help.description", listOf(ctx.prefix)).split("\n").joinToString("\n─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─\n")
+      }\n─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─```"
       color = Utils.randColor()
       footer {
         name = ctx.author.asTag
@@ -65,23 +52,23 @@ class Playlist : Command(
     when (ctx.args[0].lowercase()) {
       in listOf("criar", "create") -> {
         if (ctx.args.size < 2) {
-          ctx.channel.sendMessage(":x: **Usa:** ${prefix}playlist criar <Nome da PlayList>").queue()
+          ctx.channel.sendMessage(ctx.t("commands.playlist.usage.create", listOf(ctx.prefix))).queue()
           return
         }
 
         if (ctx.args[1].length > 32) {
-          ctx.channel.sendMessage(":x: O nome da playlist não pode ter mais do que 32 caracteres.").queue()
+          ctx.channel.sendMessage(ctx.t("commands.playlist.errors.playListNameLength")).queue()
           return
         }
 
         if (playlists != null) {
           if (playlists.size > 50) {
-            ctx.channel.sendMessage(":x: Não podes ter mais de 50 playlists").queue()
+            ctx.channel.sendMessage(ctx.t("commands.playlist.errors.maxPlaylists")).queue()
             return
           }
 
           if (playlists.find { it.name == ctx.args[1] } != null) {
-            ctx.channel.sendMessage(":x: Já tens uma playlist com esse nome!").queue()
+            ctx.channel.sendMessage(ctx.t("commands.playlist.sameNamePlaylist")).queue()
             return
           }
 
@@ -90,22 +77,22 @@ class Playlist : Command(
           Database.userDB.insertOne(UserDB(ctx.author.id, listOf(Playlist(ctx.args[1]))))
         }
 
-        ctx.channel.sendMessage("<a:disco:803678643661832233> Playlist criada com sucesso!").queue()
+        ctx.channel.sendMessage(ctx.t("commands.playlist.playlistCreated")).queue()
       }
 
       in listOf("rename", "renomear") -> {
         if (ctx.args.size < 3) {
-          ctx.channel.sendMessage(":x: **Usa:** ${prefix}playlist renomear <Nome Antigo> <Nome Novo>").queue()
+          ctx.channel.sendMessage(ctx.t("commands.playlist.usage.rename", listOf(ctx.prefix))).queue()
           return
         }
 
         if (playlists == null || playlists.isEmpty()) {
-          ctx.channel.sendMessage(":x: Não tens nenhuma playlist!").queue()
+          ctx.channel.sendMessage(ctx.t("commands.playlist.errors.noPlaylists")).queue()
           return
         }
 
         if (ctx.args[2].length > 32) {
-          ctx.channel.sendMessage(":x: O nome da playlist não pode ter mais de 32 caracteres!").queue()
+          ctx.channel.sendMessage(ctx.t("commands.playlist.errors.playListNameLength")).queue()
           return
         }
 
@@ -116,38 +103,38 @@ class Playlist : Command(
           Updates.set("playlists.${playlists.indexOf(playlist)}.name", ctx.args[2])
         )
 
-        ctx.channel.sendMessage(":bookmark: Playlist renomeada com sucesso!").queue()
+        ctx.channel.sendMessage(ctx.t("commands.playlist.renamed")).queue()
       }
 
       in listOf("deletar", "apagar", "excluir", "delete") -> {
         if (playlists == null || playlists.isEmpty()) {
-          ctx.channel.sendMessage(":x: Não tens nenhuma playlist!").queue()
+          ctx.channel.sendMessage(ctx.t("commands.playlist.errors.noPlaylists")).queue()
           return
         }
 
         val playlist = playlists.find { it.name == ctx.args[1] }
 
         if (playlist == null) {
-          ctx.channel.sendMessage(":x: Não tens nenhuma playlist com esse nome!").queue()
+          ctx.channel.sendMessage(ctx.t("commands.playlist.errors.playlistNotFound")).queue()
           return
         }
 
         Database.userDB.updateOneById(ctx.author.id, Updates.pull("playlists", playlist))
-        ctx.channel.sendMessage(":wastebasket: Playlist apagada com sucesso!").queue()
+        ctx.channel.sendMessage(ctx.t("commands.playlist.deleted")).queue()
       }
 
       in listOf("lista", "listar", "list") -> {
         if (playlists == null || playlists.isEmpty()) {
-          ctx.channel.sendMessage(":x: Não tens nenhuma playlist!").queue()
+          ctx.channel.sendMessage(ctx.t("commands.playlist.errors.noPlaylists")).queue()
           return
         }
 
         val embed = Embed {
-          title = "<a:disco:803678643661832233> Lista de Playlists"
+          title = ctx.t("commands.playlist.list.title")
           color = Utils.randColor()
           description = playlists.joinToString("\n") {
-            if (it.tracks != null) "${it.name} - `${it.tracks.size}` músicas"
-            else "${it.name} - `0` músicas"
+            if (it.tracks != null) "${it.name} - `${it.tracks.size}` ${ctx.t("commands.playlist.tracks")}"
+            else "${it.name} - `0` ${ctx.t("commands.playlist.tracks")}"
           }
           footer {
             name = ctx.author.asTag
@@ -161,34 +148,34 @@ class Playlist : Command(
 
       in listOf("detalhes", "details") -> {
         if (playlists == null || playlists.isEmpty()) {
-          ctx.channel.sendMessage(":x: Não tens nenhuma playlist!").queue()
+          ctx.channel.sendMessage(ctx.t("commands.playlist.errors.noPlaylists")).queue()
           return
         }
 
         if (ctx.args.size < 2) {
-          ctx.channel.sendMessage(":x: **Usa:** ${prefix}playlist detalhes <Nome da playlist>").queue()
+          ctx.channel.sendMessage(ctx.t("commands.playlist.usage.details", listOf(ctx.prefix))).queue()
           return
         }
 
         val playlist = playlists.find { it.name == ctx.args[1] }
 
         if (playlist == null) {
-          ctx.channel.sendMessage(":x: Não tens nenhuma playlist com esse nome!").queue()
+          ctx.channel.sendMessage(ctx.t("commands.playlist.errors.playlistNotFound")).queue()
           return
         }
 
         if (playlist.tracks == null || playlist.tracks.isEmpty()) {
-          ctx.channel.sendMessage(":x: Essa playlist não tem músicas!").queue()
+          ctx.channel.sendMessage(ctx.t("commands.playlist.errors.emptyPlaylist")).queue()
           return
         }
 
-        val header = "**${playlist.name}** - `${playlist.tracks.size}` músicas\n\n"
+        val header = "**${playlist.name}** - `${playlist.tracks.size}` ${ctx.t("commands.playlist.tracks")}\n\n"
 
         val chunkedTracks = playlist.tracks.chunked(10)
 
         val pages = chunkedTracks.map {
           Embed {
-            title = "<a:disco:803678643661832233> Lista de Músicas"
+            title = ctx.t("commands.playlist.details.title")
             description = header +
                     it.mapIndexed { index, base64 ->
                       val track = PlayerManager.decodeTrack(base64)
@@ -196,7 +183,7 @@ class Playlist : Command(
                     }.joinToString("\n")
             color = Utils.randColor()
             footer {
-              name = "Página ${chunkedTracks.indexOf(it) + 1} de ${chunkedTracks.size}"
+              name = ctx.t("commands.playlist.details.page", listOf((chunkedTracks.indexOf(it) + 1).toString(), chunkedTracks.size.toString()))
               iconUrl = ctx.author.effectiveAvatarUrl
             }
             timestamp = Instant.now()
@@ -216,38 +203,38 @@ class Playlist : Command(
 
       in listOf("remove", "remover") -> {
         if (playlists == null || playlists.isEmpty()) {
-          ctx.channel.sendMessage(":x: Não tens nenhuma playlist!").queue()
+          ctx.channel.sendMessage(ctx.t("commands.playlist.errors.noPlaylists")).queue()
           return
         }
 
         if (ctx.args.size < 3) {
-          ctx.channel.sendMessage(":x: **Usa:** ${prefix}playlist remover <Nome da playlist> <ID>").queue()
+          ctx.channel.sendMessage(ctx.t("commands.playlist.usage.remove", listOf(ctx.prefix))).queue()
           return
         }
 
         val playlist = playlists.find { it.name == ctx.args[1] }
 
         if (playlist == null) {
-          ctx.channel.sendMessage(":x: Não tens nenhuma playlist com esse nome!").queue()
+          ctx.channel.sendMessage(ctx.t("commands.playlist.errors.playlistNotFound")).queue()
           return
         }
 
         if (playlist.tracks == null || playlist.tracks.isEmpty()) {
-          ctx.channel.sendMessage(":x: Essa playlist não tem nenhuma música!").queue()
+          ctx.channel.sendMessage(ctx.t("commands.playlist.errors.emptyPlaylist")).queue()
           return
         }
 
         val id = ctx.args[2].toIntOrNull()
 
         if (id == null) {
-          ctx.channel.sendMessage(":x: O ID da música é um número!").queue()
+          ctx.channel.sendMessage(ctx.t("commands.playlist.errors.notNumber")).queue()
           return
         }
 
         val base64 = playlist.tracks.getOrNull(id - 1)
 
         if (base64 == null) {
-          ctx.channel.sendMessage(":x: ID da música inválido!\n**Usa:** ${prefix}playlist detalhes <Nome> para ver o id da música a remover.")
+          ctx.channel.sendMessage(ctx.t("commands.playlist.errors.invalidId", listOf(ctx.prefix)))
             .queue()
           return
         }
@@ -259,25 +246,25 @@ class Playlist : Command(
           Updates.pull("playlists.${playlists.indexOf(playlist)}.tracks", base64)
         )
 
-        ctx.channel.sendMessage("<a:verificado:803678585008816198> Removeste a música `${track.info.title}` da playlist!")
+        ctx.channel.sendMessage(ctx.t("commands.playlist.remove", listOf(track.info.title)))
           .queue()
       }
 
       in listOf("add", "adicionar") -> {
         if (playlists == null || playlists.isEmpty()) {
-          ctx.channel.sendMessage(":x: Não tens nenhuma playlist!").queue()
+          ctx.channel.sendMessage(ctx.t("commands.playlist.errors.noPlaylists")).queue()
           return
         }
 
         if (ctx.args.size < 2) {
-          ctx.channel.sendMessage(":x: **Usa:** ${prefix}playlist add <Nome da playlist> [Música]").queue()
+          ctx.channel.sendMessage(ctx.t("commands.playlist.usage.add", listOf(ctx.prefix))).queue()
           return
         }
 
         val playlist = playlists.find { it.name == ctx.args[1] }
 
         if (playlist == null) {
-          ctx.channel.sendMessage(":x: Não tens nenhuma playlist com esse nome!").queue()
+          ctx.channel.sendMessage(ctx.t("commands.playlist.errors.playlistNotFound")).queue()
           return
         }
 
@@ -304,7 +291,7 @@ class Playlist : Command(
         }
 
         if (tracks.size + (playlist.tracks?.size ?: 0) > 70) {
-          ctx.channel.sendMessage(":x: A playlist pode ter no máximo 70 músicas!").queue()
+          ctx.channel.sendMessage(ctx.t("commands.playlist.errors.maxPlaylistSize")).queue()
           return
         }
 
@@ -316,7 +303,7 @@ class Playlist : Command(
         }
 
         if (base64Array.isEmpty()) {
-          ctx.channel.sendMessage(":x: Essa música já está na playlist!").queue()
+          ctx.channel.sendMessage(ctx.t("commands.playlist.errors.trackAlreadyExists")).queue()
           return
         }
 
@@ -329,35 +316,35 @@ class Playlist : Command(
         )
 
         if (tracks.size == 1) {
-          ctx.channel.sendMessage("<a:disco:803678643661832233> Música `${tracks[0].info.title}` adicionada à playlist!")
+          ctx.channel.sendMessage(ctx.t("commands.playlist.add.track", listOf(tracks[0].info.title)))
             .queue()
           return
         }
 
-        ctx.channel.sendMessage("<a:disco:803678643661832233> `${base64Array.size}` músicas adicionadas à playlist")
+        ctx.channel.sendMessage(ctx.t("commands.playlist.add.tracks", listOf(base64Array.size.toString())))
           .queue()
       }
 
       in listOf("shuffle", "embaralhar") -> {
         if (playlists == null || playlists.isEmpty()) {
-          ctx.channel.sendMessage(":x: Não tens nenhuma playlist!").queue()
+          ctx.channel.sendMessage(ctx.t("commands.playlist.errors.noPlaylists")).queue()
           return
         }
 
         if (ctx.args.size < 2) {
-          ctx.channel.sendMessage(":x: **Usa:** ${prefix}playlist shuffle <Nome da playlist>").queue()
+          ctx.channel.sendMessage(ctx.t("commands.playlist.usage.shuffle", listOf(ctx.prefix))).queue()
           return
         }
 
         val playlist = playlists.find { it.name == ctx.args[1] }
 
         if (playlist == null) {
-          ctx.channel.sendMessage(":x: Não tens nenhuma playlist com esse nome!").queue()
+          ctx.channel.sendMessage(ctx.t("commands.playlist.errors.playlistNotFound")).queue()
           return
         }
 
         if (playlist.tracks == null || playlist.tracks.isEmpty()) {
-          ctx.channel.sendMessage(":x: Essa playlist não tem músicas!").queue()
+          ctx.channel.sendMessage(ctx.t("commands.playlist.errors.emptyPlaylist")).queue()
           return
         }
 
@@ -366,31 +353,31 @@ class Playlist : Command(
           Updates.set("playlists.${playlists.indexOf(playlist)}.tracks", playlist.tracks.shuffled())
         )
 
-        ctx.channel.sendMessage("<a:verificado:803678585008816198> Playlist embaralhada com sucesso!").queue()
+        ctx.channel.sendMessage(ctx.t("commands.playlist.shuffle")).queue()
       }
 
       in listOf("play", "tocar") -> {
-        if (!Utils.canPlay(ctx.selfMember, ctx.member, ctx.channel)) return
+        if (!Utils.canPlay(ctx::t, ctx.selfMember, ctx.member, ctx.channel)) return
 
         if (playlists == null || playlists.isEmpty()) {
-          ctx.channel.sendMessage(":x: Não tens nenhuma playlist!").queue()
+          ctx.channel.sendMessage(ctx.t("commands.playlist.errors.noPlaylists")).queue()
           return
         }
 
         if (ctx.args.size < 2) {
-          ctx.channel.sendMessage(":x: **Usa:** ${prefix}playlist play <Nome da playlist>").queue()
+          ctx.channel.sendMessage(ctx.t("commands.playlist.usage.play", listOf(ctx.prefix))).queue()
           return
         }
 
         val playlist = playlists.find { it.name == ctx.args[1] }
 
         if (playlist == null) {
-          ctx.channel.sendMessage(":x: Não tens nenhuma playlist com esse nome!").queue()
+          ctx.channel.sendMessage(ctx.t("commands.playlist.errors.playlistNotFound")).queue()
           return
         }
 
         if (playlist.tracks == null || playlist.tracks.isEmpty()) {
-          ctx.channel.sendMessage(":x: Essa playlist não tem músicas!").queue()
+          ctx.channel.sendMessage(ctx.t("commands.playlist.errors.emptyPlaylist")).queue()
           return
         }
 
@@ -408,19 +395,19 @@ class Playlist : Command(
         }
 
         val embed = Embed {
-          title = "<a:disco:803678643661832233> Playlist Carregada"
+          title = ctx.t("commands.playlist.play.title")
           field {
-            name = ":page_with_curl: Nome:"
+            name = ctx.t("commands.playlist.play.name")
             value = "`${playlist.name}`"
             inline = false
           }
           field {
-            name = "<a:infinity:838759634361253929> Quantidade de músicas:"
+            name = ctx.t("commands.playlist.play.amount")
             value = "`${playlist.tracks.size}`"
             inline = false
           }
           field {
-            name = ":watch: Duração:"
+            name = ctx.t("commands.playlist.play.duration")
             value = "`${Utils.msToHour(tracks.sumOf { it.duration })}`"
             inline = false
           }

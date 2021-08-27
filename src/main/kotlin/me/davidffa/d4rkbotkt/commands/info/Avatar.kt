@@ -9,7 +9,6 @@ import java.time.Instant
 
 class Avatar : Command(
   "avatar",
-  "Mostra o teu avatar ou de outra pessoa em uma imagem grande.",
   listOf("av"),
   "[ID/Nome]",
   "Info",
@@ -21,15 +20,15 @@ class Avatar : Command(
     else Utils.findUser(ctx.args.joinToString(" "), ctx.guild)
 
     if (user == null) {
-      ctx.channel.sendMessage(":x: Utilizador não encontrado!").queue()
+      ctx.channel.sendMessage(ctx.t("errors.user.notfound")).queue()
       return
     }
 
     val url = "${user.effectiveAvatarUrl}?size=4096"
 
     val embed = Embed {
-      title = ":frame_photo: Avatar de ${user.name}#${user.discriminator}"
-      description = ":diamond_shape_with_a_dot_inside: Clique [aqui](${url}) para baixar a imagem!"
+      title = ctx.t("commands.avatar.title", listOf(user.asTag))
+      description = ctx.t("commands.avatar.description", listOf(url))
       color = Utils.randColor()
       image = url
       footer {

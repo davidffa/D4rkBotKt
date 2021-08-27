@@ -1,0 +1,443 @@
+commands:
+  avatar:
+    title: ":frame_photo: Avatar de {0}"
+    description: ":diamond_shape_with_a_dot_inside: [Clica aqui]({0}) para baixar o avatar!"
+  botinfo:
+    title: "<a:blobdance:804026401849475094> Informações sobre mim"
+    description: "**[Convite](https://discord.com/oauth2/authorize?client_id={0}&scope=bot+applications.commands&permissions=8)**\n**[Servidor de Suporte](https://discord.gg/dBQnxVCTEw)**\n\nModelo da CPU: `{1}`\nTotal de comandos executados `{2}`\n\u200B"
+    fields:
+      id: ":id: Meu ID"
+      owner: ":man: Dono"
+      servers: ":desktop: Servidores"
+      users: ":busts_in_silhouette: Utilizadores"
+      prefixes:
+        name: "<:badgehypesquad:803665497223987210> Prefixos"
+        value: "Padrão: `{0}`\nNeste servidor: `{1}`"
+      ram:
+        value: "Usada: `{0}MB`\nAlocada: `{1}MB`"
+      cpu:
+        value: "Sistema: `{0}%`\nBot: `{1}%`"
+      versions: "<:kotlin:856168010004037702> Versões"
+  channelinfo:
+    channeltypes:
+      text: "Texto"
+      news: "Anúncios"
+      voice: "Voz"
+      category: "Categoria"
+      store: "Loja"
+      stage: "Palco"
+      unknown: "Desconhecido"
+    title: "Informações do canal {0}"
+    fields:
+      type:
+        name: ":diamond_shape_with_a_dot_inside: Tipo"
+      position:
+        name: ":trophy: Posição"
+      category:
+        name: ":flag_white: Categoria"
+        none: "None"
+      bitrate:
+        name: ":notes: Taxa de bits"
+      region:
+        name: ":map: Região"
+      members:
+        name: ":busts_in_silhouette: Limite de membros"
+      topic:
+        name: ":question: Tópico"
+  invite:
+    title: "Convite"
+    desctitle: "<a:blobdance:804026401849475094> **Adiciona-me ao teu servidor com um dos links abaixo**"
+    admin: "Com permissão de admin"
+    needed: "Com todas as permissões necessárias"
+    withoutperms: "Sem permissões"
+    withoutslash: "Sem slash commands"
+    support: "Servidor de Suporte"
+  roleinfo:
+    title: "Informações do cargo {0}"
+    fields:
+      mentionable:
+        name: "@ Mencionável"
+      mention:
+        name: "@ Menção"
+      position:
+        name: ":military_medal: Posição"
+      hoist:
+        name: ":beginner: Separado"
+      managed:
+        name: ":robot: Gerenciado"
+      members:
+        name: ":busts_in_silhouette: Membros"
+      permissions:
+        name: ":8ball: Permissões"
+        value:
+          none: "Nenhuma"
+  serverinfo:
+    title: "Informações do servidor {0}"
+    owner: ":crown: Dono do servidor"
+    nsfw:
+      name: ":underage: Filtro NSFW"
+      norole: "Sem cargo"
+      all: "Tudo"
+      disabled: "Desligado"
+    afk: ":zzz: Canal de AFK"
+    rules: ":bookmark_tabs: Canal de Regras"
+    verificationlevel:
+      name: ":police_officer: Nível de Verificação"
+      low: "Baixo"
+      medium: "Médio"
+      high: "Alto"
+      veryhigh: "Muito Alto"
+    botjoined:
+      name: ":calendar: I joined on"
+    boosts:
+      level: "Nível:"
+      amount: "Quantidade:"
+    emojis:
+      static: "Estáticos:"
+      animated: "Animados:"
+    members:
+      name: "Membros"
+      idle: "Ausente:"
+      dnd: "Ocupado:"
+    channels:
+      name: "Canais"
+      text: "Texto:"
+      voice: "Voz:"
+      stage: "Palco:"
+      news: "Anúncios:"
+      store: "Loja:"
+      categories: "Categorias:"
+    roles: "Cargos"
+  userinfo:
+    title: ":information_source: Informação sobre {}"
+    mention: ":man_raising_hand: Menção"
+    created:
+      name: ":calendar: Conta criada em"
+    joined:
+      name: ":date: Entrou em"
+    status:
+      idle: "Ausente"
+      dnd: "Ocupado"
+      invisible: "Invisível"
+    devices: "Dispositivos"
+    joinedrank: ":trophy: Rank de entrada"
+    badges: "Emblemas :medal:"
+    roles: "Cargos"
+    permissions:
+      name: ":8ball: Permissões neste canal"
+      none: "Nenhuma"
+  filters:
+    alreadyopen: ":x: Já existe uma mesa de DJ aberta!"
+    menuplaceholder: "Escolhe um filtro para ativar/desativar"
+    close: "Fechar"
+    title: ":level_slider: Mesa de DJ"
+    removeall: ":wastebasket: - Remove todos os filtros"
+    closetable: "<a:disco:803678643661832233> Mesa de DJ fechada!"
+  loop:
+    track:
+      switchOn: "<a:disco:803678643661832233> Música atual em loop!"
+      switchOff: "<a:disco:803678643661832233> Loop da música atual desativado!"
+    queue:
+      switchOn: ":bookmark_tabs: Queue em loop!"
+      switchOff: ":bookmark_tabs: Loop da queue desativado!"
+    wrongusage: ":x: **Usa:** `{}`"
+  nowplaying: "<a:disco:803678643661832233> A tocar: `{0}`"
+  pause: ":pause_button: Música pausada!"
+  resume: ":play_pause: Música retomada!"
+  playlist:
+    tracks: "músicas"
+    help:
+      title: "Ajuda do comando Playlist"
+      description: "```md\n# {0}playlist criar <Nome> - Cria uma playlist\n# {0}playlist apagar <Nome> - Apaga uma playlist\n# {0}playlist renomear <Nome Antigo> <Nome Novo> - Renomeia uma playlist\n# {0}playlist detalhes <Nome> - Lista todas as músicas de uma playlist\n# {0}playlist shuffle <Nome> - Embaralha as músicas de uma playlist\n# {0}playlist listar - Lista de todas as tuas playlists\n# {0}playlist adicionar <Nome> [Nome da música] - Adiciona a uma playlist a música que está a tocar ou uma música específica\n# {0}playlist remover <Nome> <Número da música> - Remove uma música da playlist\n# {0}playlist tocar <Nome> - Adiciona à queue todas as músicas de uma playlist"
+    usage:
+      create: ":x: **Usa:** {0}playlist criar <Nome da Playlist>"
+      rename: ":x: **Usa:** {0}playlist renomear <Nome Antigo> <Nome Novo>"
+      details: ":x: **Usa:** {0}playlist detalhes <Nome da playlist>"
+      remove: ":x: **Usa:** {0}playlist remover <Nome da playlist> <ID>"
+      add: ":x: **Usa:** {0}playlist add <Nome da playlist> [Música]"
+      shuffle: ":x: **Usa:** {0}playlist shuffle <Nome da playlist>"
+      play: ":x: **Usa:** {0}playlist play <Nome da playlist>"
+    errors:
+      playListNameLength: ":x: O nome da playlist não pode ter mais do que 32 caracteres."
+      maxPlaylists: ":x: Não podes ter mais de 50 playlists"
+      sameNamePlaylist: ":x: Já tens uma playlist com esse nome!"
+      noPlaylists: ":x: Não tens nenhuma playlist!"
+      playlistNotFound: ":x: Não tens nenhuma playlist com esse nome!"
+      emptyPlaylist: ":x: Essa playlist não tem músicas!"
+      notNumber: ":x: O ID da música é um número!"
+      invalidId: ":x: ID da música inválido!\n**Usa:** {0}playlist detalhes <Nome> para ver o id da música a remover."
+      maxPlaylistSize: ":x: A playlist só pode ter no máximo 70 músicas!"
+      trackAlreadyExists: ":x: Essa música já está na playlist!"
+    playlistCreated: "<a:disco:803678643661832233> Playlist criada com sucesso!"
+    renamed: ":bookmark: Playlist renomeada com sucesso!"
+    deleted: ":wastebasket: Playlist apagada com sucesso!"
+    list:
+      title: "<a:disco:803678643661832233> Lista de Playlists"
+    details:
+      title: "<a:disco:803678643661832233> Lista de Músicas"
+      page: "Página {0} de {1}"
+    remove: "<a:verificado:803678585008816198> Removeste a música `{0}` da playlist!"
+    add:
+      track: "<a:disco:803678643661832233> Música `{0}` adicionada à playlist!"
+      tracks: "<a:disco:803678643661832233> `{0}` músicas adicionadas à playlist"
+    shuffle: "<a:verificado:803678585008816198> Playlist embaralhada com sucesso!"
+    play:
+      title: "<a:disco:803678643661832233> Playlist Carregada"
+      name: ":page_with_curl: Nome:"
+      amount: "<a:infinity:838759634361253929> Quantidade de músicas:"
+      duration: ":watch: Duração:"
+  queue:
+    header: "<a:disco:803678643661832233> **A tocar:** `{0}` (Requisitado por {1})\n:alarm_clock: Tempo total da queue {2} ----- Total de músicas na queue: {3}\n\n"
+    title: ":bookmark_tabs: Lista de músicas"
+    requestedBy: "Requisitado por `{0}`"
+    page: "Página {0} de {1}"
+  remove: ":bookmark_tabs: Música removida da posição {0}."
+  search:
+    usage: ":x: **Usa:** {0}search [yt/ytm/sc] <Nome da música>"
+    errorSearching: ":x: Ocorreu um erro ao procurar a música!\nErro: {0}"
+    title: ":mag: Resultados da procura"
+    placeholder: "Escolhe as músicas para adicionar à queue"
+    cancel: ":x: Pesquisa cancelada!"
+    added: ":bookmark_tabs: Adicionado à lista"
+  seek:
+    invalidFormat: ":x: Formato inválido! Tenta da forma `hh:mm:ss`, `mm:ss` ou `ss`"
+    range: ":x: O tempo só pode variar entre **0** e **{0}**."
+    seeked: ":fast_forward: Posição da música setada para `{0}`."
+  shuffle: ":minidisc: Lista de músicas embaralhada!"
+  skip: ":fast_forward: Música pulada!"
+  stop: ":stop_button: Parei a música!"
+  volume:
+    current: ":speaker: Volume atual: `{0}`"
+    range: ":x: O volume tem de variar entre 0 e 500"
+    changed: ":speaker: Volume alterado para `{0}`"
+  github:
+    profileNotFound: ":x: Perfil não encontrado!"
+    title: "<:github:784791056670654465> Perfil de {0}"
+    name: ":bust_in_silhouette: Nome"
+    id: ":id: ID"
+    publicRepos: ":open_file_folder: Repositórios públicos"
+    followers: "<:followers:784795303156908032> Seguidores"
+    following: ":busts_in_silhouette: A seguir"
+    company: ":classical_building: Empresa"
+    location: ":map: Localização"
+    created: ":calendar: Criado em"
+    updated: ":calendar: Atualizado em"
+  record:
+    start: ":red_circle: Comecei a gravar (máximo de 8 minutos)!"
+    stop: ":stop_button: Parei de gravar!"
+    timeout: ":stop_button: Parei de gravar! (foi atingido o limite de 8 minutos)."
+  render:
+    nsfwOnly: ":x: Só podes usar este comando em um canal NSFW."
+    checkUrl: "<a:loading2:805088089319407667> A verificar se o URL é válido..."
+    offline: ":x: Site offline!"
+    rendering: "<a:loading2:805088089319407667> A renderizar a página..."
+  djrole:
+    errors:
+      noRole: ":x: Nenhum cargo de DJ setado. **Usa:** `{0}djrole <Cargo>` para setar um cargo de DJ."
+      roleDeleted: ":x: O cargo de DJ antigo foi apagado! **Usa:** `{0}djrole <Cargo>` para setar um novo cargo de DJ."
+      missingPermission: ":x: Precisas da permissão `Gerenciar Cargos` para usar este comando."
+      disabled: ":x: O cargo de DJ não está ativo!"
+    currentRole: "<a:disco:803678643661832233> Cargo de DJ atual: `{0}`\n**Usa:** `{1}djrole <Cargo> (0 para desativar)`"
+    usage: "<a:disco:803678643661832233> Cargo de DJ desativado. **Usa:** `{0}djrole <Cargo>` para setar um novo cargo de DJ."
+    success: "<a:disco:803678643661832233> Cargo `{0}` setado como cargo de DJ!"
+  logs:
+    menu:
+      placeholder: "Escolhe o tipo de logs a configurar"
+      welcome: "Mensagens de bem-vindo"
+      leave: "Mensagens de saída"
+    title: ":gear: Configuração de logs"
+    enable: "Ativar"
+    disable: "Desativar"
+    channel: "Escolher o canal"
+    timeout: ":warning: Acabou o tempo!\nUsa o comando novamente para continuar a configurar as logs!"
+    welcome: "bem-vindo"
+    leave: "saída"
+    setChannel: "Escreve o canal ou ID do canal para setar as mensagens de {0}"
+    embed:
+      enabled: "Ativado <:on:764478511875751937>"
+      disabled: "Desativado <:off:764478504124416040>"
+      channel: "Canal:"
+  setlang:
+    langNotFound: ":x: Idioma não encontrado!\nIdiomas disponíveis: pt, en"
+    success: "<a:verificado:803678585008816198> Idioma alterado para `{0}`"
+  setprefix:
+    maxLength: ":x: O meu prefixo não pode ultrapassar os 5 caracteres."
+    success: "<a:verificado:803678585008816198> O meu prefixo foi alterado para `{0}`"
+  help:
+    menu:
+      placeholder: "Escolhe uma categoria de comandos para ver"
+      settings:
+        label: "Definições"
+        description: "Comandos de configuração do bot"
+      info:
+        label: "Informação"
+        description: "Comandos de informação geral"
+      music:
+        label: "Música"
+        description: "Comandos de música"
+      others:
+        label: "Outros"
+        description: "Outros comandos de utilidade"
+    title: "Ajuda"
+    description: "Quantidade total de comandos"
+    category: "> Comandos nesta categoria"
+    timeout: ":warning: O tempo expirou!\nUsa o comando novamente para continuar a usar o menu!"
+    notFound: ":x: Comando não encontrado!"
+    none: "Nenhuma"
+    desc:
+      name: "Nome:"
+      description: "Descrição:"
+      aliases: "Alternativas:"
+      botPerms: "Permissões do bot:"
+      userPerms: "Permissões de utilizador:"
+      title: "Ajuda do comando {0}"
+
+help:
+  eval: "Executa um código e retorna o seu resultado."
+  avatar: "Mostra o teu avatar ou de outra pessoa em uma imagem grande."
+  botinfo: "Informações sobre mim."
+  channelinfo: "Mostra informações sobre um canal do servidor."
+  invite: "Envia o link do meu convite."
+  ping: "Mostra o ping de envio de mensagens e o da API"
+  roleinfo: "Informação sobre um cargo no servidor."
+  serverinfo: "Informações sobre o servidor."
+  uptime: "Mostra à quanto tempo estou online."
+  userinfo: "Informações sobre alguém."
+  filters: "Adiciona filtros à música."
+  loop: "Repete a queue ou a música atual."
+  nowplaying: "Mostra a música que está a tocar."
+  pause: "Pausa a música atual."
+  play: "Toca uma música ou adiciona-a na lista."
+  playlist: "Cria uma playlist, adiciona músicas a uma playlist ou adiciona à queue uma playlist."
+  queue: "Vê as músicas que estão na queue."
+  remove: "Remove uma música da queue."
+  resume: "Retoma a música atual."
+  search: "Procura uma música no YouTube ou na SoundCloud e toca-a."
+  seek: "Avança para um tempo específico da música."
+  shuffle: "Embaralha a lista de músicas."
+  skip: "Pula a música atual."
+  stop: "Para de tocar música e limpa a lista de músicas."
+  volume: "Altera o volume da música."
+  github: "Informações sobre algum perfil do github."
+  record: "Grava áudio no canal de voz e envia em MP3."
+  render: "Renderiza uma página web."
+  djrole: "Seta o cargo de DJ."
+  logs: "Configura os canais onde irei enviar as logs (mensagem bem-vindo etc)."
+  setlang: "Seta o idioma do bot"
+  setprefix: "Muda o meu prefixo no servidor."
+  help: "Mostra a lista de comandos do bot."
+
+music:
+  queueEnd: ":notes: A lista de músicas acabou!"
+  playlistLoadedTitle: "<a:disco:803678643661832233> Playlist Carregada"
+  playing:
+    title: "<a:disco:803678643661832233> A tocar"
+    name: ":page_with_curl: Nome:"
+    author: ":technologist: Enviado por:"
+    duration: ":watch: Duração:"
+  ratelimit: ":warning: Parece que o YouTube me impediu de tocar essa música, aguarda um momento enquanto resolvo esse problema e tenta novamente daqui a uns segundos."
+  spotify:
+    albumTitle: "<:spotify:869245737282715689> Album carregado"
+    playlistTitle: "<:spotify:869245737282715689> Playlist carregada"
+  size: "<a:infinity:838759634361253929> Quantidade de músicas:"
+  duration: ":watch: Duração:"
+  queued: ":bookmark_tabs: Adicionado à lista `{0}`"
+  noMatches: ":x: Não encontrei nenhum resultado!"
+  error: ":x: Ocorreu um erro ao carregar a música! (`{0}`)"
+
+events:
+  welcome: ":tada: `{0}` bem-vindo ao servidor `{1}`."
+  leave: ":door: `{0}` saiu do servidor."
+  message: "<a:blobcool:804026346954555432> Olá {0} O meu prefixo neste servidor é `{1}`. Faz `{1}help` para veres o que posso fazer!"
+  voice:
+    disconnected: ":warning: Fui desconectado do canal de voz, por isso limpei a queue."
+    leaveWarning: ":warning: Pausei a música porque fiquei sozinho no canal de voz, se ninguem aparecer irei sair em 2 minutos."
+    leave: ":x: Saí do canal de voz porque fiquei sozinho mais de 2 minutos."
+
+errors:
+  user:
+    notfound: ":x: Utilizador não encontrado!"
+  channels:
+    notfound: ":x: Canal não encontrado!"
+  roles:
+    notfound: ":x: Cargo não encontrado!"
+  cannotinteract: ":x: Não podes interagir aqui!\n**Usa:** `{0}{1}` para poderes interagir."
+  notplaying: ":x: Não estou a tocar nada de momento!"
+  alreadyplaying: ":x: A música já está a tocar!"
+  emptyqueue: ":x: A queue está vazia!"
+  invalidNumber: ":x: Número inválido!"
+  noMatches: ":x: Não encontrei nenhum resultado!"
+  notInVoiceChannel: ":x: Precisas de estar num canal de voz para executar esse comando!"
+  notInBotVC: ":x: Precisas de estar no meu canal de voz para usar este comando!"
+  missingViewPerm: ":x: Não tenho permissão para ver o teu canal de voz!"
+  missingConnectPerm: ":x: Não tenho permissão para entrar no teu canal de voz!"
+  missingSpeakPerm: ":x: Não tenho permissão para falar no teu canal de voz!"
+  fullVoiceChannel: ":x: O teu canal de voz está cheio!"
+  recordWhilePlaying: ":x: Não posso gravar áudio enquanto toco música!"
+  playWhileRecording: ":x: Não posso tocar música enquanto gravo áudio!"
+  noTrackAtPosition: ":x: Não há nenhuma música nessa posição da queue."
+  allQueueRequested: ":x: Todas as músicas da queue têm de ser requisitadas por ti para poderes usar esse comando!"
+  onlyDJAndOther: ":x: Apenas alguém com o cargo de DJ (`{0}`) ou quem requisitou a música dessa posição a pode remover da queue."
+  onlyDJAndCurrent: ":x: Apenas alguém com o cargo de DJ (`{0}`) ou quem requisitou esta música pode usar esse comando."
+  onlyDJ: ":x: Precisas do cargo de DJ (`{0}`) para poderes usar esse comando."
+
+utils:
+  created:
+    name: ":calendar: Criado em"
+    value: "<t:{0}:d> (<t:{0}:R>)"
+
+global:
+  none: "Nenhum"
+  yes: "Sim"
+  no: "Não"
+  unknown: "Desconhecido"
+
+permissions:
+  createInstantInvite: "Criar convites"
+  kickMembers: "Expulsar Membros"
+  banMembers: "Banir Membros"
+  administrator: "Administrador"
+  manageChannel: "Gerenciar Canal"
+  manageServer: "Gerenciar Servidor"
+  viewAuditLogs: "Ver o registo de auditoria"
+  prioritySpeaker: "Voz Prioritária"
+  voiceStream: "Transmitir"
+  viewChannel: "Ver Canal"
+  messageWrite: "Enviar Mensagens"
+  messageTTS: "Enviar mensagens TTS"
+  messageManage: "Gerenciar Mensagens"
+  messageEmbedLinks: "Inserir Links"
+  messageAttachFiles: "Anexar Arquivos"
+  messageRead: "Ler Mensagens"
+  messageHistory: "Ler o histórico de mensagens"
+  managePermissions: "Gerenciar Permissões"
+  mentionEveryone: "Mencionar everyone"
+  extEmoji: "Usar emojis externos"
+  viewGuildInsights: "Ver análises do servidor"
+  voiceConnect: "Conectar ao canal de voz"
+  voiceSpeak: "Falar no canal de voz"
+  voiceMute: "Silenciar Membros"
+  voiceDeaf: "Ensurdecer Membros"
+  voiceMove: "Mover Membros"
+  voiceVad: "Usar deteção de voz"
+  nicknameChange: "Mudar de nickname"
+  manageNicknames: "Gerenciar nicknames"
+  manageWebhooks: "Gerenciar webhooks"
+  manageEmotes: "Gerenciar Emojis"
+  useSlashCommands: "Usar comandos de barra"
+  addReactions: "Adicionar reações"
+  manageRoles: "Gerenciar Cargos"
+  requestToSpeak: "Requisitar para falar"
+  manageThreads: "Gerenciar Threads"
+  usePublicThreads: "Usar Threads públicas"
+  usePrivateThreads: "Usar Threads privadas"
+  unknown: "Desconhecido"
+
+commandManager:
+  botNeedPermissions: ":x: Preciso das permissões `{0}` para executar esse comando!"
+  botNeedPermission: ":x: Preciso da permissão `{0}` para executar esse comando!"
+  userNeedPermissions: ":x: Precisas das permissões `{0}` para usar esse comando!"
+  userNeedPermission: ":x: Precisas da permissão `{0}` para usar esse comando!"
+  cooldown: ":clock1: Espera mais `{0}` segundos para voltares a usar o comando `{1}`"
+  argsMissing: ":x: Argumentos em falta! **Usa:** `{0}`"
+  didUMean: ":x: Eu não tenho esse comando.\n:thinking: Querias dizer `{0}`?"

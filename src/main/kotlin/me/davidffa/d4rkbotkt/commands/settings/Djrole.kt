@@ -11,7 +11,6 @@ import net.dv8tion.jda.api.Permission
 
 class Djrole : Command(
   "djrole",
-  "Seta o cargo de DJ.",
   listOf("dj", "cargodj"),
   "[Cargo/0]",
   "Settings",
@@ -24,7 +23,7 @@ class Djrole : Command(
 
     if (ctx.args.isEmpty()) {
       if (djRole == null) {
-        ctx.channel.sendMessage(":x: Nenhum cargo de DJ setado. **Usa:** `${ctx.prefix}djrole <Cargo>` para setar um cargo de DJ.")
+        ctx.channel.sendMessage(ctx.t("commands.djrole.errors.noRole", listOf(ctx.prefix)))
           .queue()
         return
       }
@@ -33,30 +32,30 @@ class Djrole : Command(
       if (role == null) {
         cache.djRole = null
         Database.guildDB.updateOneById(ctx.guild.id, Updates.set("djRole", null))
-        ctx.channel.sendMessage(":x: O cargo de DJ antigo foi apagado! **Usa:** `${ctx.prefix}djrole <Cargo>` para setar um novo cargo de DJ.")
+        ctx.channel.sendMessage(ctx.t("commands.djrole.errors.roleDeleted", listOf(ctx.prefix)))
           .queue()
         return
       }
 
-      ctx.channel.sendMessage("<a:disco:803678643661832233> Cargo de DJ atual: `${role.name}`\n**Usa:** `${ctx.prefix}djrole <Cargo> (0 para desativar)`")
+      ctx.channel.sendMessage(ctx.t("commands.djrole.currentRole", listOf(role.name, ctx.prefix)))
         .queue()
       return
     }
 
     if (!ctx.member.permissions.contains(Permission.MANAGE_SERVER) && ctx.member.id != "334054158879686657") {
-      ctx.channel.sendMessage(":x: Precisas da permissão `Gerenciar Cargos` para usar este comando.").queue()
+      ctx.channel.sendMessage(ctx.t("commands.djrole.errors.missingPermission")).queue()
       return
     }
 
     if (ctx.args[0] == "0") {
       if (djRole == null) {
-        ctx.channel.sendMessage(":x: O cargo de DJ não está ativo!").queue()
+        ctx.channel.sendMessage(ctx.t("commands.djrole.errors.disabled")).queue()
         return
       }
 
       cache.djRole = null
       Database.guildDB.updateOneById(ctx.guild.id, Updates.set("djRole", null))
-      ctx.channel.sendMessage("<a:disco:803678643661832233> Cargo de DJ desativado. **Usa:** `${ctx.prefix}djrole <Cargo>` para setar um novo cargo de DJ.")
+      ctx.channel.sendMessage(ctx.t("commands.djrole.usage", listOf(ctx.prefix)))
         .queue()
       return
     }
@@ -64,7 +63,7 @@ class Djrole : Command(
     val newRole = Utils.findRole(ctx.args.joinToString(" "), ctx.guild)
 
     if (newRole == null) {
-      ctx.channel.sendMessage(":x: Cargo não encontrado!").queue()
+      ctx.channel.sendMessage(ctx.t("errors.roles.notfound")).queue()
       return
     }
 
@@ -75,6 +74,6 @@ class Djrole : Command(
       Database.guildDB.insertOne(GuildDB(ctx.guild.id, djRole = newRole.id))
     }
 
-    ctx.channel.sendMessage("<a:disco:803678643661832233> Cargo `${newRole.name}` setado como cargo de DJ!").queue()
+    ctx.channel.sendMessage(ctx.t("commands.djrole.success", listOf(newRole.name))).queue()
   }
 }

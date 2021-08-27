@@ -148,12 +148,12 @@ object Utils {
     return selfMember.getPermissions(channel).containsAll(permissions)
   }
 
-  fun canRecord(self: Member, member: Member, channel: TextChannel): Boolean {
+  fun canRecord(t: (String) -> String, self: Member, member: Member, channel: TextChannel): Boolean {
     val memberVoiceState = member.voiceState
     val selfChannel = member.guild.audioManager.connectedChannel
 
     if (!memberVoiceState!!.inVoiceChannel()) {
-      channel.sendMessage(":x: Precisas de estar num canal de voz para executar esse comando!").queue()
+      channel.sendMessage(t("errors.notInVoiceChannel")).queue()
       return false
     }
 
@@ -161,18 +161,18 @@ object Utils {
     val selfPermissions = self.getPermissions(memberVoiceChannel!!)
 
     if (!selfPermissions.contains(VIEW_CHANNEL)) {
-      channel.sendMessage(":x: Não tenho permissão para ver o teu canal de voz!").queue()
+      channel.sendMessage(t("errors.missingViewPerm")).queue()
       return false
     }
 
     if (!selfPermissions.contains(VOICE_CONNECT)) {
-      channel.sendMessage(":x: Não tenho permissão para entrar no teu canal de voz!").queue()
+      channel.sendMessage(t("errors.missingConnectPerm")).queue()
       return false
     }
 
     if (selfChannel == null) {
       if (memberVoiceChannel.userLimit == memberVoiceChannel.members.size && !selfPermissions.contains(MANAGE_CHANNEL)) {
-        channel.sendMessage(":x: O teu canal de voz está cheio!").queue()
+        channel.sendMessage(t("errors.fullVoiceChannel")).queue()
         return false
       }
     } else {
@@ -183,19 +183,19 @@ object Utils {
     }
 
     if (PlayerManager.musicManagers.contains(self.guild.idLong)) {
-      channel.sendMessage(":x: Não posso gravar áudio enquanto toco música!").queue()
+      channel.sendMessage(t("errors.recordWhilePlaying")).queue()
       return false
     }
 
     return true
   }
 
-  suspend fun canPlay(self: Member, member: Member, channel: TextChannel): Boolean {
+  suspend fun canPlay(t: (String) -> String, self: Member, member: Member, channel: TextChannel): Boolean {
     val memberVoiceState = member.voiceState
     val selfChannel = member.guild.audioManager.connectedChannel
 
     if (!memberVoiceState!!.inVoiceChannel()) {
-      channel.sendMessage(":x: Precisas de estar num canal de voz para executar esse comando!").queue()
+      channel.sendMessage(t("errors.notInVoiceChannel")).queue()
       return false
     }
 
@@ -203,30 +203,30 @@ object Utils {
     val selfPermissions = self.getPermissions(memberVoiceChannel!!)
 
     if (!selfPermissions.contains(VIEW_CHANNEL)) {
-      channel.sendMessage(":x: Não tenho permissão para ver o teu canal de voz!").queue()
+      channel.sendMessage(t("errors.missingViewPerm")).queue()
       return false
     }
 
     if (!selfPermissions.contains(VOICE_CONNECT)) {
-      channel.sendMessage(":x: Não tenho permissão para entrar no teu canal de voz!").queue()
+      channel.sendMessage(t("errors.missingConnectPerm")).queue()
       return false
     }
 
     if (!selfPermissions.contains(VOICE_SPEAK)) {
-      channel.sendMessage(":x: Não tenho permissão para falar no teu canal de voz!").queue()
+      channel.sendMessage(t("errors.missingSpeakPerm")).queue()
       return false
     }
 
     if (selfChannel == null) {
       if (memberVoiceChannel.userLimit == memberVoiceChannel.members.size && !selfPermissions.contains(MANAGE_CHANNEL)) {
-        channel.sendMessage(":x: O teu canal de voz está cheio!").queue()
+        channel.sendMessage(t("errors.fullVoiceChannel")).queue()
         return false
       }
       return true
     }
 
     if (ReceiverManager.receiveManagers.contains(self.guild.idLong)) {
-      channel.sendMessage(":x: Não posso tocar música enquanto gravo áudio!").queue()
+      channel.sendMessage(t("errors.playWhileRecording")).queue()
       return false
     }
 
@@ -241,7 +241,7 @@ object Utils {
       } else {
         if (!member.roles.contains(djRole)) {
           if (selfChannel.idLong == memberVoiceChannel.idLong) return true
-          channel.sendMessage(":x: Precisas de estar no meu canal de voz para usar este comando!").queue()
+          channel.sendMessage(t("errors.notInBotVC")).queue()
           return false
         }
       }
@@ -250,6 +250,7 @@ object Utils {
   }
 
   suspend fun canUsePlayer(
+    t: (String, List<String>?) -> String,
     self: Member,
     member: Member,
     channel: TextChannel,
@@ -263,25 +264,25 @@ object Utils {
     val player = PlayerManager.musicManagers[self.guild.idLong]
 
     if (player == null) {
-      channel.sendMessage(":x: Não estou a tocar nada de momento!").queue()
+      channel.sendMessage(t("errors.notplaying", null)).queue()
       return false
     }
 
     if (!memberVoiceState!!.inVoiceChannel()) {
-      channel.sendMessage(":x: Precisas de estar num canal de voz para executar esse comando!").queue()
+      channel.sendMessage(t("errors.notInVoiceChannel", null)).queue()
       return false
     }
 
     val memberVoiceChannel = memberVoiceState.channel
 
     if (selfVoiceState!!.inVoiceChannel() && memberVoiceChannel != selfVoiceState.channel) {
-      channel.sendMessage(":x: Precisas de estar no meu canal de voz para usar este comando!").queue()
+      channel.sendMessage(t("errors.notInBotVC", null)).queue()
       return false
     }
 
     if (trackPosition != null) {
       if (player.scheduler.queue.isEmpty()) {
-        channel.sendMessage(":x: A queue está vazia!").queue()
+        channel.sendMessage(t("errors.emptyqueue", null)).queue()
         return false
       }
 
@@ -289,7 +290,7 @@ object Utils {
       val track = queue.getOrNull(trackPosition - 1)
 
       if (track == null) {
-        channel.sendMessage(":x: Não há nenhuma música nessa posição da queue.").queue()
+        channel.sendMessage(t("errors.noTrackAtPosition", null)).queue()
         return false
       }
 
@@ -311,7 +312,7 @@ object Utils {
 
     if (forAllQueueTracks) {
       if (player.scheduler.queue.find { it.requester.idLong != member.idLong } != null) {
-        channel.sendMessage(":x: Todas as músicas da queue têm de ser requisitadas por ti para poderes usar esse comando!")
+        channel.sendMessage(t("errors.allQueueRequested", null))
           .queue()
         return false
       }
@@ -320,14 +321,14 @@ object Utils {
 
     if (forOwnTrack) {
       if (trackPosition != null) {
-        channel.sendMessage(":x: Apenas alguém com o cargo de DJ (`${djRole.name}`) ou quem requisitou a música dessa posição a pode remover da queue.")
+        channel.sendMessage(t("errors.onlyDJAndOther", listOf(djRole.name)))
           .queue()
       } else {
-        channel.sendMessage(":x: Apenas alguém com o cargo de DJ (`${djRole.name}`) ou quem requisitou esta música pode usar esse comando.")
+        channel.sendMessage(t("errors.onlyDJAndCurrent", listOf(djRole.name)))
           .queue()
       }
     } else {
-      channel.sendMessage(":x: Precisas do cargo de DJ (`${djRole.name}`) para poderes usar esse comando.").queue()
+      channel.sendMessage(t("errors.onlyDJ", listOf(djRole.name))).queue()
     }
     return false
   }
@@ -379,53 +380,53 @@ object Utils {
     return cost[lhsLength - 1]
   }
 
-  fun translatePermissions(permissions: List<Permission>): List<String> {
+  fun translatePermissions(permissions: List<Permission>, t: (String) -> String): List<String> {
     return permissions.map {
-      translatePermission(it)
+      translatePermission(it, t)
     }
   }
 
-  fun translatePermission(permission: Permission): String {
+  fun translatePermission(permission: Permission, t: (String) -> String): String {
     return when (permission) {
-      CREATE_INSTANT_INVITE -> "Criar convites"
-      KICK_MEMBERS -> "Expulsar Membros"
-      BAN_MEMBERS -> "Banir Membros"
-      ADMINISTRATOR -> "Administrador"
-      MANAGE_CHANNEL -> "Gerenciar Canal"
-      MANAGE_SERVER -> "Gerenciar Servidor"
-      VIEW_AUDIT_LOGS -> "Ver o registo de auditoria"
-      PRIORITY_SPEAKER -> "Voz Prioritária"
-      VOICE_STREAM -> "Transmitir"
-      VIEW_CHANNEL -> "Ver Canal"
-      MESSAGE_WRITE -> "Enviar Mensagens"
-      MESSAGE_TTS -> "Enviar mensagens em TTS"
-      MESSAGE_MANAGE -> "Gerenciar Mensagens"
-      MESSAGE_EMBED_LINKS -> "Inserir Links"
-      MESSAGE_ATTACH_FILES -> "Anexar Arquivos"
-      MESSAGE_READ -> "Ler mensagens"
-      MESSAGE_HISTORY -> "Ler o histórico de mensagens"
-      MANAGE_PERMISSIONS -> "Gerenciar Permissões"
-      MESSAGE_MENTION_EVERYONE -> "Mencionar everyone"
-      MESSAGE_EXT_EMOJI -> "Utilizar emojis externos"
-      VIEW_GUILD_INSIGHTS -> "Ver análises do servidor"
-      VOICE_CONNECT -> "Conectar ao canal de voz"
-      VOICE_SPEAK -> "Falar no canal de voz"
-      VOICE_MUTE_OTHERS -> "Silenciar membros"
-      VOICE_DEAF_OTHERS -> "Ensurdecer membros"
-      VOICE_MOVE_OTHERS -> "Mover membros"
-      VOICE_USE_VAD -> "Usar deteção de voz"
-      NICKNAME_CHANGE -> "Mudar de nickname"
-      NICKNAME_MANAGE -> "Gerenciar nicknames"
-      MANAGE_WEBHOOKS -> "Gerenciar Webhooks"
-      MANAGE_EMOTES -> "Gerenciar Emojis"
-      USE_SLASH_COMMANDS -> "Usar commandos de /"
-      MESSAGE_ADD_REACTION -> "Adicionar reações"
-      MANAGE_ROLES -> "Gerenciar Cargos"
-      REQUEST_TO_SPEAK -> "Requisitar para falar"
-      MANAGE_THREADS -> "Gerenciar Threads"
-      USE_PUBLIC_THREADS -> "Usar Threads públicos"
-      USE_PRIVATE_THREADS -> "Usar Threads privados"
-      UNKNOWN -> "Desconhecido"
+      CREATE_INSTANT_INVITE -> t("permissions.createInstantInvite")
+      KICK_MEMBERS -> t("permissions.kickMembers")
+      BAN_MEMBERS -> t("permissions.banMembers")
+      ADMINISTRATOR -> t("permissions.administrator")
+      MANAGE_CHANNEL -> t("permissions.manageChannel")
+      MANAGE_SERVER -> t("permissions.manageServer")
+      VIEW_AUDIT_LOGS -> t("permissions.viewAuditLogs")
+      PRIORITY_SPEAKER -> t("permissions.prioritySpeaker")
+      VOICE_STREAM -> t("permissions.voiceStream")
+      VIEW_CHANNEL -> t("permissions.viewChannel")
+      MESSAGE_WRITE -> t("permissions.messageWrite")
+      MESSAGE_TTS -> t("permissions.messageTTS")
+      MESSAGE_MANAGE -> t("permissions.messageManage")
+      MESSAGE_EMBED_LINKS -> t("permissions.messageEmbedLinks")
+      MESSAGE_ATTACH_FILES -> t("permissions.messageAttachFiles")
+      MESSAGE_READ -> t("permissions.messageRead")
+      MESSAGE_HISTORY -> t("permissions.messageHistory")
+      MANAGE_PERMISSIONS -> t("permissions.managePermissions")
+      MESSAGE_MENTION_EVERYONE -> t("permissions.mentionEveryone")
+      MESSAGE_EXT_EMOJI -> t("permissions.extEmoji")
+      VIEW_GUILD_INSIGHTS -> t("permissions.viewGuildInsights")
+      VOICE_CONNECT -> t("permissions.voiceConnect")
+      VOICE_SPEAK -> t("permissions.voiceSpeak")
+      VOICE_MUTE_OTHERS -> t("permissions.voiceMute")
+      VOICE_DEAF_OTHERS -> t("permissions.voiceDeaf")
+      VOICE_MOVE_OTHERS -> t("permissions.voiceMove")
+      VOICE_USE_VAD -> t("permissions.voiceVad")
+      NICKNAME_CHANGE -> t("permissions.nicknameChange")
+      NICKNAME_MANAGE ->  t("permissions.manageNicknames")
+      MANAGE_WEBHOOKS -> t("permissions.manageWebhooks")
+      MANAGE_EMOTES -> t("permissions.manageEmotes")
+      USE_SLASH_COMMANDS -> t("permissions.useSlashCommands")
+      MESSAGE_ADD_REACTION -> t("permissions.addReactions")
+      MANAGE_ROLES -> t("permissions.manageRoles")
+      REQUEST_TO_SPEAK -> t("permissions.requestToSpeak")
+      MANAGE_THREADS -> t("permissions.manageThreads")
+      USE_PUBLIC_THREADS -> t("permissions.usePublicThreads")
+      USE_PRIVATE_THREADS -> t("permissions.usePrivateThreads")
+      UNKNOWN -> t("permissions.unknown")
     }
   }
 }

@@ -1,5 +1,7 @@
 package me.davidffa.d4rkbotkt.database
 
+import me.davidffa.d4rkbotkt.Locale
+
 data class GuildCache(
   var prefix: String,
   val disabledCommands: List<String>? = null,
@@ -8,5 +10,6 @@ data class GuildCache(
   var welcomeChatID: String? = null,
   var memberRemoveMessagesEnabled: Boolean? = null,
   var memberRemoveChatID: String? = null,
-  var djRole: String? = null
+  var djRole: String? = null,
+  var locale: Locale = Locale.PT
 )

@@ -3,6 +3,7 @@ package me.davidffa.d4rkbotkt.events.listeners
 import com.mongodb.client.model.Updates
 import me.davidffa.d4rkbotkt.D4rkBot
 import me.davidffa.d4rkbotkt.Database
+import me.davidffa.d4rkbotkt.Translator
 import me.davidffa.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.entities.TextChannel
@@ -28,6 +29,9 @@ suspend fun onGuildMemberRemove(event: GuildMemberRemoveEvent) {
     }
 
     if (!Utils.hasPermissions(event.guild.selfMember, channel, listOf(Permission.MESSAGE_WRITE))) return
-    channel.sendMessage(":door: `${event.member?.user?.asTag}` saiu do servidor.").queue()
+
+    val tag = event.member?.user?.asTag ?: return
+
+    channel.sendMessage(Translator.t("events.leave", cache.locale, listOf(tag))).queue()
   }
 }

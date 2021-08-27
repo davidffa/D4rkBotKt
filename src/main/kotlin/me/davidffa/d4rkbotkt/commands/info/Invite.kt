@@ -9,7 +9,6 @@ import java.time.Instant
 
 class Invite : Command(
   "invite",
-  "Envia o link do meu convite.",
   listOf("inv", "convite"),
   category = "Info",
   botPermissions = listOf(Permission.MESSAGE_WRITE)
@@ -19,15 +18,15 @@ class Invite : Command(
 
     if (ctx.selfMember.getPermissions(ctx.channel).contains(Permission.MESSAGE_EMBED_LINKS)) {
       val embed = Embed {
-        title = "Convite"
+        title = ctx.t("commands.invite.title")
         color = Utils.randColor()
         description =
-          "<a:blobdance:804026401849475094> **Adicione-me ao seu servidor usando um dos convites abaixo**\n\n" +
-                  "[Com permissão de administrador](https://discord.com/oauth2/authorize?client_id=${selfID}&scope=bot+applications.commands&permissions=8)\n" +
-                  "[Com todas as permissões necessárias](https://discord.com/oauth2/authorize?client_id=${selfID}&scope=bot+applications.commands&permissions=1345711190)\n" +
-                  "[Sem permissões](https://discord.com/oauth2/authorize?client_id=${selfID}&scope=bot+applications.commands&permissions=0)\n" +
-                  "[Sem slash commands](https://discord.com/oauth2/authorize?client_id=${selfID}&scope=bot&permissions=0)\n\n" +
-                  "[Servidor de Suporte](https://discord.gg/dBQnxVCTEw)"
+          "${ctx.t("commands.invite.desctitle")}\n\n" +
+                  "[${ctx.t("commands.invite.admin")}](https://discord.com/oauth2/authorize?client_id=${selfID}&scope=bot+applications.commands&permissions=8)\n" +
+                  "[${ctx.t("commands.invite.needed")}](https://discord.com/oauth2/authorize?client_id=${selfID}&scope=bot+applications.commands&permissions=1345711190)\n" +
+                  "[${ctx.t("commands.invite.withoutperms")}](https://discord.com/oauth2/authorize?client_id=${selfID}&scope=bot+applications.commands&permissions=0)\n" +
+                  "[${ctx.t("commands.invite.withoutslash")}](https://discord.com/oauth2/authorize?client_id=${selfID}&scope=bot&permissions=0)\n\n" +
+                  "[${ctx.t("commands.invite.support")}](https://discord.gg/dBQnxVCTEw)"
         timestamp = Instant.now()
         footer {
           name = ctx.author.asTag
@@ -40,12 +39,12 @@ class Invite : Command(
     }
 
     ctx.channel.sendMessage(
-      "<a:blobdance:804026401849475094> **Adicione-me ao seu servidor usando um dos convites abaixo**\n\n" +
-              "Com permissão de administrador -> https://discord.com/oauth2/authorize?client_id=${selfID}&scope=bot+applications.commands&permissions=8\n" +
-              "Com todas as permissões necessárias -> https://discord.com/oauth2/authorize?client_id=${selfID}&scope=bot+applications.commands&permissions=1345711190\n" +
-              "Sem permissões -> https://discord.com/oauth2/authorize?client_id=${selfID}&scope=bot+applications.commands&permissions=0\n" +
-              "Sem slash commands -> https://discord.com/oauth2/authorize?client_id=${selfID}&scope=bot&permissions=0\n\n" +
-              "Servidor de Suporte -> https://discord.gg/dBQnxVCTEw"
+      "\${ctx.t(\"commands.invite.desctitle\")\n\n" +
+              "${ctx.t("commands.invite.admin")} -> https://discord.com/oauth2/authorize?client_id=${selfID}&scope=bot+applications.commands&permissions=8\n" +
+              "${ctx.t("commands.invite.needed")} -> https://discord.com/oauth2/authorize?client_id=${selfID}&scope=bot+applications.commands&permissions=1345711190\n" +
+              "${ctx.t("commands.invite.withoutperms")} -> https://discord.com/oauth2/authorize?client_id=${selfID}&scope=bot+applications.commands&permissions=0\n" +
+              "${ctx.t("commands.invite.withoutslash")} -> https://discord.com/oauth2/authorize?client_id=${selfID}&scope=bot&permissions=0\n\n" +
+              "${ctx.t("commands.invite.support")} -> https://discord.gg/dBQnxVCTEw"
     ).queue()
   }
 }

@@ -11,7 +11,6 @@ import java.time.Instant
 
 class Ping : Command(
   "ping",
-  "Mostra o ping de envio de mensagens e o da API",
   listOf("latency", "latencia"),
   category = "Info",
   botPermissions = listOf(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS)

@@ -1,5 +1,7 @@
 package me.davidffa.d4rkbotkt.events.listeners
 
+import me.davidffa.d4rkbotkt.D4rkBot
+import me.davidffa.d4rkbotkt.Translator
 import me.davidffa.d4rkbotkt.audio.PlayerManager
 import me.davidffa.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.Permission
@@ -18,7 +20,7 @@ fun onGuildVoiceMove(event: GuildVoiceMoveEvent) {
       manager.audioPlayer.isPaused = true
 
       if (Utils.hasPermissions(member.guild.selfMember, manager.textChannel, listOf(Permission.MESSAGE_WRITE))) {
-        manager.textChannel.sendMessage(":warning: Pausei a música porque fiquei sozinho no canal de voz, se ninguem aparecer irei sair em 2 minutos.")
+        manager.textChannel.sendMessage(Translator.t("events.voice.leaveWarning", D4rkBot.guildCache[event.guild.idLong]!!.locale, null))
           .queue {
             manager.leaveMessage = it
           }
@@ -34,7 +36,7 @@ fun onGuildVoiceMove(event: GuildVoiceMoveEvent) {
             listOf(Permission.MESSAGE_WRITE)
           )
         ) {
-          manager.textChannel.sendMessage(":x: Saí do canal de voz porque fiquei sozinho mais de 2 minutos.")
+          manager.textChannel.sendMessage(Translator.t("events.voice.leave", D4rkBot.guildCache[event.guild.idLong]!!.locale, null))
             .queue()
 
           if (manager.leaveMessage != null) {
