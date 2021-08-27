@@ -157,11 +157,11 @@ class Help : Command(
       "**Alternativas:** ${if (command.aliases != null) command.aliases.joinToString(", ") else "Nenhuma"}",
       "**Cooldown:** ${command.cooldown} segundo(s)",
       "**Permissões do bot:** ${
-        if (command.botPermissions != null) Utils.translatePermissions(command.botPermissions)
+        if (command.botPermissions != null) Utils.translatePermissions(command.botPermissions, ctx::t)
           .joinToString(", ") else "Nenhuma"
       }",
       "**Permissões de utilizador:** ${
-        if (command.userPermissions != null) Utils.translatePermissions(command.userPermissions)
+        if (command.userPermissions != null) Utils.translatePermissions(command.userPermissions, ctx::t)
           .joinToString(", ") else "Nenhuma"
       }"
     )

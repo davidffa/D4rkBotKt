@@ -374,53 +374,53 @@ object Utils {
     return cost[lhsLength - 1]
   }
 
-  fun translatePermissions(permissions: List<Permission>): List<String> {
+  fun translatePermissions(permissions: List<Permission>, t: (String) -> String): List<String> {
     return permissions.map {
-      translatePermission(it)
+      translatePermission(it, t)
     }
   }
 
-  fun translatePermission(permission: Permission): String {
+  fun translatePermission(permission: Permission, t: (String) -> String): String {
     return when (permission) {
-      CREATE_INSTANT_INVITE -> "Criar convites"
-      KICK_MEMBERS -> "Expulsar Membros"
-      BAN_MEMBERS -> "Banir Membros"
-      ADMINISTRATOR -> "Administrador"
-      MANAGE_CHANNEL -> "Gerenciar Canal"
-      MANAGE_SERVER -> "Gerenciar Servidor"
-      VIEW_AUDIT_LOGS -> "Ver o registo de auditoria"
-      PRIORITY_SPEAKER -> "Voz Prioritária"
-      VOICE_STREAM -> "Transmitir"
-      VIEW_CHANNEL -> "Ver Canal"
-      MESSAGE_WRITE -> "Enviar Mensagens"
-      MESSAGE_TTS -> "Enviar mensagens em TTS"
-      MESSAGE_MANAGE -> "Gerenciar Mensagens"
-      MESSAGE_EMBED_LINKS -> "Inserir Links"
-      MESSAGE_ATTACH_FILES -> "Anexar Arquivos"
-      MESSAGE_READ -> "Ler mensagens"
-      MESSAGE_HISTORY -> "Ler o histórico de mensagens"
-      MANAGE_PERMISSIONS -> "Gerenciar Permissões"
-      MESSAGE_MENTION_EVERYONE -> "Mencionar everyone"
-      MESSAGE_EXT_EMOJI -> "Utilizar emojis externos"
-      VIEW_GUILD_INSIGHTS -> "Ver análises do servidor"
-      VOICE_CONNECT -> "Conectar ao canal de voz"
-      VOICE_SPEAK -> "Falar no canal de voz"
-      VOICE_MUTE_OTHERS -> "Silenciar membros"
-      VOICE_DEAF_OTHERS -> "Ensurdecer membros"
-      VOICE_MOVE_OTHERS -> "Mover membros"
-      VOICE_USE_VAD -> "Usar deteção de voz"
-      NICKNAME_CHANGE -> "Mudar de nickname"
-      NICKNAME_MANAGE -> "Gerenciar nicknames"
-      MANAGE_WEBHOOKS -> "Gerenciar Webhooks"
-      MANAGE_EMOTES -> "Gerenciar Emojis"
-      USE_SLASH_COMMANDS -> "Usar commandos de /"
-      MESSAGE_ADD_REACTION -> "Adicionar reações"
-      MANAGE_ROLES -> "Gerenciar Cargos"
-      REQUEST_TO_SPEAK -> "Requisitar para falar"
-      MANAGE_THREADS -> "Gerenciar Threads"
-      USE_PUBLIC_THREADS -> "Usar Threads públicos"
-      USE_PRIVATE_THREADS -> "Usar Threads privados"
-      UNKNOWN -> "Desconhecido"
+      CREATE_INSTANT_INVITE -> t("permissions.createInstantInvite")
+      KICK_MEMBERS -> t("permissions.kickMembers")
+      BAN_MEMBERS -> t("permissions.banMembers")
+      ADMINISTRATOR -> t("permissions.administrator")
+      MANAGE_CHANNEL -> t("permissions.manageChannel")
+      MANAGE_SERVER -> t("permissions.manageServer")
+      VIEW_AUDIT_LOGS -> t("permissions.viewAuditLogs")
+      PRIORITY_SPEAKER -> t("permissions.prioritySpeaker")
+      VOICE_STREAM -> t("permissions.voiceStream")
+      VIEW_CHANNEL -> t("permissions.viewChannel")
+      MESSAGE_WRITE -> t("permissions.messageWrite")
+      MESSAGE_TTS -> t("permissions.messageTTS")
+      MESSAGE_MANAGE -> t("permissions.messageManage")
+      MESSAGE_EMBED_LINKS -> t("permissions.messageEmbedLinks")
+      MESSAGE_ATTACH_FILES -> t("permissions.messageAttachFiles")
+      MESSAGE_READ -> t("permissions.messageRead")
+      MESSAGE_HISTORY -> t("permissions.messageHistory")
+      MANAGE_PERMISSIONS -> t("permissions.managePermissions")
+      MESSAGE_MENTION_EVERYONE -> t("permissions.mentionEveryone")
+      MESSAGE_EXT_EMOJI -> t("permissions.extEmoji")
+      VIEW_GUILD_INSIGHTS -> t("permissions.viewGuildInsights")
+      VOICE_CONNECT -> t("permissions.voiceConnect")
+      VOICE_SPEAK -> t("permissions.voiceSpeak")
+      VOICE_MUTE_OTHERS -> t("permissions.voiceMute")
+      VOICE_DEAF_OTHERS -> t("permissions.voiceDeaf")
+      VOICE_MOVE_OTHERS -> t("permissions.voiceMove")
+      VOICE_USE_VAD -> t("permissions.voiceVad")
+      NICKNAME_CHANGE -> t("permissions.nicknameChange")
+      NICKNAME_MANAGE ->  t("permissions.manageNicknames")
+      MANAGE_WEBHOOKS -> t("permissions.manageWebhooks")
+      MANAGE_EMOTES -> t("permissions.manageEmotes")
+      USE_SLASH_COMMANDS -> t("permissions.useSlashCommands")
+      MESSAGE_ADD_REACTION -> t("permissions.addReactions")
+      MANAGE_ROLES -> t("permissions.manageRoles")
+      REQUEST_TO_SPEAK -> t("permissions.requestToSpeak")
+      MANAGE_THREADS -> t("permissions.manageThreads")
+      USE_PUBLIC_THREADS -> t("permissions.usePublicThreads")
+      USE_PRIVATE_THREADS -> t("permissions.usePrivateThreads")
+      UNKNOWN -> t("permissions.unknown")
     }
   }
 }

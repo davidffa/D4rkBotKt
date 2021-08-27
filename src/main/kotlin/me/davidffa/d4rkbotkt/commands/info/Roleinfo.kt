@@ -66,7 +66,7 @@ class Roleinfo : Command(
         value =
           "```\n${
             if (role.permissions.isEmpty()) ctx.t("commands.roleinfo.fields.permissions.value.none")
-            else Utils.translatePermissions(role.permissions.toList()).joinToString(", ")
+            else Utils.translatePermissions(role.permissions.toList(), ctx::t).joinToString(", ")
           }```"
         inline = false
       }

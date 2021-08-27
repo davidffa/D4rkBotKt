@@ -146,7 +146,7 @@ class Userinfo : Command(
         name = ctx.t("commands.userinfo.permissions.name")
         value = "```\n${
           if (permissions.isEmpty()) ctx.t("commands.userinfo.permissions.name")
-          else Utils.translatePermissions(permissions.toList()).joinToString(", ")
+          else Utils.translatePermissions(permissions.toList(), ctx::t).joinToString(", ")
         }```"
         inline = false
       }

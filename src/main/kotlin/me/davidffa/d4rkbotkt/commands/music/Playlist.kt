@@ -33,7 +33,7 @@ class Playlist : Command(
     val helpEmbed = Embed {
       title = ctx.t("commands.playlist.help.title")
       description = "${
-        ctx.t("commands.playlist.help.description", listOf(ctx.prefix)).split("\n").joinToString("─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─\n")
+        ctx.t("commands.playlist.help.description", listOf(ctx.prefix)).split("\n").joinToString("\n─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─\n")
       }```"
       color = Utils.randColor()
       footer {

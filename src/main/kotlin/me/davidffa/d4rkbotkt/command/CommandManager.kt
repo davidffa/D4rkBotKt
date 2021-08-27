@@ -2,6 +2,7 @@ package me.davidffa.d4rkbotkt.command
 
 import dev.minn.jda.ktx.await
 import me.davidffa.d4rkbotkt.D4rkBot
+import me.davidffa.d4rkbotkt.Translator
 import me.davidffa.d4rkbotkt.commands.Help
 import me.davidffa.d4rkbotkt.commands.dev.Eval
 import me.davidffa.d4rkbotkt.commands.info.*
@@ -106,6 +107,10 @@ object CommandManager {
     val invoke = split[0].lowercase()
     val cmd = this.getCommand(invoke, event.author.id)
 
+    fun t(path: String, placeholders: List<String>? = null): String {
+      return Translator.t(path, D4rkBot.guildCache[event.guild.idLong]!!.locale, placeholders)
+    }
+
     if (cmd != null) {
       if (cmd.botPermissions != null) {
         val botMissingPermissions =
@@ -116,19 +121,25 @@ object CommandManager {
 
           if (botMissingPermissions.size > 1) {
             event.channel.sendMessage(
-              ":x: Preciso das permissões `${
-                Utils.translatePermissions(
-                  botMissingPermissions
-                ).joinToString(", ")
-              }` para executar esse comando!"
+              t(
+                "commandManager.botNeedPermissions", listOf(
+                  Utils.translatePermissions(
+                    botMissingPermissions,
+                    ::t
+                  ).joinToString(", ")
+                )
+              )
             ).queue()
           } else {
             event.channel.sendMessage(
-              ":x: Preciso da permissão `${
-                Utils.translatePermission(
-                  botMissingPermissions[0]
+              t(
+                "commandManager.botNeedPermission", listOf(
+                  Utils.translatePermission(
+                    botMissingPermissions.first(),
+                    ::t
+                  )
                 )
-              }` para executar esse comando!"
+              )
             ).queue()
           }
           return
@@ -145,19 +156,25 @@ object CommandManager {
           if (userMissingPermissions.isNotEmpty()) {
             if (userMissingPermissions.size > 1) {
               event.channel.sendMessage(
-                ":x: Precisas das permissões `${
-                  Utils.translatePermissions(
-                    userMissingPermissions
-                  ).joinToString(", ")
-                }` para executar esse comando!"
+                t(
+                  "commandManager.botNeedPermissions", listOf(
+                    Utils.translatePermissions(
+                      userMissingPermissions,
+                      ::t
+                    ).joinToString(", ")
+                  )
+                )
               ).queue()
             } else {
               event.channel.sendMessage(
-                ":x: Precisas da permissão `${
-                  Utils.translatePermission(
-                    userMissingPermissions[0]
+                t(
+                  "commandManager.botNeedPermission", listOf(
+                    Utils.translatePermission(
+                      userMissingPermissions.first(),
+                      ::t
+                    )
                   )
-                }` para executar esse comando!"
+                )
               ).queue()
             }
             return
@@ -178,7 +195,7 @@ object CommandManager {
 
         if (expirationTime != null && now < expirationTime) {
           val timeLeft = (expirationTime - now) / 1e3
-          event.channel.sendMessage(":clock1: Espera mais `${"%.1f".format(timeLeft)}` segundos para voltares a usar o comando `${cmd.name}`")
+          event.channel.sendMessage(t("commandManager.cooldown", listOf("%.1f".format(timeLeft), cmd.name)))
             .queue()
           return
         }
@@ -187,7 +204,7 @@ object CommandManager {
       val args = split.subList(1, split.size)
 
       if (cmd.args > args.size) {
-        event.channel.sendMessage(":x: Argumentos em falta! **Usa:** `$prefix${cmd.name} ${cmd.usage}`").queue()
+        event.channel.sendMessage(t("commandManager.argsMissing", listOf("$prefix${cmd.name} ${cmd.usage}"))).queue()
         return
       }
 
@@ -225,7 +242,7 @@ object CommandManager {
       }
 
       val msg =
-        event.channel.sendMessage(":x: Eu não tenho esse comando.\n:thinking: Querias dizer `$prefix$suggest`?").await()
+        event.channel.sendMessage(t("commandManager.didUMean", listOf("$prefix$suggest"))).await()
 
       Timer().schedule(timerTask {
         msg.delete().queue()
