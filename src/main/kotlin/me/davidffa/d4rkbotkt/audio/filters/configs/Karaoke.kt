@@ -6,6 +6,6 @@ import com.sedmelluq.discord.lavaplayer.format.AudioDataFormat
 
 fun karaoke(format: AudioDataFormat, output: FloatPcmAudioFilter): List<FloatPcmAudioFilter> {
   return listOf(KaraokePcmAudioFilter(output, format.channelCount, format.sampleRate).also {
-    it.monoLevel = 3.5f
+    it.monoLevel = 2.5f
   })
 }
