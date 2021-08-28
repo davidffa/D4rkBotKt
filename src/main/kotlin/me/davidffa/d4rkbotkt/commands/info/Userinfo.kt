@@ -144,7 +144,7 @@ class Userinfo : Command(
       embed.field {
         name = ctx.t("commands.userinfo.permissions.name")
         value = "```\n${
-          if (permissions.isEmpty()) ctx.t("commands.userinfo.permissions.name")
+          if (permissions.isEmpty()) ctx.t("commands.userinfo.permissions.none")
           else Utils.translatePermissions(permissions.toList(), ctx::t).joinToString(", ")
         }```"
         inline = false

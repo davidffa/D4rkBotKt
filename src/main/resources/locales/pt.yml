@@ -88,7 +88,7 @@ commands:
       high: "Alto"
       veryhigh: "Muito Alto"
     botjoined:
-      name: ":calendar: I joined on"
+      name: ":calendar: Entrei em"
     boosts:
       level: "Nível:"
       amount: "Quantidade:"

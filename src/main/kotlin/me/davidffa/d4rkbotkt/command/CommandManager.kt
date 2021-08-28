@@ -158,7 +158,7 @@ object CommandManager {
             if (userMissingPermissions.size > 1) {
               event.channel.sendMessage(
                 t(
-                  "commandManager.botNeedPermissions", listOf(
+                  "commandManager.userNeedPermissions", listOf(
                     Utils.translatePermissions(
                       userMissingPermissions,
                       ::t
@@ -169,7 +169,7 @@ object CommandManager {
             } else {
               event.channel.sendMessage(
                 t(
-                  "commandManager.botNeedPermission", listOf(
+                  "commandManager.userNeedPermission", listOf(
                     Utils.translatePermission(
                       userMissingPermissions.first(),
                       ::t

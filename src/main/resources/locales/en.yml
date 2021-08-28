@@ -89,7 +89,7 @@ commands:
       high: "High"
       veryhigh: "Very High"
     botjoined:
-      name: ":calendar: I joined on"
+      name: ":calendar: I joined at"
       value: "<t:{0}:d> (<t:{0}:R>)"
     boosts:
       name: "<:badgebooster:803666384373809233> Boosts"
