@@ -85,7 +85,7 @@ object Utils {
   }
 
   fun findRole(query: String, guild: Guild): Role? {
-    val id = if (Regex("^<&\\d{17,18}>$").matches(query)) query.replace(Regex("[<&>]"), "")
+    val id = if (Regex("^<@&\\d{17,18}>$").matches(query)) query.replace(Regex("[<@&>]"), "")
     else if (Regex("^\\d{17,18}$").matches(query)) query
     else null
 
