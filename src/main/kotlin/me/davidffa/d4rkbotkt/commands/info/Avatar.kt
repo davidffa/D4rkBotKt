@@ -10,7 +10,6 @@ import java.time.Instant
 class Avatar : Command(
   "avatar",
   listOf("av"),
-  "[ID/Nome]",
   "Info",
   botPermissions = listOf(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS),
   cooldown = 3

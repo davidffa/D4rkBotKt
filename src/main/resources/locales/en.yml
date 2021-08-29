@@ -334,6 +334,24 @@ help:
   setprefix: "Change my prefix on the server."
   help: "Displays the bot command list."
 
+usages:
+  eval: "<Code>"
+  avatar: "[ID/Name]"
+  channelinfo: "[Channel ID/Name]"
+  roleinfo: "<Role/ID>"
+  userinfo: "[ID/Name]"
+  loop: "<Track/Queue>"
+  play: "<Name/URL>"
+  remove: "<Position>"
+  search: "[yt/ytm/sc] <Song name>"
+  seek: "<Time>"
+  volume: "[value]"
+  github: "<Name>"
+  render: "<URL>"
+  djrole: "[Role/0]"
+  setlang: "<pt/en>"
+  setprefix: "<Prefix>"
+
 music:
   queueEnd: ":notes: Queue ended!"
   playlistLoadedTitle: "<a:disco:803678643661832233> Playlist loaded"

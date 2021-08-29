@@ -9,7 +9,6 @@ import net.dv8tion.jda.api.Permission
 class Volume : Command(
   "volume",
   listOf("vol"),
-  "[valor]",
   "Music",
   listOf(Permission.MESSAGE_WRITE),
   cooldown = 4

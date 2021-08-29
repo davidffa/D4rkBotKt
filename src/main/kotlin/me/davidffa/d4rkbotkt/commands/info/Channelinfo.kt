@@ -16,7 +16,6 @@ import java.time.Instant
 class Channelinfo : Command(
   "channelinfo",
   listOf("chinfo"),
-  "[ID do canal/Nome]",
   "Info",
   listOf(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS, Permission.MESSAGE_EXT_EMOJI),
   cooldown = 5

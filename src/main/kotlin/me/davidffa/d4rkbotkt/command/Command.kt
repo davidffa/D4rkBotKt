@@ -5,7 +5,6 @@ import net.dv8tion.jda.api.Permission
 abstract class Command(
   val name: String,
   val aliases: List<String>? = null,
-  val usage: String? = null,
   val category: String = "Others",
   val botPermissions: List<Permission>? = null,
   val userPermissions: List<Permission>? = null,

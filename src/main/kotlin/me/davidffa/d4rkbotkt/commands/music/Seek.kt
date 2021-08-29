@@ -9,7 +9,6 @@ import kotlin.math.pow
 
 class Seek : Command(
   "seek",
-  usage = "<Tempo>",
   category = "Music",
   botPermissions = listOf(Permission.MESSAGE_WRITE),
   args = 1,

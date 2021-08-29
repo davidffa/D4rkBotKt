@@ -22,7 +22,6 @@ import kotlin.concurrent.timerTask
 class Search : Command(
   "search",
   listOf("procurar", "searchmusic"),
-  "[yt/sc] <Nome da música>",
   "Music",
   listOf(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS),
   args = 1,

@@ -11,7 +11,6 @@ import javax.script.ScriptEngineManager
 class Eval : Command(
   "eval",
   aliases = listOf("e", "evl", "evaluate"),
-  "<código>",
   "Dev",
   botPermissions = listOf(Permission.MESSAGE_WRITE),
   cooldown = 0,

@@ -9,7 +9,6 @@ import net.dv8tion.jda.api.Permission
 class Loop : Command(
   "loop",
   listOf("repeat"),
-  "<Track/Queue>",
   "Music",
   botPermissions = listOf(Permission.MESSAGE_WRITE),
   cooldown = 4,
@@ -33,7 +32,7 @@ class Loop : Command(
         else ctx.channel.sendMessage(ctx.t("commands.loop.queue.switchOff")).queue()
       }
       else -> {
-        ctx.channel.sendMessage(ctx.t("commands.loop.wrongusage", listOf("${ctx.prefix}${this.name} ${this.usage}"))).queue()
+        ctx.channel.sendMessage(ctx.t("commands.loop.wrongusage", listOf("${ctx.prefix}${this.name} ${ctx.t("usages.${this.name}")}"))).queue()
       }
     }
   }

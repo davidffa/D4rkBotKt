@@ -205,7 +205,7 @@ object CommandManager {
       val args = split.subList(1, split.size)
 
       if (cmd.args > args.size) {
-        event.channel.sendMessage(t("commandManager.argsMissing", listOf("$prefix${cmd.name} ${cmd.usage}"))).queue()
+        event.channel.sendMessage(t("commandManager.argsMissing", listOf("$prefix${cmd.name} ${t("usages.${cmd.name}")}"))).queue()
         return
       }
 

@@ -19,7 +19,6 @@ import java.util.zip.Inflater
 class Render : Command(
   "render",
   listOf("renderizar", "webrender"),
-  "<URL>",
   "Others",
   botPermissions = listOf(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS, Permission.MESSAGE_ATTACH_FILES),
   args = 1,

@@ -10,7 +10,6 @@ import net.dv8tion.jda.api.Permission
 class Remove : Command(
   "remove",
   listOf("remover"),
-  "<Posição>",
   "Music",
   listOf(Permission.MESSAGE_WRITE),
   args = 1,

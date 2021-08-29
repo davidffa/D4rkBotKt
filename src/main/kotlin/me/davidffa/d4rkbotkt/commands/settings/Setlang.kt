@@ -12,7 +12,6 @@ import net.dv8tion.jda.api.Permission
 class Setlang : Command(
   "setlang",
   listOf("lang", "setlanguage"),
-  "<pt/en>",
   "Settings",
   listOf(Permission.MESSAGE_WRITE),
   listOf(Permission.MANAGE_SERVER),

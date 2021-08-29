@@ -11,7 +11,6 @@ import net.dv8tion.jda.api.Permission
 class Setprefix : Command(
   "setprefix",
   listOf("prefix", "prefixo", "setarprefixo", "setprefixo"),
-  "<Prefixo>",
   "Settings",
   listOf(Permission.MESSAGE_WRITE),
   listOf(Permission.MANAGE_SERVER),

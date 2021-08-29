@@ -14,7 +14,6 @@ import java.time.Instant
 class Userinfo : Command(
   "userinfo",
   listOf("ui"),
-  "[nome/id]",
   "Info",
   listOf(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS),
   cooldown = 5

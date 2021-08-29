@@ -10,7 +10,6 @@ import net.dv8tion.jda.api.Permission
 class Play : Command(
   "play",
   aliases = listOf("p", "tocar"),
-  "<Nome/URL>",
   "Music",
   botPermissions = listOf(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS),
   cooldown = 2,
