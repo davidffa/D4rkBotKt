@@ -5,6 +5,7 @@ import dev.minn.jda.ktx.Embed
 import dev.minn.jda.ktx.await
 import me.davidffa.d4rkbotkt.D4rkBot
 import me.davidffa.d4rkbotkt.Database
+import me.davidffa.d4rkbotkt.audio.PlayerManager
 import me.davidffa.d4rkbotkt.command.Command
 import me.davidffa.d4rkbotkt.command.CommandContext
 import me.davidffa.d4rkbotkt.utils.Utils
@@ -43,7 +44,7 @@ class Botinfo : Command(
 
     val embed = Embed {
       title = ctx.t("commands.botinfo.title")
-      description = ctx.t("commands.botinfo.description", listOf(ctx.jda.selfUser.id, hal.processor.processorIdentifier.name, D4rkBot.commandsUsed.toString()))
+      description = ctx.t("commands.botinfo.description", listOf(ctx.jda.selfUser.id, hal.processor.processorIdentifier.name, D4rkBot.commandsUsed.toString(), PlayerManager.musicManagers.size.toString()))
       color = 15695386
       field {
         name = ctx.t("commands.botinfo.fields.id")

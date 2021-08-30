@@ -4,7 +4,7 @@ commands:
     description: ":diamond_shape_with_a_dot_inside: [Clica aqui]({0}) para baixar o avatar!"
   botinfo:
     title: "<a:blobdance:804026401849475094> Informações sobre mim"
-    description: "**[Convite](https://discord.com/oauth2/authorize?client_id={0}&scope=bot+applications.commands&permissions=8)**\n**[Servidor de Suporte](https://discord.gg/dBQnxVCTEw)**\n\nModelo da CPU: `{1}`\nTotal de comandos executados `{2}`\n\u200B"
+    description: "**[Convite](https://discord.com/oauth2/authorize?client_id={0}&scope=bot+applications.commands&permissions=8)**\n**[Servidor de Suporte](https://discord.gg/dBQnxVCTEw)**\n\nModelo da CPU: `{1}`\nTotal de comandos executados `{2}`\n:notes: Players a tocar: `{3}`\n\u200B"
     fields:
       id: ":id: Meu ID"
       owner: ":man: Dono"

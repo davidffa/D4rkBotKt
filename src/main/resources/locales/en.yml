@@ -5,7 +5,7 @@ commands:
     description: ":diamond_shape_with_a_dot_inside: [Click here]({0}) to download the avatar!"
   botinfo:
     title: "<a:blobdance:804026401849475094> Information about me"
-    description: "**[Invite](https://discord.com/oauth2/authorize?client_id={0}&scope=bot+applications.commands&permissions=8)**\n**[Support server](https://discord.gg/dBQnxVCTEw)**\n\nCPU Model: `{1}`\nTotal executed commands `{2}`\n\u200B"
+    description: "**[Invite](https://discord.com/oauth2/authorize?client_id={0}&scope=bot+applications.commands&permissions=8)**\n**[Support server](https://discord.gg/dBQnxVCTEw)**\n\nCPU Model: `{1}`\nTotal executed commands `{2}`\n:notes: Active players: `{3}`\n\u200B"
     fields:
       id: ":id: My ID"
       owner: ":man: Owner"
