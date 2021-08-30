@@ -16,7 +16,6 @@ import me.davidffa.d4rkbotkt.audio.spotify.SpotifyTrack
 import me.davidffa.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.entities.Member
-import net.dv8tion.jda.api.entities.Message
 import net.dv8tion.jda.api.entities.TextChannel
 import okhttp3.Call
 import okhttp3.Callback
@@ -36,7 +35,7 @@ class TrackScheduler(private val player: AudioPlayer, private val textChannel: T
   lateinit var current: Track
 
   private val guild = textChannel.guild
-  private var npMessage: Message? = null
+  private var npMessage: Long? = null
 
   var queueLoop = false
   var trackLoop = false
@@ -131,7 +130,11 @@ class TrackScheduler(private val player: AudioPlayer, private val textChannel: T
   }
 
   fun destroy() {
-    if (this.npMessage != null) this.npMessage?.delete()?.queue()
+    if (this.npMessage != null && this.textChannel.history.getMessageById(this.npMessage!!) != null) {
+      this.textChannel.deleteMessageById(this.npMessage!!).queue()
+      this.npMessage = null
+    }
+
     this.queue.clear()
     this.player.destroy()
 
@@ -141,8 +144,8 @@ class TrackScheduler(private val player: AudioPlayer, private val textChannel: T
 
     val manager = PlayerManager.getMusicManager(guild.idLong)
 
-    if (manager.djtableMessage != null) {
-      manager.djtableMessage?.delete()?.queue()
+    if (manager.djtableMessage != null && this.textChannel.history.getMessageById(manager.djtableMessage!!) != null) {
+      this.textChannel.deleteMessageById(manager.djtableMessage!!).queue()
       manager.djtableMessage = null
     }
 
@@ -154,8 +157,8 @@ class TrackScheduler(private val player: AudioPlayer, private val textChannel: T
   }
 
   override fun onTrackStart(player: AudioPlayer, track: AudioTrack) {
-    if (this.npMessage != null) {
-      this.npMessage?.delete()?.queue()
+    if (this.npMessage != null && this.textChannel.history.getMessageById(this.npMessage!!) != null) {
+      this.textChannel.deleteMessageById(this.npMessage!!).queue()
       this.npMessage = null
     }
 
@@ -195,7 +198,7 @@ class TrackScheduler(private val player: AudioPlayer, private val textChannel: T
       timestamp = Instant.now()
     }
 
-    textChannel.sendMessageEmbeds(embed).queue { this.npMessage = it }
+    textChannel.sendMessageEmbeds(embed).queue { this.npMessage = it.idLong }
   }
 
   override fun onTrackException(player: AudioPlayer, track: AudioTrack, exception: FriendlyException) {

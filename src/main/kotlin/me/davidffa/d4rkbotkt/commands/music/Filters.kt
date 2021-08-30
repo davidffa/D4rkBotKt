@@ -9,7 +9,6 @@ import me.davidffa.d4rkbotkt.audio.filters.Filter
 import me.davidffa.d4rkbotkt.command.Command
 import me.davidffa.d4rkbotkt.command.CommandContext
 import me.davidffa.d4rkbotkt.utils.Utils
-import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.entities.Emoji
 import net.dv8tion.jda.api.events.interaction.GenericComponentInteractionCreateEvent
@@ -93,7 +92,7 @@ class Filters : Command(
       .await()
 
     val listeners = mutableListOf<CoroutineEventListener>()
-    manager.djtableMessage = msg
+    manager.djtableMessage = msg.idLong
 
     val timer = Timer()
     timer.schedule(timerTask {
@@ -158,7 +157,7 @@ class Filters : Command(
 
     val msg = manager.djtableMessage ?: return
 
-    msg.editMessage(ctx.t("commands.filters.closetable"))
+    manager.textChannel.editMessageById(msg, ctx.t("commands.filters.closetable"))
       .setEmbeds(emptyList())
       .setActionRows(emptyList())
       .queue()

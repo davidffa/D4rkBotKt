@@ -14,7 +14,7 @@ class GuildMusicManager(manager: AudioPlayerManager, val textChannel: TextChanne
   val sendHandler = AudioPlayerSendHandler(this.audioPlayer)
 
   var leaveMessage: Message? = null
-  var djtableMessage: Message? = null
+  var djtableMessage: Long? = null
   var leaveTimer: Timer? = null
 
   val filters = mutableListOf<Filter>()
