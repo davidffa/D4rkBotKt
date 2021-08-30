@@ -12,6 +12,6 @@ fun onGuildVoiceJoin(event: GuildVoiceJoinEvent) {
     manager.audioPlayer.isPaused = false
     manager.leaveTimer?.cancel()
     manager.leaveTimer = null
-    manager.leaveMessage?.delete()?.queue()
+    manager.textChannel.deleteMessageById(manager.leaveMessage!!).queue()
   }
 }

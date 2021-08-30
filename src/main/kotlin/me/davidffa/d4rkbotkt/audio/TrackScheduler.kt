@@ -35,7 +35,7 @@ class TrackScheduler(private val player: AudioPlayer, private val textChannel: T
   lateinit var current: Track
 
   private val guild = textChannel.guild
-  private var npMessage: Long? = null
+  var npMessage: Long? = null
 
   var queueLoop = false
   var trackLoop = false
@@ -130,7 +130,7 @@ class TrackScheduler(private val player: AudioPlayer, private val textChannel: T
   }
 
   fun destroy() {
-    if (this.npMessage != null && this.textChannel.history.getMessageById(this.npMessage!!) != null) {
+    if (this.npMessage != null) {
       this.textChannel.deleteMessageById(this.npMessage!!).queue()
       this.npMessage = null
     }
@@ -144,7 +144,7 @@ class TrackScheduler(private val player: AudioPlayer, private val textChannel: T
 
     val manager = PlayerManager.getMusicManager(guild.idLong)
 
-    if (manager.djtableMessage != null && this.textChannel.history.getMessageById(manager.djtableMessage!!) != null) {
+    if (manager.djtableMessage != null) {
       this.textChannel.deleteMessageById(manager.djtableMessage!!).queue()
       manager.djtableMessage = null
     }
@@ -157,7 +157,7 @@ class TrackScheduler(private val player: AudioPlayer, private val textChannel: T
   }
 
   override fun onTrackStart(player: AudioPlayer, track: AudioTrack) {
-    if (this.npMessage != null && this.textChannel.history.getMessageById(this.npMessage!!) != null) {
+    if (this.npMessage != null) {
       this.textChannel.deleteMessageById(this.npMessage!!).queue()
       this.npMessage = null
     }

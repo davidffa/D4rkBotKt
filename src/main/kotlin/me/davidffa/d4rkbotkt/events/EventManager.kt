@@ -12,6 +12,7 @@ import net.dv8tion.jda.api.events.guild.member.GuildMemberRemoveEvent
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceJoinEvent
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceLeaveEvent
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceMoveEvent
+import net.dv8tion.jda.api.events.message.guild.GuildMessageDeleteEvent
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent
 
 object EventManager {
@@ -27,6 +28,7 @@ object EventManager {
         is GuildLeaveEvent -> onGuildLeave(event)
         is GuildMemberJoinEvent -> onGuildMemberJoin(event)
         is GuildMemberRemoveEvent -> onGuildMemberRemove(event)
+        is GuildMessageDeleteEvent -> onGuildMessageDelete(event)
       }
     }
   }

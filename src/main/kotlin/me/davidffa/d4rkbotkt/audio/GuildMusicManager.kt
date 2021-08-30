@@ -13,7 +13,7 @@ class GuildMusicManager(manager: AudioPlayerManager, val textChannel: TextChanne
   val scheduler = TrackScheduler(this.audioPlayer, textChannel)
   val sendHandler = AudioPlayerSendHandler(this.audioPlayer)
 
-  var leaveMessage: Message? = null
+  var leaveMessage: Long? = null
   var djtableMessage: Long? = null
   var leaveTimer: Timer? = null
 

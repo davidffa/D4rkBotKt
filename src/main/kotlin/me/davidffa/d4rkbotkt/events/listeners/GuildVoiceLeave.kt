@@ -22,7 +22,7 @@ fun onGuildVoiceLeave(event: GuildVoiceLeaveEvent) {
 
     if (manager.leaveMessage != null) {
       manager.leaveTimer?.cancel()
-      manager.leaveMessage?.delete()?.queue()
+      manager.textChannel.deleteMessageById(manager.leaveMessage!!).queue()
     }
     manager.scheduler.destroy()
     return
@@ -36,7 +36,7 @@ fun onGuildVoiceLeave(event: GuildVoiceLeaveEvent) {
     if (Utils.hasPermissions(member.guild.selfMember, manager.textChannel, listOf(Permission.MESSAGE_WRITE))) {
       manager.textChannel.sendMessage(Translator.t("events.voice.leaveWarning", D4rkBot.guildCache[event.guild.idLong]!!.locale, null))
         .queue {
-          manager.leaveMessage = it
+          manager.leaveMessage = it.idLong
         }
     }
 
@@ -49,7 +49,7 @@ fun onGuildVoiceLeave(event: GuildVoiceLeaveEvent) {
           .queue()
 
         if (manager.leaveMessage != null) {
-          manager.leaveMessage?.delete()?.queue()
+          manager.textChannel.deleteMessageById(manager.leaveMessage!!).queue()
         }
         manager.scheduler.destroy()
       }
