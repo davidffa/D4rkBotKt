@@ -55,6 +55,8 @@ class Spotify(
     val spotifyTracks = mutableListOf<SpotifyTrack>()
 
     for (i in 0 until tracks.length()) {
+      if (tracks.getObject(i).isNull("track")) continue
+
       spotifyTracks.add(buildTrack(tracks.getObject(i).getObject("track"), requester))
     }
 
@@ -103,7 +105,7 @@ class Spotify(
       return
     }
 
-    val json = DataObject.fromJson(withContext(Dispatchers.IO) { res.body()!!.string() })
+    val json = DataObject.fromJson(withContext(Dispatchers.IO) { body.string() })
     res.close()
     renewDate = Instant.now().toEpochMilli() + json.getLong("expires_in") * 1000
     token = "${json.getString("token_type")} ${json.getString("access_token")}"
