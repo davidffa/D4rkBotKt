@@ -32,7 +32,6 @@ object PlayerManager {
 
   init {
     AudioSourceManagers.registerRemoteSources(audioPlayerManager)
-    AudioSourceManagers.registerLocalSource(audioPlayerManager)
     audioPlayerManager.configuration.isFilterHotSwapEnabled = true
   }
 
