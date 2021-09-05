@@ -34,15 +34,25 @@ class Spotify(
   }
 
   suspend fun getAlbum(id: String, requester: Member): List<SpotifyTrack> {
-    val json = makeRequest("albums/$id/tracks")
-
-    val tracks = json.getArray("items")
-
     val spotifyTracks = mutableListOf<SpotifyTrack>()
 
-    for (i in 0 until tracks.length()) {
-      spotifyTracks.add(buildTrack(tracks.getObject(i), requester))
-    }
+    var offset = 0
+    var next: Boolean
+
+    do {
+      val json = makeRequest("albums/$id/tracks?offset=$offset&limit=50")
+
+      next = !json.isNull("next")
+
+      val tracks = json.getArray("items")
+
+      for (i in 0 until tracks.length()) {
+        spotifyTracks.add(buildTrack(tracks.getObject(i), requester))
+      }
+
+      offset += 50
+    } while (next && spotifyTracks.size < 400)
+
 
     return spotifyTracks.toList()
   }
@@ -51,12 +61,12 @@ class Spotify(
     val spotifyTracks = mutableListOf<SpotifyTrack>()
 
     var offset = 0
-    var total = 0
+    var next: Boolean
 
     do {
       val json = makeRequest("playlists/$id/tracks?offset=$offset&limit=100")
 
-      if (total == 0) total = json.getInt("total")
+      next = !json.isNull("next")
 
       val tracks = json.getArray("items")
 
@@ -67,7 +77,7 @@ class Spotify(
       }
 
       offset += 100
-    } while (spotifyTracks.size < total && spotifyTracks.size < 400)
+    } while (next && spotifyTracks.size < 400)
 
     return spotifyTracks.toList()
   }
