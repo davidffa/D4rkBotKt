@@ -408,6 +408,7 @@ object Utils {
       MANAGE_PERMISSIONS -> t("permissions.managePermissions")
       MESSAGE_MENTION_EVERYONE -> t("permissions.mentionEveryone")
       MESSAGE_EXT_EMOJI -> t("permissions.extEmoji")
+      MESSAGE_EXT_STICKER -> t("permissions.extSticker")
       VIEW_GUILD_INSIGHTS -> t("permissions.viewGuildInsights")
       VOICE_CONNECT -> t("permissions.voiceConnect")
       VOICE_SPEAK -> t("permissions.voiceSpeak")

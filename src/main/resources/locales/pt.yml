@@ -435,6 +435,7 @@ permissions:
   managePermissions: "Gerenciar Permissões"
   mentionEveryone: "Mencionar everyone"
   extEmoji: "Usar emojis externos"
+  extSticker: "Usar figurinhas externas"
   viewGuildInsights: "Ver análises do servidor"
   voiceConnect: "Conectar ao canal de voz"
   voiceSpeak: "Falar no canal de voz"
