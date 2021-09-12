@@ -306,7 +306,7 @@ object Utils {
       return true
     }
 
-    if (selfVoiceState.channel!!.members.filter { !it.user.isBot }.size <= 2) return true
+    if (selfVoiceState.channel!!.members.filter { !it.user.isBot }.size == 1) return true
     if (member.roles.contains(djRole)) return true
     if (forOwnTrack && player.scheduler.current.requester.idLong == member.idLong) return true
 
