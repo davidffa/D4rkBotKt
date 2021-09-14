@@ -1,11 +1,13 @@
 package me.davidffa.d4rkbotkt.commands.info
 
-import dev.minn.jda.ktx.Embed
+import dev.minn.jda.ktx.EmbedBuilder
+import dev.minn.jda.ktx.interactions.sendPaginator
 import me.davidffa.d4rkbotkt.command.Command
 import me.davidffa.d4rkbotkt.command.CommandContext
 import me.davidffa.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.Permission
 import java.time.Instant
+import kotlin.math.min
 
 class Roleinfo : Command(
   "roleinfo",
@@ -22,7 +24,9 @@ class Roleinfo : Command(
       return
     }
 
-    val embed = Embed {
+    val members = ctx.guild.members.filter { it.roles.contains(role) }
+
+    val embed = EmbedBuilder {
       title = ctx.t("commands.roleinfo.title", listOf(role.name))
       color = role.colorRaw
       field {
@@ -57,7 +61,7 @@ class Roleinfo : Command(
       }
       field {
         name = ctx.t("commands.roleinfo.fields.members.name")
-        value = "`${ctx.guild.members.filter { it.roles.contains(role) }.size}`"
+        value = "`${members.size}`"
       }
       field {
         name = ctx.t("commands.roleinfo.fields.permissions.name")
@@ -75,6 +79,17 @@ class Roleinfo : Command(
       }
     }
 
-    ctx.channel.sendMessageEmbeds(embed).queue()
+    val page1 = embed.build()
+
+    embed.builder.clearFields()
+    embed.description = "**${ctx.t("commands.roleinfo.fields.members.name")} [${members.size}]**\n${members.slice(0 until min(members.size, 70)).joinToString(", ") { it.asMention }}" +
+            "${if (members.size > 70) "... (${ctx.t("commands.roleinfo.more", listOf((members.size - 70).toString()))})" else ""}"
+
+    val page2 = embed.build()
+
+    ctx.channel.sendPaginator(page1, page2, expireAfter = 3 * 60 * 1000L, filter = {
+      if (it.user.idLong == ctx.author.idLong) return@sendPaginator true
+      return@sendPaginator false
+    }).queue()
   }
 }

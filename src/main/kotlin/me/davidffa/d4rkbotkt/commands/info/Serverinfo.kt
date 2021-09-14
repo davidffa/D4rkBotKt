@@ -12,6 +12,7 @@ import net.dv8tion.jda.api.entities.Guild.ExplicitContentLevel.ALL
 import net.dv8tion.jda.api.entities.Guild.ExplicitContentLevel.NO_ROLE
 import net.dv8tion.jda.api.entities.Guild.VerificationLevel.*
 import java.time.Instant
+import kotlin.math.min
 
 class Serverinfo : Command(
   "serverinfo",
@@ -120,7 +121,8 @@ class Serverinfo : Command(
     val page1 = embed.build()
 
     embed.builder.clearFields()
-    embed.description = "**${ctx.t("commands.serverinfo.roles")} [${ctx.guild.roles.size}]**\n${ctx.guild.roles.joinToString(" ") { it.asMention }}"
+    embed.description = "**${ctx.t("commands.serverinfo.roles")} [${ctx.guild.roles.size}]**\n${ctx.guild.roles.slice(0 until min(ctx.guild.roles.size, 70)).joinToString(" ") { it.asMention }}" +
+            "${if (ctx.guild.roles.size > 70) "... (${ctx.t("commands.serverinfo.more", listOf((ctx.guild.roles.size - 70).toString()))})" else ""}"
 
     val page2 = embed.build()
 
