@@ -82,7 +82,7 @@ class Roleinfo : Command(
     val page1 = embed.build()
 
     embed.builder.clearFields()
-    embed.description = "**${ctx.t("commands.roleinfo.fields.members.name")} [${members.size}]**\n${members.slice(0 until min(members.size, 50)).joinToString(", ") { "__`@${it.effectiveName}`__" }}" +
+    embed.description = "**${ctx.t("commands.roleinfo.fields.members.name")} [${members.size}]**\n${members.slice(0 until min(members.size, 50)).joinToString(", ") { "**`@${it.effectiveName}`**" }}" +
             "${if (members.size > 50) "... (${ctx.t("commands.roleinfo.more", listOf((members.size - 50).toString()))})" else ""}"
 
     val page2 = embed.build()
