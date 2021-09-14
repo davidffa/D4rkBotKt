@@ -36,7 +36,7 @@ class Botinfo : Command(
     val dbPing = Instant.now().toEpochMilli() - dbStart
 
     var processLoad = getProcessRecentCpuUsage()
-    if (processLoad.isInfinite()) processLoad = 0.0
+    if (processLoad.isInfinite()) processLoad = 100.0
 
     val systemLoad = getSystemRecentCpuUsage()
 
