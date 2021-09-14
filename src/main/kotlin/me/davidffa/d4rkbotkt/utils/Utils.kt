@@ -66,6 +66,8 @@ object Utils {
 
     val lcQuery = query.lowercase()
 
+    var startsWith = false
+
     for (m in guild.members) {
       val name = m.effectiveName
 
@@ -76,10 +78,11 @@ object Utils {
 
       if (name.startsWith(query) || name.lowercase().startsWith(lcQuery)) {
         user = m.user
-        break
+        startsWith = true
+        continue
       }
 
-      if (name.contains(query) || name.lowercase().contains(lcQuery)) user = m.user
+      if (!startsWith && (name.contains(query) || name.lowercase().contains(lcQuery))) user = m.user
     }
     return user
   }
@@ -96,6 +99,8 @@ object Utils {
     var role: Role? = null
     val lcQuery = query.lowercase()
 
+    var startsWith = false
+
     for (m in guild.roleCache) {
       val name = m.name
 
@@ -106,10 +111,11 @@ object Utils {
 
       if (name.startsWith(query) || name.lowercase().startsWith(lcQuery)) {
         role = m
-        break
+        startsWith = true
+        continue
       }
 
-      if (name.contains(query) || name.lowercase().contains(lcQuery)) role = m
+      if (!startsWith && (name.contains(query) || name.lowercase().contains(lcQuery))) role = m
     }
     return role
   }
@@ -126,6 +132,8 @@ object Utils {
     var channel: GuildChannel? = null
     val lcQuery = query.lowercase()
 
+    var startsWith = false
+
     for (m in guild.channels) {
       val name = m.name
 
@@ -136,10 +144,11 @@ object Utils {
 
       if (name.startsWith(query) || name.lowercase().startsWith(lcQuery)) {
         channel = m
-        break
+        startsWith = true
+        continue
       }
 
-      if (name.contains(query) || name.lowercase().contains(lcQuery)) channel = m
+      if (!startsWith && (name.contains(query) || name.lowercase().contains(lcQuery))) channel = m
     }
     return channel
   }
