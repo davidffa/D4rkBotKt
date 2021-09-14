@@ -72,7 +72,7 @@ commands:
         name: ":8ball: Permissions"
         value:
           none: "None"
-      more: "{0} more members"
+    more: "{0} more members"
   serverinfo:
     more: "{0} more roles"
     title: "Server {0} information"

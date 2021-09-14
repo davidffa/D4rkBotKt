@@ -71,7 +71,7 @@ commands:
         name: ":8ball: Permissões"
         value:
           none: "Nenhuma"
-      more: "Mais {0}"
+    more: "Mais {0}"
   serverinfo:
     more: "Mais {0} cargos"
     title: "Informações do servidor {0}"
