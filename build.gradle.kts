@@ -10,8 +10,8 @@ group = "me.davidffa.d4rkbotkt"
 version = "1.0.0"
 
 java {
-  sourceCompatibility = JavaVersion.VERSION_16
-  targetCompatibility = JavaVersion.VERSION_16
+  sourceCompatibility = JavaVersion.VERSION_17
+  targetCompatibility = JavaVersion.VERSION_17
 }
 
 repositories {
@@ -25,7 +25,7 @@ repositories {
 dependencies {
   // Kotlin
   implementation(kotlin("stdlib"))
-  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1")
+  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
   implementation("ru.gildor.coroutines:kotlin-coroutines-okhttp:1.0")
   implementation("org.jetbrains.kotlin:kotlin-scripting-jsr223:1.5.30")
 
