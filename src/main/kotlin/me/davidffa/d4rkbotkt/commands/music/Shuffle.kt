@@ -30,7 +30,7 @@ class Shuffle : Command(
       return
     }
 
-    musicManager.scheduler.shuffle()
+    musicManager.scheduler.queue.shuffle()
     ctx.channel.sendMessage(ctx.t("commands.shuffle")).queue()
   }
 }

@@ -35,10 +35,7 @@ class Remove : Command(
 
     val musicManager = PlayerManager.getMusicManager(ctx.guild.idLong)
 
-    val tracks = mutableListOf<Track>()
-    musicManager.scheduler.queue.drainTo(tracks)
-    tracks.removeAt(pos - 1)
-    musicManager.scheduler.queue.addAll(tracks)
+    musicManager.scheduler.queue.removeAt(pos - 1)
 
     ctx.channel.sendMessage(ctx.t("commands.remove", listOf(pos.toString()))).queue()
   }

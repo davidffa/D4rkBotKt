@@ -24,14 +24,12 @@ import okhttp3.Response
 import org.slf4j.LoggerFactory
 import java.io.IOException
 import java.time.Instant
-import java.util.concurrent.BlockingQueue
-import java.util.concurrent.LinkedBlockingQueue
 import kotlin.system.exitProcess
 
 class TrackScheduler(private val player: AudioPlayer, private val textChannel: TextChannel) : AudioEventAdapter() {
   private val logger = LoggerFactory.getLogger(this::class.java)
 
-  val queue: BlockingQueue<Track>
+  val queue = mutableListOf<Track>()
   lateinit var current: Track
 
   private val guild = textChannel.guild
@@ -40,19 +38,8 @@ class TrackScheduler(private val player: AudioPlayer, private val textChannel: T
   var queueLoop = false
   var trackLoop = false
 
-  init {
-    this.queue = LinkedBlockingQueue()
-  }
-
   fun t(path: String, placeholders: List<String>? = null): String {
     return Translator.t(path, D4rkBot.guildCache[guild.idLong]!!.locale, placeholders)
-  }
-
-  fun shuffle() {
-    val cpy = ArrayList<Track>()
-    this.queue.drainTo(cpy)
-    cpy.shuffle()
-    this.queue.addAll(cpy)
   }
 
   fun queue(audioTrack: AudioTrack, requester: Member) {
@@ -62,7 +49,7 @@ class TrackScheduler(private val player: AudioPlayer, private val textChannel: T
       this.current = track
       this.player.startTrack(audioTrack, true)
     } else {
-      this.queue.offer(track)
+      this.queue.add(track)
     }
   }
 
@@ -85,7 +72,7 @@ class TrackScheduler(private val player: AudioPlayer, private val textChannel: T
         player.startTrack(current.track, true)
       }
     } else {
-      this.queue.offer(track)
+      this.queue.add(track)
     }
   }
 
@@ -96,7 +83,7 @@ class TrackScheduler(private val player: AudioPlayer, private val textChannel: T
     }
 
     if (this.queueLoop) {
-      this.queue.offer(current.clone())
+      this.queue.add(current.clone())
     }
 
     if (this.queue.isEmpty()) {
@@ -108,7 +95,7 @@ class TrackScheduler(private val player: AudioPlayer, private val textChannel: T
       return
     }
 
-    this.current = this.queue.poll()
+    this.current = this.queue.removeFirst()
 
     if (this.current.spotifyTrack != null) {
       CoroutineScope(Dispatchers.IO).launch {

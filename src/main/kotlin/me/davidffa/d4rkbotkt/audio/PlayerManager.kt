@@ -24,6 +24,7 @@ import java.util.*
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
+import kotlin.math.min
 
 object PlayerManager {
   val musicManagers: HashMap<Long, GuildMusicManager> = HashMap()
@@ -217,7 +218,7 @@ object PlayerManager {
             cont.resumeWithException(IllegalStateException("No matches found!"))
             return@FunctionalResultHandler
           }
-          if (limit != null && it.isSearchResult) cont.resume(it.tracks.subList(0, limit))
+          if (limit != null && it.isSearchResult) cont.resume(it.tracks.slice(0..min(limit, it.tracks.size)))
           else cont.resume(it.tracks)
         },
         { cont.resumeWithException(IllegalStateException("No matches found!")) },
