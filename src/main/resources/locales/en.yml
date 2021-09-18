@@ -355,6 +355,8 @@ usages:
   setprefix: "<Prefix>"
 
 music:
+  title: ":page_with_curl: Name:"
+  artist: ":technologist: Artist:"
   queueEnd: ":notes: Queue ended!"
   playlistLoadedTitle: "<a:disco:803678643661832233> Playlist loaded"
   playing:
@@ -364,8 +366,13 @@ music:
     duration: ":watch: Duration:"
   ratelimit: ":warning: Looks like YouTube stopped me from playing this song, wait a moment while I fix this problem and try again in a few seconds."
   spotify:
+    trackTitle: "<:spotify:869245737282715689> Added to queue"
     albumTitle: "<:spotify:869245737282715689> Album loaded"
     playlistTitle: "<:spotify:869245737282715689> Playlist loaded"
+  deezer:
+    trackTitle: "<:deezer:888508425061945384> Added to queue"
+    albumTitle: "<:deezer:888508425061945384> Album loaded"
+    playlistTitle: "<:deezer:888508425061945384> Playlist loaded"
   size: "<a:infinity:838759634361253929> Tracks:"
   duration: ":watch: Duration:"
   queued: ":bookmark_tabs: Added to queue `{0}`"

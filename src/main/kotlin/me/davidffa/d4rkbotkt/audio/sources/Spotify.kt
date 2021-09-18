@@ -1,8 +1,9 @@
-package me.davidffa.d4rkbotkt.audio.spotify
+package me.davidffa.d4rkbotkt.audio.sources
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import me.davidffa.d4rkbotkt.D4rkBot
+import me.davidffa.d4rkbotkt.audio.UnresolvedTrack
 import net.dv8tion.jda.api.entities.Member
 import net.dv8tion.jda.api.utils.data.DataObject
 import okhttp3.FormBody
@@ -27,14 +28,14 @@ class Spotify(
     .post(renewFormBody)
     .build()
 
-  suspend fun getTrack(id: String, requester: Member): SpotifyTrack {
+  suspend fun getTrack(id: String, requester: Member): UnresolvedTrack {
     val json = makeRequest("tracks/$id")
 
     return buildTrack(json, requester)
   }
 
-  suspend fun getAlbum(id: String, requester: Member): List<SpotifyTrack> {
-    val spotifyTracks = mutableListOf<SpotifyTrack>()
+  suspend fun getAlbum(id: String, requester: Member): List<UnresolvedTrack> {
+    val unresolvedTracks = mutableListOf<UnresolvedTrack>()
 
     var offset = 0
     var next: Boolean
@@ -47,18 +48,18 @@ class Spotify(
       val tracks = json.getArray("items")
 
       for (i in 0 until tracks.length()) {
-        spotifyTracks.add(buildTrack(tracks.getObject(i), requester))
+        unresolvedTracks.add(buildTrack(tracks.getObject(i), requester))
       }
 
       offset += 50
-    } while (next && spotifyTracks.size < 400)
+    } while (next && unresolvedTracks.size < 400)
 
 
-    return spotifyTracks.toList()
+    return unresolvedTracks.toList()
   }
 
-  suspend fun getPlaylist(id: String, requester: Member): List<SpotifyTrack> {
-    val spotifyTracks = mutableListOf<SpotifyTrack>()
+  suspend fun getPlaylist(id: String, requester: Member): List<UnresolvedTrack> {
+    val unresolvedTracks = mutableListOf<UnresolvedTrack>()
 
     var offset = 0
     var next: Boolean
@@ -73,16 +74,16 @@ class Spotify(
       for (i in 0 until tracks.length()) {
         if (tracks.getObject(i).isNull("track")) continue
 
-        spotifyTracks.add(buildTrack(tracks.getObject(i).getObject("track"), requester))
+        unresolvedTracks.add(buildTrack(tracks.getObject(i).getObject("track"), requester))
       }
 
       offset += 100
-    } while (next && spotifyTracks.size < 400)
+    } while (next && unresolvedTracks.size < 400)
 
-    return spotifyTracks.toList()
+    return unresolvedTracks.toList()
   }
 
-  private fun buildTrack(json: DataObject, requester: Member): SpotifyTrack {
+  private fun buildTrack(json: DataObject, requester: Member): UnresolvedTrack {
     val title = json.getString("name")
     val artists = json.getArray("artists")
     val duration = json.getLong("duration_ms")
@@ -93,7 +94,7 @@ class Spotify(
       artistNames += artists.getObject(i).getString("name")
     }
 
-    return SpotifyTrack(
+    return UnresolvedTrack(
       title,
       artistNames,
       duration,

@@ -352,6 +352,8 @@ usages:
   setprefix: "<Prefixo>"
 
 music:
+  title: ":page_with_curl: Nome:"
+  artist: ":technologist: Artista:"
   queueEnd: ":notes: A lista de músicas acabou!"
   playlistLoadedTitle: "<a:disco:803678643661832233> Playlist Carregada"
   playing:
@@ -361,8 +363,13 @@ music:
     duration: ":watch: Duração:"
   ratelimit: ":warning: Parece que o YouTube me impediu de tocar essa música, aguarda um momento enquanto resolvo esse problema e tenta novamente daqui a uns segundos."
   spotify:
+    trackTitle: "<:spotify:869245737282715689> Adicionado à queue"
     albumTitle: "<:spotify:869245737282715689> Album carregado"
     playlistTitle: "<:spotify:869245737282715689> Playlist carregada"
+  deezer:
+    trackTitle: "<:deezer:888508425061945384> Adicionado à queue"
+    albumTitle: "<:deezer:888508425061945384> Album carregado"
+    playlistTitle: "<:deezer:888508425061945384> Playlist carregada"
   size: "<a:infinity:838759634361253929> Quantidade de músicas:"
   duration: ":watch: Duração:"
   queued: ":bookmark_tabs: Adicionado à lista `{0}`"

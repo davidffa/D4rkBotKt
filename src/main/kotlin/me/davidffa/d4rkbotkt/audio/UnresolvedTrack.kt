@@ -1,10 +1,8 @@
-package me.davidffa.d4rkbotkt.audio.spotify
+package me.davidffa.d4rkbotkt.audio
 
-import me.davidffa.d4rkbotkt.audio.PlayerManager
-import me.davidffa.d4rkbotkt.audio.Track
 import net.dv8tion.jda.api.entities.Member
 
-class SpotifyTrack(
+class UnresolvedTrack(
   val title: String,
   val artist: String,
   val duration: Long,

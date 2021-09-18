@@ -12,7 +12,6 @@ import kotlinx.coroutines.launch
 import me.davidffa.d4rkbotkt.D4rkBot
 import me.davidffa.d4rkbotkt.Translator
 import me.davidffa.d4rkbotkt.audio.receive.ReceiverManager
-import me.davidffa.d4rkbotkt.audio.spotify.SpotifyTrack
 import me.davidffa.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.entities.Member
@@ -53,20 +52,20 @@ class TrackScheduler(private val player: AudioPlayer, private val textChannel: T
     }
   }
 
-  fun queue(spotifyTrack: SpotifyTrack) {
-    val track = Track(spotifyTrack, spotifyTrack.requester)
+  fun queue(unresolvedTrack: UnresolvedTrack) {
+    val track = Track(unresolvedTrack, unresolvedTrack.requester)
 
     if (!this::current.isInitialized) {
       current = track
       CoroutineScope(Dispatchers.IO).launch {
-        val buildedTrack = current.spotifyTrack!!.build()
+        val buildedTrack = current.unresolvedTrack!!.build()
 
         if (buildedTrack == null) {
           nextTrack()
           return@launch
         }
 
-        buildedTrack.spotifyTrack = null
+        buildedTrack.unresolvedTrack = null
         current = buildedTrack
 
         player.startTrack(current.track, true)
@@ -97,16 +96,16 @@ class TrackScheduler(private val player: AudioPlayer, private val textChannel: T
 
     this.current = this.queue.removeFirst()
 
-    if (this.current.spotifyTrack != null) {
+    if (this.current.unresolvedTrack != null) {
       CoroutineScope(Dispatchers.IO).launch {
-        val buildedTrack = current.spotifyTrack!!.build()
+        val buildedTrack = current.unresolvedTrack!!.build()
 
         if (buildedTrack == null) {
           nextTrack()
           return@launch
         }
 
-        buildedTrack.spotifyTrack = null
+        buildedTrack.unresolvedTrack = null
         current = buildedTrack
 
         player.startTrack(current.track, false)

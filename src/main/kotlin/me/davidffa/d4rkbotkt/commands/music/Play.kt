@@ -29,12 +29,6 @@ class Play : Command(
       ctx.guild.audioManager.openAudioConnection(member.voiceState?.channel)
     }
 
-    var link = ctx.args.joinToString(" ")
-
-    if (!Utils.isUrl(link)) {
-      link = "ytsearch:$link"
-    }
-
-    PlayerManager.loadAndPlay(member, channel, link)
+    PlayerManager.loadAndPlay(member, channel, ctx.args.joinToString(" "))
   }
 }
