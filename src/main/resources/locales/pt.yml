@@ -463,6 +463,7 @@ permissions:
   manageThreads: "Gerenciar Threads"
   usePublicThreads: "Usar Threads públicas"
   usePrivateThreads: "Usar Threads privadas"
+  voiceStartActivities: "Começar atividades"
   unknown: "Desconhecido"
 
 commandManager:

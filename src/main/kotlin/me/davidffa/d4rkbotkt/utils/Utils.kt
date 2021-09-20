@@ -436,6 +436,7 @@ object Utils {
       MANAGE_THREADS -> t("permissions.manageThreads")
       USE_PUBLIC_THREADS -> t("permissions.usePublicThreads")
       USE_PRIVATE_THREADS -> t("permissions.usePrivateThreads")
+      VOICE_START_ACTIVITIES -> t("permissions.voiceStartActivities")
       UNKNOWN -> t("permissions.unknown")
     }
   }

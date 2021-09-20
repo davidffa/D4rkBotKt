@@ -466,6 +466,7 @@ permissions:
   manageThreads: "Manage Threads"
   usePublicThreads: "Use public Threads"
   usePrivateThreads: "Use private Threads"
+  voiceStartActivities: "Start voice activities"
   unknown: "Unknown"
 
 commandManager:
