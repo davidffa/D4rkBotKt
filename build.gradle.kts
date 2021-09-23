@@ -2,7 +2,7 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-  kotlin("jvm") version "1.5.30"
+  kotlin("jvm") version "1.5.31"
   id("com.github.johnrengelman.shadow") version "7.0.0"
 }
 
@@ -27,10 +27,10 @@ dependencies {
   implementation(kotlin("stdlib"))
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
   implementation("ru.gildor.coroutines:kotlin-coroutines-okhttp:1.0")
-  implementation("org.jetbrains.kotlin:kotlin-scripting-jsr223:1.5.30")
+  implementation("org.jetbrains.kotlin:kotlin-scripting-jsr223:1.5.31")
 
   // JDA & Lavaplayer
-  implementation("net.dv8tion:JDA:4.3.0_330") {
+  implementation("net.dv8tion:JDA:4.3.0_331") {
     exclude("opus-java")
   }
   implementation("com.github.minndevelopment:jda-ktx:ea0a1b2")
@@ -47,7 +47,7 @@ dependencies {
   implementation("org.yaml:snakeyaml:1.29")
 
   // MongoDB
-  implementation("org.litote.kmongo:kmongo-coroutine:4.2.8")
+  implementation("org.litote.kmongo:kmongo-coroutine:4.3.0")
 
   // Native System
   implementation("com.github.oshi:oshi-core:5.8.2")
