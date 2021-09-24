@@ -91,7 +91,7 @@ class Spotify(
     var artistNames = ""
 
     for (i in 0 until artists.length()) {
-      artistNames += artists.getObject(i).getString("name")
+      artistNames += artists.getObject(i).getString("name") + " "
     }
 
     return UnresolvedTrack(
