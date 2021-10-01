@@ -142,7 +142,7 @@ commands:
     queue:
       switchOn: ":bookmark_tabs: Queue em loop!"
       switchOff: ":bookmark_tabs: Loop da queue desativado!"
-    wrongusage: ":x: **Usa:** `{}`"
+    wrongusage: ":x: **Usa:** `{0}`"
   nowplaying:
     title: "<a:disco:803678643661832233> A tocar"
     name: ":newspaper: Nome"
