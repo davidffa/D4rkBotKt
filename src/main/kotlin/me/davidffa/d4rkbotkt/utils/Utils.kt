@@ -317,7 +317,7 @@ object Utils {
 
     if (selfVoiceState.channel!!.members.filter { !it.user.isBot }.size == 1) return true
     if (member.roles.contains(djRole)) return true
-    if (forOwnTrack && player.scheduler.current.requester.idLong == member.idLong) return true
+    if (forOwnTrack && (player.scheduler.current.requester.idLong == member.idLong || !selfVoiceState.channel!!.members.contains(player.scheduler.current.requester))) return true
 
     if (forAllQueueTracks) {
       if (player.scheduler.queue.find { it.requester.idLong != member.idLong } != null) {
