@@ -29,6 +29,7 @@ suspend fun onGuildMemberJoin(event: GuildMemberJoinEvent) {
     }
 
     if (!Utils.hasPermissions(event.guild.selfMember, channel, listOf(Permission.MESSAGE_WRITE))) return
-    channel.sendMessage(Translator.t("events.welcome", cache.locale, listOf(event.member.user.asTag, event.guild.name))).queue()
+    channel.sendMessage(Translator.t("events.welcome", cache.locale, listOf(event.member.user.asTag, event.guild.name)))
+      .queue()
   }
 }

@@ -32,7 +32,12 @@ class Loop : Command(
         else ctx.channel.sendMessage(ctx.t("commands.loop.queue.switchOff")).queue()
       }
       else -> {
-        ctx.channel.sendMessage(ctx.t("commands.loop.wrongusage", listOf("${ctx.prefix}${this.name} ${ctx.t("usages.${this.name}")}"))).queue()
+        ctx.channel.sendMessage(
+          ctx.t(
+            "commands.loop.wrongusage",
+            listOf("${ctx.prefix}${this.name} ${ctx.t("usages.${this.name}")}")
+          )
+        ).queue()
       }
     }
   }

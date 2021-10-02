@@ -42,7 +42,10 @@ class Logs : Command(
       if (welcomeChat == null) {
         guildData.welcomeChatID = null
         guildData.welcomeMessagesEnabled = false
-        Database.guildDB.updateOneById(ctx.guild.id, Updates.combine(Updates.set("welcomeChatID", null), Updates.set("welcomeMessagesEnabled", false)))
+        Database.guildDB.updateOneById(
+          ctx.guild.id,
+          Updates.combine(Updates.set("welcomeChatID", null), Updates.set("welcomeMessagesEnabled", false))
+        )
       }
     }
 
@@ -52,7 +55,10 @@ class Logs : Command(
       if (welcomeChat == null) {
         guildData.memberRemoveChatID = null
         guildData.memberRemoveMessagesEnabled = false
-        Database.guildDB.updateOneById(ctx.guild.id, Updates.combine(Updates.set("memberRemoveChatID", null), Updates.set("memberRemoveMessagesEnabled", false)))
+        Database.guildDB.updateOneById(
+          ctx.guild.id,
+          Updates.combine(Updates.set("memberRemoveChatID", null), Updates.set("memberRemoveMessagesEnabled", false))
+        )
       }
     }
 
@@ -217,7 +223,8 @@ class Logs : Command(
           mainMessage.editMessage(ctx.t("commands.logs.timeout")).setEmbeds().setActionRows().queue()
         }, 3 * 60 * 1000L)
 
-        msg.editOriginal("").setEmbeds(generateEmbed(ctx, guildData, welcomeChat, memberRemoveChat)).setActionRow(menu).queue()
+        msg.editOriginal("").setEmbeds(generateEmbed(ctx, guildData, welcomeChat, memberRemoveChat)).setActionRow(menu)
+          .queue()
       }
     }
 
@@ -227,20 +234,27 @@ class Logs : Command(
     listeners.add(channelButtonListener)
   }
 
-  private fun generateEmbed(ctx: CommandContext, guildData: GuildCache, welcomeChat: TextChannel?, memberRemoveChat: TextChannel?): MessageEmbed {
+  private fun generateEmbed(
+    ctx: CommandContext,
+    guildData: GuildCache,
+    welcomeChat: TextChannel?,
+    memberRemoveChat: TextChannel?
+  ): MessageEmbed {
     return Embed {
       title = ctx.t("commands.logs.title")
       color = Utils.randColor()
       field {
         name = ctx.t("commands.logs.menu.welcome")
-        value = "${if (guildData.welcomeMessagesEnabled == true) ctx.t("commands.logs.embed.enabled") else ctx.t("commands.logs.embed.disabled")}\n" +
-                "${ctx.t("commands.logs.embed.channel")} ${welcomeChat?.asMention ?: ctx.t("global.none")}"
+        value =
+          "${if (guildData.welcomeMessagesEnabled == true) ctx.t("commands.logs.embed.enabled") else ctx.t("commands.logs.embed.disabled")}\n" +
+                  "${ctx.t("commands.logs.embed.channel")} ${welcomeChat?.asMention ?: ctx.t("global.none")}"
         inline = false
       }
       field {
         name = ctx.t("commands.logs.menu.leave")
-        value = "${if (guildData.memberRemoveMessagesEnabled == true) ctx.t("commands.logs.embed.enabled") else ctx.t("commands.logs.embed.disabled")}\n" +
-                "${ctx.t("commands.logs.embed.channel")} ${memberRemoveChat?.asMention ?: ctx.t("global.none")}"
+        value =
+          "${if (guildData.memberRemoveMessagesEnabled == true) ctx.t("commands.logs.embed.enabled") else ctx.t("commands.logs.embed.disabled")}\n" +
+                  "${ctx.t("commands.logs.embed.channel")} ${memberRemoveChat?.asMention ?: ctx.t("global.none")}"
         inline = false
       }
 

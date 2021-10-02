@@ -30,7 +30,10 @@ class Userinfo : Command(
     val member = ctx.guild.memberCache.getElementById(user.id)
 
     val embed = EmbedBuilder {
-      title = ctx.t("commands.userinfo.title", listOf("${if (user.isBot) "<:bot:804028762307821578>" else ""}${member?.effectiveName ?: user.name}"))
+      title = ctx.t(
+        "commands.userinfo.title",
+        listOf("${if (user.isBot) "<:bot:804028762307821578>" else ""}${member?.effectiveName ?: user.name}")
+      )
       color = Utils.randColor()
       field {
         name = ":id: ID"

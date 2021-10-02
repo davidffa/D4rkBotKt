@@ -41,7 +41,13 @@ suspend fun onGuildVoiceLeave(event: GuildVoiceLeaveEvent) {
 
   if (member.idLong == event.jda.selfUser.idLong) {
     if (Utils.hasPermissions(member.guild.selfMember, manager.textChannel, listOf(Permission.MESSAGE_WRITE))) {
-      manager.textChannel.sendMessage(Translator.t("events.voice.disconnected", D4rkBot.guildCache[event.guild.idLong]!!.locale, null))
+      manager.textChannel.sendMessage(
+        Translator.t(
+          "events.voice.disconnected",
+          D4rkBot.guildCache[event.guild.idLong]!!.locale,
+          null
+        )
+      )
         .queue()
     }
 
@@ -59,7 +65,13 @@ suspend fun onGuildVoiceLeave(event: GuildVoiceLeaveEvent) {
     manager.audioPlayer.isPaused = true
 
     if (Utils.hasPermissions(member.guild.selfMember, manager.textChannel, listOf(Permission.MESSAGE_WRITE))) {
-      manager.textChannel.sendMessage(Translator.t("events.voice.leaveWarning", D4rkBot.guildCache[event.guild.idLong]!!.locale, null))
+      manager.textChannel.sendMessage(
+        Translator.t(
+          "events.voice.leaveWarning",
+          D4rkBot.guildCache[event.guild.idLong]!!.locale,
+          null
+        )
+      )
         .queue {
           manager.leaveMessage = it.idLong
         }
@@ -70,7 +82,13 @@ suspend fun onGuildVoiceLeave(event: GuildVoiceLeaveEvent) {
 
     timer.schedule(timerTask {
       if (Utils.hasPermissions(member.guild.selfMember, manager.textChannel, listOf(Permission.MESSAGE_WRITE))) {
-        manager.textChannel.sendMessage(Translator.t("events.voice.leave", D4rkBot.guildCache[event.guild.idLong]!!.locale, null))
+        manager.textChannel.sendMessage(
+          Translator.t(
+            "events.voice.leave",
+            D4rkBot.guildCache[event.guild.idLong]!!.locale,
+            null
+          )
+        )
           .queue()
 
         if (manager.leaveMessage != null) {

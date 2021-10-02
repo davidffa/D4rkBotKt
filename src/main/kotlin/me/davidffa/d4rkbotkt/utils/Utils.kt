@@ -317,7 +317,10 @@ object Utils {
 
     if (selfVoiceState.channel!!.members.filter { !it.user.isBot }.size == 1) return true
     if (member.roles.contains(djRole)) return true
-    if (forOwnTrack && (player.scheduler.current.requester.idLong == member.idLong || !selfVoiceState.channel!!.members.contains(player.scheduler.current.requester))) return true
+    if (forOwnTrack && (player.scheduler.current.requester.idLong == member.idLong || !selfVoiceState.channel!!.members.contains(
+        player.scheduler.current.requester
+      ))
+    ) return true
 
     if (forAllQueueTracks) {
       if (player.scheduler.queue.find { it.requester.idLong != member.idLong } != null) {
@@ -426,7 +429,7 @@ object Utils {
       VOICE_MOVE_OTHERS -> t("permissions.voiceMove")
       VOICE_USE_VAD -> t("permissions.voiceVad")
       NICKNAME_CHANGE -> t("permissions.nicknameChange")
-      NICKNAME_MANAGE ->  t("permissions.manageNicknames")
+      NICKNAME_MANAGE -> t("permissions.manageNicknames")
       MANAGE_WEBHOOKS -> t("permissions.manageWebhooks")
       MANAGE_EMOTES -> t("permissions.manageEmotes")
       USE_SLASH_COMMANDS -> t("permissions.useSlashCommands")

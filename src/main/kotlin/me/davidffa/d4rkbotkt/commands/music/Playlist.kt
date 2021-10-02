@@ -32,7 +32,8 @@ class Playlist : Command(
     val helpEmbed = Embed {
       title = ctx.t("commands.playlist.help.title")
       description = "${
-        ctx.t("commands.playlist.help.description", listOf(ctx.prefix)).split("\n").joinToString("\n─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─\n")
+        ctx.t("commands.playlist.help.description", listOf(ctx.prefix)).split("\n")
+          .joinToString("\n─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─\n")
       }\n─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─```"
       color = Utils.randColor()
       footer {
@@ -183,7 +184,10 @@ class Playlist : Command(
                     }.joinToString("\n")
             color = Utils.randColor()
             footer {
-              name = ctx.t("commands.playlist.details.page", listOf((chunkedTracks.indexOf(it) + 1).toString(), chunkedTracks.size.toString()))
+              name = ctx.t(
+                "commands.playlist.details.page",
+                listOf((chunkedTracks.indexOf(it) + 1).toString(), chunkedTracks.size.toString())
+              )
               iconUrl = ctx.author.effectiveAvatarUrl
             }
             timestamp = Instant.now()

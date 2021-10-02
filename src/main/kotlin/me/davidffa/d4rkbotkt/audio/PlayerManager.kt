@@ -98,7 +98,7 @@ object PlayerManager {
               value = "`${Utils.msToHour(track.duration)}`"
               inline = false
             }
-          }else return
+          } else return
         }
         "album" -> {
           embed.title = musicManager.scheduler.t("music.spotify.albumTitle")
@@ -175,7 +175,7 @@ object PlayerManager {
               value = "`${Utils.msToHour(track.duration)}`"
               inline = false
             }
-          }else return
+          } else return
         }
         "album" -> {
           embed.title = musicManager.scheduler.t("music.deezer.albumTitle")

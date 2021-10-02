@@ -8,8 +8,13 @@ import me.davidffa.d4rkbotkt.commands.dev.Eval
 import me.davidffa.d4rkbotkt.commands.info.*
 import me.davidffa.d4rkbotkt.commands.music.*
 import me.davidffa.d4rkbotkt.commands.music.Queue
-import me.davidffa.d4rkbotkt.commands.others.*
-import me.davidffa.d4rkbotkt.commands.settings.*
+import me.davidffa.d4rkbotkt.commands.others.Github
+import me.davidffa.d4rkbotkt.commands.others.Record
+import me.davidffa.d4rkbotkt.commands.others.Render
+import me.davidffa.d4rkbotkt.commands.settings.Djrole
+import me.davidffa.d4rkbotkt.commands.settings.Logs
+import me.davidffa.d4rkbotkt.commands.settings.Setlang
+import me.davidffa.d4rkbotkt.commands.settings.Setprefix
 import me.davidffa.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent
@@ -205,7 +210,12 @@ object CommandManager {
       val args = split.subList(1, split.size)
 
       if (cmd.args > args.size) {
-        event.channel.sendMessage(t("commandManager.argsMissing", listOf("$prefix${cmd.name} ${t("usages.${cmd.name}")}"))).queue()
+        event.channel.sendMessage(
+          t(
+            "commandManager.argsMissing",
+            listOf("$prefix${cmd.name} ${t("usages.${cmd.name}")}")
+          )
+        ).queue()
         return
       }
 

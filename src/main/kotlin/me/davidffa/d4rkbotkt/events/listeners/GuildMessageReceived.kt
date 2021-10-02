@@ -18,7 +18,13 @@ suspend fun onGuildMessageReceived(event: GuildMessageReceivedEvent) {
   if (mentionRegExp.containsMatchIn(raw)) {
     val botPermissions = event.guild.selfMember.getPermissions(event.channel)
     if (botPermissions.contains(Permission.MESSAGE_WRITE)) {
-      event.channel.sendMessage(Translator.t("events.message", D4rkBot.guildCache[event.guild.idLong]!!.locale, listOf(user.asMention, prefix)))
+      event.channel.sendMessage(
+        Translator.t(
+          "events.message",
+          D4rkBot.guildCache[event.guild.idLong]!!.locale,
+          listOf(user.asMention, prefix)
+        )
+      )
         .queue()
     }
     return

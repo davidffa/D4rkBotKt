@@ -47,7 +47,8 @@ class Render : Command(
 
     msg.editMessage(ctx.t("commands.render.rendering")).queue()
 
-    val renderURL = withContext(Dispatchers.IO) { "${System.getenv("RENDERAPIURL")}?url=${URLEncoder.encode(url, "utf-8")}" }
+    val renderURL =
+      withContext(Dispatchers.IO) { "${System.getenv("RENDERAPIURL")}?url=${URLEncoder.encode(url, "utf-8")}" }
 
     val renderReq = Request.Builder()
       .url(renderURL)

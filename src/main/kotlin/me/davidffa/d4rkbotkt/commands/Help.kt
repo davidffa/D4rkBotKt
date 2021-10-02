@@ -65,10 +65,30 @@ class Help : Command(
             Emoji.fromMarkdown("<:kotlin:856168010004037702>")
           )
         }
-        option(ctx.t("commands.help.menu.settings.label"), "settings", ctx.t("commands.help.menu.settings.description"), Emoji.fromUnicode("⚙️"))
-        option(ctx.t("commands.help.menu.info.label"), "info", ctx.t("commands.help.menu.info.description"), Emoji.fromUnicode("ℹ️"))
-        option(ctx.t("commands.help.menu.music.label"), "music", ctx.t("commands.help.menu.music.description"), Emoji.fromMarkdown("<a:disco:803678643661832233>"))
-        option(ctx.t("commands.help.menu.others.label"), "others", ctx.t("commands.help.menu.others.description"), Emoji.fromUnicode("\uD83D\uDCDA"))
+        option(
+          ctx.t("commands.help.menu.settings.label"),
+          "settings",
+          ctx.t("commands.help.menu.settings.description"),
+          Emoji.fromUnicode("⚙️")
+        )
+        option(
+          ctx.t("commands.help.menu.info.label"),
+          "info",
+          ctx.t("commands.help.menu.info.description"),
+          Emoji.fromUnicode("ℹ️")
+        )
+        option(
+          ctx.t("commands.help.menu.music.label"),
+          "music",
+          ctx.t("commands.help.menu.music.description"),
+          Emoji.fromMarkdown("<a:disco:803678643661832233>")
+        )
+        option(
+          ctx.t("commands.help.menu.others.label"),
+          "others",
+          ctx.t("commands.help.menu.others.description"),
+          Emoji.fromUnicode("\uD83D\uDCDA")
+        )
       }
 
       val msg = channel.sendMessage("\u200B").setActionRow(menu).await()

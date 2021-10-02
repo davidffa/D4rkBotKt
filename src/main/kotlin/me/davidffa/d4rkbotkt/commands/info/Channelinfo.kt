@@ -23,7 +23,7 @@ class Channelinfo : Command(
   override suspend fun run(ctx: CommandContext) {
     val channel = if (ctx.args.isNotEmpty()) {
       Utils.findChannel(ctx.args.joinToString(" "), ctx.guild)
-    }else ctx.channel
+    } else ctx.channel
 
     if (channel == null) {
       ctx.channel.sendMessage(ctx.t("errors.channels.notfound")).queue()
@@ -35,7 +35,7 @@ class Channelinfo : Command(
         if (channel is TextChannel) {
           if (channel.isNews) ctx.t("commands.channelinfo.channeltypes.news")
           else ctx.t("commands.channelinfo.channeltypes.text")
-        }else ctx.t("commands.channelinfo.channeltypes.unknown")
+        } else ctx.t("commands.channelinfo.channeltypes.unknown")
       }
       VOICE -> ctx.t("commands.channelinfo.channeltypes.voice")
       CATEGORY -> ctx.t("commands.channelinfo.channeltypes.category")
@@ -67,12 +67,13 @@ class Channelinfo : Command(
       if (channel.type != CATEGORY) {
         field {
           name = ctx.t("commands.channelinfo.fields.category.name")
-          value = "`${if (channel.parent != null) channel.parent!!.name else ctx.t("commands.channelinfo.fields.category.none")}`"
+          value =
+            "`${if (channel.parent != null) channel.parent!!.name else ctx.t("commands.channelinfo.fields.category.none")}`"
         }
-      }else {
+      } else {
         field {
           name = "<:chat:804050576647913522> Quantidade de canais na categoria"
-          value = "`${ctx.guild.channels.filter { it.parent == channel }.size }`"
+          value = "`${ctx.guild.channels.filter { it.parent == channel }.size}`"
         }
       }
 

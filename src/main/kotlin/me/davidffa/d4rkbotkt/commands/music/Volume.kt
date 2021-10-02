@@ -19,7 +19,8 @@ class Volume : Command(
     val manager = PlayerManager.getMusicManager(ctx.guild.idLong)
 
     if (ctx.args.isEmpty()) {
-      ctx.channel.sendMessage(ctx.t("commands.volume.current", listOf((manager.volume * 100f).toInt().toString()))).queue()
+      ctx.channel.sendMessage(ctx.t("commands.volume.current", listOf((manager.volume * 100f).toInt().toString())))
+        .queue()
       return
     }
 
@@ -31,6 +32,7 @@ class Volume : Command(
     }
 
     manager.volume = vol / 100f
-    ctx.channel.sendMessage(ctx.t("commands.volume.changed", listOf((manager.volume * 100f).toInt().toString()))).queue()
+    ctx.channel.sendMessage(ctx.t("commands.volume.changed", listOf((manager.volume * 100f).toInt().toString())))
+      .queue()
   }
 }

@@ -44,7 +44,15 @@ class Botinfo : Command(
 
     val embed = Embed {
       title = ctx.t("commands.botinfo.title")
-      description = ctx.t("commands.botinfo.description", listOf(ctx.jda.selfUser.id, hal.processor.processorIdentifier.name, D4rkBot.commandsUsed.toString(), PlayerManager.musicManagers.size.toString()))
+      description = ctx.t(
+        "commands.botinfo.description",
+        listOf(
+          ctx.jda.selfUser.id,
+          hal.processor.processorIdentifier.name,
+          D4rkBot.commandsUsed.toString(),
+          PlayerManager.musicManagers.size.toString()
+        )
+      )
       color = 15695386
       field {
         name = ctx.t("commands.botinfo.fields.id")
@@ -84,11 +92,20 @@ class Botinfo : Command(
       }
       field {
         name = "<:ram:751468688686841986> RAM"
-        value = ctx.t("commands.botinfo.fields.ram.value", listOf(((runtime.totalMemory() - runtime.freeMemory()) / 1024 / 1024).toString(), (runtime.totalMemory() / 1024 / 1024).toString()))
+        value = ctx.t(
+          "commands.botinfo.fields.ram.value",
+          listOf(
+            ((runtime.totalMemory() - runtime.freeMemory()) / 1024 / 1024).toString(),
+            (runtime.totalMemory() / 1024 / 1024).toString()
+          )
+        )
       }
       field {
         name = "<a:loading:804026048647659540> CPU"
-        value = ctx.t("commands.botinfo.fields.cpu.value", listOf("%.2f".format(systemLoad * 100), "%.2f".format(processLoad * 100)))
+        value = ctx.t(
+          "commands.botinfo.fields.cpu.value",
+          listOf("%.2f".format(systemLoad * 100), "%.2f".format(processLoad * 100))
+        )
       }
       field {
         name = ctx.t("commands.botinfo.fields.versions")

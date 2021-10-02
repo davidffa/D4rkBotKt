@@ -45,7 +45,13 @@ suspend fun onGuildVoiceMove(event: GuildVoiceMoveEvent) {
       manager.audioPlayer.isPaused = true
 
       if (Utils.hasPermissions(member.guild.selfMember, manager.textChannel, listOf(Permission.MESSAGE_WRITE))) {
-        manager.textChannel.sendMessage(Translator.t("events.voice.leaveWarning", D4rkBot.guildCache[event.guild.idLong]!!.locale, null))
+        manager.textChannel.sendMessage(
+          Translator.t(
+            "events.voice.leaveWarning",
+            D4rkBot.guildCache[event.guild.idLong]!!.locale,
+            null
+          )
+        )
           .queue {
             manager.leaveMessage = it.idLong
           }
@@ -61,7 +67,13 @@ suspend fun onGuildVoiceMove(event: GuildVoiceMoveEvent) {
             listOf(Permission.MESSAGE_WRITE)
           )
         ) {
-          manager.textChannel.sendMessage(Translator.t("events.voice.leave", D4rkBot.guildCache[event.guild.idLong]!!.locale, null))
+          manager.textChannel.sendMessage(
+            Translator.t(
+              "events.voice.leave",
+              D4rkBot.guildCache[event.guild.idLong]!!.locale,
+              null
+            )
+          )
             .queue()
 
           if (manager.leaveMessage != null) {

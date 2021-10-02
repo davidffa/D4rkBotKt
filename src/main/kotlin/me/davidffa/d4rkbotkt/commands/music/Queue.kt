@@ -31,14 +31,27 @@ class Queue : Command(
       return
     }
 
-    val header = ctx.t("commands.queue.header", listOf(scheduler.current.title, scheduler.current.requester.user.asTag, Utils.msToHour(scheduler.queue.sumOf { it.duration }), scheduler.queue.size.toString()))
+    val header = ctx.t(
+      "commands.queue.header",
+      listOf(
+        scheduler.current.title,
+        scheduler.current.requester.user.asTag,
+        Utils.msToHour(scheduler.queue.sumOf { it.duration }),
+        scheduler.queue.size.toString()
+      )
+    )
 
     if (scheduler.queue.size <= 10) {
       val embed = Embed {
         title = ctx.t("commands.queue.title")
         description = header +
                 scheduler.queue.mapIndexed { index, track ->
-                  "${index + 1}º - [${track.title}](${track.uri}) (${ctx.t("commands.queue.requestedBy", listOf(track.requester.user.asTag))})"
+                  "${index + 1}º - [${track.title}](${track.uri}) (${
+                    ctx.t(
+                      "commands.queue.requestedBy",
+                      listOf(track.requester.user.asTag)
+                    )
+                  })"
                 }.joinToString("\n")
         color = Utils.randColor()
         footer {
@@ -59,11 +72,19 @@ class Queue : Command(
         title = ctx.t("commands.queue.title")
         description = header +
                 it.mapIndexed { index, track ->
-                  "${index + (chunkedQueue.indexOf(it) * 10) + 1}º - [${track.title}](${track.uri}) (${ctx.t("commands.queue.requestedBy", listOf(track.requester.user.asTag))})"
+                  "${index + (chunkedQueue.indexOf(it) * 10) + 1}º - [${track.title}](${track.uri}) (${
+                    ctx.t(
+                      "commands.queue.requestedBy",
+                      listOf(track.requester.user.asTag)
+                    )
+                  })"
                 }.joinToString("\n")
         color = Utils.randColor()
         footer {
-          name = ctx.t("commands.queue.page", listOf((chunkedQueue.indexOf(it) + 1).toString(), chunkedQueue.size.toString()))
+          name = ctx.t(
+            "commands.queue.page",
+            listOf((chunkedQueue.indexOf(it) + 1).toString(), chunkedQueue.size.toString())
+          )
           iconUrl = ctx.author.effectiveAvatarUrl
         }
         timestamp = Instant.now()

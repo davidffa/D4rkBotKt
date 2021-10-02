@@ -17,11 +17,11 @@ object Translator {
         Locale.PT -> pt[splitedPath[0]] as String?
         Locale.EN -> en[splitedPath[0]] as String?
       }
-    }else {
+    } else {
       for (i in splitedPath.indices) {
         if (map == null && i != 0) break
 
-        if (i == splitedPath.size-1) {
+        if (i == splitedPath.size - 1) {
           translation = map?.get(splitedPath[i]) as String?
           break
         }
@@ -31,14 +31,14 @@ object Translator {
             Locale.PT -> pt[splitedPath[i]] as Map<*, *>?
             Locale.EN -> en[splitedPath[i]] as Map<*, *>?
           }
-        }else map[splitedPath[i]] as Map<*, *>?
+        } else map[splitedPath[i]] as Map<*, *>?
       }
     }
 
     if (translation != null && placeholders != null) {
       val matchedPlaceholders = "\\{.}".toRegex().findAll(translation)
 
-      val nums = matchedPlaceholders.map { it.groupValues.map{ v -> v.replace("[{}]".toRegex(), "")} }.flatten()
+      val nums = matchedPlaceholders.map { it.groupValues.map { v -> v.replace("[{}]".toRegex(), "") } }.flatten()
 
       nums.forEach {
         translation = translation!!.replaceFirst("{$it}", placeholders[it.toInt()])
