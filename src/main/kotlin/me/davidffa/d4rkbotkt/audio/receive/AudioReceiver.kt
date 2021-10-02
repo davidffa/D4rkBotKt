@@ -9,7 +9,6 @@ import java.io.FileOutputStream
 import java.io.OutputStream
 import java.nio.file.Files
 import java.nio.file.Paths
-import javax.sound.sampled.AudioFormat
 
 class AudioReceiver(
   guildId: String
@@ -17,7 +16,7 @@ class AudioReceiver(
   private val volume = 1.0
 
   private val encoder = LameEncoder(
-    AudioFormat(48000.0f, 16, 2, true, true),
+    AudioReceiveHandler.OUTPUT_FORMAT,
     96,
     MPEGMode.STEREO,
     Lame.QUALITY_MIDDLE_LOW,
@@ -45,7 +44,7 @@ class AudioReceiver(
   }
 
   fun close() {
-    encoder.close()
     stream.close()
+    encoder.close()
   }
 }

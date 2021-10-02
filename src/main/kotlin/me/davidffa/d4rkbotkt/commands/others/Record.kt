@@ -74,6 +74,6 @@ class Record : Command(
         }
     }, 8 * 60 * 1000L)
 
-    ReceiverManager.receiveManagers[ctx.guild.idLong] = Receiver(audioReceiver, timer)
+    ReceiverManager.receiveManagers[ctx.guild.idLong] = Receiver(audioReceiver, timer, ctx.channel)
   }
 }

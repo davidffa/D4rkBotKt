@@ -1,15 +1,40 @@
 package me.davidffa.d4rkbotkt.events.listeners
 
+import dev.minn.jda.ktx.await
 import me.davidffa.d4rkbotkt.D4rkBot
 import me.davidffa.d4rkbotkt.Translator
 import me.davidffa.d4rkbotkt.audio.PlayerManager
+import me.davidffa.d4rkbotkt.audio.receive.ReceiverManager
 import me.davidffa.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceLeaveEvent
+import java.io.File
 import java.util.*
 import kotlin.concurrent.timerTask
 
-fun onGuildVoiceLeave(event: GuildVoiceLeaveEvent) {
+suspend fun onGuildVoiceLeave(event: GuildVoiceLeaveEvent) {
+  val receiverManager = ReceiverManager.receiveManagers[event.guild.idLong]
+
+  if (receiverManager != null && event.member.idLong == event.jda.selfUser.idLong) {
+    event.guild.audioManager.receivingHandler = null
+    event.guild.audioManager.closeAudioConnection()
+
+    receiverManager.timer.cancel()
+    receiverManager.audioReceiver.close()
+
+    ReceiverManager.receiveManagers.remove(event.guild.idLong)
+
+    val file = File("./records/record-${event.guild.id}.mp3")
+
+    receiverManager.textChannel
+      .sendMessage(Translator.t("commands.record.stop", D4rkBot.guildCache[event.guild.idLong]!!.locale, null))
+      .addFile(file, "record.mp3")
+      .await()
+
+    file.delete()
+    return
+  }
+
   val manager = PlayerManager.musicManagers[event.guild.idLong] ?: return
 
   val member = event.member
