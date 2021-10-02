@@ -6,7 +6,6 @@ import dev.minn.jda.ktx.*
 import dev.minn.jda.ktx.interactions.SelectionMenu
 import dev.minn.jda.ktx.interactions.option
 import me.davidffa.d4rkbotkt.audio.PlayerManager
-import me.davidffa.d4rkbotkt.audio.receive.ReceiverManager
 import me.davidffa.d4rkbotkt.command.Command
 import me.davidffa.d4rkbotkt.command.CommandContext
 import me.davidffa.d4rkbotkt.utils.Utils
@@ -72,8 +71,10 @@ class Search : Command(
     val menu = SelectionMenu("$nonce:search", ctx.t("commands.search.placeholder"), 1..10) {
       tracks.mapIndexed { i, track ->
         option(
-          formatString(track.info.author, 25), "$i", formatString(track.info.title, 50), emoji =
-          if (i == 9) Emoji.fromUnicode("\uD83D\uDD1F") else Emoji.fromUnicode("${i + 1}️⃣")
+          if (track.info.author.isEmpty()) "Desconhecido" else formatString(track.info.author, 50),
+          "$i",
+          formatString(track.info.title, 80),
+          emoji = if (i == 9) Emoji.fromUnicode("\uD83D\uDD1F") else Emoji.fromUnicode("${i + 1}️⃣")
         )
       }
     }
