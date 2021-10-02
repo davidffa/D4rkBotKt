@@ -2,13 +2,12 @@ package me.davidffa.d4rkbotkt
 
 import com.mongodb.client.model.Updates
 import com.sedmelluq.discord.lavaplayer.jdaudp.NativeAudioSendFactory
-import dev.minn.jda.ktx.injectKTX
+import dev.minn.jda.ktx.createJDA
 import kotlinx.coroutines.runBlocking
 import me.davidffa.d4rkbotkt.database.BotDB
 import me.davidffa.d4rkbotkt.database.GuildCache
 import me.davidffa.d4rkbotkt.events.EventManager
 import net.dv8tion.jda.api.JDA
-import net.dv8tion.jda.api.JDABuilder
 import net.dv8tion.jda.api.OnlineStatus
 import net.dv8tion.jda.api.entities.Activity
 import net.dv8tion.jda.api.requests.GatewayIntent.*
@@ -20,7 +19,7 @@ import java.util.concurrent.TimeUnit
 
 class D4rkBot {
   companion object {
-    lateinit var jda: JDA
+    private lateinit var jda: JDA
     var commandsUsed = 0
     val guildCache = HashMap<Long, GuildCache>()
     val okHttpClient = OkHttpClient()
@@ -99,14 +98,14 @@ class D4rkBot {
     )
 
     try {
-      jda = JDABuilder.create(System.getenv("TOKEN"), intents)
-        .enableCache(listOf(CacheFlag.VOICE_STATE, CacheFlag.CLIENT_STATUS, CacheFlag.ONLINE_STATUS))
-        .disableCache(listOf(CacheFlag.ACTIVITY, CacheFlag.ROLE_TAGS))
-        .setStatus(OnlineStatus.IDLE)
-        .setActivity(Activity.playing("A iniciar..."))
-        .setAudioSendFactory(NativeAudioSendFactory())
-        .injectKTX()
-        .build()
+      jda = createJDA(System.getenv("TOKEN"), true, intents) {
+        this.enableCache(listOf(CacheFlag.VOICE_STATE, CacheFlag.CLIENT_STATUS, CacheFlag.ONLINE_STATUS))
+        this.disableCache(listOf(CacheFlag.ACTIVITY, CacheFlag.ROLE_TAGS))
+        this.setAudioSendFactory(NativeAudioSendFactory())
+
+        this.setStatus(OnlineStatus.IDLE)
+        this.setActivity(Activity.playing("A iniciar..."))
+      }
 
       EventManager.manage(jda)
     } catch (e: Exception) {
