@@ -24,10 +24,10 @@ repositories {
 
 dependencies {
   // Kotlin
-  implementation(kotlin("stdlib"))
+  implementation(kotlin("stdlib", "1.5.31"))
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
   implementation("ru.gildor.coroutines:kotlin-coroutines-okhttp:1.0")
-  implementation("org.jetbrains.kotlin:kotlin-scripting-jsr223:1.5.31")
+  implementation(kotlin("scripting-jsr223", "1.5.31"))
 
   // JDA & Lavaplayer
   implementation("net.dv8tion:JDA:4.3.0_331") {
