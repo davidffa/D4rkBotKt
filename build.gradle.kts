@@ -30,11 +30,11 @@ dependencies {
   implementation(kotlin("scripting-jsr223", "1.5.31"))
 
   // JDA & Lavaplayer
-  implementation("net.dv8tion:JDA:4.3.0_331") {
+  implementation("net.dv8tion:JDA:4.3.0_333") {
     exclude("opus-java")
   }
   implementation("com.github.minndevelopment:jda-ktx:d90709a")
-  implementation("com.github.davidffa:lavaplayer-fork:108d125")
+  implementation("com.github.davidffa:lavaplayer-fork:c0b7346")
   implementation("com.sedmelluq:jda-nas:1.1.0")
 
   // Audio converter

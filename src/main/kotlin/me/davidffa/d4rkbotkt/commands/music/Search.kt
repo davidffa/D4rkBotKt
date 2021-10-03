@@ -29,7 +29,7 @@ class Search : Command(
   override suspend fun run(ctx: CommandContext) {
     if (!Utils.canPlay(ctx::t, ctx.selfMember, ctx.member, ctx.channel)) return
 
-    val query = if (listOf("yt", "ytm", "sc").contains(ctx.args[0].lowercase())) {
+    val query = if (listOf("yt", "ytm", "sc", "ym", "od").contains(ctx.args[0].lowercase())) {
       if (ctx.args.size < 2) {
         ctx.channel.sendMessage(ctx.t("commands.search.usage", listOf(ctx.prefix))).queue()
         return
