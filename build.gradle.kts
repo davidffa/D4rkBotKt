@@ -30,10 +30,10 @@ dependencies {
   implementation(kotlin("scripting-jsr223", "1.5.31"))
 
   // JDA & Lavaplayer
-  implementation("net.dv8tion:JDA:4.3.0_333") {
+  implementation("net.dv8tion:JDA:4.3.0_334") {
     exclude("opus-java")
   }
-  implementation("com.github.minndevelopment:jda-ktx:d90709a")
+  implementation("com.github.minndevelopment:jda-ktx:1223d5c")
   implementation("com.github.davidffa:lavaplayer-fork:5ed9ada")
   implementation("com.sedmelluq:jda-nas:1.1.0")
 
