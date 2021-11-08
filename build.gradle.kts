@@ -30,7 +30,7 @@ dependencies {
   implementation(kotlin("scripting-jsr223", "1.5.31"))
 
   // JDA & Lavaplayer
-  implementation("net.dv8tion:JDA:4.3.0_335") {
+  implementation("net.dv8tion:JDA:4.3.0_346") {
     exclude("opus-java")
   }
   implementation("com.github.minndevelopment:jda-ktx:1223d5c")
@@ -50,7 +50,7 @@ dependencies {
   implementation("org.litote.kmongo:kmongo-coroutine:4.3.0")
 
   // Native System
-  implementation("com.github.oshi:oshi-core:5.8.2")
+  implementation("com.github.oshi:oshi-core:5.8.3")
 
   // Logger
   runtimeOnly("ch.qos.logback", "logback-classic", "1.2.5")
