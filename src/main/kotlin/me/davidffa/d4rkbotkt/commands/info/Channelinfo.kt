@@ -58,6 +58,12 @@ class Channelinfo : Command(
         name = ctx.t("commands.channelinfo.fields.position.name")
         value = "`${(channel as IPositionableChannel).position}`"
       }
+      if (channel is TextChannel) {
+        field {
+          name = ":underage: NSFW"
+          value = "`${if (channel.isNSFW) ctx.t("global.yes") else ctx.t("global.no")}`"
+        }
+      }
       if (channel.type != CATEGORY) {
         field {
           name = ctx.t("commands.channelinfo.fields.category.name")
