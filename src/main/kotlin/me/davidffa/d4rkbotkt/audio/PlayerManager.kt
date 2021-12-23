@@ -4,6 +4,7 @@ import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager
 import com.sedmelluq.discord.lavaplayer.player.FunctionalResultHandler
 import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers
+import com.sedmelluq.discord.lavaplayer.source.youtube.YoutubeHttpContextFilter
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException
 import com.sedmelluq.discord.lavaplayer.tools.io.MessageInput
 import com.sedmelluq.discord.lavaplayer.tools.io.MessageOutput
@@ -36,6 +37,9 @@ object PlayerManager {
   init {
     AudioSourceManagers.registerRemoteSources(audioPlayerManager)
     audioPlayerManager.configuration.isFilterHotSwapEnabled = true
+
+    YoutubeHttpContextFilter.setPAPISID("i1ooiMWn1UvtoNmR/AfneNyM7MDMd7YWgx")
+    YoutubeHttpContextFilter.setPSID("EwjkPUR-jT50R3vAmVLcPetI0oMcrZPDCxmXgYeazDkoiRm-Ly_CaM2FGPEom6W_OLOVSQ.")
   }
 
   fun getMusicManager(guildId: Long): GuildMusicManager {
