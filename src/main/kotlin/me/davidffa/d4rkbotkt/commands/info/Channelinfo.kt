@@ -7,17 +7,15 @@ import me.davidffa.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.Region
 import net.dv8tion.jda.api.Region.*
+import net.dv8tion.jda.api.entities.*
 import net.dv8tion.jda.api.entities.ChannelType.*
-import net.dv8tion.jda.api.entities.StageChannel
-import net.dv8tion.jda.api.entities.TextChannel
-import net.dv8tion.jda.api.entities.VoiceChannel
 import java.time.Instant
 
 class Channelinfo : Command(
   "channelinfo",
   listOf("chinfo"),
   "Info",
-  listOf(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS, Permission.MESSAGE_EXT_EMOJI),
+  listOf(Permission.MESSAGE_SEND, Permission.MESSAGE_EMBED_LINKS, Permission.MESSAGE_EXT_EMOJI),
   cooldown = 5
 ) {
   override suspend fun run(ctx: CommandContext) {
@@ -31,12 +29,8 @@ class Channelinfo : Command(
     }
 
     val channelType = when (channel.type) {
-      TEXT -> {
-        if (channel is TextChannel) {
-          if (channel.isNews) ctx.t("commands.channelinfo.channeltypes.news")
-          else ctx.t("commands.channelinfo.channeltypes.text")
-        } else ctx.t("commands.channelinfo.channeltypes.unknown")
-      }
+      TEXT -> ctx.t("commands.channelinfo.channeltypes.text")
+      NEWS -> ctx.t("commands.channelinfo.channeltypes.news")
       VOICE -> ctx.t("commands.channelinfo.channeltypes.voice")
       CATEGORY -> ctx.t("commands.channelinfo.channeltypes.category")
       STORE -> ctx.t("commands.channelinfo.channeltypes.store")
@@ -62,18 +56,18 @@ class Channelinfo : Command(
       }
       field {
         name = ctx.t("commands.channelinfo.fields.position.name")
-        value = "`${channel.position}`"
+        value = "`${(channel as IPositionableChannel).position}`"
       }
       if (channel.type != CATEGORY) {
         field {
           name = ctx.t("commands.channelinfo.fields.category.name")
           value =
-            "`${if (channel.parent != null) channel.parent!!.name else ctx.t("commands.channelinfo.fields.category.none")}`"
+            "`${(channel as ICategorizableChannel).parentCategory?.name ?: ctx.t("commands.channelinfo.fields.category.none")}`"
         }
       } else {
         field {
           name = "<:chat:804050576647913522> Quantidade de canais na categoria"
-          value = "`${ctx.guild.channels.filter { it.parent == channel }.size}`"
+          value = "`${ctx.guild.channels.filter { it is ICategorizableChannel && it.parentCategory == channel }.size}`"
         }
       }
 
@@ -100,10 +94,6 @@ class Channelinfo : Command(
           field {
             name = ctx.t("commands.channelinfo.fields.region.name")
             value = convertRegion(channel.region)
-          }
-          field {
-            name = ctx.t("commands.channelinfo.fields.members.name")
-            value = "`${if (channel.userLimit == 0) ctx.t("global.none") else channel.userLimit}`"
           }
         }
         is TextChannel -> {

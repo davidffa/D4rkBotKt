@@ -44,7 +44,7 @@ suspend fun onGuildVoiceMove(event: GuildVoiceMoveEvent) {
       if (manager.leaveTimer != null) return
       manager.audioPlayer.isPaused = true
 
-      if (Utils.hasPermissions(member.guild.selfMember, manager.textChannel, listOf(Permission.MESSAGE_WRITE))) {
+      if (Utils.hasPermissions(member.guild.selfMember, manager.textChannel, listOf(Permission.MESSAGE_SEND))) {
         manager.textChannel.sendMessage(
           Translator.t(
             "events.voice.leaveWarning",
@@ -64,7 +64,7 @@ suspend fun onGuildVoiceMove(event: GuildVoiceMoveEvent) {
         if (Utils.hasPermissions(
             member.guild.selfMember,
             manager.textChannel,
-            listOf(Permission.MESSAGE_WRITE)
+            listOf(Permission.MESSAGE_SEND)
           )
         ) {
           manager.textChannel.sendMessage(

@@ -19,7 +19,7 @@ class Botinfo : Command(
   "botinfo",
   aliases = listOf("info", "bi"),
   category = "Info",
-  botPermissions = listOf(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS, Permission.MESSAGE_EXT_EMOJI),
+  botPermissions = listOf(Permission.MESSAGE_SEND, Permission.MESSAGE_EMBED_LINKS, Permission.MESSAGE_EXT_EMOJI),
   cooldown = 10
 ) {
   private val si = SystemInfo()

@@ -28,7 +28,7 @@ suspend fun onGuildMemberRemove(event: GuildMemberRemoveEvent) {
       return
     }
 
-    if (!Utils.hasPermissions(event.guild.selfMember, channel, listOf(Permission.MESSAGE_WRITE))) return
+    if (!Utils.hasPermissions(event.guild.selfMember, channel, listOf(Permission.MESSAGE_SEND))) return
 
     val tag = event.member?.user?.asTag ?: return
 

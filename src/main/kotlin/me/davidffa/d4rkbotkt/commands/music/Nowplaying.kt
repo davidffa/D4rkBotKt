@@ -11,7 +11,7 @@ import java.time.Instant
 class Nowplaying : Command(
   "nowplaying",
   listOf("np", "tocando"),
-  botPermissions = listOf(Permission.MESSAGE_WRITE),
+  botPermissions = listOf(Permission.MESSAGE_SEND),
   category = "Music",
   cooldown = 5,
 

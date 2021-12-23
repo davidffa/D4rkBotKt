@@ -10,7 +10,7 @@ class Loop : Command(
   "loop",
   listOf("repeat"),
   "Music",
-  botPermissions = listOf(Permission.MESSAGE_WRITE),
+  botPermissions = listOf(Permission.MESSAGE_SEND),
   cooldown = 4,
   args = 1
 ) {

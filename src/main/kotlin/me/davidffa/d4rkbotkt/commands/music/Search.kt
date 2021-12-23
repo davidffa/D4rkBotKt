@@ -22,7 +22,7 @@ class Search : Command(
   "search",
   listOf("procurar", "searchmusic"),
   "Music",
-  listOf(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS),
+  listOf(Permission.MESSAGE_SEND, Permission.MESSAGE_EMBED_LINKS),
   args = 1,
   cooldown = 5
 ) {
@@ -119,7 +119,7 @@ class Search : Command(
         chosenTracks.add(tracks[i])
       }
 
-      if (!ctx.selfMember.voiceState!!.inVoiceChannel()) {
+      if (!ctx.selfMember.voiceState!!.inAudioChannel()) {
         ctx.guild.audioManager.isSelfDeafened = true
         ctx.guild.audioManager.isSelfMuted = false
         ctx.guild.audioManager.openAudioConnection(ctx.member.voiceState?.channel)

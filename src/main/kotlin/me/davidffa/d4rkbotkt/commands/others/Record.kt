@@ -17,7 +17,7 @@ class Record : Command(
   listOf("rec", "gravar"),
   category = "Others",
   cooldown = 8,
-  botPermissions = listOf(Permission.MESSAGE_WRITE)
+  botPermissions = listOf(Permission.MESSAGE_SEND)
 ) {
   override suspend fun run(ctx: CommandContext) {
     if (!Utils.canRecord(ctx::t, ctx.selfMember, ctx.member, ctx.channel)) return
@@ -46,7 +46,7 @@ class Record : Command(
       return
     }
 
-    if (!selfVoiceState!!.inVoiceChannel()) {
+    if (!selfVoiceState!!.inAudioChannel()) {
       ctx.guild.audioManager.isSelfDeafened = false
       ctx.guild.audioManager.isSelfMuted = true
       ctx.guild.audioManager.openAudioConnection(ctx.member.voiceState?.channel)

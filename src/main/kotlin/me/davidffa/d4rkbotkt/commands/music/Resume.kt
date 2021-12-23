@@ -11,7 +11,7 @@ class Resume : Command(
   listOf("retomar"),
   category = "Music",
   cooldown = 4,
-  botPermissions = listOf(Permission.MESSAGE_WRITE)
+  botPermissions = listOf(Permission.MESSAGE_SEND)
 ) {
   override suspend fun run(ctx: CommandContext) {
     if (!Utils.canUsePlayer(ctx::t, ctx.selfMember, ctx.member, ctx.channel)) return

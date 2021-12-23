@@ -10,7 +10,7 @@ class Skip : Command(
   "skip",
   listOf("s", "pular"),
   category = "Music",
-  botPermissions = listOf(Permission.MESSAGE_WRITE),
+  botPermissions = listOf(Permission.MESSAGE_SEND),
   cooldown = 2
 ) {
   override suspend fun run(ctx: CommandContext) {

@@ -40,7 +40,7 @@ suspend fun onGuildVoiceLeave(event: GuildVoiceLeaveEvent) {
   val member = event.member
 
   if (member.idLong == event.jda.selfUser.idLong) {
-    if (Utils.hasPermissions(member.guild.selfMember, manager.textChannel, listOf(Permission.MESSAGE_WRITE))) {
+    if (Utils.hasPermissions(member.guild.selfMember, manager.textChannel, listOf(Permission.MESSAGE_SEND))) {
       manager.textChannel.sendMessage(
         Translator.t(
           "events.voice.disconnected",
@@ -64,7 +64,7 @@ suspend fun onGuildVoiceLeave(event: GuildVoiceLeaveEvent) {
   if (!member.user.isBot && selfChannel != null && event.oldValue.idLong == selfChannel.idLong && selfChannel.members.none { !it.user.isBot }) {
     manager.audioPlayer.isPaused = true
 
-    if (Utils.hasPermissions(member.guild.selfMember, manager.textChannel, listOf(Permission.MESSAGE_WRITE))) {
+    if (Utils.hasPermissions(member.guild.selfMember, manager.textChannel, listOf(Permission.MESSAGE_SEND))) {
       manager.textChannel.sendMessage(
         Translator.t(
           "events.voice.leaveWarning",
@@ -81,7 +81,7 @@ suspend fun onGuildVoiceLeave(event: GuildVoiceLeaveEvent) {
     manager.leaveTimer = timer
 
     timer.schedule(timerTask {
-      if (Utils.hasPermissions(member.guild.selfMember, manager.textChannel, listOf(Permission.MESSAGE_WRITE))) {
+      if (Utils.hasPermissions(member.guild.selfMember, manager.textChannel, listOf(Permission.MESSAGE_SEND))) {
         manager.textChannel.sendMessage(
           Translator.t(
             "events.voice.leave",

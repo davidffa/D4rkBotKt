@@ -10,7 +10,7 @@ class Pause : Command(
   "pause",
   listOf("pausa"),
   category = "Music",
-  botPermissions = listOf(Permission.MESSAGE_WRITE),
+  botPermissions = listOf(Permission.MESSAGE_SEND),
   cooldown = 4
 ) {
   override suspend fun run(ctx: CommandContext) {

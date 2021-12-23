@@ -13,11 +13,12 @@ import me.davidffa.d4rkbotkt.database.UserDB
 import me.davidffa.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.Permission
 import java.time.Instant
+import kotlin.time.Duration.Companion.minutes
 
 class Playlist : Command(
   "playlist",
   category = "Music",
-  botPermissions = listOf(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS),
+  botPermissions = listOf(Permission.MESSAGE_SEND, Permission.MESSAGE_EMBED_LINKS),
   cooldown = 5
 ) {
   override suspend fun run(ctx: CommandContext) {
@@ -199,7 +200,7 @@ class Playlist : Command(
           return
         }
 
-        ctx.channel.sendPaginator(*pages, expireAfter = 10 * 60 * 1000L, filter = {
+        ctx.channel.sendPaginator(*pages, expireAfter = 10.minutes, filter = {
           if (it.user.idLong == ctx.author.idLong) return@sendPaginator true
           return@sendPaginator false
         }).queue()
@@ -385,7 +386,7 @@ class Playlist : Command(
           return
         }
 
-        if (!ctx.selfMember.voiceState!!.inVoiceChannel()) {
+        if (!ctx.selfMember.voiceState!!.inAudioChannel()) {
           ctx.guild.audioManager.isSelfDeafened = true
           ctx.guild.audioManager.isSelfMuted = false
           ctx.guild.audioManager.openAudioConnection(ctx.member.voiceState?.channel)

@@ -8,11 +8,12 @@ import me.davidffa.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.Permission
 import java.time.Instant
 import kotlin.math.min
+import kotlin.time.Duration.Companion.minutes
 
 class Roleinfo : Command(
   "roleinfo",
   args = 1,
-  botPermissions = listOf(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS),
+  botPermissions = listOf(Permission.MESSAGE_SEND, Permission.MESSAGE_EMBED_LINKS),
   category = "Info",
   cooldown = 5
 ) {
@@ -83,11 +84,11 @@ class Roleinfo : Command(
 
     embed.builder.clearFields()
     embed.description = "**${ctx.t("commands.roleinfo.fields.members.name")} [${members.size}]**\n${members.slice(0 until min(members.size, 50)).joinToString(", ") { "**`@${it.effectiveName}`**" }}" +
-            "${if (members.size > 50) "... (${ctx.t("commands.roleinfo.more", listOf((members.size - 50).toString()))})" else ""}"
+            if (members.size > 50) "... (${ctx.t("commands.roleinfo.more", listOf((members.size - 50).toString()))})" else ""
 
     val page2 = embed.build()
 
-    ctx.channel.sendPaginator(page1, page2, expireAfter = 3 * 60 * 1000L, filter = {
+    ctx.channel.sendPaginator(page1, page2, expireAfter = 3.minutes, filter = {
       if (it.user.idLong == ctx.author.idLong) return@sendPaginator true
       return@sendPaginator false
     }).queue()

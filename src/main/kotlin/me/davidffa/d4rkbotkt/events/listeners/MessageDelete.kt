@@ -1,9 +1,9 @@
 package me.davidffa.d4rkbotkt.events.listeners
 
 import me.davidffa.d4rkbotkt.audio.PlayerManager
-import net.dv8tion.jda.api.events.message.guild.GuildMessageDeleteEvent
+import net.dv8tion.jda.api.events.message.MessageDeleteEvent
 
-fun onGuildMessageDelete(event: GuildMessageDeleteEvent) {
+fun onMessageDelete(event: MessageDeleteEvent) {
   val manager = PlayerManager.musicManagers[event.guild.idLong] ?: return
 
   when (event.messageIdLong) {

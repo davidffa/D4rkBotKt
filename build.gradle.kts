@@ -30,11 +30,11 @@ dependencies {
   implementation(kotlin("scripting-jsr223", "1.6.0"))
 
   // JDA & Lavaplayer
-  implementation("net.dv8tion:JDA:4.4.0_350") {
+  implementation("net.dv8tion:JDA:5.0.0-alpha.2") {
     exclude("opus-java")
   }
-  implementation("com.github.minndevelopment:jda-ktx:1223d5c")
-  implementation("com.github.davidffa:lavaplayer-fork:ee3b47b")
+  implementation("com.github.minndevelopment:jda-ktx:d3c6b4d")
+  implementation("com.github.davidffa:lavaplayer-fork:eb32fb7")
   implementation("com.sedmelluq:jda-nas:1.1.0")
 
   // Audio converter
@@ -47,10 +47,10 @@ dependencies {
   implementation("org.yaml:snakeyaml:1.29")
 
   // MongoDB
-  implementation("org.litote.kmongo:kmongo-coroutine:4.3.0")
+  implementation("org.litote.kmongo:kmongo-coroutine:4.4.0")
 
   // Native System
-  implementation("com.github.oshi:oshi-core:5.8.3")
+  implementation("com.github.oshi:oshi-core:5.8.5")
 
   // Logger
   runtimeOnly("ch.qos.logback", "logback-classic", "1.2.5")

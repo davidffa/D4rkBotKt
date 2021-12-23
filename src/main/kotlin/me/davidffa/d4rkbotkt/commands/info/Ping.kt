@@ -13,7 +13,7 @@ class Ping : Command(
   "ping",
   listOf("latency", "latencia"),
   category = "Info",
-  botPermissions = listOf(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS)
+  botPermissions = listOf(Permission.MESSAGE_SEND, Permission.MESSAGE_EMBED_LINKS)
 ) {
   override suspend fun run(ctx: CommandContext) {
     val jda = ctx.jda

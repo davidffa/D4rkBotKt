@@ -23,7 +23,7 @@ class Help : Command(
   "help",
   aliases = listOf("ajuda", "comandos", "commands", "cmds"),
   category = "Others",
-  botPermissions = listOf(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS),
+  botPermissions = listOf(Permission.MESSAGE_SEND, Permission.MESSAGE_EMBED_LINKS),
   cooldown = 6
 ) {
   override suspend fun run(ctx: CommandContext) {

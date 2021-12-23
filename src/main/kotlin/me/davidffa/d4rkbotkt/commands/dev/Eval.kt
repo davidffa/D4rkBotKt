@@ -12,7 +12,7 @@ class Eval : Command(
   "eval",
   aliases = listOf("e", "evl", "evaluate"),
   "Dev",
-  botPermissions = listOf(Permission.MESSAGE_WRITE),
+  botPermissions = listOf(Permission.MESSAGE_SEND),
   cooldown = 0,
   args = 1
 ) {

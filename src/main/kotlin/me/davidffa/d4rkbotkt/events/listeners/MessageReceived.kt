@@ -3,10 +3,9 @@ package me.davidffa.d4rkbotkt.events.listeners
 import me.davidffa.d4rkbotkt.D4rkBot
 import me.davidffa.d4rkbotkt.Translator
 import me.davidffa.d4rkbotkt.command.CommandManager
-import net.dv8tion.jda.api.Permission
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent
 
-suspend fun onGuildMessageReceived(event: GuildMessageReceivedEvent) {
+suspend fun onMessageReceived(event: MessageReceivedEvent) {
   val user = event.author
   if (user.isBot || event.isWebhookMessage) return
 
@@ -16,8 +15,7 @@ suspend fun onGuildMessageReceived(event: GuildMessageReceivedEvent) {
   val mentionRegExp = Regex("^<@!?${event.jda.selfUser.id}>$")
 
   if (mentionRegExp.containsMatchIn(raw)) {
-    val botPermissions = event.guild.selfMember.getPermissions(event.channel)
-    if (botPermissions.contains(Permission.MESSAGE_WRITE)) {
+    if (event.guildChannel.canTalk()) {
       event.channel.sendMessage(
         Translator.t(
           "events.message",

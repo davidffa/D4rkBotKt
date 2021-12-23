@@ -4,15 +4,15 @@ import me.davidffa.d4rkbotkt.D4rkBot
 import me.davidffa.d4rkbotkt.Translator
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.entities.*
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent
 
 interface ICommandContext {
-  val event: GuildMessageReceivedEvent
+  val event: MessageReceivedEvent
 
   val guild: Guild
     get() = this.event.guild
   val channel: TextChannel
-    get() = this.event.channel
+    get() = this.event.channel as TextChannel
   val message: Message
     get() = this.event.message
   val author: User

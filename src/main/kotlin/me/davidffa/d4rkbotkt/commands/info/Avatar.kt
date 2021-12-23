@@ -11,7 +11,7 @@ class Avatar : Command(
   "avatar",
   listOf("av"),
   "Info",
-  botPermissions = listOf(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS),
+  botPermissions = listOf(Permission.MESSAGE_SEND, Permission.MESSAGE_EMBED_LINKS),
   cooldown = 3
 ) {
   override suspend fun run(ctx: CommandContext) {

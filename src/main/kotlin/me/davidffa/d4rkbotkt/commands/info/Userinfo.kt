@@ -10,12 +10,13 @@ import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.entities.ClientType
 import net.dv8tion.jda.api.entities.User.UserFlag.*
 import java.time.Instant
+import kotlin.time.Duration.Companion.minutes
 
 class Userinfo : Command(
   "userinfo",
   listOf("ui"),
   "Info",
-  listOf(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS),
+  listOf(Permission.MESSAGE_SEND, Permission.MESSAGE_EMBED_LINKS),
   cooldown = 5
 ) {
   override suspend fun run(ctx: CommandContext) {
@@ -158,7 +159,7 @@ class Userinfo : Command(
 
     val page2 = embed.build()
 
-    ctx.channel.sendPaginator(page1, page2, expireAfter = 3 * 60 * 1000L, filter = {
+    ctx.channel.sendPaginator(page1, page2, expireAfter = 3.minutes, filter = {
       if (it.user.idLong == ctx.author.idLong) return@sendPaginator true
       return@sendPaginator false
     }).queue()

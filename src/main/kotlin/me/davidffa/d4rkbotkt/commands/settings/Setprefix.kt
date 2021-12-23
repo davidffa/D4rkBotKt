@@ -12,7 +12,7 @@ class Setprefix : Command(
   "setprefix",
   listOf("prefix", "prefixo", "setarprefixo", "setprefixo"),
   "Settings",
-  listOf(Permission.MESSAGE_WRITE),
+  listOf(Permission.MESSAGE_SEND),
   listOf(Permission.MANAGE_SERVER),
   1,
   5

@@ -13,11 +13,12 @@ import net.dv8tion.jda.api.entities.Guild.ExplicitContentLevel.NO_ROLE
 import net.dv8tion.jda.api.entities.Guild.VerificationLevel.*
 import java.time.Instant
 import kotlin.math.min
+import kotlin.time.Duration.Companion.minutes
 
 class Serverinfo : Command(
   "serverinfo",
   listOf("si", "svinfo"),
-  botPermissions = listOf(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS),
+  botPermissions = listOf(Permission.MESSAGE_SEND, Permission.MESSAGE_EMBED_LINKS),
   category = "Info",
   cooldown = 5
 ) {
@@ -100,10 +101,10 @@ class Serverinfo : Command(
       }
       field {
         name = ":white_small_square: ${ctx.t("commands.serverinfo.channels.name")} [${ctx.guild.channels.size}]"
-        value = "<:chat:804050576647913522> ${ctx.t("commands.serverinfo.channels.text")} ${ctx.guild.textChannels.filter { !it.isNews }.size}\n" +
+        value = "<:chat:804050576647913522> ${ctx.t("commands.serverinfo.channels.text")} ${ctx.guild.textChannels.size}\n" +
                 ":microphone2: ${ctx.t("commands.serverinfo.channels.voice")} ${ctx.guild.voiceChannels.size}\n" +
                 "<:stage:828651062184378389> ${ctx.t("commands.serverinfo.channels.stage")} ${ctx.guild.stageChannels.size}\n" +
-                ":loudspeaker: ${ctx.t("commands.serverinfo.channels.news")} ${ctx.guild.textChannels.filter { it.isNews }.size}\n" +
+                ":loudspeaker: ${ctx.t("commands.serverinfo.channels.news")} ${ctx.guild.newsChannels.size}\n" +
                 ":shopping_bags: ${ctx.t("commands.serverinfo.channels.store")} ${ctx.guild.storeChannels.size}\n" +
                 ":diamond_shape_with_a_dot_inside: ${ctx.t("commands.serverinfo.channels.categories")} ${ctx.guild.categories.size}"
       }
@@ -122,11 +123,11 @@ class Serverinfo : Command(
 
     embed.builder.clearFields()
     embed.description = "**${ctx.t("commands.serverinfo.roles")} [${ctx.guild.roles.size}]**\n${ctx.guild.roles.slice(0 until min(ctx.guild.roles.size, 70)).joinToString(" ") { it.asMention }}" +
-            "${if (ctx.guild.roles.size > 70) "... (${ctx.t("commands.serverinfo.more", listOf((ctx.guild.roles.size - 70).toString()))})" else ""}"
+            if (ctx.guild.roles.size > 70) "... (${ctx.t("commands.serverinfo.more", listOf((ctx.guild.roles.size - 70).toString()))})" else ""
 
     val page2 = embed.build()
 
-    ctx.channel.sendPaginator(page1, page2, expireAfter = 3 * 60 * 1000L, filter = {
+    ctx.channel.sendPaginator(page1, page2, expireAfter = 3.minutes, filter = {
       if (it.user.idLong == ctx.author.idLong) return@sendPaginator true
       return@sendPaginator false
     }).queue()

@@ -13,7 +13,7 @@ class Djrole : Command(
   "djrole",
   listOf("dj", "cargodj"),
   "Settings",
-  listOf(Permission.MESSAGE_WRITE),
+  listOf(Permission.MESSAGE_SEND),
   cooldown = 5
 ) {
   override suspend fun run(ctx: CommandContext) {

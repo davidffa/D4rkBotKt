@@ -11,7 +11,7 @@ class Invite : Command(
   "invite",
   listOf("inv", "convite"),
   category = "Info",
-  botPermissions = listOf(Permission.MESSAGE_WRITE)
+  botPermissions = listOf(Permission.MESSAGE_SEND)
 ) {
   override suspend fun run(ctx: CommandContext) {
     val selfID = ctx.selfUser.id

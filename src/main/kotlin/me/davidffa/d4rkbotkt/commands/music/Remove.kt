@@ -10,7 +10,7 @@ class Remove : Command(
   "remove",
   listOf("remover"),
   "Music",
-  listOf(Permission.MESSAGE_WRITE),
+  listOf(Permission.MESSAGE_SEND),
   args = 1,
   cooldown = 2
 ) {

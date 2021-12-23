@@ -10,7 +10,7 @@ class Shuffle : Command(
   "shuffle",
   category = "Music",
   cooldown = 8,
-  botPermissions = listOf(Permission.MESSAGE_WRITE),
+  botPermissions = listOf(Permission.MESSAGE_SEND),
 ) {
   override suspend fun run(ctx: CommandContext) {
     if (!Utils.canUsePlayer(

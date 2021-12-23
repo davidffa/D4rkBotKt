@@ -15,7 +15,7 @@ import java.time.Instant
 
 class Github : Command(
   "github",
-  botPermissions = listOf(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS),
+  botPermissions = listOf(Permission.MESSAGE_SEND, Permission.MESSAGE_EMBED_LINKS),
   cooldown = 5,
   category = "Others",
   args = 1

@@ -15,7 +15,7 @@ import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.entities.Emoji
 import net.dv8tion.jda.api.entities.MessageEmbed
 import net.dv8tion.jda.api.entities.TextChannel
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent
 import net.dv8tion.jda.api.interactions.components.ActionRow
 import net.dv8tion.jda.api.interactions.components.Button
 import java.security.SecureRandom
@@ -27,7 +27,7 @@ class Logs : Command(
   "logs",
   listOf("logconfig", "configlogs"),
   category = "Settings",
-  botPermissions = listOf(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS),
+  botPermissions = listOf(Permission.MESSAGE_SEND, Permission.MESSAGE_EMBED_LINKS),
   userPermissions = listOf(Permission.MESSAGE_MANAGE)
 ) {
   override suspend fun run(ctx: CommandContext) {
@@ -182,18 +182,9 @@ class Logs : Command(
 
       val msg = it.editMessage(ctx.t("commands.logs.setChannel", listOf(type))).setEmbeds().setActionRows().await()
 
-      var msgListener: CoroutineEventListener? = null
-
       val timerMsg = Timer()
 
-      timerMsg.schedule(timerTask {
-        ctx.jda.removeEventListener(msgListener)
-        removeListeners(listeners, ctx.jda)
-
-        msg.editOriginal(ctx.t("commands.logs.timeout")).queue()
-      }, 30000L)
-
-      msgListener = ctx.jda.listener<GuildMessageReceivedEvent> { e ->
+      val msgListener = ctx.jda.listener<MessageReceivedEvent> { e ->
         if (e.channel != ctx.channel || e.member != ctx.member) return@listener
         ctx.jda.removeEventListener(this)
         timerMsg.cancel()
@@ -226,6 +217,13 @@ class Logs : Command(
         msg.editOriginal("").setEmbeds(generateEmbed(ctx, guildData, welcomeChat, memberRemoveChat)).setActionRow(menu)
           .queue()
       }
+
+      timerMsg.schedule(timerTask {
+        ctx.jda.removeEventListener(msgListener)
+        removeListeners(listeners, ctx.jda)
+
+        msg.editOriginal(ctx.t("commands.logs.timeout")).queue()
+      }, 30000L)
     }
 
     listeners.add(menuListener)

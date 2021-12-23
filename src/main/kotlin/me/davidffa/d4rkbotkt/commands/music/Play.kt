@@ -10,7 +10,7 @@ class Play : Command(
   "play",
   aliases = listOf("p", "tocar"),
   "Music",
-  botPermissions = listOf(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS),
+  botPermissions = listOf(Permission.MESSAGE_SEND, Permission.MESSAGE_EMBED_LINKS),
   cooldown = 2,
   args = 1
 ) {
@@ -22,7 +22,7 @@ class Play : Command(
 
     if (!Utils.canPlay(ctx::t, ctx.selfMember, ctx.member, channel)) return
 
-    if (!selfVoiceState!!.inVoiceChannel()) {
+    if (!selfVoiceState!!.inAudioChannel()) {
       ctx.guild.audioManager.isSelfDeafened = true
       ctx.guild.audioManager.isSelfMuted = false
       ctx.guild.audioManager.openAudioConnection(member.voiceState?.channel)

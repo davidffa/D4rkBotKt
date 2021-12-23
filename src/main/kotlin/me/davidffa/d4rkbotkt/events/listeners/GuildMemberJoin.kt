@@ -28,7 +28,7 @@ suspend fun onGuildMemberJoin(event: GuildMemberJoinEvent) {
       return
     }
 
-    if (!Utils.hasPermissions(event.guild.selfMember, channel, listOf(Permission.MESSAGE_WRITE))) return
+    if (!Utils.hasPermissions(event.guild.selfMember, channel, listOf(Permission.MESSAGE_SEND))) return
     channel.sendMessage(Translator.t("events.welcome", cache.locale, listOf(event.member.user.asTag, event.guild.name)))
       .queue()
   }

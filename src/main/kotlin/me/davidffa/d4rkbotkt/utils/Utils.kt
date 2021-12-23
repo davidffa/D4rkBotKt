@@ -161,7 +161,7 @@ object Utils {
     val memberVoiceState = member.voiceState
     val selfChannel = member.guild.audioManager.connectedChannel
 
-    if (!memberVoiceState!!.inVoiceChannel()) {
+    if (!memberVoiceState!!.inAudioChannel()) {
       channel.sendMessage(t("errors.notInVoiceChannel")).queue()
       return false
     }
@@ -180,7 +180,7 @@ object Utils {
     }
 
     if (selfChannel == null) {
-      if (memberVoiceChannel.userLimit == memberVoiceChannel.members.size && !selfPermissions.contains(MANAGE_CHANNEL)) {
+      if (memberVoiceChannel is VoiceChannel && memberVoiceChannel.userLimit == memberVoiceChannel.members.size && !selfPermissions.contains(MANAGE_CHANNEL)) {
         channel.sendMessage(t("errors.fullVoiceChannel")).queue()
         return false
       }
@@ -203,7 +203,7 @@ object Utils {
     val memberVoiceState = member.voiceState
     val selfChannel = member.guild.audioManager.connectedChannel
 
-    if (!memberVoiceState!!.inVoiceChannel()) {
+    if (!memberVoiceState!!.inAudioChannel()) {
       channel.sendMessage(t("errors.notInVoiceChannel")).queue()
       return false
     }
@@ -227,7 +227,7 @@ object Utils {
     }
 
     if (selfChannel == null) {
-      if (memberVoiceChannel.userLimit == memberVoiceChannel.members.size && !selfPermissions.contains(MANAGE_CHANNEL)) {
+      if (memberVoiceChannel is VoiceChannel && memberVoiceChannel.userLimit == memberVoiceChannel.members.size && !selfPermissions.contains(MANAGE_CHANNEL)) {
         channel.sendMessage(t("errors.fullVoiceChannel")).queue()
         return false
       }
@@ -277,14 +277,14 @@ object Utils {
       return false
     }
 
-    if (!memberVoiceState!!.inVoiceChannel()) {
+    if (!memberVoiceState!!.inAudioChannel()) {
       channel.sendMessage(t("errors.notInVoiceChannel", null)).queue()
       return false
     }
 
     val memberVoiceChannel = memberVoiceState.channel
 
-    if (selfVoiceState!!.inVoiceChannel() && memberVoiceChannel != selfVoiceState.channel) {
+    if (selfVoiceState!!.inAudioChannel() && memberVoiceChannel != selfVoiceState.channel) {
       channel.sendMessage(t("errors.notInBotVC", null)).queue()
       return false
     }
@@ -410,12 +410,11 @@ object Utils {
       PRIORITY_SPEAKER -> t("permissions.prioritySpeaker")
       VOICE_STREAM -> t("permissions.voiceStream")
       VIEW_CHANNEL -> t("permissions.viewChannel")
-      MESSAGE_WRITE -> t("permissions.messageWrite")
+      MESSAGE_SEND -> t("permissions.messageWrite")
       MESSAGE_TTS -> t("permissions.messageTTS")
       MESSAGE_MANAGE -> t("permissions.messageManage")
       MESSAGE_EMBED_LINKS -> t("permissions.messageEmbedLinks")
       MESSAGE_ATTACH_FILES -> t("permissions.messageAttachFiles")
-      MESSAGE_READ -> t("permissions.messageRead")
       MESSAGE_HISTORY -> t("permissions.messageHistory")
       MANAGE_PERMISSIONS -> t("permissions.managePermissions")
       MESSAGE_MENTION_EVERYONE -> t("permissions.mentionEveryone")
@@ -431,14 +430,15 @@ object Utils {
       NICKNAME_CHANGE -> t("permissions.nicknameChange")
       NICKNAME_MANAGE -> t("permissions.manageNicknames")
       MANAGE_WEBHOOKS -> t("permissions.manageWebhooks")
-      MANAGE_EMOTES -> t("permissions.manageEmotes")
-      USE_SLASH_COMMANDS -> t("permissions.useSlashCommands")
+      MANAGE_EMOTES_AND_STICKERS -> t("permissions.manageEmotes")
+      USE_APPLICATION_COMMANDS -> t("permissions.useApplicationCommands")
       MESSAGE_ADD_REACTION -> t("permissions.addReactions")
       MANAGE_ROLES -> t("permissions.manageRoles")
       REQUEST_TO_SPEAK -> t("permissions.requestToSpeak")
       MANAGE_THREADS -> t("permissions.manageThreads")
-      USE_PUBLIC_THREADS -> t("permissions.usePublicThreads")
-      USE_PRIVATE_THREADS -> t("permissions.usePrivateThreads")
+      CREATE_PUBLIC_THREADS -> t("permissions.createPublicThreads")
+      CREATE_PRIVATE_THREADS -> t("permissions.createPrivateThreads")
+      MESSAGE_SEND_IN_THREADS -> t("permissions.messageSendInThreads")
       VOICE_START_ACTIVITIES -> t("permissions.voiceStartActivities")
       UNKNOWN -> t("permissions.unknown")
     }

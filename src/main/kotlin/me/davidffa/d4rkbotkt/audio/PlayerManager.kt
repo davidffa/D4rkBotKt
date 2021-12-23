@@ -223,7 +223,7 @@ object PlayerManager {
         if (musicManager.scheduler.queue.isNotEmpty() && Utils.hasPermissions(
             channel.guild.selfMember,
             channel,
-            listOf(Permission.MESSAGE_WRITE)
+            listOf(Permission.MESSAGE_SEND)
           )
         ) {
           channel.sendMessage(musicManager.scheduler.t("music.queued", listOf(track.info.title))).queue()
@@ -239,7 +239,7 @@ object PlayerManager {
           if (musicManager.scheduler.queue.isNotEmpty() && Utils.hasPermissions(
               channel.guild.selfMember,
               channel,
-              listOf(Permission.MESSAGE_WRITE)
+              listOf(Permission.MESSAGE_SEND)
             )
           ) {
             channel.sendMessage(musicManager.scheduler.t("music.queued", listOf(tracks[0].info.title))).queue()
@@ -252,7 +252,7 @@ object PlayerManager {
         if (Utils.hasPermissions(
             channel.guild.selfMember,
             channel,
-            listOf(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS)
+            listOf(Permission.MESSAGE_SEND, Permission.MESSAGE_EMBED_LINKS)
           )
         ) {
           val embed = Embed {
@@ -286,13 +286,13 @@ object PlayerManager {
       }
 
       override fun noMatches() {
-        if (Utils.hasPermissions(channel.guild.selfMember, channel, listOf(Permission.MESSAGE_WRITE))) {
+        if (Utils.hasPermissions(channel.guild.selfMember, channel, listOf(Permission.MESSAGE_SEND))) {
           channel.sendMessage(musicManager.scheduler.t("music.noMatches")).queue()
         }
       }
 
       override fun loadFailed(exception: FriendlyException) {
-        if (Utils.hasPermissions(channel.guild.selfMember, channel, listOf(Permission.MESSAGE_WRITE))) {
+        if (Utils.hasPermissions(channel.guild.selfMember, channel, listOf(Permission.MESSAGE_SEND))) {
           channel.sendMessage(musicManager.scheduler.t("music.error", listOf(exception.message.toString()))).queue()
         }
       }

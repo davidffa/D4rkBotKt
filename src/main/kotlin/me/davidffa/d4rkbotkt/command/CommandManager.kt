@@ -16,8 +16,8 @@ import me.davidffa.d4rkbotkt.commands.settings.Logs
 import me.davidffa.d4rkbotkt.commands.settings.Setlang
 import me.davidffa.d4rkbotkt.commands.settings.Setprefix
 import me.davidffa.d4rkbotkt.utils.Utils
-import net.dv8tion.jda.api.Permission
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent
+import net.dv8tion.jda.api.entities.ChannelType
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent
 import java.time.Instant
 import java.util.*
 import kotlin.concurrent.timerTask
@@ -104,7 +104,9 @@ object CommandManager {
     return null
   }
 
-  suspend fun handle(event: GuildMessageReceivedEvent) {
+  suspend fun handle(event: MessageReceivedEvent) {
+    if (event.channelType == ChannelType.PRIVATE) return
+
     val prefix = D4rkBot.guildCache[event.guild.idLong]!!.prefix
     val split = event.message.contentRaw
       .replaceFirst(prefix, "")
@@ -118,13 +120,12 @@ object CommandManager {
     }
 
     if (cmd != null) {
+      if (!event.guildChannel.canTalk()) return
       if (cmd.botPermissions != null) {
         val botMissingPermissions =
-          cmd.botPermissions.filter { !event.guild.selfMember.getPermissions(event.channel).contains(it) }
+          cmd.botPermissions.filter { !event.guild.selfMember.getPermissions(event.guildChannel).contains(it) }
 
         if (botMissingPermissions.isNotEmpty()) {
-          if (botMissingPermissions.contains(Permission.MESSAGE_WRITE)) return
-
           if (botMissingPermissions.size > 1) {
             event.channel.sendMessage(
               t(
@@ -157,7 +158,7 @@ object CommandManager {
       if (member != null && member.id != "334054158879686657") {
         if (cmd.userPermissions != null) {
           val userMissingPermissions =
-            cmd.userPermissions.filter { !member.getPermissions(event.channel).contains(it) }
+            cmd.userPermissions.filter { !member.getPermissions(event.guildChannel).contains(it) }
 
           if (userMissingPermissions.isNotEmpty()) {
             if (userMissingPermissions.size > 1) {

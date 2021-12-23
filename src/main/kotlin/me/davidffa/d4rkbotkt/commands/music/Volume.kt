@@ -10,7 +10,7 @@ class Volume : Command(
   "volume",
   listOf("vol"),
   "Music",
-  listOf(Permission.MESSAGE_WRITE),
+  listOf(Permission.MESSAGE_SEND),
   cooldown = 4
 ) {
   override suspend fun run(ctx: CommandContext) {

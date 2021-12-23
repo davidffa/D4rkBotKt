@@ -24,7 +24,7 @@ class Filters : Command(
   listOf("musicfilters", "filtros", "audiofilters", "djtable"),
   category = "Music",
   cooldown = 5,
-  botPermissions = listOf(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS)
+  botPermissions = listOf(Permission.MESSAGE_SEND, Permission.MESSAGE_EMBED_LINKS)
 ) {
   override suspend fun run(ctx: CommandContext) {
     if (!Utils.canUsePlayer(ctx::t, ctx.selfMember, ctx.member, ctx.channel, true)) return

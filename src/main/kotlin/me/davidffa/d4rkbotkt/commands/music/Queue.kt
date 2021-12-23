@@ -8,11 +8,12 @@ import me.davidffa.d4rkbotkt.command.CommandContext
 import me.davidffa.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.Permission
 import java.time.Instant
+import kotlin.time.Duration.Companion.minutes
 
 class Queue : Command(
   "queue",
   listOf("q"),
-  botPermissions = listOf(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS),
+  botPermissions = listOf(Permission.MESSAGE_SEND, Permission.MESSAGE_EMBED_LINKS),
   category = "Music",
   cooldown = 6
 ) {
@@ -91,7 +92,7 @@ class Queue : Command(
       }
     }.toTypedArray()
 
-    ctx.channel.sendPaginator(*pages, expireAfter = 10 * 60 * 1000L, filter = {
+    ctx.channel.sendPaginator(*pages, expireAfter = 10.minutes, filter = {
       if (it.user.idLong == ctx.author.idLong) return@sendPaginator true
       return@sendPaginator false
     }).queue()

@@ -9,7 +9,7 @@ import java.lang.management.ManagementFactory
 class Uptime : Command(
   "uptime",
   listOf("ontime"),
-  botPermissions = listOf(Permission.MESSAGE_WRITE),
+  botPermissions = listOf(Permission.MESSAGE_SEND),
   category = "Info",
   cooldown = 3
 ) {

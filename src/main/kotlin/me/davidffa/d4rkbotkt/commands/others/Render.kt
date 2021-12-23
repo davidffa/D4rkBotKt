@@ -20,7 +20,7 @@ class Render : Command(
   "render",
   listOf("renderizar", "webrender"),
   "Others",
-  botPermissions = listOf(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS, Permission.MESSAGE_ATTACH_FILES),
+  botPermissions = listOf(Permission.MESSAGE_SEND, Permission.MESSAGE_EMBED_LINKS, Permission.MESSAGE_ATTACH_FILES),
   args = 1,
   cooldown = 5
 ) {

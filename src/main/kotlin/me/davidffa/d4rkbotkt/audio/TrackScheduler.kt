@@ -86,7 +86,7 @@ class TrackScheduler(private val player: AudioPlayer, private val textChannel: T
     }
 
     if (this.queue.isEmpty()) {
-      if (Utils.hasPermissions(guild.selfMember, textChannel, listOf(Permission.MESSAGE_WRITE))) {
+      if (Utils.hasPermissions(guild.selfMember, textChannel, listOf(Permission.MESSAGE_SEND))) {
         this.textChannel.sendMessage(t("music.queueEnd")).queue()
       }
 
@@ -151,7 +151,7 @@ class TrackScheduler(private val player: AudioPlayer, private val textChannel: T
     if (!Utils.hasPermissions(
         guild.selfMember,
         textChannel,
-        listOf(Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS)
+        listOf(Permission.MESSAGE_SEND, Permission.MESSAGE_EMBED_LINKS)
       )
     ) return
 
