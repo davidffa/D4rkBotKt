@@ -440,6 +440,7 @@ object Utils {
       CREATE_PRIVATE_THREADS -> t("permissions.createPrivateThreads")
       MESSAGE_SEND_IN_THREADS -> t("permissions.messageSendInThreads")
       VOICE_START_ACTIVITIES -> t("permissions.voiceStartActivities")
+      MODERATE_MEMBERS -> t("permissions.moderateMembers")
       UNKNOWN -> t("permissions.unknown")
     }
   }

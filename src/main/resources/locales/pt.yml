@@ -464,6 +464,7 @@ permissions:
   createPrivateThreads: "Criar Threads privadas"
   voiceStartActivities: "Começar atividades"
   messageSendInThreads: "Enviar mensagens em threads"
+  moderateMembers: "Moderar Membros"
   unknown: "Desconhecido"
 
 commandManager:

@@ -25,16 +25,16 @@ repositories {
 dependencies {
   // Kotlin
   implementation(kotlin("stdlib", "1.6.0"))
-  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
+  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
   implementation("ru.gildor.coroutines:kotlin-coroutines-okhttp:1.0")
   implementation(kotlin("scripting-jsr223", "1.6.0"))
 
   // JDA & Lavaplayer
-  implementation("net.dv8tion:JDA:5.0.0-alpha.3") {
+  implementation("net.dv8tion:JDA:5.0.0-alpha.4") {
     exclude("opus-java")
   }
   implementation("com.github.minndevelopment:jda-ktx:d3c6b4d")
-  implementation("com.github.davidffa:lavaplayer-fork:eb32fb7")
+  implementation("com.github.davidffa:lavaplayer-fork:a0b5fc5")
   implementation("com.sedmelluq:jda-nas:1.1.0")
 
   // Audio converter
