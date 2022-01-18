@@ -18,9 +18,7 @@ class Database {
     lateinit var userDB: CoroutineCollection<UserDB>
   }
 
-  private val mongodbURI = System.getenv("MONGODBURI") ?: throw Error("MongoDBURI cannot be null!")
-
-  private val connString = ConnectionString(mongodbURI)
+  private val connString = ConnectionString(Credentials.MONGODBURI)
   private val pojoCodecRegistry = CodecRegistries.fromProviders(PojoCodecProvider.builder().automatic(true).build())
   private val codecRegistry =
     CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(), pojoCodecRegistry)

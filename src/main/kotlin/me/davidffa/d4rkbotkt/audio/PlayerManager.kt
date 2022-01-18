@@ -12,6 +12,7 @@ import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack
 import dev.minn.jda.ktx.Embed
 import dev.minn.jda.ktx.EmbedBuilder
+import me.davidffa.d4rkbotkt.Credentials
 import me.davidffa.d4rkbotkt.audio.sources.Deezer
 import me.davidffa.d4rkbotkt.audio.sources.Spotify
 import me.davidffa.d4rkbotkt.utils.Utils
@@ -31,7 +32,7 @@ import kotlin.math.min
 object PlayerManager {
   val musicManagers: HashMap<Long, GuildMusicManager> = HashMap()
   private val audioPlayerManager = DefaultAudioPlayerManager()
-  private val spotify = Spotify(System.getenv("SPOTIFYID"), System.getenv("SPOTIFYSECRET"))
+  private val spotify = Spotify(Credentials.SPOTIFYID, Credentials.SPOTIFYSECRET)
   private val deezer = Deezer()
 
   init {

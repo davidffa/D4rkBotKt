@@ -4,6 +4,7 @@ import dev.minn.jda.ktx.Embed
 import dev.minn.jda.ktx.await
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import me.davidffa.d4rkbotkt.Credentials
 import me.davidffa.d4rkbotkt.D4rkBot
 import me.davidffa.d4rkbotkt.command.Command
 import me.davidffa.d4rkbotkt.command.CommandContext
@@ -48,11 +49,11 @@ class Render : Command(
     msg.editMessage(ctx.t("commands.render.rendering")).queue()
 
     val renderURL =
-      withContext(Dispatchers.IO) { "${System.getenv("RENDERAPIURL")}?url=${URLEncoder.encode(url, "utf-8")}" }
+      withContext(Dispatchers.IO) { "${Credentials.RENDERAPIURL}?url=${URLEncoder.encode(url, "utf-8")}" }
 
     val renderReq = Request.Builder()
       .url(renderURL)
-      .addHeader("Authorization", System.getenv("RENDERAPITOKEN"))
+      .addHeader("Authorization", Credentials.RENDERAPITOKEN)
       .build()
 
     val renderRes = D4rkBot.okHttpClient.newCall(renderReq).await().body() ?: return
