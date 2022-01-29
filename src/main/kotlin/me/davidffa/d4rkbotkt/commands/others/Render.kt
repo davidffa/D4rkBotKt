@@ -10,6 +10,7 @@ import me.davidffa.d4rkbotkt.command.Command
 import me.davidffa.d4rkbotkt.command.CommandContext
 import me.davidffa.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.Permission
+import net.dv8tion.jda.api.entities.TextChannel
 import okhttp3.Request
 import ru.gildor.coroutines.okhttp.await
 import java.io.ByteArrayOutputStream
@@ -26,7 +27,7 @@ class Render : Command(
   cooldown = 5
 ) {
   override suspend fun run(ctx: CommandContext) {
-    if (!ctx.channel.isNSFW && ctx.author.id != "334054158879686657") {
+    if (((ctx.channel !is TextChannel) || !(ctx.channel as TextChannel).isNSFW) && ctx.author.id != "334054158879686657") {
       ctx.channel.sendMessage(ctx.t("commands.render.nsfwOnly")).queue()
       return
     }

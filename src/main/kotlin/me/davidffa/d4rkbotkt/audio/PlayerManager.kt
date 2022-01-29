@@ -17,6 +17,7 @@ import me.davidffa.d4rkbotkt.audio.sources.Spotify
 import me.davidffa.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.entities.Guild
+import net.dv8tion.jda.api.entities.GuildMessageChannel
 import net.dv8tion.jda.api.entities.Member
 import net.dv8tion.jda.api.entities.TextChannel
 import java.io.ByteArrayInputStream
@@ -45,7 +46,7 @@ object PlayerManager {
     throw Error("MusicManager does not exist for guild ${guildId}.")
   }
 
-  fun getMusicManager(guild: Guild, textChannel: TextChannel): GuildMusicManager {
+  fun getMusicManager(guild: Guild, textChannel: GuildMessageChannel): GuildMusicManager {
     return this.musicManagers.computeIfAbsent(guild.idLong) {
       val guildMusicManager = GuildMusicManager(this.audioPlayerManager, textChannel)
 
@@ -55,7 +56,7 @@ object PlayerManager {
     }
   }
 
-  suspend fun loadAndPlay(requester: Member, channel: TextChannel, trackURL: String) {
+  suspend fun loadAndPlay(requester: Member, channel: GuildMessageChannel, trackURL: String) {
     val musicManager = this.getMusicManager(channel.guild, channel)
 
     val spotifyRegex = "^(?:https?://(?:open\\.)?spotify\\.com|spotify)[/:](track|album|playlist)[/:]([a-zA-Z0-9]+)".toRegex()

@@ -153,11 +153,11 @@ object Utils {
     return channel
   }
 
-  fun hasPermissions(selfMember: Member, channel: TextChannel, permissions: List<Permission>): Boolean {
+  fun hasPermissions(selfMember: Member, channel: GuildMessageChannel, permissions: List<Permission>): Boolean {
     return selfMember.getPermissions(channel).containsAll(permissions)
   }
 
-  fun canRecord(t: (String) -> String, self: Member, member: Member, channel: TextChannel): Boolean {
+  fun canRecord(t: (String) -> String, self: Member, member: Member, channel: GuildMessageChannel): Boolean {
     val memberVoiceState = member.voiceState
     val selfChannel = member.guild.audioManager.connectedChannel
 
@@ -199,7 +199,7 @@ object Utils {
     return true
   }
 
-  suspend fun canPlay(t: (String) -> String, self: Member, member: Member, channel: TextChannel): Boolean {
+  suspend fun canPlay(t: (String) -> String, self: Member, member: Member, channel: GuildMessageChannel): Boolean {
     val memberVoiceState = member.voiceState
     val selfChannel = member.guild.audioManager.connectedChannel
 
@@ -262,7 +262,7 @@ object Utils {
     t: (String, List<String>?) -> String,
     self: Member,
     member: Member,
-    channel: TextChannel,
+    channel: GuildMessageChannel,
     forOwnTrack: Boolean = false,
     forAllQueueTracks: Boolean = false,
     trackPosition: Int? = null

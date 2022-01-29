@@ -11,8 +11,8 @@ interface ICommandContext {
 
   val guild: Guild
     get() = this.event.guild
-  val channel: TextChannel
-    get() = this.event.channel as TextChannel
+  val channel: GuildMessageChannel
+    get() = this.event.channel as GuildMessageChannel
   val message: Message
     get() = this.event.message
   val author: User

@@ -14,6 +14,7 @@ import me.davidffa.d4rkbotkt.Translator
 import me.davidffa.d4rkbotkt.audio.receive.ReceiverManager
 import me.davidffa.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.Permission
+import net.dv8tion.jda.api.entities.GuildMessageChannel
 import net.dv8tion.jda.api.entities.Member
 import net.dv8tion.jda.api.entities.TextChannel
 import okhttp3.Call
@@ -25,7 +26,7 @@ import java.io.IOException
 import java.time.Instant
 import kotlin.system.exitProcess
 
-class TrackScheduler(private val player: AudioPlayer, private val textChannel: TextChannel) : AudioEventAdapter() {
+class TrackScheduler(private val player: AudioPlayer, private val textChannel: GuildMessageChannel) : AudioEventAdapter() {
   private val logger = LoggerFactory.getLogger(this::class.java)
 
   val queue = mutableListOf<Track>()
