@@ -101,12 +101,13 @@ class Serverinfo : Command(
       }
       field {
         name = ":white_small_square: ${ctx.t("commands.serverinfo.channels.name")} [${ctx.guild.channels.size}]"
-        value = "<:chat:804050576647913522> ${ctx.t("commands.serverinfo.channels.text")} ${ctx.guild.textChannels.size}\n" +
-                ":microphone2: ${ctx.t("commands.serverinfo.channels.voice")} ${ctx.guild.voiceChannels.size}\n" +
-                "<:stage:828651062184378389> ${ctx.t("commands.serverinfo.channels.stage")} ${ctx.guild.stageChannels.size}\n" +
-                ":loudspeaker: ${ctx.t("commands.serverinfo.channels.news")} ${ctx.guild.newsChannels.size}\n" +
-                ":shopping_bags: ${ctx.t("commands.serverinfo.channels.store")} ${ctx.guild.storeChannels.size}\n" +
-                ":diamond_shape_with_a_dot_inside: ${ctx.t("commands.serverinfo.channels.categories")} ${ctx.guild.categories.size}"
+        value =
+          "<:chat:804050576647913522> ${ctx.t("commands.serverinfo.channels.text")} ${ctx.guild.textChannels.size}\n" +
+                  ":microphone2: ${ctx.t("commands.serverinfo.channels.voice")} ${ctx.guild.voiceChannels.size}\n" +
+                  "<:stage:828651062184378389> ${ctx.t("commands.serverinfo.channels.stage")} ${ctx.guild.stageChannels.size}\n" +
+                  ":loudspeaker: ${ctx.t("commands.serverinfo.channels.news")} ${ctx.guild.newsChannels.size}\n" +
+                  ":shopping_bags: ${ctx.t("commands.serverinfo.channels.store")} ${ctx.guild.storeChannels.size}\n" +
+                  ":diamond_shape_with_a_dot_inside: ${ctx.t("commands.serverinfo.channels.categories")} ${ctx.guild.categories.size}"
       }
       color = Utils.randColor()
       footer {
@@ -122,8 +123,20 @@ class Serverinfo : Command(
     val page1 = embed.build()
 
     embed.builder.clearFields()
-    embed.description = "**${ctx.t("commands.serverinfo.roles")} [${ctx.guild.roles.size}]**\n${ctx.guild.roles.slice(0 until min(ctx.guild.roles.size, 70)).joinToString(" ") { it.asMention }}" +
-            if (ctx.guild.roles.size > 70) "... (${ctx.t("commands.serverinfo.more", listOf((ctx.guild.roles.size - 70).toString()))})" else ""
+    embed.description = "**${ctx.t("commands.serverinfo.roles")} [${ctx.guild.roles.size}]**\n${
+      ctx.guild.roles.slice(
+        0 until min(
+          ctx.guild.roles.size,
+          70
+        )
+      ).joinToString(" ") { it.asMention }
+    }" +
+            if (ctx.guild.roles.size > 70) "... (${
+              ctx.t(
+                "commands.serverinfo.more",
+                listOf((ctx.guild.roles.size - 70).toString())
+              )
+            })" else ""
 
     val page2 = embed.build()
 

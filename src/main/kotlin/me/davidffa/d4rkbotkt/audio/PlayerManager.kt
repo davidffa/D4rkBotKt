@@ -19,7 +19,6 @@ import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.entities.Guild
 import net.dv8tion.jda.api.entities.GuildMessageChannel
 import net.dv8tion.jda.api.entities.Member
-import net.dv8tion.jda.api.entities.TextChannel
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.time.Instant
@@ -59,7 +58,8 @@ object PlayerManager {
   suspend fun loadAndPlay(requester: Member, channel: GuildMessageChannel, trackURL: String) {
     val musicManager = this.getMusicManager(channel.guild, channel)
 
-    val spotifyRegex = "^(?:https?://(?:open\\.)?spotify\\.com|spotify)[/:](track|album|playlist)[/:]([a-zA-Z0-9]+)".toRegex()
+    val spotifyRegex =
+      "^(?:https?://(?:open\\.)?spotify\\.com|spotify)[/:](track|album|playlist)[/:]([a-zA-Z0-9]+)".toRegex()
     val deezerRegex = "^(?:https?://|)?(?:www\\.)?deezer\\.com/(?:\\w{2}/)?(track|album|playlist)/(\\d+)".toRegex()
 
     val spotifyMatch = spotifyRegex.find(trackURL)

@@ -5,7 +5,6 @@ import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager
 import me.davidffa.d4rkbotkt.audio.filters.Filter
 import me.davidffa.d4rkbotkt.audio.filters.FilterFactory
 import net.dv8tion.jda.api.entities.GuildMessageChannel
-import net.dv8tion.jda.api.entities.TextChannel
 import java.util.*
 
 class GuildMusicManager(manager: AudioPlayerManager, val textChannel: GuildMessageChannel) {
