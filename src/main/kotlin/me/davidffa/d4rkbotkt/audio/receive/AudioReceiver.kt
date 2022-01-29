@@ -22,10 +22,11 @@ class AudioReceiver(
   init {
     Files.createDirectories(Paths.get("./records"))
 
+    // Audio format: AudioSendHandler.INPUT_FORMAT (48k 16 bit big endian pcm)
     val args = arrayOf("-f", "s16be", "-ar", "48k", "-ac", "2", "-i", "pipe:0", "-b:a", min(bitrate, 128000).toString(), "-f", "mp3", "pipe:1")
 
     ffmpeg = ProcessBuilder("ffmpeg", *args)
-      .redirectError(ProcessBuilder.Redirect.PIPE)  // Logs
+      .redirectError(ProcessBuilder.Redirect.DISCARD)  // Logs
       .redirectInput(ProcessBuilder.Redirect.PIPE)
       .redirectOutput(File("./records/record-${guildId}.mp3"))
       .start()
