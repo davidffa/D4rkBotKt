@@ -3,10 +3,10 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
   kotlin("jvm") version "1.6.0"
-  id("com.github.johnrengelman.shadow") version "7.0.0"
+  id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
-group = "me.davidffa.d4rkbotkt"
+group = "me.davidffa"
 version = "1.0.0"
 
 java {
@@ -34,7 +34,7 @@ dependencies {
     exclude("opus-java")
   }
   implementation("com.github.minndevelopment:jda-ktx:d3c6b4d")
-  implementation("com.github.davidffa:lavaplayer-fork:a0b5fc5")
+  implementation("com.github.davidffa:lavaplayer-fork:0cb6a3a")
   implementation("com.sedmelluq:jda-nas:1.1.0")
 
   // Audio converter
@@ -50,7 +50,7 @@ dependencies {
   implementation("org.litote.kmongo:kmongo-coroutine:4.4.0")
 
   // Native System
-  implementation("com.github.oshi:oshi-core:5.8.6")
+  implementation("com.github.oshi:oshi-core:6.1.0")
 
   // Logger
   runtimeOnly("ch.qos.logback", "logback-classic", "1.2.5")
