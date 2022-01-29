@@ -9,15 +9,17 @@ import java.io.FileOutputStream
 import java.io.OutputStream
 import java.nio.file.Files
 import java.nio.file.Paths
+import kotlin.math.min
 
 class AudioReceiver(
-  guildId: String
+  guildId: String,
+  bitrate: Int
 ) : AudioReceiveHandler {
   private val volume = 1.0
 
   private val encoder = LameEncoder(
     AudioReceiveHandler.OUTPUT_FORMAT,
-    96,
+    min(bitrate / 1000, 128),
     MPEGMode.STEREO,
     Lame.QUALITY_MIDDLE_LOW,
     false

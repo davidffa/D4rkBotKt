@@ -52,7 +52,7 @@ class Record : Command(
       ctx.guild.audioManager.openAudioConnection(ctx.member.voiceState?.channel)
     }
 
-    val audioReceiver = AudioReceiver(ctx.guild.id)
+    val audioReceiver = AudioReceiver(ctx.guild.id, ctx.member.voiceState!!.channel!!.bitrate)
     ctx.guild.audioManager.receivingHandler = audioReceiver
     ctx.channel.sendMessage(ctx.t("commands.record.start")).queue()
 
