@@ -1,1 +1,1 @@
-Worker: java -jar build/libs/D4rkBot.jar
+Worker: java -jar build/libs/D4rkBotKt.jar

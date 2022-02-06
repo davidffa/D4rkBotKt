@@ -83,13 +83,13 @@ tasks {
 
   withType<Jar> {
     manifest {
-      attributes["Class-Path"] = "/libs/D4rkBot.jar"
+      attributes["Class-Path"] = "/libs/D4rkBotKt.jar"
       attributes["Main-Class"] = "me.davidffa.d4rkbotkt.Launcher"
     }
   }
 
   withType<ShadowJar> {
-    archiveFileName.set("D4rkBot.jar")
+    archiveFileName.set("D4rkBotKt.jar")
   }
 
   withType<KotlinCompile> {
