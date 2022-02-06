@@ -2,7 +2,7 @@ package me.davidffa.d4rkbotkt.commands.settings
 
 import com.mongodb.client.model.Updates
 import dev.minn.jda.ktx.*
-import dev.minn.jda.ktx.interactions.SelectionMenu
+import dev.minn.jda.ktx.interactions.SelectMenu
 import dev.minn.jda.ktx.interactions.option
 import me.davidffa.d4rkbotkt.D4rkBot
 import me.davidffa.d4rkbotkt.Database
@@ -17,7 +17,7 @@ import net.dv8tion.jda.api.entities.MessageEmbed
 import net.dv8tion.jda.api.entities.TextChannel
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent
 import net.dv8tion.jda.api.interactions.components.ActionRow
-import net.dv8tion.jda.api.interactions.components.Button
+import net.dv8tion.jda.api.interactions.components.buttons.Button
 import java.security.SecureRandom
 import java.time.Instant
 import java.util.*
@@ -68,7 +68,7 @@ class Logs : Command(
     SecureRandom().nextBytes(nonceBytes)
     val nonce = Base64.getEncoder().encodeToString(nonceBytes)
 
-    val menu = SelectionMenu("$nonce:logs", ctx.t("commands.logs.menu.placeholder")) {
+    val menu = SelectMenu("$nonce:logs", ctx.t("commands.logs.menu.placeholder")) {
       option(ctx.t("commands.logs.menu.welcome"), "welcome", emoji = Emoji.fromUnicode("\uD83D\uDC4B"))
       option(ctx.t("commands.logs.menu.leave"), "leave", emoji = Emoji.fromUnicode("\uD83D\uDEAA"))
     }
@@ -111,7 +111,7 @@ class Logs : Command(
         return@onSelection
       }
 
-      val selected = it.selectedOptions!!.first().value
+      val selected = it.selectedOptions.first().value
 
       if (selected == "welcome") logType = LogType.WELCOME
       else if (selected == "leave") logType = LogType.REMOVE

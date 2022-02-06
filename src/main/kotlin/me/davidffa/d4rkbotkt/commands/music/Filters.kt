@@ -1,7 +1,7 @@
 package me.davidffa.d4rkbotkt.commands.music
 
 import dev.minn.jda.ktx.*
-import dev.minn.jda.ktx.interactions.SelectionMenu
+import dev.minn.jda.ktx.interactions.SelectMenu
 import dev.minn.jda.ktx.interactions.option
 import me.davidffa.d4rkbotkt.audio.GuildMusicManager
 import me.davidffa.d4rkbotkt.audio.PlayerManager
@@ -11,9 +11,9 @@ import me.davidffa.d4rkbotkt.command.CommandContext
 import me.davidffa.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.entities.Emoji
-import net.dv8tion.jda.api.events.interaction.GenericComponentInteractionCreateEvent
+import net.dv8tion.jda.api.events.interaction.component.GenericComponentInteractionCreateEvent
 import net.dv8tion.jda.api.interactions.components.ActionRow
-import net.dv8tion.jda.api.interactions.components.Button
+import net.dv8tion.jda.api.interactions.components.buttons.Button
 import java.security.SecureRandom
 import java.time.Instant
 import java.util.*
@@ -40,7 +40,7 @@ class Filters : Command(
     SecureRandom().nextBytes(nonceBytes)
     val nonce = Base64.getEncoder().encodeToString(nonceBytes)
 
-    val menu = SelectionMenu("$nonce:filters", ctx.t("commands.filters.menuplaceholder")) {
+    val menu = SelectMenu("$nonce:filters", ctx.t("commands.filters.menuplaceholder")) {
       option("Bass", "bass", emoji = Emoji.fromUnicode("1️⃣"))
       option("Daycore", "daycore", emoji = Emoji.fromUnicode("2️⃣"))
       option("Nightcore", "nightcore", emoji = Emoji.fromUnicode("3️⃣"))
@@ -105,7 +105,7 @@ class Filters : Command(
         return@onSelection
       }
 
-      val selection = it.selectedOptions!!.first()
+      val selection = it.selectedOptions.first()
 
       when (selection.value) {
         "bass" -> manager.switchFilter(Filter.BASS)

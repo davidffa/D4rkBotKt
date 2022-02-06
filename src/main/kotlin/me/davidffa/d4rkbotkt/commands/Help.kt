@@ -3,7 +3,7 @@ package me.davidffa.d4rkbotkt.commands
 import dev.minn.jda.ktx.Embed
 import dev.minn.jda.ktx.EmbedBuilder
 import dev.minn.jda.ktx.await
-import dev.minn.jda.ktx.interactions.SelectionMenu
+import dev.minn.jda.ktx.interactions.SelectMenu
 import dev.minn.jda.ktx.interactions.option
 import dev.minn.jda.ktx.onSelection
 import me.davidffa.d4rkbotkt.command.Command
@@ -56,7 +56,7 @@ class Help : Command(
       SecureRandom().nextBytes(nonceBytes)
       val nonce = Base64.getEncoder().encodeToString(nonceBytes)
 
-      val menu = SelectionMenu("$nonce:help", ctx.t("commands.help.menu.placeholder")) {
+      val menu = SelectMenu("$nonce:help", ctx.t("commands.help.menu.placeholder")) {
         if (ctx.author.id == "334054158879686657") {
           option(
             "Desenvolvedor",
@@ -98,7 +98,7 @@ class Help : Command(
           it.reply(ctx.t("errors.cannotinteract", listOf(ctx.prefix, name))).setEphemeral(true).queue()
           return@onSelection
         }
-        val option = it.selectedOptions?.first()
+        val option = it.selectedOptions.first()
 
         val embed = EmbedBuilder {
           title = ctx.t("commands.help.title")

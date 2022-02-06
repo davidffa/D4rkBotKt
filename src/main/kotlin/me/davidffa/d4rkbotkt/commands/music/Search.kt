@@ -3,7 +3,7 @@ package me.davidffa.d4rkbotkt.commands.music
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack
 import dev.minn.jda.ktx.*
-import dev.minn.jda.ktx.interactions.SelectionMenu
+import dev.minn.jda.ktx.interactions.SelectMenu
 import dev.minn.jda.ktx.interactions.option
 import me.davidffa.d4rkbotkt.audio.PlayerManager
 import me.davidffa.d4rkbotkt.command.Command
@@ -12,7 +12,7 @@ import me.davidffa.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.entities.Emoji
 import net.dv8tion.jda.api.interactions.components.ActionRow
-import net.dv8tion.jda.api.interactions.components.Button
+import net.dv8tion.jda.api.interactions.components.buttons.Button
 import java.security.SecureRandom
 import java.time.Instant
 import java.util.*
@@ -68,7 +68,7 @@ class Search : Command(
     SecureRandom().nextBytes(nonceBytes)
     val nonce = Base64.getEncoder().encodeToString(nonceBytes)
 
-    val menu = SelectionMenu("$nonce:search", ctx.t("commands.search.placeholder"), 1..10) {
+    val menu = SelectMenu("$nonce:search", ctx.t("commands.search.placeholder"), 1..10) {
       tracks.mapIndexed { i, track ->
         option(
           if (track.info.author.isEmpty()) "Desconhecido" else formatString(track.info.author, 50),
@@ -104,7 +104,7 @@ class Search : Command(
         return@onSelection
       }
 
-      val ids = it.selectedOptions!!.map { op -> op.value.toInt() }
+      val ids = it.selectedOptions.map { op -> op.value.toInt() }
 
       timer.cancel()
       ctx.jda.removeEventListener(this)
@@ -153,7 +153,7 @@ class Search : Command(
 
       timer.cancel()
 
-      ctx.jda.removeEventListener(buttonListener)
+      ctx.jda.removeEventListener(this)
       ctx.jda.removeEventListener(menuListener)
 
       it.editMessage(ctx.t("commands.search.cancel")).setEmbeds().setActionRows().queue()
