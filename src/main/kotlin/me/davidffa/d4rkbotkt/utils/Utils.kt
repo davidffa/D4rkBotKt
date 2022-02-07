@@ -329,7 +329,8 @@ object Utils {
     ) return true
 
     if (forAllQueueTracks) {
-      if (player.scheduler.queue.find { it.requester.idLong != member.idLong } != null) {
+      if (player.scheduler.current.requester.idLong != member.idLong ||
+        player.scheduler.queue.find { it.requester.idLong != member.idLong } != null) {
         channel.sendMessage(t("errors.allQueueRequested", null))
           .queue()
         return false
