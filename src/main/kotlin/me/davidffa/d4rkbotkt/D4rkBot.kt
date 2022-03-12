@@ -3,6 +3,7 @@ package me.davidffa.d4rkbotkt
 import com.mongodb.client.model.Updates
 import com.sedmelluq.discord.lavaplayer.jdaudp.NativeAudioSendFactory
 import dev.minn.jda.ktx.createJDA
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import me.davidffa.d4rkbotkt.database.BotDB
 import me.davidffa.d4rkbotkt.database.GuildCache
@@ -27,6 +28,8 @@ class D4rkBot {
     private var lastCommandsUsed = 0
 
     suspend fun loadCache() {
+      if (!Database.isDBInitialized()) delay(1000)
+
       var botDB = Database.botDB.findOneById(jda.selfUser.id)
 
       if (botDB == null) {

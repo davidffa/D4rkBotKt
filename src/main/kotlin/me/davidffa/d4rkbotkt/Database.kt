@@ -16,6 +16,8 @@ class Database {
     lateinit var botDB: CoroutineCollection<BotDB>
     lateinit var guildDB: CoroutineCollection<GuildDB>
     lateinit var userDB: CoroutineCollection<UserDB>
+
+    fun isDBInitialized() = ::botDB.isInitialized
   }
 
   private val connString = ConnectionString(Credentials.MONGODBURI)
