@@ -35,7 +35,7 @@ val lavadspVersion          = "0.7.7"
 val snakeyamlVersion        = "1.30"
 val kmongoVersion           = "4.5.0"
 val oshiVersion             = "6.1.4"
-val logbackVersion          = "1.2.10"
+val logbackVersion          = "1.2.11"
 
 dependencies {
   // Kotlin
