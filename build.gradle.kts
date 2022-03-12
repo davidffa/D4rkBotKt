@@ -26,15 +26,15 @@ val kotlinVersion           = "1.6.10"
 val coroutinesVersion       = "1.6.0"
 
 val okhttpCoroutinesVersion = "1.0"
-val jdaVersion              = "5.0.0-alpha.5"
-val jdaKtxVersion           = "6f70da7"
-val lavaplayerVersion       = "87215b8"
+val jdaVersion              = "5.0.0-alpha.9"
+val jdaKtxVersion           = "6527755"
+val lavaplayerVersion       = "f9e6bce"
 val jdaNasVersion           = "1.1.0"
 val lavadspVersion          = "0.7.7"
 
-val snakeyamlVersion        = "1.29"
-val kmongoVersion           = "4.4.0"
-val oshiVersion             = "6.1.0"
+val snakeyamlVersion        = "1.30"
+val kmongoVersion           = "4.5.0"
+val oshiVersion             = "6.1.4"
 val logbackVersion          = "1.2.10"
 
 dependencies {
