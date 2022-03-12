@@ -39,7 +39,7 @@ suspend fun onReady(event: ReadyEvent) {
       }
       (3).toByte() -> {
         val totalChannels =
-          jda.storeChannels.size + jda.textChannels.size + jda.voiceChannels.size + jda.categories.size
+          jda.textChannels.size + jda.voiceChannels.size + jda.categories.size
         presence.setPresence(
           OnlineStatus.ONLINE,
           Activity.streaming("$totalChannels Canais", "https://twitch.tv/d4rkb12")

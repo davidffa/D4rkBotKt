@@ -24,7 +24,6 @@ commands:
       news: "Anúncios"
       voice: "Voz"
       category: "Categoria"
-      store: "Loja"
       stage: "Palco"
       unknown: "Desconhecido"
     title: "Informações do canal {0}"
@@ -107,7 +106,6 @@ commands:
       voice: "Voz:"
       stage: "Palco:"
       news: "Anúncios:"
-      store: "Loja:"
       categories: "Categorias:"
     roles: "Cargos"
   userinfo:

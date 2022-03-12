@@ -33,7 +33,6 @@ class Channelinfo : Command(
       NEWS -> ctx.t("commands.channelinfo.channeltypes.news")
       VOICE -> ctx.t("commands.channelinfo.channeltypes.voice")
       CATEGORY -> ctx.t("commands.channelinfo.channeltypes.category")
-      STORE -> ctx.t("commands.channelinfo.channeltypes.store")
       STAGE -> ctx.t("commands.channelinfo.channeltypes.stage")
       else -> ctx.t("commands.channelinfo.channeltypes.unknown")
     }
@@ -123,18 +122,14 @@ class Channelinfo : Command(
 
   private fun convertRegion(region: Region): String {
     return when (region) {
-      AMSTERDAM -> ":flag_nl:"
       BRAZIL -> ":flag_br:"
-      EUROPE -> ":flag_eu:"
-      EU_CENTRAL -> ":flag_eu:"
-      EU_WEST -> ":flag_eu:"
-      FRANKFURT -> ":flag_de:"
       HONG_KONG -> ":flag_hk:"
       JAPAN -> ":flag_jp:"
       SOUTH_KOREA -> ":flag_kr:"
-      LONDON -> ":flag_gb:"
       RUSSIA -> ":flag_ru:"
       INDIA -> ":flag_in:"
+      MILAN -> ":flag_it:"
+      ROTTERDAM -> ":flag_nl:"
       SINGAPORE -> ":flag_sg:"
       SOUTH_AFRICA -> ":flag_sa:"
       SYDNEY -> ":flag_au:"
@@ -143,14 +138,14 @@ class Channelinfo : Command(
       US_SOUTH -> ":flag_us:"
       US_WEST -> ":flag_us:"
 
-      VIP_AMSTERDAM -> "VIP :flag_nl:"
       VIP_BRAZIL -> "VIP :flag_br:"
-      VIP_EU_CENTRAL -> "VIP :flag_eu:"
-      VIP_EU_WEST -> "VIP :flag_eu:"
-      VIP_FRANKFURT -> "VIP :flag_de:"
+      VIP_HONG_KONG -> "VIP :flag_hk:"
+      VIP_INDIA -> "VIP :flag_in:"
       VIP_JAPAN -> "VIP :flag_jp:"
+      VIP_MILAN -> "VIP :flag_it:"
+      VIP_ROTTERDAM -> "VIP :flag_nl:"
+      VIP_RUSSIA -> "VIP :flag_ru:"
       VIP_SOUTH_KOREA -> "VIP :flag_kr:"
-      VIP_LONDON -> "VIP :flag_gb:"
       VIP_SINGAPORE -> "VIP :flag_sg:"
       VIP_SOUTH_AFRICA -> "VIP :flag_sa:"
       VIP_SYDNEY -> "VIP :flag_au:"

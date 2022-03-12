@@ -106,7 +106,6 @@ class Serverinfo : Command(
                   ":microphone2: ${ctx.t("commands.serverinfo.channels.voice")} ${ctx.guild.voiceChannels.size}\n" +
                   "<:stage:828651062184378389> ${ctx.t("commands.serverinfo.channels.stage")} ${ctx.guild.stageChannels.size}\n" +
                   ":loudspeaker: ${ctx.t("commands.serverinfo.channels.news")} ${ctx.guild.newsChannels.size}\n" +
-                  ":shopping_bags: ${ctx.t("commands.serverinfo.channels.store")} ${ctx.guild.storeChannels.size}\n" +
                   ":diamond_shape_with_a_dot_inside: ${ctx.t("commands.serverinfo.channels.categories")} ${ctx.guild.categories.size}"
       }
       color = Utils.randColor()

@@ -25,7 +25,6 @@ commands:
       news: "News"
       voice: "Voice"
       category: "Category"
-      store: "Store"
       stage: "Stage"
       unknown: "Unknown"
     title: "Channel {0} info"
@@ -111,7 +110,6 @@ commands:
       voice: "Voice:"
       stage: "Stage:"
       news: "News:"
-      store: "Store:"
       categories: "Categories:"
     roles: "Roles"
   userinfo:
