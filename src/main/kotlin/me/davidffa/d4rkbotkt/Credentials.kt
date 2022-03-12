@@ -18,6 +18,8 @@ object Credentials {
       properties.setProperty("SPOTIFYSECRET", System.getenv("SPOTIFYSECRET"))
       properties.setProperty("RENDERAPIURL", System.getenv("RENDERAPIURL"))
       properties.setProperty("RENDERAPITOKEN", System.getenv("RENDERAPITOKEN"))
+      properties.setProperty("YTEMAIL", System.getenv("YTEMAIL"))
+      properties.setProperty("YTPASS", System.getenv("YTPASS"))
     }
   }
 
@@ -38,4 +40,10 @@ object Credentials {
 
   val RENDERAPITOKEN: String
     get() = properties.getProperty("RENDERAPITOKEN")
+
+  val YTEMAIL: String
+    get() = properties.getProperty("YTEMAIL")
+
+  val YTPASS: String
+    get() = properties.getProperty("YTPASS")
 }

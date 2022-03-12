@@ -1,9 +1,21 @@
 package me.davidffa.d4rkbotkt.audio
 
+import com.sedmelluq.discord.lavaplayer.container.MediaContainerRegistry
 import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager
 import com.sedmelluq.discord.lavaplayer.player.FunctionalResultHandler
-import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers
+import com.sedmelluq.discord.lavaplayer.source.bandcamp.BandcampAudioSourceManager
+import com.sedmelluq.discord.lavaplayer.source.beam.BeamAudioSourceManager
+import com.sedmelluq.discord.lavaplayer.source.getyarn.GetyarnAudioSourceManager
+import com.sedmelluq.discord.lavaplayer.source.http.HttpAudioSourceManager
+import com.sedmelluq.discord.lavaplayer.source.odysee.OdyseeAudioSourceManager
+import com.sedmelluq.discord.lavaplayer.source.reddit.RedditAudioSourceManager
+import com.sedmelluq.discord.lavaplayer.source.soundcloud.SoundCloudAudioSourceManager
+import com.sedmelluq.discord.lavaplayer.source.tiktok.TiktokAudioSourceManager
+import com.sedmelluq.discord.lavaplayer.source.twitch.TwitchStreamAudioSourceManager
+import com.sedmelluq.discord.lavaplayer.source.vimeo.VimeoAudioSourceManager
+import com.sedmelluq.discord.lavaplayer.source.yamusic.YandexMusicAudioSourceManager
+import com.sedmelluq.discord.lavaplayer.source.youtube.YoutubeAudioSourceManager
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException
 import com.sedmelluq.discord.lavaplayer.tools.io.MessageInput
 import com.sedmelluq.discord.lavaplayer.tools.io.MessageOutput
@@ -35,7 +47,18 @@ object PlayerManager {
   private val deezer = Deezer()
 
   init {
-    AudioSourceManagers.registerRemoteSources(audioPlayerManager)
+    audioPlayerManager.registerSourceManager(YoutubeAudioSourceManager(true, Credentials.YTEMAIL, Credentials.YTPASS))
+    audioPlayerManager.registerSourceManager(SoundCloudAudioSourceManager.createDefault(true))
+    audioPlayerManager.registerSourceManager(BandcampAudioSourceManager())
+    audioPlayerManager.registerSourceManager(VimeoAudioSourceManager())
+    audioPlayerManager.registerSourceManager(TwitchStreamAudioSourceManager())
+    audioPlayerManager.registerSourceManager(TiktokAudioSourceManager())
+    audioPlayerManager.registerSourceManager(BeamAudioSourceManager())
+    audioPlayerManager.registerSourceManager(OdyseeAudioSourceManager(true))
+    audioPlayerManager.registerSourceManager(YandexMusicAudioSourceManager(true))
+    audioPlayerManager.registerSourceManager(RedditAudioSourceManager())
+    audioPlayerManager.registerSourceManager(GetyarnAudioSourceManager())
+    audioPlayerManager.registerSourceManager(HttpAudioSourceManager(MediaContainerRegistry.DEFAULT_REGISTRY))
     audioPlayerManager.configuration.isFilterHotSwapEnabled = true
   }
 
