@@ -2,7 +2,7 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-  kotlin("jvm") version "1.6.10"
+  kotlin("jvm") version "1.6.20"
   id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
@@ -10,8 +10,8 @@ group = "me.davidffa"
 version = "1.0.0"
 
 java {
-  sourceCompatibility = JavaVersion.VERSION_17
-  targetCompatibility = JavaVersion.VERSION_17
+  sourceCompatibility = JavaVersion.VERSION_18
+  targetCompatibility = JavaVersion.VERSION_18
 }
 
 repositories {
@@ -22,13 +22,13 @@ repositories {
   maven("https://jitpack.io/")
 }
 
-val kotlinVersion           = "1.6.10"
-val coroutinesVersion       = "1.6.0"
+val kotlinVersion           = "1.6.20"
+val coroutinesVersion       = "1.6.1"
 
 val okhttpCoroutinesVersion = "1.0"
 val jdaVersion              = "5.0.0-alpha.9"
 val jdaKtxVersion           = "9f01b74"
-val lavaplayerVersion       = "ec43ed0"
+val lavaplayerVersion       = "0db9ab6"
 val jdaNasVersion           = "1.1.0"
 val lavadspVersion          = "0.7.7"
 
@@ -93,6 +93,6 @@ tasks {
   }
 
   withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = JavaVersion.VERSION_17.toString()
+    kotlinOptions.jvmTarget = JavaVersion.VERSION_18.toString()
   }
 }
