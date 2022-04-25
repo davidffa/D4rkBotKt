@@ -16,8 +16,6 @@ java {
 
 repositories {
   mavenCentral()
-  @Suppress("DEPRECATION")
-  jcenter() // JDA-NAS & lavadsp
   maven("https://m2.dv8tion.net/releases")
   maven("https://jitpack.io/")
 }
@@ -26,15 +24,15 @@ val kotlinVersion           = "1.6.20"
 val coroutinesVersion       = "1.6.1"
 
 val okhttpCoroutinesVersion = "1.0"
-val jdaVersion              = "5.0.0-alpha.9"
+val jdaVersion              = "5.0.0-alpha.10"
 val jdaKtxVersion           = "9f01b74"
-val lavaplayerVersion       = "0db9ab6"
-val jdaNasVersion           = "1.1.0"
-val lavadspVersion          = "0.7.7"
+val lavaplayerVersion       = "36cdfb4"
+val jdaNasVersion           = "1.0.0"
+val lavadspVersion          = "0.7.8"
 
 val snakeyamlVersion        = "1.30"
-val kmongoVersion           = "4.5.0"
-val oshiVersion             = "6.1.5"
+val kmongoVersion           = "4.5.1"
+val oshiVersion             = "6.1.6"
 val logbackVersion          = "1.2.11"
 
 dependencies {
@@ -50,10 +48,10 @@ dependencies {
   }
   implementation("com.github.minndevelopment:jda-ktx:$jdaKtxVersion")
   implementation("com.github.davidffa:lavaplayer-fork:$lavaplayerVersion")
-  implementation("com.sedmelluq:jda-nas:$jdaNasVersion")
+  implementation("com.github.davidffa:jda-nas-fork:$jdaNasVersion")
 
   // Lavaplayer filters
-  implementation("com.github.natanbc:lavadsp:$lavadspVersion")
+  implementation("com.github.davidffa:lavadsp-fork:$lavadspVersion")
 
   // YAML
   implementation("org.yaml:snakeyaml:$snakeyamlVersion")
