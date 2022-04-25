@@ -211,7 +211,7 @@ class TrackScheduler(private val player: AudioPlayer, private val textChannel: G
           }
 
           override fun onResponse(call: Call, response: Response) {
-            if (response.code() != 202) exitProcess(1)
+            if (response.code != 202) exitProcess(1)
           }
         })
       }

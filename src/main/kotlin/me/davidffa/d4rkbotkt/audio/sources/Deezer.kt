@@ -62,7 +62,7 @@ class Deezer {
       .build()
 
     val res = D4rkBot.okHttpClient.newCall(request).await()
-    val json = DataObject.fromJson(withContext(Dispatchers.IO) { res.body()!!.string() })
+    val json = DataObject.fromJson(withContext(Dispatchers.IO) { res.body!!.string() })
     res.close()
 
     return json

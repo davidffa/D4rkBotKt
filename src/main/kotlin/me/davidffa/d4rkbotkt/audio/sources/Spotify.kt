@@ -111,14 +111,14 @@ class Spotify(
       .build()
 
     val res = D4rkBot.okHttpClient.newCall(request).await()
-    val json = DataObject.fromJson(withContext(Dispatchers.IO) { res.body()!!.string() })
+    val json = DataObject.fromJson(withContext(Dispatchers.IO) { res.body!!.string() })
     res.close()
     return json
   }
 
   private suspend fun renewToken() {
     val res = D4rkBot.okHttpClient.newCall(renewRequest).await()
-    val body = res.body()
+    val body = res.body
 
     if (body == null) {
       token = null

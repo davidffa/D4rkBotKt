@@ -27,12 +27,12 @@ class Github : Command(
 
     val res = D4rkBot.okHttpClient.newCall(req).await()
 
-    if (res.code() != 200) {
+    if (res.code != 200) {
       ctx.channel.sendMessage(ctx.t("commands.github.profileNotFound")).queue()
       return
     }
 
-    val user = DataObject.fromJson(withContext(Dispatchers.IO) { res.body()!!.string() })
+    val user = DataObject.fromJson(withContext(Dispatchers.IO) { res.body!!.string() })
     res.close()
 
     val embed = EmbedBuilder {

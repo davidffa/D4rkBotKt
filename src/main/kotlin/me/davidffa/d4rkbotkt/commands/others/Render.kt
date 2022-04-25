@@ -57,7 +57,7 @@ class Render : Command(
       .addHeader("Authorization", Credentials.RENDERAPITOKEN)
       .build()
 
-    val renderRes = D4rkBot.okHttpClient.newCall(renderReq).await().body() ?: return
+    val renderRes = D4rkBot.okHttpClient.newCall(renderReq).await().body ?: return
 
     val compressedBuffer = withContext(Dispatchers.IO) { renderRes.bytes() }
 
