@@ -48,7 +48,7 @@ class Botinfo : Command(
         "commands.botinfo.description",
         listOf(
           ctx.jda.selfUser.id,
-          hal.processor.processorIdentifier.name,
+          hal.processor.processorIdentifier.name.takeIf { it.isNotEmpty() } ?: ctx.t("global.unknown"),
           D4rkBot.commandsUsed.toString(),
           PlayerManager.musicManagers.size.toString()
         )
