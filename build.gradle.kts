@@ -2,7 +2,7 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-  kotlin("jvm") version "1.6.20"
+  kotlin("jvm") version "1.6.21"
   id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
@@ -26,7 +26,7 @@ val coroutinesVersion       = "1.6.1"
 val okhttpCoroutinesVersion = "1.0"
 val jdaVersion              = "5.0.0-alpha.11"
 val jdaKtxVersion           = "9f01b74"
-val lavaplayerVersion       = "36cdfb4"
+val lavaplayerVersion       = "809ca76"
 val jdaNasVersion           = "1.0.0"
 val lavadspVersion          = "0.7.8"
 
