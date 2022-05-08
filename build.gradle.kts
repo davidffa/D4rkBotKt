@@ -20,11 +20,11 @@ repositories {
   maven("https://jitpack.io/")
 }
 
-val kotlinVersion           = "1.6.20"
+val kotlinVersion           = "1.6.21"
 val coroutinesVersion       = "1.6.1"
 
 val okhttpCoroutinesVersion = "1.0"
-val jdaVersion              = "5.0.0-alpha.10"
+val jdaVersion              = "5.0.0-alpha.11"
 val jdaKtxVersion           = "9f01b74"
 val lavaplayerVersion       = "36cdfb4"
 val jdaNasVersion           = "1.0.0"
