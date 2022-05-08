@@ -26,7 +26,7 @@ val coroutinesVersion       = "1.6.1"
 val okhttpCoroutinesVersion = "1.0"
 val jdaVersion              = "5.0.0-alpha.11"
 val jdaKtxVersion           = "9f01b74"
-val lavaplayerVersion       = "809ca76"
+val lavaplayerVersion       = "258b168"
 val jdaNasVersion           = "1.0.0"
 val lavadspVersion          = "0.7.8"
 
