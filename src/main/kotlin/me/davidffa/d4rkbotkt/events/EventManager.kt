@@ -1,6 +1,6 @@
 package me.davidffa.d4rkbotkt.events
 
-import dev.minn.jda.ktx.listener
+import dev.minn.jda.ktx.events.listener
 import me.davidffa.d4rkbotkt.events.listeners.*
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.events.GenericEvent

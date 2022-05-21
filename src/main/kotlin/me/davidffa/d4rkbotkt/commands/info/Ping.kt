@@ -1,7 +1,7 @@
 package me.davidffa.d4rkbotkt.commands.info
 
-import dev.minn.jda.ktx.Embed
-import dev.minn.jda.ktx.await
+import dev.minn.jda.ktx.messages.Embed
+import dev.minn.jda.ktx.coroutines.await
 import me.davidffa.d4rkbotkt.Database
 import me.davidffa.d4rkbotkt.command.Command
 import me.davidffa.d4rkbotkt.command.CommandContext

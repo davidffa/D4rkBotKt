@@ -1,8 +1,8 @@
 package me.davidffa.d4rkbotkt.commands.info
 
 import com.sedmelluq.discord.lavaplayer.tools.PlayerLibrary
-import dev.minn.jda.ktx.Embed
-import dev.minn.jda.ktx.await
+import dev.minn.jda.ktx.messages.Embed
+import dev.minn.jda.ktx.coroutines.await
 import me.davidffa.d4rkbotkt.D4rkBot
 import me.davidffa.d4rkbotkt.Database
 import me.davidffa.d4rkbotkt.audio.PlayerManager

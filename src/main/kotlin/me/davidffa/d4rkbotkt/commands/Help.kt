@@ -1,11 +1,11 @@
 package me.davidffa.d4rkbotkt.commands
 
-import dev.minn.jda.ktx.Embed
-import dev.minn.jda.ktx.EmbedBuilder
-import dev.minn.jda.ktx.await
-import dev.minn.jda.ktx.interactions.SelectMenu
-import dev.minn.jda.ktx.interactions.option
-import dev.minn.jda.ktx.onSelection
+import dev.minn.jda.ktx.messages.Embed
+import dev.minn.jda.ktx.messages.EmbedBuilder
+import dev.minn.jda.ktx.coroutines.await
+import dev.minn.jda.ktx.events.onSelection
+import dev.minn.jda.ktx.interactions.components.SelectMenu
+import dev.minn.jda.ktx.interactions.components.option
 import me.davidffa.d4rkbotkt.command.Command
 import me.davidffa.d4rkbotkt.command.CommandContext
 import me.davidffa.d4rkbotkt.command.CommandManager

@@ -1,7 +1,7 @@
 package me.davidffa.d4rkbotkt.utils
 
 import com.mongodb.client.model.Updates
-import dev.minn.jda.ktx.await
+import dev.minn.jda.ktx.coroutines.await
 import me.davidffa.d4rkbotkt.D4rkBot
 import me.davidffa.d4rkbotkt.Database
 import me.davidffa.d4rkbotkt.audio.PlayerManager

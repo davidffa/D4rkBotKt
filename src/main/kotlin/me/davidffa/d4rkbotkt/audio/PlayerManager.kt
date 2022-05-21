@@ -21,8 +21,8 @@ import com.sedmelluq.discord.lavaplayer.tools.io.MessageInput
 import com.sedmelluq.discord.lavaplayer.tools.io.MessageOutput
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack
-import dev.minn.jda.ktx.Embed
-import dev.minn.jda.ktx.EmbedBuilder
+import dev.minn.jda.ktx.messages.Embed
+import dev.minn.jda.ktx.messages.EmbedBuilder
 import me.davidffa.d4rkbotkt.Credentials
 import me.davidffa.d4rkbotkt.audio.sources.Deezer
 import me.davidffa.d4rkbotkt.audio.sources.Spotify

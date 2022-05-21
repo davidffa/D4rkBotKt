@@ -1,7 +1,7 @@
 package me.davidffa.d4rkbotkt.commands.music
 
-import dev.minn.jda.ktx.Embed
-import dev.minn.jda.ktx.interactions.sendPaginator
+import dev.minn.jda.ktx.messages.Embed
+import dev.minn.jda.ktx.interactions.components.sendPaginator
 import me.davidffa.d4rkbotkt.audio.PlayerManager
 import me.davidffa.d4rkbotkt.command.Command
 import me.davidffa.d4rkbotkt.command.CommandContext

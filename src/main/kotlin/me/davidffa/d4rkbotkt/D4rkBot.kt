@@ -2,7 +2,7 @@ package me.davidffa.d4rkbotkt
 
 import com.mongodb.client.model.Updates
 import com.sedmelluq.discord.lavaplayer.jdaudp.NativeAudioSendFactory
-import dev.minn.jda.ktx.createJDA
+import dev.minn.jda.ktx.jdabuilder.createJDA
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import me.davidffa.d4rkbotkt.database.BotDB

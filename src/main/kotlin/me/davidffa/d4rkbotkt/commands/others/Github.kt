@@ -1,6 +1,6 @@
 package me.davidffa.d4rkbotkt.commands.others
 
-import dev.minn.jda.ktx.EmbedBuilder
+import dev.minn.jda.ktx.messages.EmbedBuilder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import me.davidffa.d4rkbotkt.D4rkBot

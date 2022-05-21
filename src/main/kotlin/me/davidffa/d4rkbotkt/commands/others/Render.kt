@@ -1,7 +1,7 @@
 package me.davidffa.d4rkbotkt.commands.others
 
-import dev.minn.jda.ktx.Embed
-import dev.minn.jda.ktx.await
+import dev.minn.jda.ktx.messages.Embed
+import dev.minn.jda.ktx.coroutines.await
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import me.davidffa.d4rkbotkt.Credentials

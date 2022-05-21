@@ -1,7 +1,7 @@
 package me.davidffa.d4rkbotkt.commands.info
 
-import dev.minn.jda.ktx.EmbedBuilder
-import dev.minn.jda.ktx.interactions.sendPaginator
+import dev.minn.jda.ktx.messages.EmbedBuilder
+import dev.minn.jda.ktx.interactions.components.sendPaginator
 import me.davidffa.d4rkbotkt.command.Command
 import me.davidffa.d4rkbotkt.command.CommandContext
 import me.davidffa.d4rkbotkt.utils.Utils
