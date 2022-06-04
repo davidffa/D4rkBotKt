@@ -50,7 +50,7 @@ class Roleinfo : Command(
 
       field {
         name = ctx.t("commands.roleinfo.fields.position.name")
-        value = "`${role.position}`"
+        value = "`${role.positionRaw}`"
       }
       field {
         name = ctx.t("commands.roleinfo.fields.hoist.name")
