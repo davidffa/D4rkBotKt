@@ -18,7 +18,7 @@ import me.davidffa.d4rkbotkt.database.GuildCache
 import me.davidffa.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.Permission
-import net.dv8tion.jda.api.entities.Emoji
+import net.dv8tion.jda.api.entities.emoji.Emoji
 import net.dv8tion.jda.api.entities.MessageEmbed
 import net.dv8tion.jda.api.entities.TextChannel
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent
@@ -95,7 +95,7 @@ class Logs : Command(
     val buttons = ActionRow.of(
       Button.success("$nonce:on", Emoji.fromUnicode("✅")),
       Button.danger("$nonce:off", Emoji.fromUnicode("❌")),
-      Button.primary("$nonce:channel", Emoji.fromMarkdown("<:chat:804050576647913522>"))
+      Button.primary("$nonce:channel", Emoji.fromFormatted("<:chat:804050576647913522>"))
     )
 
     val mainMessage = ctx.channel.sendMessageEmbeds(embed).setActionRow(menu).await()

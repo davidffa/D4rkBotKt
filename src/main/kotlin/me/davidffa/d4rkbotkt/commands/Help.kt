@@ -11,7 +11,7 @@ import me.davidffa.d4rkbotkt.command.CommandContext
 import me.davidffa.d4rkbotkt.command.CommandManager
 import me.davidffa.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.Permission
-import net.dv8tion.jda.api.entities.Emoji
+import net.dv8tion.jda.api.entities.emoji.Emoji
 import net.dv8tion.jda.api.exceptions.ErrorResponseException.ignore
 import net.dv8tion.jda.api.requests.ErrorResponse
 import java.security.SecureRandom
@@ -62,7 +62,7 @@ class Help : Command(
             "Desenvolvedor",
             "dev",
             "Comandos de desenvolvedor",
-            Emoji.fromMarkdown("<:kotlin:856168010004037702>")
+            Emoji.fromFormatted("<:kotlin:856168010004037702>")
           )
         }
         option(
@@ -81,7 +81,7 @@ class Help : Command(
           ctx.t("commands.help.menu.music.label"),
           "music",
           ctx.t("commands.help.menu.music.description"),
-          Emoji.fromMarkdown("<a:disco:803678643661832233>")
+          Emoji.fromFormatted("<a:disco:803678643661832233>")
         )
         option(
           ctx.t("commands.help.menu.others.label"),

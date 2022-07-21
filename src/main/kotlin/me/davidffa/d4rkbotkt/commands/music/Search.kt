@@ -14,7 +14,7 @@ import me.davidffa.d4rkbotkt.command.Command
 import me.davidffa.d4rkbotkt.command.CommandContext
 import me.davidffa.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.Permission
-import net.dv8tion.jda.api.entities.Emoji
+import net.dv8tion.jda.api.entities.emoji.Emoji
 import net.dv8tion.jda.api.interactions.components.ActionRow
 import net.dv8tion.jda.api.interactions.components.buttons.Button
 import java.security.SecureRandom

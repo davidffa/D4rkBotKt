@@ -87,9 +87,9 @@ class Serverinfo : Command(
                 "${ctx.t("commands.serverinfo.boosts.amount")} ${ctx.guild.boostCount}"
       }
       field {
-        name = ":grinning: Emojis [${ctx.guild.emotes.size}]"
-        value = "${ctx.t("commands.serverinfo.emojis.static")} ${ctx.guild.emotes.filter { !it.isAnimated }.size}\n" +
-                "${ctx.t("commands.serverinfo.emojis.animated")} ${ctx.guild.emotes.filter { it.isAnimated }.size}"
+        name = ":grinning: Emojis [${ctx.guild.emojis.size}]"
+        value = "${ctx.t("commands.serverinfo.emojis.static")} ${ctx.guild.emojis.filter { !it.isAnimated }.size}\n" +
+                "${ctx.t("commands.serverinfo.emojis.animated")} ${ctx.guild.emojis.filter { it.isAnimated }.size}"
       }
       field {
         name = ":busts_in_silhouette: ${ctx.t("commands.serverinfo.members.name")} [${ctx.guild.memberCount}]"

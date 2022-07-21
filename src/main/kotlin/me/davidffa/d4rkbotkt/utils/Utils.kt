@@ -437,7 +437,7 @@ object Utils {
       NICKNAME_CHANGE -> t("permissions.nicknameChange")
       NICKNAME_MANAGE -> t("permissions.manageNicknames")
       MANAGE_WEBHOOKS -> t("permissions.manageWebhooks")
-      MANAGE_EMOTES_AND_STICKERS -> t("permissions.manageEmotes")
+      MANAGE_EMOJIS_AND_STICKERS -> t("permissions.manageEmotes")
       USE_APPLICATION_COMMANDS -> t("permissions.useApplicationCommands")
       MESSAGE_ADD_REACTION -> t("permissions.addReactions")
       MANAGE_ROLES -> t("permissions.manageRoles")

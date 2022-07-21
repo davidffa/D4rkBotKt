@@ -15,7 +15,7 @@ import me.davidffa.d4rkbotkt.command.Command
 import me.davidffa.d4rkbotkt.command.CommandContext
 import me.davidffa.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.Permission
-import net.dv8tion.jda.api.entities.Emoji
+import net.dv8tion.jda.api.entities.emoji.Emoji
 import net.dv8tion.jda.api.events.interaction.component.GenericComponentInteractionCreateEvent
 import net.dv8tion.jda.api.interactions.components.ActionRow
 import net.dv8tion.jda.api.interactions.components.buttons.Button
@@ -56,10 +56,10 @@ class Filters : Command(
       option("8D", "8d", emoji = Emoji.fromUnicode("8️⃣"))
       option("Vibrato", "vibrato", emoji = Emoji.fromUnicode("9️⃣"))
       option("Vocals", "vocals", emoji = Emoji.fromUnicode("\uD83D\uDD1F"))
-      option("Karaoke", "karaoke", emoji = Emoji.fromMarkdown("<:keycap_11:862005088716193793>"))
-      option("Distortion", "distortion", emoji = Emoji.fromMarkdown("<:keycap_12:873556905983868928>"))
-      option("Lowpass", "lowpass", emoji = Emoji.fromMarkdown("<:keycap_13:877959573653319742>"))
-      option("Tremolo", "tremolo", emoji = Emoji.fromMarkdown("<:keycap_14:879388444726542336>"))
+      option("Karaoke", "karaoke", emoji = Emoji.fromFormatted("<:keycap_11:862005088716193793>"))
+      option("Distortion", "distortion", emoji = Emoji.fromFormatted("<:keycap_12:873556905983868928>"))
+      option("Lowpass", "lowpass", emoji = Emoji.fromFormatted("<:keycap_13:877959573653319742>"))
+      option("Tremolo", "tremolo", emoji = Emoji.fromFormatted("<:keycap_14:879388444726542336>"))
     }
 
     val clearButton = Button.danger("$nonce:clear", Emoji.fromUnicode("\uD83D\uDDD1️"))
