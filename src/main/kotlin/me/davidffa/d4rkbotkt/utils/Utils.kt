@@ -48,8 +48,8 @@ object Utils {
     var user: User? = null
     var id: String? = null
 
-    if (Regex("^<@!?[0-9]{17,18}>$").matches(query)) id = query.replace(Regex("[<@!>]"), "")
-    else if (Regex("^[0-9]{17,18}$").matches(query)) id = query
+    if (Regex("^<@!?\\d{17,19}>$").matches(query)) id = query.replace(Regex("[<@!>]"), "")
+    else if (Regex("^\\d{17,19}$").matches(query)) id = query
 
     if (id != null) {
       return try {
@@ -59,7 +59,7 @@ object Utils {
       }
     }
 
-    if (Regex("^#?[0-9]{4}$").matches(query)) {
+    if (Regex("^#?\\d{4}$").matches(query)) {
       val u = guild.members.find { it.user.discriminator == query.replace("#", "") }?.user
       if (u != null) return u
     }
@@ -88,8 +88,8 @@ object Utils {
   }
 
   fun findRole(query: String, guild: Guild): Role? {
-    val id = if (Regex("^<@&\\d{17,18}>$").matches(query)) query.replace(Regex("[<@&>]"), "")
-    else if (Regex("^\\d{17,18}$").matches(query)) query
+    val id = if (Regex("^<@&\\d{17,19}>$").matches(query)) query.replace(Regex("[<@&>]"), "")
+    else if (Regex("^\\d{17,19}$").matches(query)) query
     else null
 
     if (id != null) {
@@ -121,8 +121,8 @@ object Utils {
   }
 
   fun findChannel(query: String, guild: Guild): GuildChannel? {
-    val id = if (Regex("^<&\\d{17,18}>$").matches(query)) query.replace(Regex("[<#>]"), "")
-    else if (Regex("^\\d{17,18}$").matches(query)) query
+    val id = if (Regex("^<&\\d{17,19}>$").matches(query)) query.replace(Regex("[<#>]"), "")
+    else if (Regex("^\\d{17,19}$").matches(query)) query
     else null
 
     if (id != null) {
