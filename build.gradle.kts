@@ -1,9 +1,10 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-  kotlin("jvm") version "1.7.10"
-  id("com.github.johnrengelman.shadow") version "7.1.2"
+  alias(libs.plugins.kotlinJVM)
+  alias(libs.plugins.shadowJar)
 }
 
 group = "me.davidffa"
@@ -20,50 +21,36 @@ repositories {
   maven("https://jitpack.io/")
 }
 
-val kotlinVersion           = "1.7.10"
-val coroutinesVersion       = "1.6.2"
-
-val okhttpCoroutinesVersion = "1.0"
-val jdaVersion              = "5.0.0-alpha.16"
-val jdaKtxVersion           = "03b07e7"
-val lavaplayerVersion       = "fad7298"
-val jdaNasVersion           = "1.0.3"
-val lavadspVersion          = "0.7.8"
-
-val snakeyamlVersion        = "1.30"
-val kmongoVersion           = "4.5.1"
-val oshiVersion             = "6.1.6"
-val logbackVersion          = "1.2.11"
-
 dependencies {
   // Kotlin
-  implementation(kotlin("stdlib", kotlinVersion))
-  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
-  implementation("ru.gildor.coroutines:kotlin-coroutines-okhttp:$okhttpCoroutinesVersion")
-  implementation(kotlin("scripting-jsr223", kotlinVersion))
+  implementation(libs.kotlin.stdlib)
+  implementation(libs.kotlin.scriptEngine)
+  implementation(libs.kotlinx.coroutines)
+  implementation(libs.okhttp.coroutines)
+
 
   // JDA & Lavaplayer
-  implementation("net.dv8tion:JDA:$jdaVersion") {
+  implementation(libs.jda.core) {
     exclude("opus-java")
   }
-  implementation("com.github.minndevelopment:jda-ktx:$jdaKtxVersion")
-  implementation("com.github.davidffa:lavaplayer-fork:$lavaplayerVersion")
-  implementation("com.github.davidffa:jda-nas-fork:$jdaNasVersion")
+  implementation(libs.jda.ktx)
+  implementation(libs.lavaplayer)
+  implementation(libs.jda.nas)
 
   // Lavaplayer filters
-  implementation("com.github.davidffa:lavadsp-fork:$lavadspVersion")
+  implementation(libs.lavadsp)
 
   // YAML
-  implementation("org.yaml:snakeyaml:$snakeyamlVersion")
+  implementation(libs.snakeyaml)
 
   // MongoDB
-  implementation("org.litote.kmongo:kmongo-coroutine:$kmongoVersion")
+  implementation(libs.kmongo)
 
   // Native System
-  implementation("com.github.oshi:oshi-core:$oshiVersion")
+  implementation(libs.oshi)
 
   // Logger
-  runtimeOnly("ch.qos.logback:logback-classic:$logbackVersion")
+  runtimeOnly(libs.logback)
 }
 
 tasks {
