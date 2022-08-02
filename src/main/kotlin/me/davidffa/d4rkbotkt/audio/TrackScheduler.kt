@@ -16,14 +16,8 @@ import me.davidffa.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.entities.GuildMessageChannel
 import net.dv8tion.jda.api.entities.Member
-import okhttp3.Call
-import okhttp3.Callback
-import okhttp3.Request
-import okhttp3.Response
 import org.slf4j.LoggerFactory
-import java.io.IOException
 import java.time.Instant
-import kotlin.system.exitProcess
 
 class TrackScheduler(private val player: AudioPlayer, private val textChannel: GuildMessageChannel) :
   AudioEventAdapter() {
@@ -190,32 +184,6 @@ class TrackScheduler(private val player: AudioPlayer, private val textChannel: G
 
   override fun onTrackException(player: AudioPlayer, track: AudioTrack, exception: FriendlyException) {
     logger.warn("Ocorreu um erro ao tocar a música ${track.info.identifier}.\nErro: ${exception.printStackTrace()}")
-    if (exception.localizedMessage.contains("429")) {
-      this.textChannel.sendMessage(t("music.ratelimit"))
-        .queue()
-      this.destroy()
-
-      val appName = System.getenv("APPNAME")
-
-      if (appName != null) {
-        val req = Request.Builder()
-          .url("https://api.heroku.com/apps/${appName}/dynos")
-          .addHeader("Accept", "application/vnd.heroku+json; version=3")
-          .addHeader("Authorization", "Bearer ${System.getenv("HEROKUTOKEN")}")
-          .delete()
-          .build()
-
-        D4rkBot.okHttpClient.newCall(req).enqueue(object : Callback {
-          override fun onFailure(call: Call, e: IOException) {
-            exitProcess(1)
-          }
-
-          override fun onResponse(call: Call, response: Response) {
-            if (response.code != 202) exitProcess(1)
-          }
-        })
-      }
-    }
   }
 
   override fun onTrackStuck(player: AudioPlayer, track: AudioTrack, thresholdMs: Long) {

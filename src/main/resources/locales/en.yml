@@ -362,7 +362,6 @@ music:
     name: ":page_with_curl: Name:"
     author: ":technologist: Author:"
     duration: ":watch: Duration:"
-  ratelimit: ":warning: Looks like YouTube stopped me from playing this song, wait a moment while I fix this problem and try again in a few seconds."
   spotify:
     trackTitle: "<:spotify:869245737282715689> Added to queue"
     albumTitle: "<:spotify:869245737282715689> Album loaded"

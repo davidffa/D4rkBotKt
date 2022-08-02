@@ -359,7 +359,6 @@ music:
     name: ":page_with_curl: Nome:"
     author: ":technologist: Enviado por:"
     duration: ":watch: Duração:"
-  ratelimit: ":warning: Parece que o YouTube me impediu de tocar essa música, aguarda um momento enquanto resolvo esse problema e tenta novamente daqui a uns segundos."
   spotify:
     trackTitle: "<:spotify:869245737282715689> Adicionado à queue"
     albumTitle: "<:spotify:869245737282715689> Album carregado"
