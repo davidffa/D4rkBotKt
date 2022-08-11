@@ -17,7 +17,7 @@ dependencyResolutionManagement {
       // JDA & Lavaplayer
       library("jda-core", "net.dv8tion", "JDA").version("5.0.0-alpha.17")
       library("jda-ktx", "com.github.minndevelopment", "jda-ktx").version("03b07e7")
-      library("lavaplayer", "com.github.davidffa", "lavaplayer-fork").version("fad7298")
+      library("lavaplayer", "com.github.davidffa", "lavaplayer-fork").version("cc41abf")
       library("jda-nas", "com.github.davidffa", "jda-nas-fork").version("1.0.3")
 
       // Lavaplayer audio filters
