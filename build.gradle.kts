@@ -78,6 +78,6 @@ tasks {
   }
 
   withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = JavaVersion.VERSION_18.toString()
+    kotlinOptions.jvmTarget = JavaVersion.VERSION_19.toString()
   }
 }
