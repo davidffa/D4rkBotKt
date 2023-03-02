@@ -29,8 +29,8 @@ import me.davidffa.d4rkbotkt.audio.sources.Spotify
 import me.davidffa.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.entities.Guild
-import net.dv8tion.jda.api.entities.GuildMessageChannel
 import net.dv8tion.jda.api.entities.Member
+import net.dv8tion.jda.api.entities.channel.middleman.GuildMessageChannel
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.time.Instant

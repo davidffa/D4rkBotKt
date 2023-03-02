@@ -5,8 +5,8 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack
 import dev.minn.jda.ktx.coroutines.await
 import dev.minn.jda.ktx.events.CoroutineEventListener
 import dev.minn.jda.ktx.events.onButton
-import dev.minn.jda.ktx.events.onSelection
-import dev.minn.jda.ktx.interactions.components.SelectMenu
+import dev.minn.jda.ktx.events.onStringSelect
+import dev.minn.jda.ktx.interactions.components.StringSelectMenu
 import dev.minn.jda.ktx.interactions.components.option
 import dev.minn.jda.ktx.messages.Embed
 import me.davidffa.d4rkbotkt.audio.PlayerManager
@@ -72,7 +72,7 @@ class Search : Command(
     SecureRandom().nextBytes(nonceBytes)
     val nonce = Base64.getEncoder().encodeToString(nonceBytes)
 
-    val menu = SelectMenu("$nonce:search", ctx.t("commands.search.placeholder"), 1..10) {
+    val menu = StringSelectMenu("$nonce:search", ctx.t("commands.search.placeholder"), 1..10) {
       tracks.mapIndexed { i, track ->
         option(
           if (track.info.author.isEmpty()) "Desconhecido" else formatString(track.info.author, 50),
@@ -90,7 +90,7 @@ class Search : Command(
       ActionRow.of(cancel)
     )
 
-    val msg = ctx.channel.sendMessageEmbeds(embed).setActionRows(buttons).await()
+    val msg = ctx.channel.sendMessageEmbeds(embed).setComponents(buttons).await()
 
     var buttonListener: CoroutineEventListener? = null
     var menuListener: CoroutineEventListener? = null
@@ -99,13 +99,13 @@ class Search : Command(
     timer.schedule(timerTask {
       ctx.jda.removeEventListener(buttonListener)
       ctx.jda.removeEventListener(menuListener)
-      msg.editMessage(ctx.t("commands.search.cancel")).setEmbeds().setActionRows().queue()
+      msg.editMessage(ctx.t("commands.search.cancel")).setEmbeds().setComponents().queue()
     }, 40000L)
 
-    menuListener = ctx.jda.onSelection("$nonce:search") {
+    menuListener = ctx.jda.onStringSelect("$nonce:search") {
       if (it.member != ctx.member) {
         it.reply(ctx.t("errors.cannotinteract", listOf(ctx.prefix, name))).setEphemeral(true).queue()
-        return@onSelection
+        return@onStringSelect
       }
 
       val ids = it.selectedOptions.map { op -> op.value.toInt() }
@@ -115,7 +115,7 @@ class Search : Command(
       ctx.jda.removeEventListener(buttonListener)
       msg.delete().queue()
 
-      if (!Utils.canPlay(ctx::t, ctx.selfMember, ctx.member, ctx.channel)) return@onSelection
+      if (!Utils.canPlay(ctx::t, ctx.selfMember, ctx.member, ctx.channel)) return@onStringSelect
 
       val chosenTracks = mutableListOf<AudioTrack>()
 
@@ -160,7 +160,7 @@ class Search : Command(
       ctx.jda.removeEventListener(this)
       ctx.jda.removeEventListener(menuListener)
 
-      it.editMessage(ctx.t("commands.search.cancel")).setEmbeds().setActionRows().queue()
+      it.editMessage(ctx.t("commands.search.cancel")).setEmbeds().setComponents().queue()
       return@onButton
     }
   }

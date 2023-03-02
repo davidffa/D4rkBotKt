@@ -14,8 +14,8 @@ import me.davidffa.d4rkbotkt.Translator
 import me.davidffa.d4rkbotkt.audio.receive.ReceiverManager
 import me.davidffa.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.Permission
-import net.dv8tion.jda.api.entities.GuildMessageChannel
 import net.dv8tion.jda.api.entities.Member
+import net.dv8tion.jda.api.entities.channel.middleman.GuildMessageChannel
 import org.slf4j.LoggerFactory
 import java.time.Instant
 

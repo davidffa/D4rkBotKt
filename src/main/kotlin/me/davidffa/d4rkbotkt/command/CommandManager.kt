@@ -16,7 +16,7 @@ import me.davidffa.d4rkbotkt.commands.settings.Logs
 import me.davidffa.d4rkbotkt.commands.settings.Setlang
 import me.davidffa.d4rkbotkt.commands.settings.Setprefix
 import me.davidffa.d4rkbotkt.utils.Utils
-import net.dv8tion.jda.api.entities.ChannelType
+import net.dv8tion.jda.api.entities.channel.ChannelType
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent
 import java.time.Instant
 import java.util.*

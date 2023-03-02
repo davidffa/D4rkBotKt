@@ -5,7 +5,7 @@ import me.davidffa.d4rkbotkt.audio.PlayerManager
 import me.davidffa.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.OnlineStatus
 import net.dv8tion.jda.api.entities.Activity
-import net.dv8tion.jda.api.events.ReadyEvent
+import net.dv8tion.jda.api.events.session.ReadyEvent
 import org.slf4j.LoggerFactory
 import java.lang.management.ManagementFactory
 import java.util.concurrent.Executors

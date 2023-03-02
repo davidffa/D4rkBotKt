@@ -3,11 +3,8 @@ package me.davidffa.d4rkbotkt.commands.settings
 import com.mongodb.client.model.Updates
 import dev.minn.jda.ktx.*
 import dev.minn.jda.ktx.coroutines.await
-import dev.minn.jda.ktx.events.CoroutineEventListener
-import dev.minn.jda.ktx.events.listener
-import dev.minn.jda.ktx.events.onButton
-import dev.minn.jda.ktx.events.onSelection
-import dev.minn.jda.ktx.interactions.components.SelectMenu
+import dev.minn.jda.ktx.events.*
+import dev.minn.jda.ktx.interactions.components.StringSelectMenu
 import dev.minn.jda.ktx.interactions.components.option
 import dev.minn.jda.ktx.messages.Embed
 import me.davidffa.d4rkbotkt.D4rkBot
@@ -20,7 +17,7 @@ import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.entities.emoji.Emoji
 import net.dv8tion.jda.api.entities.MessageEmbed
-import net.dv8tion.jda.api.entities.TextChannel
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent
 import net.dv8tion.jda.api.interactions.components.ActionRow
 import net.dv8tion.jda.api.interactions.components.buttons.Button
@@ -74,7 +71,7 @@ class Logs : Command(
     SecureRandom().nextBytes(nonceBytes)
     val nonce = Base64.getEncoder().encodeToString(nonceBytes)
 
-    val menu = SelectMenu("$nonce:logs", ctx.t("commands.logs.menu.placeholder")) {
+    val menu = StringSelectMenu("$nonce:logs", ctx.t("commands.logs.menu.placeholder")) {
       option(ctx.t("commands.logs.menu.welcome"), "welcome", emoji = Emoji.fromUnicode("\uD83D\uDC4B"))
       option(ctx.t("commands.logs.menu.leave"), "leave", emoji = Emoji.fromUnicode("\uD83D\uDEAA"))
     }
@@ -108,13 +105,13 @@ class Logs : Command(
 
     globalTimer.schedule(timerTask {
       removeListeners(listeners, ctx.jda)
-      mainMessage.editMessage(ctx.t("commands.logs.timeout")).setEmbeds().setActionRows().queue()
+      mainMessage.editMessage(ctx.t("commands.logs.timeout")).setEmbeds().setComponents().queue()
     }, 3 * 60 * 1000L)
 
-    val menuListener = ctx.jda.onSelection("$nonce:logs") {
+    val menuListener = ctx.jda.onStringSelect("$nonce:logs") {
       if (it.member != ctx.member) {
         it.reply(ctx.t("errors.cannotinteract", listOf(ctx.prefix, name))).setEphemeral(true).queue()
-        return@onSelection
+        return@onStringSelect
       }
 
       val selected = it.selectedOptions.first().value
@@ -122,7 +119,7 @@ class Logs : Command(
       if (selected == "welcome") logType = LogType.WELCOME
       else if (selected == "leave") logType = LogType.REMOVE
 
-      it.editMessageEmbeds(descEmbed).setActionRows(buttons).queue()
+      it.editMessageEmbeds(descEmbed).setComponents(buttons).queue()
     }
 
     val onButtonListener = ctx.jda.onButton("$nonce:on") {
@@ -186,7 +183,7 @@ class Logs : Command(
         LogType.REMOVE -> ctx.t("commands.logs.leave")
       }
 
-      val msg = it.editMessage(ctx.t("commands.logs.setChannel", listOf(type))).setEmbeds().setActionRows().await()
+      val msg = it.editMessage(ctx.t("commands.logs.setChannel", listOf(type))).setEmbeds().setComponents().await()
 
       val timerMsg = Timer()
 
@@ -217,7 +214,7 @@ class Logs : Command(
         globalTimer = Timer()
         globalTimer.schedule(timerTask {
           removeListeners(listeners, ctx.jda)
-          mainMessage.editMessage(ctx.t("commands.logs.timeout")).setEmbeds().setActionRows().queue()
+          mainMessage.editMessage(ctx.t("commands.logs.timeout")).setEmbeds().setComponents().queue()
         }, 3 * 60 * 1000L)
 
         msg.editOriginal("").setEmbeds(generateEmbed(ctx, guildData, welcomeChat, memberRemoveChat)).setActionRow(menu)

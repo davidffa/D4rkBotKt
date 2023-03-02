@@ -8,6 +8,7 @@ import me.davidffa.d4rkbotkt.command.Command
 import me.davidffa.d4rkbotkt.command.CommandContext
 import me.davidffa.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.Permission
+import net.dv8tion.jda.api.utils.FileUpload
 import java.io.File
 import java.util.*
 import kotlin.concurrent.timerTask
@@ -39,7 +40,7 @@ class Record : Command(
 
       ctx.channel
         .sendMessage(ctx.t("commands.record.stop"))
-        .addFile(file, "record.mp3")
+        .addFiles(FileUpload.fromData(file, "record.mp3"))
         .await()
 
       file.delete()
@@ -68,7 +69,7 @@ class Record : Command(
 
       ctx.channel
         .sendMessage(ctx.t("commands.record.timeout"))
-        .addFile(file, "record.mp3")
+        .addFiles(FileUpload.fromData(file, "record.mp3"))
         .queue {
           file.delete()
         }

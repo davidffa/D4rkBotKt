@@ -104,7 +104,7 @@ class D4rkBot {
     try {
       jda = createJDA(Credentials.TOKEN, true, intents = intents) {
         this.enableCache(listOf(CacheFlag.VOICE_STATE, CacheFlag.CLIENT_STATUS, CacheFlag.ONLINE_STATUS))
-        this.disableCache(listOf(CacheFlag.ACTIVITY, CacheFlag.ROLE_TAGS))
+        this.disableCache(listOf(CacheFlag.ACTIVITY, CacheFlag.ROLE_TAGS, CacheFlag.SCHEDULED_EVENTS))
         this.setAudioSendFactory(NativeAudioSendFactory())
 
         this.setStatus(OnlineStatus.IDLE)

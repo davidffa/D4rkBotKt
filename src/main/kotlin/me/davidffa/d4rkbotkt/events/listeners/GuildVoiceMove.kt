@@ -7,12 +7,13 @@ import me.davidffa.d4rkbotkt.audio.PlayerManager
 import me.davidffa.d4rkbotkt.audio.receive.ReceiverManager
 import me.davidffa.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.Permission
-import net.dv8tion.jda.api.events.guild.voice.GuildVoiceMoveEvent
+import net.dv8tion.jda.api.events.guild.voice.GuildVoiceUpdateEvent
+import net.dv8tion.jda.api.utils.FileUpload
 import java.io.File
 import java.util.*
 import kotlin.concurrent.timerTask
 
-suspend fun onGuildVoiceMove(event: GuildVoiceMoveEvent) {
+suspend fun onGuildVoiceMove(event: GuildVoiceUpdateEvent) {
   val receiverManager = ReceiverManager.receiveManagers[event.guild.idLong]
 
   if (receiverManager != null && event.member.idLong == event.jda.selfUser.idLong) {
@@ -28,7 +29,7 @@ suspend fun onGuildVoiceMove(event: GuildVoiceMoveEvent) {
 
     receiverManager.textChannel
       .sendMessage(Translator.t("commands.record.stop", D4rkBot.guildCache[event.guild.idLong]!!.locale, null))
-      .addFile(file, "record.mp3")
+      .addFiles(FileUpload.fromData(file, "record.mp3"))
       .await()
 
     file.delete()
@@ -39,7 +40,7 @@ suspend fun onGuildVoiceMove(event: GuildVoiceMoveEvent) {
   val member = event.member
   val selfChannel = event.guild.audioManager.connectedChannel
 
-  if (selfChannel != null && (member.idLong == event.jda.selfUser.idLong || event.oldValue.idLong == selfChannel.idLong || event.newValue.idLong == selfChannel.idLong)) {
+  if (selfChannel != null && (member.idLong == event.jda.selfUser.idLong || event.oldValue!!.idLong == selfChannel.idLong || event.newValue!!.idLong == selfChannel.idLong)) {
     if (selfChannel.members.none { !it.user.isBot }) {
       if (manager.leaveTimer != null) return
       manager.audioPlayer.isPaused = true

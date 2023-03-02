@@ -10,7 +10,8 @@ import me.davidffa.d4rkbotkt.command.Command
 import me.davidffa.d4rkbotkt.command.CommandContext
 import me.davidffa.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.Permission
-import net.dv8tion.jda.api.entities.TextChannel
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel
+import net.dv8tion.jda.api.utils.FileUpload
 import okhttp3.Request
 import ru.gildor.coroutines.okhttp.await
 import java.io.ByteArrayOutputStream
@@ -91,6 +92,6 @@ class Render : Command(
       timestamp = Instant.now()
     }
 
-    ctx.channel.sendMessageEmbeds(embed).addFile(output, "render.png").queue()
+    ctx.channel.sendMessageEmbeds(embed).addFiles(FileUpload.fromData(output, "render.png")).queue()
   }
 }

@@ -1,6 +1,6 @@
 package me.davidffa.d4rkbotkt.audio.receive
 
-import net.dv8tion.jda.api.entities.GuildMessageChannel
+import net.dv8tion.jda.api.entities.channel.middleman.GuildMessageChannel
 import java.util.*
 
 object ReceiverManager {

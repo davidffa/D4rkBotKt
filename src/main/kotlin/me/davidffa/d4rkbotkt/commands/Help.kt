@@ -3,8 +3,8 @@ package me.davidffa.d4rkbotkt.commands
 import dev.minn.jda.ktx.messages.Embed
 import dev.minn.jda.ktx.messages.EmbedBuilder
 import dev.minn.jda.ktx.coroutines.await
-import dev.minn.jda.ktx.events.onSelection
-import dev.minn.jda.ktx.interactions.components.SelectMenu
+import dev.minn.jda.ktx.events.onStringSelect
+import dev.minn.jda.ktx.interactions.components.StringSelectMenu
 import dev.minn.jda.ktx.interactions.components.option
 import me.davidffa.d4rkbotkt.command.Command
 import me.davidffa.d4rkbotkt.command.CommandContext
@@ -56,7 +56,7 @@ class Help : Command(
       SecureRandom().nextBytes(nonceBytes)
       val nonce = Base64.getEncoder().encodeToString(nonceBytes)
 
-      val menu = SelectMenu("$nonce:help", ctx.t("commands.help.menu.placeholder")) {
+      val menu = StringSelectMenu("$nonce:help", ctx.t("commands.help.menu.placeholder")) {
         if (ctx.author.id == "334054158879686657") {
           option(
             "Desenvolvedor",
@@ -93,10 +93,10 @@ class Help : Command(
 
       val msg = channel.sendMessage("\u200B").setActionRow(menu).await()
 
-      val listener = ctx.jda.onSelection("$nonce:help") {
+      val listener = ctx.jda.onStringSelect("$nonce:help") {
         if (it.user.idLong != ctx.author.idLong) {
           it.reply(ctx.t("errors.cannotinteract", listOf(ctx.prefix, name))).setEphemeral(true).queue()
-          return@onSelection
+          return@onStringSelect
         }
         val option = it.selectedOptions.first()
 

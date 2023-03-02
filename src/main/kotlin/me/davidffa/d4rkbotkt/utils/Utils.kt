@@ -9,6 +9,9 @@ import me.davidffa.d4rkbotkt.audio.receive.ReceiverManager
 import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.Permission.*
 import net.dv8tion.jda.api.entities.*
+import net.dv8tion.jda.api.entities.channel.concrete.VoiceChannel
+import net.dv8tion.jda.api.entities.channel.middleman.GuildChannel
+import net.dv8tion.jda.api.entities.channel.middleman.GuildMessageChannel
 import java.net.MalformedURLException
 import java.net.URL
 import kotlin.math.min
@@ -180,7 +183,7 @@ object Utils {
     }
 
     if (selfChannel == null) {
-      if (memberVoiceChannel is VoiceChannel && memberVoiceChannel.userLimit == memberVoiceChannel.members.size && !selfPermissions.contains(
+      if (memberVoiceChannel is VoiceChannel && memberVoiceChannel.userLimit == (memberVoiceChannel as VoiceChannel).members.size && !selfPermissions.contains(
           MANAGE_CHANNEL
         )
       ) {
@@ -230,7 +233,7 @@ object Utils {
     }
 
     if (selfChannel == null) {
-      if (memberVoiceChannel is VoiceChannel && memberVoiceChannel.userLimit == memberVoiceChannel.members.size && !selfPermissions.contains(
+      if (memberVoiceChannel is VoiceChannel && memberVoiceChannel.userLimit == (memberVoiceChannel as VoiceChannel).members.size && !selfPermissions.contains(
           MANAGE_CHANNEL
         )
       ) {
@@ -448,6 +451,7 @@ object Utils {
       MESSAGE_SEND_IN_THREADS -> t("permissions.messageSendInThreads")
       VOICE_START_ACTIVITIES -> t("permissions.voiceStartActivities")
       MODERATE_MEMBERS -> t("permissions.moderateMembers")
+      MANAGE_EVENTS -> t("permissions.manageEvents")
       UNKNOWN -> t("permissions.unknown")
     }
   }

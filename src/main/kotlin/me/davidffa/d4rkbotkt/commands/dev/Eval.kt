@@ -4,7 +4,7 @@ import me.davidffa.d4rkbotkt.audio.PlayerManager
 import me.davidffa.d4rkbotkt.command.Command
 import me.davidffa.d4rkbotkt.command.CommandContext
 import net.dv8tion.jda.api.Permission
-import net.dv8tion.jda.api.entities.ChannelType
+import net.dv8tion.jda.api.entities.channel.ChannelType
 import javax.script.ScriptEngine
 import javax.script.ScriptEngineManager
 

@@ -465,6 +465,7 @@ permissions:
   messageSendInThreads: "Send messages in threads"
   voiceStartActivities: "Start voice activities"
   moderateMembers: "Moderate Members"
+  manageEvents: "Manage Events"
   unknown: "Unknown"
 
 commandManager:

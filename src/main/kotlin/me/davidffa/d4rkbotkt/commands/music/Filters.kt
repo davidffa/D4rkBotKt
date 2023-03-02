@@ -3,8 +3,8 @@ package me.davidffa.d4rkbotkt.commands.music
 import dev.minn.jda.ktx.coroutines.await
 import dev.minn.jda.ktx.events.CoroutineEventListener
 import dev.minn.jda.ktx.events.onButton
-import dev.minn.jda.ktx.events.onSelection
-import dev.minn.jda.ktx.interactions.components.SelectMenu
+import dev.minn.jda.ktx.events.onStringSelect
+import dev.minn.jda.ktx.interactions.components.StringSelectMenu
 import dev.minn.jda.ktx.interactions.components.option
 import dev.minn.jda.ktx.messages.EmbedBuilder
 import dev.minn.jda.ktx.messages.InlineEmbed
@@ -45,7 +45,7 @@ class Filters : Command(
     SecureRandom().nextBytes(nonceBytes)
     val nonce = Base64.getEncoder().encodeToString(nonceBytes)
 
-    val menu = SelectMenu("$nonce:filters", ctx.t("commands.filters.menuplaceholder")) {
+    val menu = StringSelectMenu("$nonce:filters", ctx.t("commands.filters.menuplaceholder")) {
       option("Bass", "bass", emoji = Emoji.fromUnicode("1️⃣"))
       option("Daycore", "daycore", emoji = Emoji.fromUnicode("2️⃣"))
       option("Nightcore", "nightcore", emoji = Emoji.fromUnicode("3️⃣"))
@@ -93,7 +93,9 @@ class Filters : Command(
     )
 
     val msg = ctx.channel.sendMessageEmbeds(embed.build())
-      .setActionRows(controls)
+            .addActionRow(menu)
+            .addActionRow(clearButton, deleteButton)
+      .setComponents(controls)
       .await()
 
     val listeners = mutableListOf<CoroutineEventListener>()
@@ -104,10 +106,10 @@ class Filters : Command(
       close(ctx, listeners, manager)
     }, 60000)
 
-    val menuListener = ctx.jda.onSelection("$nonce:filters") {
+    val menuListener = ctx.jda.onStringSelect("$nonce:filters") {
       if (it.member?.idLong != ctx.member.idLong) {
         it.reply(ctx.t("errors.cannotinteract", listOf(ctx.prefix, name))).setEphemeral(true).queue()
-        return@onSelection
+        return@onStringSelect
       }
 
       val selection = it.selectedOptions.first()
@@ -164,7 +166,7 @@ class Filters : Command(
 
     manager.textChannel.editMessageById(msg, ctx.t("commands.filters.closetable"))
       .setEmbeds(emptyList())
-      .setActionRows(emptyList())
+      .setComponents(emptyList())
       .queue()
 
     manager.djtableMessage = null

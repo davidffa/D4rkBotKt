@@ -4,6 +4,7 @@ import me.davidffa.d4rkbotkt.D4rkBot
 import me.davidffa.d4rkbotkt.Translator
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.entities.*
+import net.dv8tion.jda.api.entities.channel.middleman.GuildMessageChannel
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent
 
 interface ICommandContext {

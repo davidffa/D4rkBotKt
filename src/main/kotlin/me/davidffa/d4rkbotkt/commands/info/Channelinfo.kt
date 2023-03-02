@@ -7,8 +7,12 @@ import me.davidffa.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.Region
 import net.dv8tion.jda.api.Region.*
-import net.dv8tion.jda.api.entities.*
-import net.dv8tion.jda.api.entities.ChannelType.*
+import net.dv8tion.jda.api.entities.channel.ChannelType.*
+import net.dv8tion.jda.api.entities.channel.attribute.ICategorizableChannel
+import net.dv8tion.jda.api.entities.channel.attribute.IPositionableChannel
+import net.dv8tion.jda.api.entities.channel.concrete.StageChannel
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel
+import net.dv8tion.jda.api.entities.channel.concrete.VoiceChannel
 import java.time.Instant
 
 class Channelinfo : Command(

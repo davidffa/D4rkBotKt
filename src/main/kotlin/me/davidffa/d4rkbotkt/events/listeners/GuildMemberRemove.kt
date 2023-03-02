@@ -6,7 +6,7 @@ import me.davidffa.d4rkbotkt.Database
 import me.davidffa.d4rkbotkt.Translator
 import me.davidffa.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.Permission
-import net.dv8tion.jda.api.entities.TextChannel
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel
 import net.dv8tion.jda.api.events.guild.member.GuildMemberRemoveEvent
 
 suspend fun onGuildMemberRemove(event: GuildMemberRemoveEvent) {
