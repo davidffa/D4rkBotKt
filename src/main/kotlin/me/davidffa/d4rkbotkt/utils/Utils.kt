@@ -183,7 +183,7 @@ object Utils {
     }
 
     if (selfChannel == null) {
-      if (memberVoiceChannel is VoiceChannel && memberVoiceChannel.userLimit == (memberVoiceChannel as VoiceChannel).members.size && !selfPermissions.contains(
+      if (memberVoiceChannel.userLimit == (memberVoiceChannel as VoiceChannel).members.size && !selfPermissions.contains(
           MANAGE_CHANNEL
         )
       ) {
@@ -233,7 +233,7 @@ object Utils {
     }
 
     if (selfChannel == null) {
-      if (memberVoiceChannel is VoiceChannel && memberVoiceChannel.userLimit == (memberVoiceChannel as VoiceChannel).members.size && !selfPermissions.contains(
+      if (memberVoiceChannel.userLimit == (memberVoiceChannel as VoiceChannel).members.size && !selfPermissions.contains(
           MANAGE_CHANNEL
         )
       ) {

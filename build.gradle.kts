@@ -11,8 +11,8 @@ group = "me.davidffa"
 version = "1.0.0"
 
 java {
-  sourceCompatibility = JavaVersion.VERSION_19
-  targetCompatibility = JavaVersion.VERSION_19
+  sourceCompatibility = JavaVersion.VERSION_17
+  targetCompatibility = JavaVersion.VERSION_17
 }
 
 repositories {
@@ -78,6 +78,6 @@ tasks {
   }
 
   withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = JavaVersion.VERSION_19.toString()
+    kotlinOptions.jvmTarget = JavaVersion.VERSION_17.toString()
   }
 }

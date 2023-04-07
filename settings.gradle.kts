@@ -3,7 +3,7 @@ rootProject.name = "D4rkBotKt"
 dependencyResolutionManagement {
   versionCatalogs {
     create("libs") {
-      version("kotlin", "1.8.10")
+      version("kotlin", "1.8.20")
 
       plugin("kotlinJVM", "org.jetbrains.kotlin.jvm").versionRef("kotlin")
       plugin("shadowJar", "com.github.johnrengelman.shadow").version("8.1.0")
@@ -15,9 +15,9 @@ dependencyResolutionManagement {
       library("okhttp-coroutines", "ru.gildor.coroutines", "kotlin-coroutines-okhttp").version("1.0")
 
       // JDA & Lavaplayer
-      library("jda-core", "net.dv8tion", "JDA").version("5.0.0-beta.5")
+      library("jda-core", "net.dv8tion", "JDA").version("5.0.0-beta.6")
       library("jda-ktx", "com.github.minndevelopment", "jda-ktx").version("0.10.0-beta.1")
-      library("lavaplayer", "com.github.davidffa", "lavaplayer-fork").version("9d8e1fe")
+      library("lavaplayer", "com.github.davidffa", "lavaplayer-fork").version("2465faa")
       library("jda-nas", "com.github.davidffa", "jda-nas-fork").version("1.0.3")
 
       // Lavaplayer audio filters
@@ -30,10 +30,10 @@ dependencyResolutionManagement {
       library("kmongo", "org.litote.kmongo", "kmongo-coroutine").version("4.8.0")
 
       // Native System
-      library("oshi", "com.github.oshi", "oshi-core").version("6.4.0")
+      library("oshi", "com.github.oshi", "oshi-core").version("6.4.1")
 
       // Logger impl
-      library("logback", "ch.qos.logback", "logback-classic").version("1.4.5")
+      library("logback", "ch.qos.logback", "logback-classic").version("1.4.6")
     }
   }
 }
