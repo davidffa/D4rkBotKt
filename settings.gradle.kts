@@ -1,6 +1,7 @@
 rootProject.name = "D4rkBotKt"
 
 include("D4rkBotKtMain")
+include("D4rkBotNatives")
 
 dependencyResolutionManagement {
   versionCatalogs {
