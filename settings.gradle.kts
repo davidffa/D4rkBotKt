@@ -6,10 +6,10 @@ include("D4rkBotNatives")
 dependencyResolutionManagement {
   versionCatalogs {
     create("libs") {
-      version("kotlin", "1.8.20")
+      version("kotlin", "1.8.21")
 
       plugin("kotlinJVM", "org.jetbrains.kotlin.jvm").versionRef("kotlin")
-      plugin("shadowJar", "com.github.johnrengelman.shadow").version("8.1.0")
+      plugin("shadowJar", "com.github.johnrengelman.shadow").version("8.1.1")
 
       // Kotlin
       library("kotlin-stdlib", "org.jetbrains.kotlin", "kotlin-stdlib").versionRef("kotlin")
@@ -18,7 +18,7 @@ dependencyResolutionManagement {
       library("okhttp-coroutines", "ru.gildor.coroutines", "kotlin-coroutines-okhttp").version("1.0")
 
       // JDA & Lavaplayer
-      library("jda-core", "net.dv8tion", "JDA").version("5.0.0-beta.6")
+      library("jda-core", "net.dv8tion", "JDA").version("5.0.0-beta.8")
       library("jda-ktx", "com.github.minndevelopment", "jda-ktx").version("0.10.0-beta.1")
       library("lavaplayer", "com.github.davidffa", "lavaplayer-fork").version("2465faa")
       library("jda-nas", "com.github.davidffa", "jda-nas-fork").version("1.0.3")
@@ -30,13 +30,13 @@ dependencyResolutionManagement {
       library("snakeyaml", "org.yaml", "snakeyaml").version("2.0")
 
       // MongoDB
-      library("kmongo", "org.litote.kmongo", "kmongo-coroutine").version("4.8.0")
+      library("kmongo", "org.litote.kmongo", "kmongo-coroutine").version("4.9.0")
 
       // Native System
       library("oshi", "com.github.oshi", "oshi-core").version("6.4.1")
 
       // Logger impl
-      library("logback", "ch.qos.logback", "logback-classic").version("1.4.6")
+      library("logback", "ch.qos.logback", "logback-classic").version("1.4.7")
     }
   }
 }
