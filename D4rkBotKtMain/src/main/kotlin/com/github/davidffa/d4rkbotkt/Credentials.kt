@@ -16,8 +16,6 @@ object Credentials {
       properties.setProperty("MONGODBURI", System.getenv("MONGODBURI"))
       properties.setProperty("SPOTIFYID", System.getenv("SPOTIFYID"))
       properties.setProperty("SPOTIFYSECRET", System.getenv("SPOTIFYSECRET"))
-      properties.setProperty("RENDERAPIURL", System.getenv("RENDERAPIURL"))
-      properties.setProperty("RENDERAPITOKEN", System.getenv("RENDERAPITOKEN"))
       properties.setProperty("YTEMAIL", System.getenv("YTEMAIL"))
       properties.setProperty("YTPASS", System.getenv("YTPASS"))
     }
@@ -34,12 +32,6 @@ object Credentials {
 
   val SPOTIFYSECRET: String
     get() = properties.getProperty("SPOTIFYSECRET")
-
-  val RENDERAPIURL: String
-    get() = properties.getProperty("RENDERAPIURL")
-
-  val RENDERAPITOKEN: String
-    get() = properties.getProperty("RENDERAPITOKEN")
 
   val YTEMAIL: String
     get() = properties.getProperty("YTEMAIL")

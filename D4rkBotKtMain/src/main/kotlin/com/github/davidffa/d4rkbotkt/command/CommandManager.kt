@@ -8,13 +8,8 @@ import com.github.davidffa.d4rkbotkt.commands.dev.Eval
 import com.github.davidffa.d4rkbotkt.commands.info.*
 import com.github.davidffa.d4rkbotkt.commands.music.*
 import com.github.davidffa.d4rkbotkt.commands.music.Queue
-import com.github.davidffa.d4rkbotkt.commands.others.Github
-import com.github.davidffa.d4rkbotkt.commands.others.Record
-import com.github.davidffa.d4rkbotkt.commands.others.Render
-import com.github.davidffa.d4rkbotkt.commands.settings.Djrole
-import com.github.davidffa.d4rkbotkt.commands.settings.Logs
-import com.github.davidffa.d4rkbotkt.commands.settings.Setlang
-import com.github.davidffa.d4rkbotkt.commands.settings.Setprefix
+import com.github.davidffa.d4rkbotkt.commands.others.*
+import com.github.davidffa.d4rkbotkt.commands.settings.*
 import com.github.davidffa.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.entities.channel.ChannelType
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent
@@ -64,7 +59,6 @@ object CommandManager {
     this.addCommand(Github())
     this.addCommand(Help())
     this.addCommand(Record())
-    this.addCommand(Render())
 
     /* ** SETTINGS ** */
     this.addCommand(Djrole())
