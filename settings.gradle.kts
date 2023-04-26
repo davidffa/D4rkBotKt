@@ -1,5 +1,7 @@
 rootProject.name = "D4rkBotKt"
 
+include("D4rkBotKtMain")
+
 dependencyResolutionManagement {
   versionCatalogs {
     create("libs") {
