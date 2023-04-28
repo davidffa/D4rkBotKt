@@ -11,6 +11,8 @@ import java.nio.file.Paths
 import java.nio.file.StandardOpenOption
 import kotlin.io.path.Path
 import kotlin.math.min
+import kotlin.reflect.full.memberProperties
+import kotlin.reflect.jvm.isAccessible
 
 class AudioReceiver(
   guildId: String,
@@ -19,7 +21,10 @@ class AudioReceiver(
   companion object {
     private const val FRAME_SIZE = 960
     private const val SAMPLE_RATE = 48000
-    private const val VOLUME = 1.0
+
+    private val combinedAudioData = CombinedAudio::class.memberProperties
+            .first { it.name == "audioData" }
+            .apply { isAccessible = true }
 
     // lame.h#L701
     fun calcSafeFrameSize(bitrate: Int, sampleRate: Int)
@@ -64,15 +69,15 @@ class AudioReceiver(
   }
 
   override fun handleCombinedAudio(combinedAudio: CombinedAudio) {
-    val audio = combinedAudio.getAudioData(VOLUME)
+    // We want little endian pcm, but JDA gives us big endian in combinedAudio#getAudioData(), so let's use
+    // reflection to obtain the internal CombinedAudio pcm audio array which is a short array
+    val audio = combinedAudioData.get(combinedAudio) as ShortArray
 
-    for (i in 0 until audio.size - 1) {
-      val tmp = audio[i]
-      audio[i] = audio[i+1]
-      audio[i+1] = tmp
+    for (i in audio.indices) {
+      inputBuf.putShort(audio[i])
     }
 
-    inputBuf.put(audio).flip()
+    inputBuf.flip()
     encoder.encodeStereo(inputBuf.asShortBuffer(), FRAME_SIZE, tempBuf)
 
     outputChannel.write(tempBuf)

@@ -24,6 +24,7 @@ repositories {
 dependencies {
   // Kotlin
   implementation(libs.kotlin.stdlib)
+  implementation(libs.kotlin.reflect)
   implementation(libs.kotlin.scriptEngine)
   implementation(libs.kotlinx.coroutines)
   implementation(libs.okhttp.coroutines)
