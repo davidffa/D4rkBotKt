@@ -466,6 +466,10 @@ permissions:
   voiceStartActivities: "Start voice activities"
   moderateMembers: "Moderate Members"
   manageEvents: "Manage Events"
+  viewAnalytics: "View creator analytics"
+  attachVoiceMessages: "Attach Voice messages"
+  useSoundboard: "Use Soundboard"
+  useExtSounds: "Use external sounds"
   unknown: "Unknown"
 
 commandManager:

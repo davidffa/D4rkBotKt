@@ -441,6 +441,7 @@ object Utils {
       NICKNAME_MANAGE -> t("permissions.manageNicknames")
       MANAGE_WEBHOOKS -> t("permissions.manageWebhooks")
       MANAGE_EMOJIS_AND_STICKERS -> t("permissions.manageEmotes")
+      MANAGE_GUILD_EXPRESSIONS -> t("permissions.manageEmotes")
       USE_APPLICATION_COMMANDS -> t("permissions.useApplicationCommands")
       MESSAGE_ADD_REACTION -> t("permissions.addReactions")
       MANAGE_ROLES -> t("permissions.manageRoles")
@@ -452,6 +453,10 @@ object Utils {
       VOICE_START_ACTIVITIES -> t("permissions.voiceStartActivities")
       MODERATE_MEMBERS -> t("permissions.moderateMembers")
       MANAGE_EVENTS -> t("permissions.manageEvents")
+      VIEW_CREATOR_MONETIZATION_ANALYTICS -> t("permissions.viewAnalytics")
+      MESSAGE_ATTACH_VOICE_MESSAGE -> t("permissions.attachVoiceMessages")
+      VOICE_USE_SOUNDBOARD -> t("permissions.useSoundboard")
+      VOICE_USE_EXTERNAL_SOUNDS -> t("permissions.useExtSounds")
       UNKNOWN -> t("permissions.unknown")
     }
   }

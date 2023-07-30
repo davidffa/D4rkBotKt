@@ -463,6 +463,10 @@ permissions:
   messageSendInThreads: "Enviar mensagens em threads"
   moderateMembers: "Moderar Membros"
   manageEvents: "Gerir Eventos"
+  viewAnalytics: "Ver estatísticas do criador"
+  attachVoiceMessages: "Anexar mensagens de voz"
+  useSoundboard: "Usar a Soundboard"
+  useExtSounds: "Usar sons externos"
   unknown: "Desconhecido"
 
 commandManager:
