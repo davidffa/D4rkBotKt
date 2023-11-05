@@ -62,10 +62,8 @@ object Utils {
       }
     }
 
-    if (Regex("^#?\\d{4}$").matches(query)) {
-      val u = guild.members.find { it.user.discriminator == query.replace("#", "") }?.user
-      if (u != null) return u
-    }
+    val u = guild.members.find { it.user.name.lowercase() == query.lowercase() }?.user
+    if (u != null) return u
 
     val lcQuery = query.lowercase()
 
