@@ -62,7 +62,7 @@ class Search : Command(
       }.joinToString("\n")
       color = Utils.randColor()
       footer {
-        name = ctx.author.asTag
+        name = ctx.author.name
         iconUrl = ctx.author.effectiveAvatarUrl
       }
       timestamp = Instant.now()
@@ -140,7 +140,7 @@ class Search : Command(
         description = chosenTracks.joinToString("\n") { t -> "[${t.info.title}](${t.info.uri})" }
         color = Utils.randColor()
         footer {
-          name = ctx.author.asTag
+          name = ctx.author.name
           iconUrl = ctx.author.effectiveAvatarUrl
         }
         timestamp = Instant.now()

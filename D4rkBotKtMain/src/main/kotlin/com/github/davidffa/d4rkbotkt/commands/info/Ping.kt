@@ -38,7 +38,7 @@ class Ping : Command(
               "<:MongoDB:773610222602158090> `${dbPing}ms`"
       this.color = color
       footer {
-        name = ctx.author.asTag
+        name = ctx.author.name
         iconUrl = ctx.author.effectiveAvatarUrl
       }
       timestamp = Instant.now()

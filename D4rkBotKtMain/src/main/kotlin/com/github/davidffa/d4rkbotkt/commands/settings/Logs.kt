@@ -1,7 +1,6 @@
 package com.github.davidffa.d4rkbotkt.commands.settings
 
 import com.mongodb.client.model.Updates
-import dev.minn.jda.ktx.*
 import dev.minn.jda.ktx.coroutines.await
 import dev.minn.jda.ktx.events.*
 import dev.minn.jda.ktx.interactions.components.StringSelectMenu
@@ -84,7 +83,7 @@ class Logs : Command(
               "<:chat:804050576647913522> - ${ctx.t("commands.logs.channel")}"
       timestamp = Instant.now()
       footer {
-        name = ctx.author.asTag
+        name = ctx.author.name
         iconUrl = ctx.author.effectiveAvatarUrl
       }
     }
@@ -261,7 +260,7 @@ class Logs : Command(
 
       timestamp = Instant.now()
       footer {
-        name = ctx.author.asTag
+        name = ctx.author.name
         iconUrl = ctx.author.effectiveAvatarUrl
       }
     }

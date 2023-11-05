@@ -116,7 +116,7 @@ class Botinfo : Command(
       }
       thumbnail = ctx.selfUser.effectiveAvatarUrl
       footer {
-        name = ctx.author.asTag
+        name = ctx.author.name
         iconUrl = ctx.author.effectiveAvatarUrl
       }
       timestamp = Instant.now()

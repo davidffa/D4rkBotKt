@@ -173,7 +173,7 @@ class TrackScheduler(private val player: AudioPlayer, private val textChannel: G
         inline = false
       }
       footer {
-        name = requester.user.asTag
+        name = requester.user.name
         iconUrl = requester.user.effectiveAvatarUrl
       }
       timestamp = Instant.now()

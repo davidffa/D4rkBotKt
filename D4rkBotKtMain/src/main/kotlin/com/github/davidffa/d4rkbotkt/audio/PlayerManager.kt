@@ -94,7 +94,7 @@ object PlayerManager {
         color = 1947988
         timestamp = Instant.now()
         footer {
-          name = requester.user.asTag
+          name = requester.user.name
           iconUrl = requester.user.effectiveAvatarUrl
         }
       }
@@ -171,7 +171,7 @@ object PlayerManager {
         color = 1973790
         timestamp = Instant.now()
         footer {
-          name = requester.user.asTag
+          name = requester.user.name
           iconUrl = requester.user.effectiveAvatarUrl
         }
       }
@@ -300,7 +300,7 @@ object PlayerManager {
               inline = false
             }
             footer {
-              name = requester.user.asTag
+              name = requester.user.name
               iconUrl = requester.user.effectiveAvatarUrl
             }
             timestamp = Instant.now()

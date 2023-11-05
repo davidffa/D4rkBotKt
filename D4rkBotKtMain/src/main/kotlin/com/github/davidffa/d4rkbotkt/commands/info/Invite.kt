@@ -29,7 +29,7 @@ class Invite : Command(
                   "[${ctx.t("commands.invite.support")}](https://discord.gg/dBQnxVCTEw)"
         timestamp = Instant.now()
         footer {
-          name = ctx.author.asTag
+          name = ctx.author.name
           iconUrl = ctx.author.effectiveAvatarUrl
         }
       }

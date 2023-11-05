@@ -42,7 +42,7 @@ class Userinfo : Command(
       }
       field {
         name = "<:tag:863419716029906955> Tag"
-        value = "`${user.asTag}`"
+        value = "`${user.name}`"
       }
       field {
         name = ctx.t("commands.userinfo.mention")
@@ -54,7 +54,7 @@ class Userinfo : Command(
       }
       thumbnail = "${user.effectiveAvatarUrl}?size=4096"
       footer {
-        name = ctx.author.asTag
+        name = ctx.author.name
         iconUrl = ctx.author.effectiveAvatarUrl
       }
       timestamp = Instant.now()

@@ -110,7 +110,7 @@ class Serverinfo : Command(
       }
       color = Utils.randColor()
       footer {
-        name = ctx.author.asTag
+        name = ctx.author.name
         iconUrl = ctx.author.effectiveAvatarUrl
       }
       timestamp = Instant.now()

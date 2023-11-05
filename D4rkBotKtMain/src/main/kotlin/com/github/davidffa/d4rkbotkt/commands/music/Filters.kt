@@ -71,7 +71,7 @@ class Filters : Command(
       description = ctx.t("commands.filters.removeall")
       thumbnail = "https://i.pinimg.com/564x/a3/a9/29/a3a929cc8d09e88815b89bc071ff4d8d.jpg"
       footer {
-        name = ctx.author.asTag
+        name = ctx.author.name
         iconUrl = ctx.author.effectiveAvatarUrl
       }
       timestamp = Instant.now()

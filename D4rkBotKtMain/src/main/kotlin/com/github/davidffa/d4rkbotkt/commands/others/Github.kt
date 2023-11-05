@@ -63,7 +63,7 @@ class Github : Command(
       color = Utils.randColor()
       thumbnail = "${user.getString("avatar_url")}${(1..10000).random()}"
       footer {
-        name = ctx.author.asTag
+        name = ctx.author.name
         iconUrl = ctx.author.effectiveAvatarUrl
       }
       timestamp = Instant.now()

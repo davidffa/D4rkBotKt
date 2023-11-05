@@ -75,7 +75,7 @@ class Roleinfo : Command(
       }
       timestamp = Instant.now()
       footer {
-        name = ctx.author.asTag
+        name = ctx.author.name
         iconUrl = ctx.author.effectiveAvatarUrl
       }
     }

@@ -21,7 +21,7 @@ suspend fun onGuildJoin(event: GuildJoinEvent) {
     }
     field {
       name = ":crown: Dono"
-      value = "`${event.guild.owner?.user?.asTag}`"
+      value = "`${event.guild.owner?.user?.name}`"
       inline = false
     }
     field {

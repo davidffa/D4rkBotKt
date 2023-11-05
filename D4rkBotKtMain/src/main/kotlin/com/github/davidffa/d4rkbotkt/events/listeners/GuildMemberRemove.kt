@@ -30,8 +30,8 @@ suspend fun onGuildMemberRemove(event: GuildMemberRemoveEvent) {
 
     if (!Utils.hasPermissions(event.guild.selfMember, channel, listOf(Permission.MESSAGE_SEND))) return
 
-    val tag = event.member?.user?.asTag ?: return
+    val username = event.member?.user?.name ?: return
 
-    channel.sendMessage(Translator.t("events.leave", cache.locale, listOf(tag))).queue()
+    channel.sendMessage(Translator.t("events.leave", cache.locale, listOf(username))).queue()
   }
 }

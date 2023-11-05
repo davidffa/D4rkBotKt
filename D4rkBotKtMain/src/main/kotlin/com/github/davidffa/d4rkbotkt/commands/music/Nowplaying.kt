@@ -48,14 +48,14 @@ class Nowplaying : Command(
       }
       field {
         name = ctx.t("commands.nowplaying.requester")
-        value = "`${musicManager.scheduler.current.requester.user.asTag}`"
+        value = "`${musicManager.scheduler.current.requester.user.name}`"
         inline = false
       }
       url = track.info.uri
       thumbnail = track.info.artworkUrl
       timestamp = Instant.now()
       footer {
-        name = ctx.author.asTag
+        name = ctx.author.name
         iconUrl = ctx.author.effectiveAvatarUrl
       }
     }

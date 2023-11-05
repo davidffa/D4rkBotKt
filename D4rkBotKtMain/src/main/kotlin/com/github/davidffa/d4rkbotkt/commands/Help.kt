@@ -105,7 +105,7 @@ class Help : Command(
           description = "${ctx.t("commands.help.description")} [$commandsSize]"
           color = Utils.randColor()
           footer {
-            name = ctx.author.asTag
+            name = ctx.author.name
             iconUrl = ctx.author.effectiveAvatarUrl
           }
           timestamp = Instant.now()
@@ -190,7 +190,7 @@ class Help : Command(
       color = Utils.randColor()
       description = desc.joinToString("\n")
       footer {
-        name = ctx.author.asTag
+        name = ctx.author.name
         iconUrl = ctx.author.effectiveAvatarUrl
       }
       timestamp = Instant.now()

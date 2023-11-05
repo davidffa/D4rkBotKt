@@ -26,12 +26,12 @@ class Avatar : Command(
     val url = "${user.effectiveAvatarUrl}?size=4096"
 
     val embed = Embed {
-      title = ctx.t("commands.avatar.title", listOf(user.asTag))
+      title = ctx.t("commands.avatar.title", listOf(user.name))
       description = ctx.t("commands.avatar.description", listOf(url))
       color = Utils.randColor()
       image = url
       footer {
-        name = ctx.author.asTag
+        name = ctx.author.name
         iconUrl = ctx.author.effectiveAvatarUrl
       }
       timestamp = Instant.now()

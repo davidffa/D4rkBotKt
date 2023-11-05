@@ -38,7 +38,7 @@ class Playlist : Command(
       }\n─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─```"
       color = Utils.randColor()
       footer {
-        name = ctx.author.asTag
+        name = ctx.author.name
         iconUrl = ctx.author.effectiveAvatarUrl
       }
       timestamp = Instant.now()
@@ -139,7 +139,7 @@ class Playlist : Command(
             else "${it.name} - `0` ${ctx.t("commands.playlist.tracks")}"
           }
           footer {
-            name = ctx.author.asTag
+            name = ctx.author.name
             iconUrl = ctx.author.effectiveAvatarUrl
           }
           timestamp = Instant.now()
@@ -418,7 +418,7 @@ class Playlist : Command(
           }
           color = Utils.randColor()
           footer {
-            name = ctx.author.asTag
+            name = ctx.author.name
             iconUrl = ctx.author.effectiveAvatarUrl
           }
           timestamp = Instant.now()

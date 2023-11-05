@@ -36,7 +36,7 @@ class Queue : Command(
       "commands.queue.header",
       listOf(
         scheduler.current.title,
-        scheduler.current.requester.user.asTag,
+        scheduler.current.requester.user.name,
         Utils.msToHour(scheduler.queue.sumOf { it.duration }),
         scheduler.queue.size.toString()
       )
@@ -50,13 +50,13 @@ class Queue : Command(
                   "${index + 1}º - [${track.title}](${track.uri}) (${
                     ctx.t(
                       "commands.queue.requestedBy",
-                      listOf(track.requester.user.asTag)
+                      listOf(track.requester.user.name)
                     )
                   })"
                 }.joinToString("\n")
         color = Utils.randColor()
         footer {
-          name = ctx.author.asTag
+          name = ctx.author.name
           iconUrl = ctx.author.effectiveAvatarUrl
         }
         timestamp = Instant.now()
@@ -76,7 +76,7 @@ class Queue : Command(
                   "${index + (chunkedQueue.indexOf(it) * 10) + 1}º - [${track.title}](${track.uri}) (${
                     ctx.t(
                       "commands.queue.requestedBy",
-                      listOf(track.requester.user.asTag)
+                      listOf(track.requester.user.name)
                     )
                   })"
                 }.joinToString("\n")
