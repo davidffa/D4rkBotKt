@@ -323,7 +323,7 @@ object Utils {
     }
 
     if (selfVoiceState.channel!!.members.filter { !it.user.isBot }.size == 1) return true
-    if (member.roles.contains(djRole)) return true
+    if (member.roles.contains(djRole) || member.hasPermission(MANAGE_SERVER)) return true
     if (forOwnTrack && (player.scheduler.current.requester.idLong == member.idLong || !selfVoiceState.channel!!.members.contains(
         player.scheduler.current.requester
       ))
