@@ -6,7 +6,7 @@ include("D4rkBotNatives")
 dependencyResolutionManagement {
   versionCatalogs {
     create("libs") {
-      version("kotlin", "1.9.20")
+      version("kotlin", "1.9.22")
 
       plugin("kotlinJVM", "org.jetbrains.kotlin.jvm").versionRef("kotlin")
       plugin("shadowJar", "com.github.johnrengelman.shadow").version("8.1.1")
@@ -34,10 +34,10 @@ dependencyResolutionManagement {
       library("kmongo", "org.litote.kmongo", "kmongo-coroutine").version("4.10.0")
 
       // Native System
-      library("oshi", "com.github.oshi", "oshi-core").version("6.4.7")
+      library("oshi", "com.github.oshi", "oshi-core").version("6.4.10")
 
       // Logger impl
-      library("logback", "ch.qos.logback", "logback-classic").version("1.4.11")
+      library("logback", "ch.qos.logback", "logback-classic").version("1.4.14")
     }
   }
 }
