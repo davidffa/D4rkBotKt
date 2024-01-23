@@ -19,9 +19,9 @@ dependencyResolutionManagement {
       library("okhttp-coroutines", "ru.gildor.coroutines", "kotlin-coroutines-okhttp").version("1.0")
 
       // JDA & Lavaplayer
-      library("jda-core", "net.dv8tion", "JDA").version("5.0.0-beta.18")
-      library("jda-ktx", "com.github.minndevelopment", "jda-ktx").version("0.10.0-beta.1")
-      library("lavaplayer", "com.github.davidffa", "lavaplayer-fork").version("fa29182")
+      library("jda-core", "net.dv8tion", "JDA").version("5.0.0-beta.20")
+      library("jda-ktx", "com.github.minndevelopment", "jda-ktx").version("0.11.0-beta.19")
+      library("lavaplayer", "com.github.davidffa", "lavaplayer-fork").version("ca0b377")
       library("jda-nas", "com.github.davidffa", "jda-nas-fork").version("1.0.3")
 
       // Lavaplayer audio filters
