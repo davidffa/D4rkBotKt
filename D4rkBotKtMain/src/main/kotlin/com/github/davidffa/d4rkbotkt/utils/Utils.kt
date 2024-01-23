@@ -455,6 +455,7 @@ object Utils {
       MESSAGE_ATTACH_VOICE_MESSAGE -> t("permissions.attachVoiceMessages")
       VOICE_USE_SOUNDBOARD -> t("permissions.useSoundboard")
       VOICE_USE_EXTERNAL_SOUNDS -> t("permissions.useExtSounds")
+      VOICE_SET_STATUS -> t("permissions.voiceSetStatus")
       UNKNOWN -> t("permissions.unknown")
     }
   }

@@ -467,6 +467,7 @@ permissions:
   attachVoiceMessages: "Anexar mensagens de voz"
   useSoundboard: "Usar a Soundboard"
   useExtSounds: "Usar sons externos"
+  voiceSetStatus: "Setar status de voz"
   unknown: "Desconhecido"
 
 commandManager:
