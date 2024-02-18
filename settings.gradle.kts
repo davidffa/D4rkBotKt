@@ -15,13 +15,13 @@ dependencyResolutionManagement {
       library("kotlin-stdlib", "org.jetbrains.kotlin", "kotlin-stdlib").versionRef("kotlin")
       library("kotlin-reflect", "org.jetbrains.kotlin", "kotlin-reflect").versionRef("kotlin")
       library("kotlin.scriptEngine", "org.jetbrains.kotlin", "kotlin-scripting-jsr223").versionRef("kotlin")
-      library("kotlinx-coroutines", "org.jetbrains.kotlinx", "kotlinx-coroutines-core").version("1.7.3")
+      library("kotlinx-coroutines", "org.jetbrains.kotlinx", "kotlinx-coroutines-core").version("1.8.0")
       library("okhttp-coroutines", "ru.gildor.coroutines", "kotlin-coroutines-okhttp").version("1.0")
 
       // JDA & Lavaplayer
       library("jda-core", "net.dv8tion", "JDA").version("5.0.0-beta.20")
-      library("jda-ktx", "com.github.minndevelopment", "jda-ktx").version("0.11.0-beta.19")
-      library("lavaplayer", "com.github.davidffa", "lavaplayer-fork").version("ca0b377")
+      library("jda-ktx", "com.github.minndevelopment", "jda-ktx").version("78dbf82")
+      library("lavaplayer", "com.github.davidffa", "lavaplayer-fork").version("51c13e3")
       library("jda-nas", "com.github.davidffa", "jda-nas-fork").version("1.0.3")
 
       // Lavaplayer audio filters
@@ -34,10 +34,10 @@ dependencyResolutionManagement {
       library("kmongo", "org.litote.kmongo", "kmongo-coroutine").version("4.10.0")
 
       // Native System
-      library("oshi", "com.github.oshi", "oshi-core").version("6.4.10")
+      library("oshi", "com.github.oshi", "oshi-core").version("6.4.12")
 
       // Logger impl
-      library("logback", "ch.qos.logback", "logback-classic").version("1.4.14")
+      library("logback", "ch.qos.logback", "logback-classic").version("1.5.0")
     }
   }
 }
