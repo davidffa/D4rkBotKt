@@ -34,7 +34,7 @@ dependencies {
   implementation(libs.jda.core) {
     exclude(module="opus-java")
   }
-  implementation("com.github.davidffa:opus-java:eeaf630")
+  implementation(libs.opus)
   implementation(libs.jda.ktx)
   implementation(libs.lavaplayer)
   implementation(libs.jda.nas)
