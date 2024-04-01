@@ -22,7 +22,7 @@ dependencyResolutionManagement {
       library("jda-core", "net.dv8tion", "JDA").version("5.0.0-beta.21")
       library("opus", "com.github.davidffa", "opus-java").version("c6194b1")
       library("jda-ktx", "com.github.minndevelopment", "jda-ktx").version("78dbf82")
-      library("lavaplayer", "com.github.davidffa", "lavaplayer-fork").version("51c13e3")
+      library("lavaplayer", "com.github.davidffa", "lavaplayer-fork").version("1154e56")
       library("jda-nas", "com.github.davidffa", "jda-nas-fork").version("1.0.3")
 
       // Lavaplayer audio filters
