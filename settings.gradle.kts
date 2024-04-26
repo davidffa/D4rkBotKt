@@ -19,7 +19,7 @@ dependencyResolutionManagement {
       library("okhttp-coroutines", "ru.gildor.coroutines", "kotlin-coroutines-okhttp").version("1.0")
 
       // JDA & Lavaplayer
-      library("jda-core", "net.dv8tion", "JDA").version("5.0.0-beta.21")
+      library("jda-core", "net.dv8tion", "JDA").version("5.0.0-beta.23")
       library("opus", "com.github.davidffa", "opus-java").version("c6194b1")
       library("jda-ktx", "com.github.minndevelopment", "jda-ktx").version("78dbf82")
       library("lavaplayer", "com.github.davidffa", "lavaplayer-fork").version("1fa3cff")
