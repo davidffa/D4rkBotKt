@@ -15,7 +15,6 @@ import com.sedmelluq.discord.lavaplayer.source.tiktok.TiktokAudioSourceManager
 import com.sedmelluq.discord.lavaplayer.source.twitch.TwitchStreamAudioSourceManager
 import com.sedmelluq.discord.lavaplayer.source.vimeo.VimeoAudioSourceManager
 import com.sedmelluq.discord.lavaplayer.source.yamusic.YandexMusicAudioSourceManager
-import com.sedmelluq.discord.lavaplayer.source.youtube.YoutubeAudioSourceManager
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException
 import com.sedmelluq.discord.lavaplayer.tools.io.MessageInput
 import com.sedmelluq.discord.lavaplayer.tools.io.MessageOutput
@@ -27,6 +26,12 @@ import com.github.davidffa.d4rkbotkt.Credentials
 import com.github.davidffa.d4rkbotkt.audio.sources.Deezer
 import com.github.davidffa.d4rkbotkt.audio.sources.Spotify
 import com.github.davidffa.d4rkbotkt.utils.Utils
+import dev.lavalink.youtube.YoutubeAudioSourceManager
+import dev.lavalink.youtube.clients.AndroidWithThumbnail
+import dev.lavalink.youtube.clients.IosWithThumbnail
+import dev.lavalink.youtube.clients.MusicWithThumbnail
+import dev.lavalink.youtube.clients.TvHtml5EmbeddedWithThumbnail
+import dev.lavalink.youtube.clients.WebWithThumbnail
 import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.entities.Guild
 import net.dv8tion.jda.api.entities.Member
@@ -47,7 +52,8 @@ object PlayerManager {
   private val deezer = Deezer()
 
   init {
-    audioPlayerManager.registerSourceManager(YoutubeAudioSourceManager(true, Credentials.YTEMAIL, Credentials.YTPASS))
+//    audioPlayerManager.registerSourceManager(YoutubeAudioSourceManager(true, Credentials.YTEMAIL, Credentials.YTPASS))
+    audioPlayerManager.registerSourceManager(YoutubeAudioSourceManager(true, MusicWithThumbnail(), WebWithThumbnail(), AndroidWithThumbnail(), TvHtml5EmbeddedWithThumbnail()))
     audioPlayerManager.registerSourceManager(SoundCloudAudioSourceManager.createDefault(true))
     audioPlayerManager.registerSourceManager(BandcampAudioSourceManager())
     audioPlayerManager.registerSourceManager(VimeoAudioSourceManager())

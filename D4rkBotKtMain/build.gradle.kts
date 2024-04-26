@@ -37,6 +37,8 @@ dependencies {
   implementation(libs.opus)
   implementation(libs.jda.ktx)
   implementation(libs.lavaplayer)
+  implementation(libs.lavaplayer.yt)
+  implementation(libs.lavaplayer.yt.thumbnail)
   implementation(libs.jda.nas)
 
   // Lavaplayer filters
