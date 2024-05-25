@@ -48,6 +48,7 @@ class Spotify(
       val tracks = json.getArray("items")
 
       for (i in 0 until tracks.length()) {
+        if (tracks.getObject(i).getBoolean("is_local", false)) continue
         unresolvedTracks.add(buildTrack(tracks.getObject(i), requester))
       }
 
@@ -72,7 +73,7 @@ class Spotify(
       val tracks = json.getArray("items")
 
       for (i in 0 until tracks.length()) {
-        if (tracks.getObject(i).isNull("track")) continue
+        if (tracks.getObject(i).isNull("track") || tracks.getObject(i).getBoolean("is_local", false)) continue
 
         unresolvedTracks.add(buildTrack(tracks.getObject(i).getObject("track"), requester))
       }
