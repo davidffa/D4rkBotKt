@@ -18,6 +18,7 @@ java {
 repositories {
   mavenCentral()
   maven("https://m2.dv8tion.net/releases")
+  maven("https://maven.lavalink.dev/releases")
   maven("https://jitpack.io/")
 }
 
@@ -38,7 +39,7 @@ dependencies {
   implementation(libs.jda.ktx)
   implementation(libs.lavaplayer)
   implementation(libs.lavaplayer.yt)
-  implementation(libs.lavaplayer.yt.thumbnail)
+  implementation(libs.lavaplayer.yt.v2)
   implementation(libs.jda.nas)
 
   // Lavaplayer filters

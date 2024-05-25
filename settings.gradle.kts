@@ -6,7 +6,7 @@ include("D4rkBotNatives")
 dependencyResolutionManagement {
   versionCatalogs {
     create("libs") {
-      version("kotlin", "1.9.23")
+      version("kotlin", "2.0.0")
 
       plugin("kotlinJVM", "org.jetbrains.kotlin.jvm").versionRef("kotlin")
       plugin("shadowJar", "com.github.johnrengelman.shadow").version("8.1.1")
@@ -15,16 +15,16 @@ dependencyResolutionManagement {
       library("kotlin-stdlib", "org.jetbrains.kotlin", "kotlin-stdlib").versionRef("kotlin")
       library("kotlin-reflect", "org.jetbrains.kotlin", "kotlin-reflect").versionRef("kotlin")
       library("kotlin.scriptEngine", "org.jetbrains.kotlin", "kotlin-scripting-jsr223").versionRef("kotlin")
-      library("kotlinx-coroutines", "org.jetbrains.kotlinx", "kotlinx-coroutines-core").version("1.8.0")
+      library("kotlinx-coroutines", "org.jetbrains.kotlinx", "kotlinx-coroutines-core").version("1.8.1")
       library("okhttp-coroutines", "ru.gildor.coroutines", "kotlin-coroutines-okhttp").version("1.0")
 
       // JDA & Lavaplayer
-      library("jda-core", "net.dv8tion", "JDA").version("5.0.0-beta.23")
+      library("jda-core", "net.dv8tion", "JDA").version("5.0.0-beta.24")
       library("opus", "com.github.davidffa", "opus-java").version("c6194b1")
       library("jda-ktx", "com.github.minndevelopment", "jda-ktx").version("78dbf82")
-      library("lavaplayer", "com.github.davidffa", "lavaplayer-fork").version("1fa3cff")
-      library("lavaplayer-yt", "com.github.lavalink-devs.youtube-source", "common").version("1.0.5")
-      library("lavaplayer-yt-thumbnail", "com.github.lavalink-devs.youtube-source", "lldevs").version("1.0.5")
+      library("lavaplayer", "com.github.davidffa", "lavaplayer-fork").version("474b2a1")
+      library("lavaplayer-yt", "dev.lavalink.youtube", "common").version("1.3.0")
+      library("lavaplayer-yt-v2", "dev.lavalink.youtube", "v2").version("1.3.0")
       library("jda-nas", "com.github.davidffa", "jda-nas-fork").version("1.0.3")
 
       // Lavaplayer audio filters
@@ -34,13 +34,13 @@ dependencyResolutionManagement {
       library("snakeyaml", "org.yaml", "snakeyaml").version("2.2")
 
       // MongoDB
-      library("kmongo", "org.litote.kmongo", "kmongo-coroutine").version("4.10.0")
+      library("kmongo", "org.litote.kmongo", "kmongo-coroutine").version("4.11.0")
 
       // Native System
-      library("oshi", "com.github.oshi", "oshi-core").version("6.4.13")
+      library("oshi", "com.github.oshi", "oshi-core").version("6.6.0")
 
       // Logger impl
-      library("logback", "ch.qos.logback", "logback-classic").version("1.5.3")
+      library("logback", "ch.qos.logback", "logback-classic").version("1.5.6")
     }
   }
 }
