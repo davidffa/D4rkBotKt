@@ -467,6 +467,8 @@ permissions:
   createPrivateThreads: "Create private Threads"
   messageSendInThreads: "Send messages in threads"
   voiceStartActivities: "Start voice activities"
+  useEmbeddedActivities: "Use embedded activities"
+  useExternalApps: "Use external applications"
   moderateMembers: "Moderate Members"
   manageEvents: "Manage Events"
   viewAnalytics: "View creator analytics"

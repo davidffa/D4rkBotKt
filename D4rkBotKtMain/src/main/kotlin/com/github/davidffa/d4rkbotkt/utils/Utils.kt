@@ -450,6 +450,8 @@ object Utils {
       CREATE_PRIVATE_THREADS -> t("permissions.createPrivateThreads")
       MESSAGE_SEND_IN_THREADS -> t("permissions.messageSendInThreads")
       VOICE_START_ACTIVITIES -> t("permissions.voiceStartActivities")
+      USE_EMBEDDED_ACTIVITIES -> t("permisssions.useEmbeddedActivities")
+      USE_EXTERNAL_APPLICATIONS -> t("permissions.useExternalApps")
       MODERATE_MEMBERS -> t("permissions.moderateMembers")
       CREATE_SCHEDULED_EVENTS -> t("permissions.createEvents")
       MANAGE_EVENTS -> t("permissions.manageEvents")
