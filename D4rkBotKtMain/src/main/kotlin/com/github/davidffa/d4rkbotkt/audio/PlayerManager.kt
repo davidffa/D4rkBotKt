@@ -53,7 +53,7 @@ object PlayerManager {
 
   init {
 //    audioPlayerManager.registerSourceManager(YoutubeAudioSourceManager(true, Credentials.YTEMAIL, Credentials.YTPASS))
-    audioPlayerManager.registerSourceManager(YoutubeAudioSourceManager(true, MusicWithThumbnail(), WebWithThumbnail(), AndroidWithThumbnail(), TvHtml5EmbeddedWithThumbnail()))
+    audioPlayerManager.registerSourceManager(YoutubeAudioSourceManager(true, MusicWithThumbnail(), WebWithThumbnail(), TvHtml5EmbeddedWithThumbnail()))
     audioPlayerManager.registerSourceManager(SoundCloudAudioSourceManager.createDefault(true))
     audioPlayerManager.registerSourceManager(BandcampAudioSourceManager())
     audioPlayerManager.registerSourceManager(VimeoAudioSourceManager())
