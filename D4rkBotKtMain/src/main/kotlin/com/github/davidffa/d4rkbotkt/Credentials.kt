@@ -18,6 +18,8 @@ object Credentials {
       properties.setProperty("SPOTIFYSECRET", System.getenv("SPOTIFYSECRET"))
       properties.setProperty("YTEMAIL", System.getenv("YTEMAIL"))
       properties.setProperty("YTPASS", System.getenv("YTPASS"))
+      properties.setProperty("POTOKEN", System.getenv("POTOKEN"))
+      properties.setProperty("VISITORDATA", System.getenv("VISITORDATA"))
     }
   }
 
@@ -38,4 +40,10 @@ object Credentials {
 
   val YTPASS: String
     get() = properties.getProperty("YTPASS")
+
+  val POTOKEN: String
+    get() = properties.getProperty("POTOKEN")
+
+  val VISITORDATA: String
+    get() = properties.getProperty("VISITORDATA")
 }

@@ -31,6 +31,7 @@ import dev.lavalink.youtube.clients.AndroidWithThumbnail
 import dev.lavalink.youtube.clients.IosWithThumbnail
 import dev.lavalink.youtube.clients.MusicWithThumbnail
 import dev.lavalink.youtube.clients.TvHtml5EmbeddedWithThumbnail
+import dev.lavalink.youtube.clients.Web
 import dev.lavalink.youtube.clients.WebWithThumbnail
 import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.entities.Guild
@@ -66,6 +67,8 @@ object PlayerManager {
     audioPlayerManager.registerSourceManager(GetyarnAudioSourceManager())
     audioPlayerManager.registerSourceManager(HttpAudioSourceManager(MediaContainerRegistry.DEFAULT_REGISTRY))
     audioPlayerManager.configuration.isFilterHotSwapEnabled = true
+
+    Web.setPoTokenAndVisitorData(Credentials.POTOKEN, Credentials.VISITORDATA)
   }
 
   fun getMusicManager(guildId: Long): GuildMusicManager {

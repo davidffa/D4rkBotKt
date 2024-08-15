@@ -6,7 +6,7 @@ include("D4rkBotNatives")
 dependencyResolutionManagement {
   versionCatalogs {
     create("libs") {
-      version("kotlin", "2.0.0")
+      version("kotlin", "2.0.10")
 
       plugin("kotlinJVM", "org.jetbrains.kotlin.jvm").versionRef("kotlin")
       plugin("shadowJar", "com.github.johnrengelman.shadow").version("8.1.1")
@@ -23,8 +23,8 @@ dependencyResolutionManagement {
       library("opus", "com.github.davidffa", "opus-java").version("c6194b1")
       library("jda-ktx", "com.github.minndevelopment", "jda-ktx").version("0.12.0")
       library("lavaplayer", "com.github.davidffa", "lavaplayer-fork").version("5a3a782")
-      library("lavaplayer-yt", "dev.lavalink.youtube", "common").version("1.5.2")
-      library("lavaplayer-yt-v2", "dev.lavalink.youtube", "v2").version("1.5.2")
+      library("lavaplayer-yt", "dev.lavalink.youtube", "common").version("1.6.0")
+      library("lavaplayer-yt-v2", "dev.lavalink.youtube", "v2").version("1.6.0")
       library("jda-nas", "com.github.davidffa", "jda-nas-fork").version("1.0.3")
 
       // Lavaplayer audio filters
