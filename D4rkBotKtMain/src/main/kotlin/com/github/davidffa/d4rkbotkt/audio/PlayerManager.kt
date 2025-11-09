@@ -26,12 +26,11 @@ import com.github.davidffa.d4rkbotkt.Credentials
 import com.github.davidffa.d4rkbotkt.audio.sources.Deezer
 import com.github.davidffa.d4rkbotkt.audio.sources.Spotify
 import com.github.davidffa.d4rkbotkt.utils.Utils
+import com.sedmelluq.discord.lavaplayer.source.rumble.RumbleAudioSourceManager
 import dev.lavalink.youtube.YoutubeAudioSourceManager
-import dev.lavalink.youtube.clients.AndroidWithThumbnail
-import dev.lavalink.youtube.clients.IosWithThumbnail
+import dev.lavalink.youtube.YoutubeSourceOptions
 import dev.lavalink.youtube.clients.MusicWithThumbnail
 import dev.lavalink.youtube.clients.TvHtml5EmbeddedWithThumbnail
-import dev.lavalink.youtube.clients.Web
 import dev.lavalink.youtube.clients.WebWithThumbnail
 import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.entities.Guild
@@ -53,8 +52,13 @@ object PlayerManager {
   private val deezer = Deezer()
 
   init {
-//    audioPlayerManager.registerSourceManager(YoutubeAudioSourceManager(true, Credentials.YTEMAIL, Credentials.YTPASS))
-    audioPlayerManager.registerSourceManager(YoutubeAudioSourceManager(true, MusicWithThumbnail(), WebWithThumbnail(), TvHtml5EmbeddedWithThumbnail()))
+    val youtubeSourceOptions = YoutubeSourceOptions().apply {
+      this.setRemoteCipher(Credentials.YT_REMOTE_CIPHER_URL, Credentials.YT_REMOTE_CIPHER_PASSWORD, "D4rkBotKt")
+    }
+    val youtubeSource = YoutubeAudioSourceManager(youtubeSourceOptions, MusicWithThumbnail(), WebWithThumbnail(), TvHtml5EmbeddedWithThumbnail())
+    youtubeSource.useOauth2(Credentials.YT_REFRESH_TOKEN, true)
+
+    audioPlayerManager.registerSourceManager(youtubeSource)
     audioPlayerManager.registerSourceManager(SoundCloudAudioSourceManager.createDefault(true))
     audioPlayerManager.registerSourceManager(BandcampAudioSourceManager())
     audioPlayerManager.registerSourceManager(VimeoAudioSourceManager())
@@ -64,11 +68,12 @@ object PlayerManager {
     audioPlayerManager.registerSourceManager(OdyseeAudioSourceManager(true))
     audioPlayerManager.registerSourceManager(YandexMusicAudioSourceManager(true))
     audioPlayerManager.registerSourceManager(RedditAudioSourceManager())
+    audioPlayerManager.registerSourceManager(RumbleAudioSourceManager())
     audioPlayerManager.registerSourceManager(GetyarnAudioSourceManager())
     audioPlayerManager.registerSourceManager(HttpAudioSourceManager(MediaContainerRegistry.DEFAULT_REGISTRY))
     audioPlayerManager.configuration.isFilterHotSwapEnabled = true
 
-    Web.setPoTokenAndVisitorData(Credentials.POTOKEN, Credentials.VISITORDATA)
+    //Web.setPoTokenAndVisitorData(Credentials.POTOKEN, Credentials.VISITORDATA)
   }
 
   fun getMusicManager(guildId: Long): GuildMusicManager {
@@ -91,7 +96,7 @@ object PlayerManager {
     val musicManager = this.getMusicManager(channel.guild, channel)
 
     val spotifyRegex =
-      "^(?:https?://(?:open\\.)?spotify\\.com|spotify)[/:](track|album|playlist)[/:]([a-zA-Z0-9]+)".toRegex()
+      "^(?:https?://(?:open\\.)?spotify\\.com|spotify)[/:](?:intl-[a-zA-Z]+/)?(track|album|playlist)[/:]([a-zA-Z0-9]+)".toRegex()
     val deezerRegex = "^(?:https?://|)?(?:www\\.)?deezer\\.com/(?:\\w{2}/)?(track|album|playlist)/(\\d+)".toRegex()
 
     val spotifyMatch = spotifyRegex.find(trackURL)
@@ -329,6 +334,8 @@ object PlayerManager {
         if (Utils.hasPermissions(channel.guild.selfMember, channel, listOf(Permission.MESSAGE_SEND))) {
           channel.sendMessage(musicManager.scheduler.t("music.error", listOf(exception.message.toString()))).queue()
         }
+
+        exception.printStackTrace()
       }
     })
   }

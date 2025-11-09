@@ -16,10 +16,8 @@ object Credentials {
       properties.setProperty("MONGODBURI", System.getenv("MONGODBURI"))
       properties.setProperty("SPOTIFYID", System.getenv("SPOTIFYID"))
       properties.setProperty("SPOTIFYSECRET", System.getenv("SPOTIFYSECRET"))
-      properties.setProperty("YTEMAIL", System.getenv("YTEMAIL"))
-      properties.setProperty("YTPASS", System.getenv("YTPASS"))
-      properties.setProperty("POTOKEN", System.getenv("POTOKEN"))
-      properties.setProperty("VISITORDATA", System.getenv("VISITORDATA"))
+      properties.setProperty("YT_REFRESH_TOKEN", System.getenv("YT_REFRESH_TOKEN"))
+      properties.setProperty("YT_REMOTE_CIPHER_URL", System.getenv("YT_REMOTE_CIPHER_PASSWORD"))
     }
   }
 
@@ -35,15 +33,12 @@ object Credentials {
   val SPOTIFYSECRET: String
     get() = properties.getProperty("SPOTIFYSECRET")
 
-  val YTEMAIL: String
-    get() = properties.getProperty("YTEMAIL")
+  val YT_REFRESH_TOKEN: String
+    get() = properties.getProperty("YT_REFRESH_TOKEN")
 
-  val YTPASS: String
-    get() = properties.getProperty("YTPASS")
+  val YT_REMOTE_CIPHER_URL: String
+    get() = properties.getProperty("YT_REMOTE_CIPHER_URL")
 
-  val POTOKEN: String
-    get() = properties.getProperty("POTOKEN")
-
-  val VISITORDATA: String
-    get() = properties.getProperty("VISITORDATA")
+  val YT_REMOTE_CIPHER_PASSWORD: String
+    get() = properties.getProperty("YT_REMOTE_CIPHER_PASSWORD")
 }

@@ -8,6 +8,7 @@ import com.github.davidffa.d4rkbotkt.command.Command
 import com.github.davidffa.d4rkbotkt.command.CommandContext
 import com.github.davidffa.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.Permission
+import net.dv8tion.jda.api.entities.channel.middleman.AudioChannel
 import net.dv8tion.jda.api.utils.FileUpload
 import java.io.File
 import java.util.*
@@ -50,7 +51,7 @@ class Record : Command(
     if (!selfVoiceState!!.inAudioChannel()) {
       ctx.guild.audioManager.isSelfDeafened = false
       ctx.guild.audioManager.isSelfMuted = true
-      ctx.guild.audioManager.openAudioConnection(ctx.member.voiceState?.channel)
+      ctx.guild.audioManager.openAudioConnection(ctx.member.voiceState?.channel as AudioChannel)
     }
 
     val audioReceiver = AudioReceiver(ctx.guild.id, ctx.member.voiceState!!.channel!!.bitrate)

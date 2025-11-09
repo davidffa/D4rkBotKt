@@ -183,7 +183,8 @@ class TrackScheduler(private val player: AudioPlayer, private val textChannel: G
   }
 
   override fun onTrackException(player: AudioPlayer, track: AudioTrack, exception: FriendlyException) {
-    logger.warn("Ocorreu um erro ao tocar a música ${track.info.identifier}.\nErro: ${exception.printStackTrace()}")
+    logger.warn("Ocorreu um erro ao tocar a música ${track.info.uri}.")
+    exception.printStackTrace()
   }
 
   override fun onTrackStuck(player: AudioPlayer, track: AudioTrack, thresholdMs: Long) {

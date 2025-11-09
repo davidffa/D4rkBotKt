@@ -1,4 +1,5 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 @Suppress("DSL_SCOPE_VIOLATION")
@@ -17,7 +18,7 @@ java {
 
 repositories {
   mavenCentral()
-  maven("https://m2.dv8tion.net/releases")
+  mavenLocal()
   maven("https://maven.lavalink.dev/releases")
   maven("https://jitpack.io/")
 }
@@ -59,10 +60,6 @@ dependencies {
 }
 
 tasks {
-  test {
-    useJUnitPlatform()
-  }
-
   register("stage") {
     dependsOn("build", "shadowJar", "clean", "test")
   }
@@ -83,6 +80,8 @@ tasks {
   }
 
   withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = JavaVersion.VERSION_17.toString()
+    compilerOptions {
+      jvmTarget.set(JvmTarget.JVM_17)
+    }
   }
 }

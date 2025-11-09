@@ -12,6 +12,7 @@ import com.github.davidffa.d4rkbotkt.database.Playlist
 import com.github.davidffa.d4rkbotkt.database.UserDB
 import com.github.davidffa.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.Permission
+import net.dv8tion.jda.api.entities.channel.middleman.AudioChannel
 import java.time.Instant
 import kotlin.time.Duration.Companion.minutes
 
@@ -389,7 +390,7 @@ class Playlist : Command(
         if (!ctx.selfMember.voiceState!!.inAudioChannel()) {
           ctx.guild.audioManager.isSelfDeafened = true
           ctx.guild.audioManager.isSelfMuted = false
-          ctx.guild.audioManager.openAudioConnection(ctx.member.voiceState?.channel)
+          ctx.guild.audioManager.openAudioConnection(ctx.member.voiceState?.channel as AudioChannel)
         }
 
         val tracks = playlist.tracks.map { PlayerManager.decodeTrack(it) }

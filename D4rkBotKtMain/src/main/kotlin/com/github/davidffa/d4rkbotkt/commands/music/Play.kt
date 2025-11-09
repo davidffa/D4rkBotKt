@@ -5,6 +5,7 @@ import com.github.davidffa.d4rkbotkt.command.Command
 import com.github.davidffa.d4rkbotkt.command.CommandContext
 import com.github.davidffa.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.Permission
+import net.dv8tion.jda.api.entities.channel.middleman.AudioChannel
 
 class Play : Command(
   "play",
@@ -25,7 +26,7 @@ class Play : Command(
     if (!selfVoiceState!!.inAudioChannel()) {
       ctx.guild.audioManager.isSelfDeafened = true
       ctx.guild.audioManager.isSelfMuted = false
-      ctx.guild.audioManager.openAudioConnection(member.voiceState?.channel)
+      ctx.guild.audioManager.openAudioConnection(member.voiceState?.channel as AudioChannel)
     }
 
     PlayerManager.loadAndPlay(member, channel, ctx.args.joinToString(" "))

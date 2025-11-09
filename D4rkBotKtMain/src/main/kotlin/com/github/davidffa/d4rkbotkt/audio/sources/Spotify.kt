@@ -55,7 +55,6 @@ class Spotify(
       offset += 50
     } while (next && unresolvedTracks.size < 400)
 
-
     return unresolvedTracks.toList()
   }
 

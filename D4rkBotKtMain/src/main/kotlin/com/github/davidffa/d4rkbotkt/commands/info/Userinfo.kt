@@ -148,7 +148,7 @@ class Userinfo : Command(
         name = ctx.t("commands.userinfo.permissions.name")
         value = "```\n${
           if (permissions.isEmpty()) ctx.t("commands.userinfo.permissions.none")
-          else Utils.translatePermissions(permissions.toList(), ctx::t).joinToString(", ")
+          else Utils.translatePermissions(permissions.toList(), ctx::t).joinToString(", ").take(1017)
         }```"
         inline = false
       }
@@ -160,8 +160,7 @@ class Userinfo : Command(
     val page2 = embed.build()
 
     ctx.channel.sendPaginator(page1, page2, expireAfter = 3.minutes, filter = {
-      if (it.user.idLong == ctx.author.idLong) return@sendPaginator true
-      return@sendPaginator false
+      return@sendPaginator it.user.idLong == ctx.author.idLong
     }).queue()
   }
 }
