@@ -10,6 +10,7 @@ import com.github.davidffa.d4rkbotkt.database.GuildCache
 import com.github.davidffa.d4rkbotkt.events.EventManager
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.OnlineStatus
+import net.dv8tion.jda.api.audio.AudioModuleConfig
 import net.dv8tion.jda.api.entities.Activity
 import net.dv8tion.jda.api.requests.GatewayIntent.*
 import net.dv8tion.jda.api.utils.cache.CacheFlag
@@ -80,7 +81,7 @@ class D4rkBot {
 
   private val intents = listOf(
     GUILD_MEMBERS,
-    GUILD_EMOJIS_AND_STICKERS,
+    GUILD_EXPRESSIONS,
     GUILD_VOICE_STATES,
     GUILD_PRESENCES,
     GUILD_MESSAGES,

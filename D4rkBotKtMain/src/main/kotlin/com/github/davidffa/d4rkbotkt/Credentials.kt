@@ -17,7 +17,8 @@ object Credentials {
       properties.setProperty("SPOTIFYID", System.getenv("SPOTIFYID"))
       properties.setProperty("SPOTIFYSECRET", System.getenv("SPOTIFYSECRET"))
       properties.setProperty("YT_REFRESH_TOKEN", System.getenv("YT_REFRESH_TOKEN"))
-      properties.setProperty("YT_REMOTE_CIPHER_URL", System.getenv("YT_REMOTE_CIPHER_PASSWORD"))
+      properties.setProperty("YT_REMOTE_CIPHER_URL", System.getenv("YT_REMOTE_CIPHER_URL"))
+      properties.setProperty("YT_REMOTE_CIPHER_PASSWORD", System.getenv("YT_REMOTE_CIPHER_PASSWORD"))
     }
   }
 

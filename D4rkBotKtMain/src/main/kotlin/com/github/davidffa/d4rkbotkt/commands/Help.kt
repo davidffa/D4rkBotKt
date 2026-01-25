@@ -11,6 +11,7 @@ import com.github.davidffa.d4rkbotkt.command.CommandContext
 import com.github.davidffa.d4rkbotkt.command.CommandManager
 import com.github.davidffa.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.Permission
+import net.dv8tion.jda.api.components.actionrow.ActionRow
 import net.dv8tion.jda.api.entities.emoji.Emoji
 import net.dv8tion.jda.api.exceptions.ErrorResponseException.ignore
 import net.dv8tion.jda.api.requests.ErrorResponse
@@ -56,7 +57,7 @@ class Help : Command(
       SecureRandom().nextBytes(nonceBytes)
       val nonce = Base64.getEncoder().encodeToString(nonceBytes)
 
-      val menu = StringSelectMenu("$nonce:help", ctx.t("commands.help.menu.placeholder")) {
+      val menu = StringSelectMenu("$nonce:help", placeholder = ctx.t("commands.help.menu.placeholder")) {
         if (ctx.author.id == "334054158879686657") {
           option(
             "Desenvolvedor",
@@ -91,7 +92,7 @@ class Help : Command(
         )
       }
 
-      val msg = channel.sendMessage("\u200B").setActionRow(menu).await()
+      val msg = channel.sendMessage("\u200B").addComponents(ActionRow.of(menu)).await()
 
       val listener = ctx.jda.onStringSelect("$nonce:help") {
         if (it.user.idLong != ctx.author.idLong) {
@@ -149,14 +150,14 @@ class Help : Command(
 
         val editedMenu = menu.createCopy()
         editedMenu.setDefaultOptions(listOf(editedMenu.options.find { op -> op.value == option?.value }))
-        it.editMessageEmbeds(embed.build()).setActionRow(editedMenu.build()).queue()
+        it.editMessageEmbeds(embed.build()).setComponents(ActionRow.of(editedMenu.build())).queue()
       }
 
       Timer().schedule(timerTask {
         ctx.jda.removeEventListener(listener)
         msg.editMessage(ctx.t("commands.help.timeout"))
           .setEmbeds()
-          .setActionRow(menu.asDisabled())
+          .setComponents(ActionRow.of(menu.asDisabled()))
           .queue(null, ignore(ErrorResponse.UNKNOWN_MESSAGE))
       }, 90000L)
       return

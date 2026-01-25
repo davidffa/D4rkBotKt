@@ -32,7 +32,7 @@ class Github : Command(
       return
     }
 
-    val user = DataObject.fromJson(withContext(Dispatchers.IO) { res.body!!.string() })
+    val user = DataObject.fromJson(withContext(Dispatchers.IO) { res.body.string() })
     res.close()
 
     val embed = EmbedBuilder {

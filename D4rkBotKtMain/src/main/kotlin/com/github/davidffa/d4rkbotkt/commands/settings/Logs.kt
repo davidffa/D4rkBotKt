@@ -14,12 +14,12 @@ import com.github.davidffa.d4rkbotkt.database.GuildCache
 import com.github.davidffa.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.Permission
+import net.dv8tion.jda.api.components.actionrow.ActionRow
+import net.dv8tion.jda.api.components.buttons.Button
 import net.dv8tion.jda.api.entities.emoji.Emoji
 import net.dv8tion.jda.api.entities.MessageEmbed
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent
-import net.dv8tion.jda.api.interactions.components.ActionRow
-import net.dv8tion.jda.api.interactions.components.buttons.Button
 import java.security.SecureRandom
 import java.time.Instant
 import java.util.*
@@ -70,7 +70,7 @@ class Logs : Command(
     SecureRandom().nextBytes(nonceBytes)
     val nonce = Base64.getEncoder().encodeToString(nonceBytes)
 
-    val menu = StringSelectMenu("$nonce:logs", ctx.t("commands.logs.menu.placeholder")) {
+    val menu = StringSelectMenu("$nonce:logs", placeholder = ctx.t("commands.logs.menu.placeholder")) {
       option(ctx.t("commands.logs.menu.welcome"), "welcome", emoji = Emoji.fromUnicode("\uD83D\uDC4B"))
       option(ctx.t("commands.logs.menu.leave"), "leave", emoji = Emoji.fromUnicode("\uD83D\uDEAA"))
     }
@@ -94,7 +94,7 @@ class Logs : Command(
       Button.primary("$nonce:channel", Emoji.fromFormatted("<:chat:804050576647913522>"))
     )
 
-    val mainMessage = ctx.channel.sendMessageEmbeds(embed).setActionRow(menu).await()
+    val mainMessage = ctx.channel.sendMessageEmbeds(embed).setComponents(ActionRow.of(menu)).await()
 
     lateinit var logType: LogType
 
@@ -133,14 +133,14 @@ class Logs : Command(
             guildData.welcomeMessagesEnabled = true
             Database.guildDB.updateOneById(ctx.guild.id, Updates.set("welcomeMessagesEnabled", true))
           }
-          it.editMessageEmbeds(generateEmbed(ctx, guildData, welcomeChat, memberRemoveChat)).setActionRow(menu).queue()
+          it.editMessageEmbeds(generateEmbed(ctx, guildData, welcomeChat, memberRemoveChat)).setComponents(ActionRow.of(menu)).queue()
         }
         LogType.REMOVE -> {
           if (guildData.memberRemoveMessagesEnabled == null || guildData.memberRemoveMessagesEnabled == false) {
             guildData.memberRemoveMessagesEnabled = true
             Database.guildDB.updateOneById(ctx.guild.id, Updates.set("memberRemoveMessagesEnabled", true))
           }
-          it.editMessageEmbeds(generateEmbed(ctx, guildData, welcomeChat, memberRemoveChat)).setActionRow(menu).queue()
+          it.editMessageEmbeds(generateEmbed(ctx, guildData, welcomeChat, memberRemoveChat)).setComponents(ActionRow.of(menu)).queue()
         }
       }
     }
@@ -157,14 +157,14 @@ class Logs : Command(
             guildData.welcomeMessagesEnabled = false
             Database.guildDB.updateOneById(ctx.guild.id, Updates.set("welcomeMessagesEnabled", false))
           }
-          it.editMessageEmbeds(generateEmbed(ctx, guildData, welcomeChat, memberRemoveChat)).setActionRow(menu).queue()
+          it.editMessageEmbeds(generateEmbed(ctx, guildData, welcomeChat, memberRemoveChat)).setComponents(ActionRow.of(menu)).queue()
         }
         LogType.REMOVE -> {
           if (guildData.memberRemoveMessagesEnabled == true) {
             guildData.memberRemoveMessagesEnabled = false
             Database.guildDB.updateOneById(ctx.guild.id, Updates.set("memberRemoveMessagesEnabled", false))
           }
-          it.editMessageEmbeds(generateEmbed(ctx, guildData, welcomeChat, memberRemoveChat)).setActionRow(menu).queue()
+          it.editMessageEmbeds(generateEmbed(ctx, guildData, welcomeChat, memberRemoveChat)).setComponents(ActionRow.of(menu)).queue()
         }
       }
     }
@@ -216,7 +216,7 @@ class Logs : Command(
           mainMessage.editMessage(ctx.t("commands.logs.timeout")).setEmbeds().setComponents().queue()
         }, 3 * 60 * 1000L)
 
-        msg.editOriginal("").setEmbeds(generateEmbed(ctx, guildData, welcomeChat, memberRemoveChat)).setActionRow(menu)
+        msg.editOriginal("").setEmbeds(generateEmbed(ctx, guildData, welcomeChat, memberRemoveChat)).setComponents(ActionRow.of(menu))
           .queue()
       }
 

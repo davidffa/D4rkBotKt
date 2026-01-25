@@ -14,10 +14,10 @@ import com.github.davidffa.d4rkbotkt.command.Command
 import com.github.davidffa.d4rkbotkt.command.CommandContext
 import com.github.davidffa.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.Permission
+import net.dv8tion.jda.api.components.actionrow.ActionRow
+import net.dv8tion.jda.api.components.buttons.Button
 import net.dv8tion.jda.api.entities.channel.middleman.AudioChannel
 import net.dv8tion.jda.api.entities.emoji.Emoji
-import net.dv8tion.jda.api.interactions.components.ActionRow
-import net.dv8tion.jda.api.interactions.components.buttons.Button
 import java.security.SecureRandom
 import java.time.Instant
 import java.util.*
@@ -73,7 +73,7 @@ class Search : Command(
     SecureRandom().nextBytes(nonceBytes)
     val nonce = Base64.getEncoder().encodeToString(nonceBytes)
 
-    val menu = StringSelectMenu("$nonce:search", ctx.t("commands.search.placeholder"), 1..10) {
+    val menu = StringSelectMenu("$nonce:search", placeholder = ctx.t("commands.search.placeholder"), valueRange = 1..10) {
       tracks.mapIndexed { i, track ->
         option(
           if (track.info.author.isEmpty()) "Desconhecido" else formatString(track.info.author, 50),

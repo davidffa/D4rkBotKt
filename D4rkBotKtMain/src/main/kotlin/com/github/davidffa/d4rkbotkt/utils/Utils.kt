@@ -429,6 +429,8 @@ object Utils {
       MESSAGE_EXT_EMOJI -> t("permissions.extEmoji")
       MESSAGE_SEND_POLLS -> t("permissions.sendPolls")
       MESSAGE_EXT_STICKER -> t("permissions.extSticker")
+      PIN_MESSAGES -> t("permissions.pinMessages")
+      BYPASS_SLOWMODE -> t("permissions.bypassSlowmode")
       VIEW_GUILD_INSIGHTS -> t("permissions.viewGuildInsights")
       VOICE_CONNECT -> t("permissions.voiceConnect")
       VOICE_SPEAK -> t("permissions.voiceSpeak")

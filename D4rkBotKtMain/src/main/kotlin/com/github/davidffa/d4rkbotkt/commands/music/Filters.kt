@@ -15,10 +15,10 @@ import com.github.davidffa.d4rkbotkt.command.Command
 import com.github.davidffa.d4rkbotkt.command.CommandContext
 import com.github.davidffa.d4rkbotkt.utils.Utils
 import net.dv8tion.jda.api.Permission
+import net.dv8tion.jda.api.components.actionrow.ActionRow
+import net.dv8tion.jda.api.components.buttons.Button
 import net.dv8tion.jda.api.entities.emoji.Emoji
 import net.dv8tion.jda.api.events.interaction.component.GenericComponentInteractionCreateEvent
-import net.dv8tion.jda.api.interactions.components.ActionRow
-import net.dv8tion.jda.api.interactions.components.buttons.Button
 import java.security.SecureRandom
 import java.time.Instant
 import java.util.*
@@ -45,7 +45,7 @@ class Filters : Command(
     SecureRandom().nextBytes(nonceBytes)
     val nonce = Base64.getEncoder().encodeToString(nonceBytes)
 
-    val menu = StringSelectMenu("$nonce:filters", ctx.t("commands.filters.menuplaceholder")) {
+    val menu = StringSelectMenu("$nonce:filters", placeholder = ctx.t("commands.filters.menuplaceholder")) {
       option("Bass", "bass", emoji = Emoji.fromUnicode("1️⃣"))
       option("Daycore", "daycore", emoji = Emoji.fromUnicode("2️⃣"))
       option("Nightcore", "nightcore", emoji = Emoji.fromUnicode("3️⃣"))
@@ -93,8 +93,6 @@ class Filters : Command(
     )
 
     val msg = ctx.channel.sendMessageEmbeds(embed.build())
-            .addActionRow(menu)
-            .addActionRow(clearButton, deleteButton)
       .setComponents(controls)
       .await()
 

@@ -441,6 +441,8 @@ permissions:
   mentionEveryone: "Mencionar everyone"
   extEmoji: "Usar emojis externos"
   extSticker: "Usar figurinhas externas"
+  pinMessages: "Afixar Mensagens"
+  bypassSlowmode: "Contornar modo lento"
   sendPolls: "Enviar polls"
   createEvents: "Criar eventos"
   createExpressions: "Criar expressões"
