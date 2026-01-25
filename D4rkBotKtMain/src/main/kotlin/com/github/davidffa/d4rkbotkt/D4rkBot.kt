@@ -1,5 +1,6 @@
 package com.github.davidffa.d4rkbotkt
 
+import club.minnced.discord.jdave.interop.JDaveSessionFactory
 import com.mongodb.client.model.Updates
 import com.sedmelluq.discord.lavaplayer.jdaudp.NativeAudioSendFactory
 import dev.minn.jda.ktx.jdabuilder.createJDA
@@ -104,12 +105,16 @@ class D4rkBot {
 
     try {
       jda = createJDA(Credentials.TOKEN, true, intents = intents) {
-        this.enableCache(listOf(CacheFlag.VOICE_STATE, CacheFlag.CLIENT_STATUS, CacheFlag.ONLINE_STATUS))
-        this.disableCache(listOf(CacheFlag.ACTIVITY, CacheFlag.ROLE_TAGS, CacheFlag.SCHEDULED_EVENTS))
-        this.setAudioSendFactory(NativeAudioSendFactory())
+        enableCache(CacheFlag.VOICE_STATE, CacheFlag.CLIENT_STATUS, CacheFlag.ONLINE_STATUS)
+        disableCache(CacheFlag.ACTIVITY, CacheFlag.ROLE_TAGS, CacheFlag.SCHEDULED_EVENTS)
+        setAudioModuleConfig(
+          AudioModuleConfig()
+          .withDaveSessionFactory(JDaveSessionFactory())
+          .withAudioSendFactory(NativeAudioSendFactory())
+        )
 
-        this.setStatus(OnlineStatus.IDLE)
-        this.setActivity(Activity.playing("A iniciar..."))
+        setStatus(OnlineStatus.IDLE)
+        setActivity(Activity.playing("A iniciar..."))
       }
 
       EventManager.manage(jda)

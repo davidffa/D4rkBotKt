@@ -7,6 +7,7 @@ dependencyResolutionManagement {
   versionCatalogs {
     create("libs") {
       version("kotlin", "2.3.0")
+      version("jdave", "0.1.5")
 
       plugin("kotlinJVM", "org.jetbrains.kotlin.jvm").versionRef("kotlin")
       plugin("shadowJar", "com.gradleup.shadow").version("9.3.1")
@@ -26,6 +27,10 @@ dependencyResolutionManagement {
       library("lavaplayer-yt", "dev.lavalink.youtube", "common").version("1.16.0")
       library("lavaplayer-yt-v2", "dev.lavalink.youtube", "v2").version("1.16.0")
       library("jda-nas", "com.github.davidffa", "jda-nas-fork").version("1.0.3")
+      library("jdave-api", "club.minnced", "jdave-api").versionRef("jdave")
+      library("jdave-native-linux-amd64", "club.minnced", "jdave-native-linux-x86-64").versionRef("jdave")
+      library("jdave-native-linux-arm64", "club.minnced", "jdave-native-linux-aarch64").versionRef("jdave")
+      library("jdave-native-darwin", "club.minnced", "jdave-native-darwin").versionRef("jdave")
 
       // Lavaplayer audio filters
       library("lavadsp", "com.github.davidffa", "lavadsp-fork").version("0.7.8")

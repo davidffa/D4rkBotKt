@@ -11,8 +11,8 @@ group = "com.github.davidffa"
 version = "1.0.0"
 
 java {
-  sourceCompatibility = JavaVersion.VERSION_17
-  targetCompatibility = JavaVersion.VERSION_17
+  sourceCompatibility = JavaVersion.VERSION_25
+  targetCompatibility = JavaVersion.VERSION_25
 }
 
 repositories {
@@ -41,6 +41,10 @@ dependencies {
   implementation(libs.lavaplayer.yt)
   implementation(libs.lavaplayer.yt.v2)
   implementation(libs.jda.nas)
+  implementation(libs.jdave.api)
+  implementation(libs.jdave.native.linux.amd64)
+  implementation(libs.jdave.native.linux.arm64)
+  implementation(libs.jdave.native.darwin)
 
   // Lavaplayer filters
   implementation(libs.lavadsp)
@@ -80,7 +84,7 @@ tasks {
 
   withType<KotlinCompile> {
     compilerOptions {
-      jvmTarget.set(JvmTarget.JVM_17)
+      jvmTarget.set(JvmTarget.JVM_25)
     }
   }
 }
